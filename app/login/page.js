@@ -1,80 +1,95 @@
 "use client";
-import { useState } from "react";
+import React, { useState } from "react";
 import { supabase } from "@/lib/supabase";
 import { useRouter } from "next/navigation";
 
-export default function LoginPage() {
+export default function AuthPage() {
+  const [isLogin, setIsLogin] = useState(true);
   const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
   const [loading, setLoading] = useState(false);
   const [message, setMessage] = useState("");
   const router = useRouter();
 
-  const handleLogin = async (e) => {
+  // Menggunakan tipe 'any' dan memastikan fungsi ditutup dengan benar
+  const handleAuth = async (e) => {
     e.preventDefault();
     setLoading(true);
-    const { error } = await supabase.auth.signInWithOtp({
-      email,
-      options: { emailRedirectTo: window.location.origin + "/dashboard" },
-    });
-    if (error) setMessage(error.message);
-    else setMessage("Cek email kamu untuk link login!");
-    setLoading(false);
+    setMessage("");
+
+    try {
+      if (isLogin) {
+        const { error } = await supabase.auth.signInWithPassword({
+          email,
+          password,
+        });
+        if (error) throw error;
+        router.push("/dashboard");
+      } else {
+        const { error } = await supabase.auth.signUp({
+          email,
+          password,
+        });
+        if (error) throw error;
+        setMessage("Registrasi berhasil! Silakan login.");
+        setIsLogin(true);
+      }
+    } catch (err) {
+      setMessage(err.message || "Terjadi kesalahan");
+    } finally {
+      setLoading(false);
+    }
   };
 
   return (
-    <div className="min-h-screen bg-[#F8FAFC] flex flex-col justify-center px-6 py-12">
-      <div className="sm:mx-auto sm:w-full sm:max-w-md text-center mb-10">
-        <div className="w-12 h-12 bg-blue-600 rounded-2xl flex items-center justify-center text-white font-black text-xl mx-auto mb-6 shadow-lg shadow-blue-200">
-          NP
-        </div>
-        <h2 className="text-4xl font-black tracking-tighter italic">Okaeri!</h2>
-        <p className="mt-2 text-sm font-medium text-slate-500">
-          Masuk tanpa ribet password, cukup pakai email.
+    <div className="min-h-screen bg-slate-50 flex flex-col justify-center items-center p-6">
+      <div className="w-full max-w-md bg-white p-8 rounded-3xl shadow-sm border border-slate-100">
+        <h1 className="text-2xl font-black mb-2 text-slate-900">
+          Nihongo<span className="text-blue-600">Path.</span>
+        </h1>
+        <p className="text-slate-500 text-sm mb-8">
+          {isLogin ? "Masuk ke akun kamu" : "Daftar akun baru gratis"}
         </p>
-      </div>
 
-      <div className="sm:mx-auto sm:w-full sm:max-w-md">
-        <div className="bg-white py-10 px-8 shadow-xl shadow-slate-200/50 rounded-[3rem] border border-slate-100">
-          <form className="space-y-6" onSubmit={handleLogin}>
-            <div>
-              <label
-                htmlFor="email"
-                className="block text-[10px] font-black text-slate-400 uppercase tracking-widest ml-4 mb-2"
-              >
-                Email Address
-              </label>
-              <input
-                id="email"
-                type="email"
-                required
-                className="block w-full px-6 py-4 rounded-2xl bg-slate-50 border-none focus:ring-2 focus:ring-blue-600 font-bold text-slate-900 transition-all"
-                placeholder="name@example.com"
-                value={email}
-                onChange={(e) => setEmail(e.target.value)}
-              />
-            </div>
-
-            <button
-              disabled={loading}
-              type="submit"
-              className="w-full flex justify-center py-5 px-4 rounded-2xl bg-slate-900 text-white font-black hover:bg-blue-600 transition-all disabled:opacity-50 shadow-xl shadow-slate-200"
-            >
-              {loading ? "MENGIRIM..." : "DAPATKAN MAGIC LINK →"}
-            </button>
-          </form>
+        <form onSubmit={handleAuth} className="space-y-4">
+          <input
+            type="email"
+            placeholder="Email"
+            className="w-full p-4 bg-slate-50 rounded-xl border-none outline-none focus:ring-2 focus:ring-blue-500"
+            value={email}
+            onChange={(e) => setEmail(e.target.value)}
+            required
+          />
+          <input
+            type="password"
+            placeholder="Password"
+            className="w-full p-4 bg-slate-50 rounded-xl border-none outline-none focus:ring-2 focus:ring-blue-500"
+            value={password}
+            onChange={(e) => setPassword(e.target.value)}
+            required
+          />
 
           {message && (
-            <div className="mt-6 p-4 bg-blue-50 rounded-2xl text-center">
-              <p className="text-xs font-bold text-blue-600 leading-relaxed">
-                {message}
-              </p>
+            <div className="text-xs font-bold text-red-500 bg-red-50 p-3 rounded-lg">
+              {message}
             </div>
           )}
-        </div>
 
-        <p className="mt-10 text-center text-[10px] font-black text-slate-300 uppercase tracking-widest">
-          NihongoPath • Community Project
-        </p>
+          <button
+            type="submit"
+            disabled={loading}
+            className="w-full py-4 bg-blue-600 text-white rounded-xl font-bold hover:bg-blue-700 transition-all disabled:opacity-50"
+          >
+            {loading ? "Sabar ya..." : isLogin ? "Masuk" : "Daftar"}
+          </button>
+        </form>
+
+        <button
+          onClick={() => setIsLogin(!isLogin)}
+          className="w-full mt-6 text-sm text-slate-400 font-medium hover:text-blue-600"
+        >
+          {isLogin ? "Belum punya akun? Daftar" : "Sudah punya akun? Login"}
+        </button>
       </div>
     </div>
   );
