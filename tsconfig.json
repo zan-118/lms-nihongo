@@ -29,7 +29,8 @@
     ".next/types/**/*.ts",
     ".next/dev/types/**/*.ts",
     "**/*.mts",
-    "lib/supabase.js"
+    "lib/supabase.js",
+    "app/materi/[slug]/page.js"
   ],
   "exclude": ["node_modules"]
 }

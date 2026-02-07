@@ -47,7 +47,7 @@ export default function AuthPage() {
         <h1 className="text-2xl font-black mb-2 text-slate-900">
           Nihongo<span className="text-blue-600">Path.</span>
         </h1>
-        <p className="text-slate-500 text-sm mb-8">
+        <p className="text-slate-900 text-sm mb-8">
           {isLogin ? "Masuk ke akun kamu" : "Daftar akun baru gratis"}
         </p>
 
@@ -55,7 +55,7 @@ export default function AuthPage() {
           <input
             type="email"
             placeholder="Email"
-            className="w-full p-4 bg-slate-50 rounded-xl border-none outline-none focus:ring-2 focus:ring-blue-500"
+            className="w-full p-4 bg-slate-100 rounded-xl border-none outline-none focus:ring-2 focus:ring-blue-500"
             value={email}
             onChange={(e) => setEmail(e.target.value)}
             required
@@ -63,7 +63,7 @@ export default function AuthPage() {
           <input
             type="password"
             placeholder="Password"
-            className="w-full p-4 bg-slate-50 rounded-xl border-none outline-none focus:ring-2 focus:ring-blue-500"
+            className="w-full p-4 bg-slate-100 rounded-xl border-none outline-none focus:ring-2 focus:ring-blue-500"
             value={password}
             onChange={(e) => setPassword(e.target.value)}
             required

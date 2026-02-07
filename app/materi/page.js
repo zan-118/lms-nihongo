@@ -2,6 +2,7 @@
 import { useEffect, useState } from "react";
 import { supabase } from "@/lib/supabase";
 import Link from "next/link";
+import ReactMarkdown from "react-markdown";
 
 export default function MateriList() {
   const [lessons, setLessons] = useState([]);
@@ -63,7 +64,7 @@ export default function MateriList() {
         ) : (
           lessons.map((lesson, idx) => (
             <Link
-              href={`/materi/${lesson.id}`}
+              href={`/materi/${lesson.slug}`}
               key={lesson.id}
               className="block group"
             >
@@ -94,7 +95,7 @@ export default function MateriList() {
                     </h3>
 
                     {/* INI BAGIAN YANG MENAMPILKAN CUPLIKAN MATERI */}
-                    <p className="text-slate-400 text-sm font-medium leading-relaxed mb-6">
+                    <p className="text-slate-900 text-sm font-medium leading-relaxed mb-6">
                       {getSnippet(lesson.content)}
                     </p>
 
