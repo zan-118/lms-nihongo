@@ -81,12 +81,14 @@ export default async function LessonDetailPage({ params }) {
         {/* Menggunakan Tailwind Typography 'prose' */}
         <article
           className="prose prose-slate max-w-none 
-  text-slate-900 
-  prose-headings:text-slate-900 
-  prose-p:text-slate-700 
-  prose-strong:text-blue-600
-  prose-headings:font-black 
-  prose-headings:italic"
+  text-slate-900
+  /* Styling Tabel */
+  prose-table:border-collapse 
+  prose-th:bg-slate-50 prose-th:p-4 prose-th:text-left prose-th:font-black prose-th:uppercase prose-th:text-[10px] prose-th:tracking-widest
+  prose-td:p-4 prose-td:border-b prose-td:border-slate-100
+  /* Styling Lainnya */
+  prose-headings:font-black prose-headings:italic prose-headings:tracking-tighter
+  prose-p:leading-relaxed"
         >
           <ReactMarkdown>{lesson.content}</ReactMarkdown>
         </article>

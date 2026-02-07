@@ -45,7 +45,7 @@ export default function MateriList() {
           >
             ← Dashboard
           </Link>
-          <h1 className="font-black italic text-xl tracking-tighter">
+          <h1 className="font-black text-black italic text-xl tracking-tighter">
             Learning Path.
           </h1>
           <div className="w-10 h-10 bg-blue-50 rounded-full flex items-center justify-center text-blue-600 font-bold text-xs">
