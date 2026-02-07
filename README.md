@@ -1,7 +1,4 @@
----
-### File: `README.md`
-
-```markdown
+````markdown
 # 🇯🇵 NihongoPath - Free Japanese Learning Platform
 
 **NihongoPath** adalah platform pembelajaran bahasa Jepang mandiri yang gratis dan berbasis donasi. Dirancang untuk membantu pembelajar tingkat N5 hingga N1 menguasai tata bahasa, kosakata, dan simulasi ujian dengan pengalaman aplikasi modern (PWA).
@@ -40,6 +37,7 @@
    git clone [https://github.com/username-kamu/nihongopath.git](https://github.com/username-kamu/nihongopath.git)
    cd nihongopath
    ```
+````
 
 ````
 

@@ -1,52 +1,43 @@
-import { Geist, Geist_Mono } from "next/font/google";
+import type { Metadata, Viewport } from "next";
+import { Inter } from "next/font/google";
 import "./globals.css";
+import { ReactNode } from "react";
 
-// Konfigurasi Font
-const geistSans = Geist({
-  variable: "--font-geist-sans",
-  subsets: ["latin"],
-});
+const inter = Inter({ subsets: ["latin"] });
 
-const geistMono = Geist_Mono({
-  variable: "--font-geist-mono",
-  subsets: ["latin"],
-});
-
-// Metadata untuk PWA dan SEO
-export const metadata = {
-  title: "NihongoPath",
-  description: "Belajar Bahasa Jepang Gratis",
+// Konfigurasi Metadata untuk SEO dan PWA
+export const metadata: Metadata = {
+  title: "NihongoPath | Belajar Bahasa Jepang Gratis",
+  description:
+    "Platform belajar bahasa Jepang mandiri dengan kurikulum terstruktur dan simulasi kuis JLPT.",
   manifest: "/manifest.json",
-  appleWebApp: {
-    capable: true,
-    statusBarStyle: "default",
-    title: "NihongoPath",
+  icons: {
+    apple: "/icons/icon-192x192.png",
   },
 };
 
-// Viewport dipisah (Standar Next.js terbaru)
-export const viewport = {
+// Konfigurasi Viewport (Penting agar UI tidak zoom otomatis di mobile)
+export const viewport: Viewport = {
   themeColor: "#2563eb",
   width: "device-width",
   initialScale: 1,
   maximumScale: 1,
-  userScalable: false,
 };
 
-export default function RootLayout({ children }) {
+// Definisi Interface untuk Props
+interface RootLayoutProps {
+  children: ReactNode;
+}
+
+export default function RootLayout({ children }: RootLayoutProps) {
   return (
     <html lang="id">
       <head>
-        {/* Icon khusus iOS agar muncul saat 'Add to Home Screen' */}
-        <link
-          rel="apple-touch-icon"
-          href="https://img.icons8.com/color/192/000000/torii-gate.png"
-        />
+        {/* Kamu bisa menambahkan script atau link font tambahan di sini jika perlu */}
       </head>
-      <body
-        className={`${geistSans.variable} ${geistMono.variable} antialiased`}
-      >
-        {children}
+      <body className={`${inter.className} antialiased bg-white`}>
+        {/* Pembungkus Utama */}
+        <div className="min-h-screen">{children}</div>
       </body>
     </html>
   );
