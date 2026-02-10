@@ -1,353 +1,399 @@
 "use client";
-import { useEffect, useState, useCallback } from "react";
+import { useEffect, useState } from "react";
 import { supabase } from "@/lib/supabase";
+import { client } from "@/sanity/lib/client";
 import { useRouter } from "next/navigation";
 import Link from "next/link";
 
 export default function DashboardPage() {
   const router = useRouter();
-
-  // State Management
   const [user, setUser] = useState(null);
   const [showModal, setShowModal] = useState(false);
   const [packages, setPackages] = useState([]);
+  const [loading, setLoading] = useState(true);
   const [stats, setStats] = useState({
     completed: 0,
     total: 0,
-    lastLesson: null,
+    lastLessonTitle: null,
+    resumeSlug: null,
   });
-  const [deferredPrompt, setDeferredPrompt] = useState(null);
+  const [dailyKanji, setDailyKanji] = useState({
+    kanji: "学",
+    meaning: "Study / Learn",
+    reading: "まなぶ (manabu)",
+  });
 
-  // Daily Kanji States
-  const [dailyKanji, setDailyKanji] = useState(null);
-  const [kanjiLevel, setKanjiLevel] = useState("grade-1");
-  const [loadingKanji, setLoadingKanji] = useState(true);
-
-  // 1. PWA Install Logic
+  // --- 1. DATA FETCHING ---
   useEffect(() => {
-    const handler = (e) => {
-      e.preventDefault();
-      setDeferredPrompt(e);
-    };
-    window.addEventListener("beforeinstallprompt", handler);
-    return () => window.removeEventListener("beforeinstallprompt", handler);
-  }, []);
-
-  const handleInstallClick = async () => {
-    if (!deferredPrompt) return;
-    deferredPrompt.prompt();
-    const { outcome } = await deferredPrompt.userChoice;
-    if (outcome === "accepted") setDeferredPrompt(null);
-  };
-
-  // 2. Fetch Kanji Logic
-  const fetchDailyKanji = useCallback(async (level) => {
-    setLoadingKanji(true);
-    try {
-      const res = await fetch(`https://kanjiapi.dev/v1/kanji/${level}`);
-      const list = await res.json();
-      const day = Math.floor(
-        (new Date() - new Date(new Date().getFullYear(), 0, 0)) / 86400000
-      );
-      const pick = list[day % list.length];
-      const detRes = await fetch(`https://kanjiapi.dev/v1/kanji/${pick}`);
-      const det = await detRes.json();
-      setDailyKanji({
-        kanji: det.kanji,
-        read: det.kun_readings[0] || det.on_readings[0],
-        mean: det.meanings[0],
-        level: level === "grade-1" ? "N5" : level === "grade-2" ? "N4" : "N3",
-      });
-    } catch (e) {
-      console.error(e);
-    } finally {
-      setLoadingKanji(false);
-    }
-  }, []);
-
-  // 3. Main Data Fetching
-  useEffect(() => {
-    const getData = async () => {
+    const getDashboardData = async () => {
       const {
         data: { user },
       } = await supabase.auth.getUser();
-      if (!user) return router.push("/");
+
+      if (!user) return router.replace("/login");
       setUser(user);
 
-      const { data: progress } = await supabase
-        .from("user_progress")
-        .select("*")
-        .eq("user_id", user.id);
-      const { data: allLessons } = await supabase
-        .from("lessons")
-        .select("id, title");
+      try {
+        const [supabaseProgress, sanityContent] = await Promise.all([
+          supabase
+            .from("user_progress")
+            .select("*")
+            .eq("user_id", user.id)
+            .order("updated_at", { ascending: false }),
+          client.fetch(
+            `{
+              "allLessons": *[_type == "materi"] | order(orderIndex asc) { title, "slug": slug.current },
+              "allPackages": *[_type == "quizPackage" && (isTryout == true || isTryout == "true")] { 
+                "slug": slug.current, 
+                packageName, 
+                isTryout 
+              }
+            }`,
+          ),
+        ]);
 
-      if (progress && allLessons) {
-        const completedCount = progress.filter(
-          (p) => p.progress_type === "lesson" && p.is_completed
-        ).length;
-        const lastEntry = [...progress].sort(
-          (a, b) => new Date(b.updated_at) - new Date(a.updated_at)
-        )[0];
-        setStats({
-          completed: completedCount,
-          total: allLessons.length,
-          lastLesson:
-            allLessons.find((l) => l.id === lastEntry?.chapter_id) || null,
-        });
+        const progress = supabaseProgress.data || [];
+        const { allLessons, allPackages } = sanityContent;
+
+        if (allLessons.length > 0) {
+          const lastEntry = progress[0];
+          setStats({
+            completed: progress.filter((p) => p.is_completed).length,
+            total: allLessons.length,
+            lastLessonTitle: lastEntry
+              ? allLessons.find((l) => l.slug === lastEntry.chapter_id)?.title
+              : null,
+            resumeSlug: lastEntry ? lastEntry.chapter_id : allLessons[0].slug,
+          });
+        }
+        setPackages(allPackages || []);
+      } catch (err) {
+        console.error("Dashboard Fetch Error:", err);
+      } finally {
+        setLoading(false);
       }
-
-      const { data: qData } = await supabase
-        .from("questions")
-        .select("package_id")
-        .not("package_id", "is", null);
-      if (qData)
-        setPackages([...new Set(qData.map((item) => item.package_id))]);
     };
 
-    getData();
-    fetchDailyKanji(kanjiLevel);
-  }, [kanjiLevel, fetchDailyKanji, router]);
+    getDashboardData();
+  }, [router]);
 
-  if (!user) return null;
+  if (loading || !user)
+    return (
+      <div className="min-h-screen bg-[#1f242d] flex items-center justify-center font-bodyFont">
+        <p className="text-[#0ef] font-black animate-pulse tracking-widest uppercase text-[10px]">
+          INITIALIZING_DASHBOARD...
+        </p>
+      </div>
+    );
 
   return (
-    <div className="min-h-screen bg-[#F8FAFC] text-slate-900 font-sans pb-32">
-      {/* NAVBAR */}
-      <nav className="bg-white/70 backdrop-blur-md border-b border-slate-100 px-8 py-4 sticky top-0 z-50">
-        <div className="max-w-6xl mx-auto flex justify-between items-center">
-          <div className="flex items-center gap-2">
-            <div className="w-8 h-8 bg-blue-600 rounded-lg flex items-center justify-center text-white font-black text-[10px]">
-              NP
-            </div>
-            <h1 className="text-sm font-black tracking-widest uppercase">
-              NihongoPath
-            </h1>
-          </div>
-          <button
-            onClick={() =>
-              supabase.auth.signOut().then(() => router.push("/login"))
-            }
-            className="text-[10px] font-black text-slate-400 hover:text-red-500 transition uppercase"
-          >
-            Logout
-          </button>
-        </div>
-      </nav>
+    <div className="min-h-screen bg-[#1f242d] text-[#c4cfde] font-bodyFont pb-32 pt-32 relative overflow-x-hidden selection:bg-[#0ef] selection:text-[#1f242d]">
+      {/* BACKGROUND DECORATION - Z-index -1 agar di bawah konten */}
+      <div className="fixed top-[-10%] right-[-10%] w-[500px] h-[500px] bg-[#0ef]/5 rounded-full blur-[120px] pointer-events-none -z-10"></div>
+      <div className="fixed bottom-[-10%] left-[-10%] w-[500px] h-[500px] bg-[#0ef]/5 rounded-full blur-[120px] pointer-events-none -z-10"></div>
 
-      <main className="max-w-6xl mx-auto p-6 md:p-12">
-        {/* PWA INSTALL BANNER */}
-        {deferredPrompt && (
-          <div className="mb-8 p-6 bg-blue-600 rounded-[2rem] flex flex-col sm:flex-row justify-between items-center gap-4 text-white shadow-xl shadow-blue-200 animate-in slide-in-from-top-4">
-            <div className="text-center sm:text-left">
-              <p className="font-black italic text-lg leading-tight">
-                Pasang Aplikasi di HP?
-              </p>
-              <p className="text-[10px] font-bold text-blue-100 uppercase tracking-widest">
-                Akses lebih cepat & lancar
-              </p>
-            </div>
-            <button
-              onClick={handleInstallClick}
-              className="bg-white text-blue-600 text-[10px] font-black px-8 py-3 rounded-xl uppercase tracking-widest"
-            >
-              Instal Sekarang
-            </button>
-          </div>
-        )}
+      <main className="max-w-6xl mx-auto px-6 relative z-10">
+        {/* BREADCRUMBS - Memberikan navigasi cepat & hierarki */}
+        <nav className="mb-10 flex items-center gap-2 text-[9px] font-black uppercase tracking-[0.4em] text-[#c4cfde]/20">
+          <Link href="/" className="hover:text-[#0ef] transition-colors">
+            Terminal
+          </Link>
+          <span className="text-white/5">/</span>
+          <span className="text-[#0ef]">User_Dashboard</span>
+        </nav>
 
-        {/* HEADER & KANJI */}
-        <div className="flex flex-col lg:flex-row gap-10 mb-12 items-start">
-          <section className="flex-1 pt-4">
-            <p className="text-blue-600 font-black text-[10px] uppercase tracking-[0.3em] mb-3">
-              Selamat Datang 👋
-            </p>
-            <h1 className="text-6xl font-black tracking-tighter mb-6 italic leading-[0.9]">
-              Dashboard.
-            </h1>
-            <div className="flex items-center gap-3 p-4 bg-white border border-slate-100 rounded-2xl w-fit shadow-sm">
-              <div className="w-2 h-2 bg-green-500 rounded-full animate-pulse"></div>
-              <p className="text-xs font-bold text-slate-500">{user.email}</p>
-            </div>
-          </section>
-
-          <section className="w-full lg:w-80">
-            <div className="bg-white border border-slate-100 p-8 rounded-[2.5rem] shadow-xl shadow-slate-200/40 relative overflow-hidden group">
-              <div className="flex justify-between items-center mb-6 relative z-10">
-                <p className="text-[9px] font-black text-slate-300 uppercase tracking-widest">
-                  Daily Kanji
-                </p>
-                <div className="flex bg-slate-50 p-1 rounded-xl">
-                  {["grade-1", "grade-2", "grade-3"].map((lvl, i) => (
-                    <button
-                      key={lvl}
-                      onClick={() => setKanjiLevel(lvl)}
-                      className={`text-[8px] font-black px-3 py-1 rounded-lg transition-all ${
-                        kanjiLevel === lvl
-                          ? "bg-blue-600 text-white shadow-md"
-                          : "text-slate-400 hover:text-slate-600"
-                      }`}
-                    >
-                      N{5 - i}
-                    </button>
-                  ))}
-                </div>
-              </div>
-              {loadingKanji ? (
-                <div className="h-32 flex items-center justify-center animate-pulse text-slate-200 text-4xl font-black">
-                  ...
-                </div>
-              ) : (
-                <div className="text-center relative z-10">
-                  <h2 className="text-7xl font-black text-slate-900 mb-2">
-                    {dailyKanji?.kanji}
-                  </h2>
-                  <p className="text-[10px] font-black text-blue-600 mb-1 capitalize tracking-tight">
-                    {dailyKanji?.read}
-                  </p>
-                  <p className="text-sm font-bold text-slate-700 capitalize">
-                    {dailyKanji?.mean}
-                  </p>
-                </div>
-              )}
-              <div className="absolute -bottom-6 -left-6 text-slate-50 text-8xl font-black opacity-60 select-none">
-                {dailyKanji?.kanji}
-              </div>
-            </div>
-          </section>
-        </div>
-
-        {/* STATS */}
-        <div className="grid grid-cols-2 md:grid-cols-4 gap-4 mb-12">
-          <div className="bg-white p-7 rounded-[2.2rem] border border-slate-100 shadow-sm">
-            <p className="text-[9px] font-black text-slate-400 uppercase mb-1 tracking-widest">
-              Progress
-            </p>
-            <p className="text-3xl font-black text-slate-800">
-              {stats.completed}
-              <span className="text-slate-200 text-xl">/{stats.total}</span>
+        {/* HEADER SECTION */}
+        <header className="mb-12">
+          <p className="text-[#0ef] font-bold text-[10px] uppercase tracking-[0.5em] mb-4 font-titleFont">
+            SYSTEM_STATUS_STABLE
+          </p>
+          <h1 className="text-6xl md:text-8xl font-black tracking-tighter mb-6 italic text-white leading-[0.8] font-titleFont">
+            Okaerinasai.
+          </h1>
+          <div className="inline-flex items-center gap-3 px-5 py-2.5 bg-[#1e2024] shadow-shadowOne rounded-xl border border-white/5">
+            <div className="w-2 h-2 rounded-full bg-[#0ef] shadow-[0_0_10px_#0ef] animate-pulse"></div>
+            <p className="text-[10px] font-bold text-[#c4cfde] tracking-widest uppercase">
+              {user?.email?.split("@")[0]}{" "}
+              <span className="opacity-30 ml-2">// ID_LINKED</span>
             </p>
           </div>
-          <div className="bg-white p-7 rounded-[2.2rem] border border-slate-100 shadow-sm">
-            <p className="text-[9px] font-black text-slate-400 uppercase mb-1 tracking-widest">
-              Mastery
-            </p>
-            <p className="text-3xl font-black text-blue-600">
-              {stats.total > 0
-                ? Math.round((stats.completed / stats.total) * 100)
-                : 0}
-              %
-            </p>
-          </div>
-          <div className="md:col-span-2 bg-blue-600 p-7 rounded-[2.2rem] text-white flex flex-col justify-center relative overflow-hidden shadow-xl shadow-blue-200">
-            <div className="relative z-10">
-              <p className="text-[9px] font-black text-blue-200 uppercase mb-1 tracking-widest">
-                Lanjutkan
-              </p>
-              <h4 className="font-bold text-lg truncate">
-                {stats.lastLesson
-                  ? `Bab ${stats.lastLesson.id}: ${stats.lastLesson.title}`
-                  : "Siap belajar?"}
-              </h4>
-            </div>
-            <div className="absolute right-[-5%] bottom-[-30%] text-white/10 text-9xl font-black italic">
-              GO
-            </div>
-          </div>
-        </div>
+        </header>
 
-        {/* CARDS */}
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
-          <div className="bg-white border border-slate-100 p-10 rounded-[3rem] shadow-sm group hover:border-blue-200 transition-all">
-            <h3 className="text-[10px] font-black text-blue-600 uppercase tracking-widest mb-6">
-              Learning Path
-            </h3>
-            <h2 className="text-4xl font-black mb-4 tracking-tighter italic leading-none">
-              Kurikulum Dasar
+        {/* MAIN GRID */}
+        <div className="grid grid-cols-1 lg:grid-cols-3 gap-10 mb-12">
+          {/* DAILY KANJI CARD */}
+          <div className="lg:col-span-1 bg-[#1e2024] shadow-shadowOne p-10 rounded-[3rem] text-center flex flex-col justify-center min-h-[300px] border border-white/5 group relative overflow-hidden transition-all hover:border-[#0ef]/20">
+            <div className="absolute top-0 left-0 w-full h-1 bg-gradient-to-r from-transparent via-[#0ef]/40 to-transparent opacity-0 group-hover:opacity-100 transition-all"></div>
+            <p className="text-[9px] font-black uppercase tracking-[0.3em] mb-8 text-[#c4cfde]/20 font-titleFont group-hover:text-[#0ef] transition-colors">
+              Daily Kanji Focus
+            </p>
+            <h2 className="text-9xl font-black text-[#0ef] mb-4 drop-shadow-[0_0_20px_rgba(0,255,239,0.3)] font-titleFont select-none">
+              {dailyKanji.kanji}
             </h2>
-            <p className="text-slate-400 text-sm font-medium mb-10 leading-relaxed">
-              Materi tata bahasa dan kosakata persiapan JFT/JLPT.
+            <div className="space-y-1">
+              <p className="text-sm font-bold text-white uppercase tracking-tighter italic">
+                {dailyKanji.reading}
+              </p>
+              <p className="text-[10px] text-[#c4cfde]/40 font-medium uppercase tracking-widest">
+                {dailyKanji.meaning}
+              </p>
+            </div>
+          </div>
+
+          {/* STATS PROGRESS CARD */}
+          <div className="lg:col-span-2 grid grid-cols-1 md:grid-cols-2 gap-8">
+            <div className="bg-[#1e2024] shadow-shadowOne p-10 rounded-[3rem] flex flex-col justify-center items-center border border-white/5">
+              <p className="text-[9px] font-black text-[#c4cfde]/20 uppercase mb-6 tracking-[0.3em] font-titleFont">
+                Mastery Progress
+              </p>
+              <div className="relative">
+                <p className="text-8xl font-black text-white italic leading-none font-titleFont">
+                  {stats.total > 0
+                    ? Math.round((stats.completed / stats.total) * 100)
+                    : 0}
+                  <span className="text-[#0ef] text-4xl not-italic ml-2">
+                    %
+                  </span>
+                </p>
+              </div>
+              <p className="text-[10px] mt-8 text-[#c4cfde]/60 font-black uppercase tracking-[0.2em]">
+                {stats.completed} <span className="text-[#0ef]">/</span>{" "}
+                {stats.total} Modules Clear
+              </p>
+            </div>
+
+            {/* QUICK RESUME CARD */}
+            <div className="bg-[#1e2024] shadow-shadowOne p-10 rounded-[3rem] flex flex-col justify-center gap-8 border border-white/5 relative overflow-hidden">
+              <div className="relative z-10">
+                <Link
+                  href={`/materi/${stats.resumeSlug || ""}`}
+                  className="block w-full py-6 text-center text-[11px] font-black tracking-[0.3em] bg-[#1f242d] text-[#0ef] border border-[#0ef]/20 rounded-2xl hover:bg-[#0ef] hover:text-[#1f242d] hover:shadow-[0_0_30px_rgba(0,255,239,0.4)] transition-all duration-500 uppercase"
+                >
+                  Resume Journey →
+                </Link>
+                <div className="mt-6 px-2">
+                  <p className="text-[8px] font-black text-[#c4cfde]/20 uppercase mb-2 tracking-widest">
+                    Last Synced Lesson:
+                  </p>
+                  <p className="text-xs font-bold text-white truncate italic uppercase tracking-tight">
+                    {stats.lastLessonTitle || "Ready to start?"}
+                  </p>
+                </div>
+              </div>
+              <div className="absolute -right-4 -bottom-4 text-white/5 text-8xl font-black italic select-none">
+                進
+              </div>
+            </div>
+          </div>
+        </div>
+
+        {/* NAVIGATION CARDS */}
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-10">
+          {/* CURRICULUM */}
+          <div className="bg-[#1e2024] shadow-shadowOne p-12 group rounded-[3rem] border border-white/5 hover:border-[#0ef]/20 transition-all duration-500">
+            <h2 className="text-4xl font-black mb-4 italic text-white uppercase tracking-tighter font-titleFont">
+              Curriculum
+            </h2>
+            <p className="text-[#c4cfde]/50 text-sm mb-10 leading-relaxed max-w-xs">
+              Database materi tata bahasa dan kosa kata N5 - N1 yang terstruktur
+              secara sistematis.
             </p>
-            <Link href="/materi">
-              <button className="w-full bg-slate-900 text-white font-black py-5 rounded-2xl hover:bg-blue-600 transition-all">
-                BUKA MATERI →
-              </button>
+            <Link
+              href="/materi"
+              className="inline-flex items-center gap-4 text-[#0ef] text-[10px] font-black tracking-[0.3em] uppercase group-hover:gap-8 transition-all duration-500"
+            >
+              Access Database{" "}
+              <span className="h-[1px] w-12 bg-[#0ef] shadow-[0_0_8px_#0ef]"></span>
             </Link>
           </div>
 
-          <div className="bg-slate-900 p-10 rounded-[3rem] text-white shadow-2xl relative overflow-hidden">
-            <h3 className="text-[10px] font-black text-white/30 uppercase tracking-widest mb-6">
-              Assessment
-            </h3>
-            <h2 className="text-4xl font-black mb-4 tracking-tighter italic leading-none">
-              Simulasi Ujian
-            </h2>
-            <p className="text-slate-400 text-sm font-medium mb-10 leading-relaxed">
-              Uji kemampuanmu dengan sistem timer real-time.
-            </p>
-            <button
-              onClick={() => setShowModal(true)}
-              className="w-full bg-blue-600 text-white font-black py-5 rounded-2xl hover:bg-white hover:text-slate-900 transition-all"
-            >
-              MULAI TRY OUT
-            </button>
+          {/* SIMULATION */}
+          <div className="bg-[#1e2024] shadow-shadowOne p-12 rounded-[3rem] relative overflow-hidden group border border-white/5 hover:border-[#0ef]/20 transition-all duration-500">
+            <div className="relative z-10">
+              <h2 className="text-4xl font-black mb-4 italic text-[#0ef] uppercase tracking-tighter font-titleFont">
+                Simulation
+              </h2>
+              <p className="text-[#c4cfde]/50 text-sm mb-10 leading-relaxed max-w-xs">
+                Uji kemampuanmu dengan simulasi ujian JLPT standar internasional
+                secara gratis.
+              </p>
+              <button
+                onClick={() => setShowModal(true)}
+                className="px-10 py-5 bg-[#0ef] text-[#1f242d] font-black rounded-2xl hover:shadow-[0_0_40px_rgba(0,255,239,0.5)] transition-all text-[10px] tracking-[0.3em] uppercase active:scale-95"
+              >
+                Launch Simulation
+              </button>
+            </div>
+            <div className="absolute -right-6 -bottom-8 text-white/[0.03] text-[12rem] font-black italic select-none group-hover:text-[#0ef]/5 transition-colors duration-700">
+              試験
+            </div>
           </div>
         </div>
       </main>
 
-      {/* STICKY SUPPORT */}
-      <div className="fixed bottom-8 left-0 right-0 z-40 flex justify-center px-6 pointer-events-none">
-        <div className="bg-slate-900/95 backdrop-blur-xl border border-white/10 p-2 pl-6 rounded-full shadow-2xl flex items-center gap-6 pointer-events-auto">
-          <div className="flex items-center gap-2">
-            <div className="h-2 w-2 rounded-full bg-blue-500 animate-pulse"></div>
-            <p className="text-[10px] font-black text-white uppercase tracking-widest hidden sm:block">
-              Support Project
-            </p>
-          </div>
-          <Link href="/support">
-            <button className="bg-white text-slate-900 text-[10px] font-black px-5 py-3 rounded-full hover:bg-blue-600 hover:text-white transition-all">
-              DONASI 🍵
-            </button>
-          </Link>
-        </div>
+      {/* FLOATING SUPPORT ACTION */}
+      <div className="fixed bottom-10 left-0 right-0 z-40 flex justify-center px-6">
+        <Link
+          href="/support"
+          className="bg-[#1e2024]/80 backdrop-blur-xl shadow-shadowOne p-5 px-12 rounded-full border border-white/5 flex items-center gap-6 hover:scale-105 transition-all group"
+        >
+          <span className="text-[#0ef] text-xl group-hover:animate-bounce">
+            ❤️
+          </span>
+          <p className="text-[10px] font-black text-white uppercase tracking-[0.4em] font-titleFont">
+            Keep NihongoPath Free
+          </p>
+        </Link>
       </div>
 
-      {/* MODAL */}
+      <footer className="bg-[#1e2024] border-t border-white/5 pt-20 pb-10">
+        <div className="max-w-6xl mx-auto px-6">
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-12 mb-16">
+            {/* Brand Section */}
+            <div className="space-y-4">
+              <h2 className="text-2xl font-black italic text-white tracking-tighter">
+                NIHONGO<span className="text-[#0ef]">PATH.</span>
+              </h2>
+              <p className="text-[11px] text-[#c4cfde]/40 uppercase tracking-widest leading-relaxed">
+                Platform pembelajaran bahasa Jepang mandiri yang gratis dan
+                didukung oleh komunitas.
+              </p>
+            </div>
+
+            {/* Quick Links */}
+            <div className="grid grid-cols-2 gap-4">
+              <div className="flex flex-col gap-3">
+                <h4 className="text-[#0ef] text-[10px] font-black uppercase tracking-widest mb-2">
+                  Explore
+                </h4>
+                <Link
+                  href="/materi"
+                  className="text-xs hover:text-white transition-colors"
+                >
+                  Curriculum
+                </Link>
+                <Link
+                  href="/tryout"
+                  className="text-xs hover:text-white transition-colors"
+                >
+                  Simulation
+                </Link>
+              </div>
+              <div className="flex flex-col gap-3">
+                <h4 className="text-[#0ef] text-[10px] font-black uppercase tracking-widest mb-2">
+                  Support
+                </h4>
+                <Link
+                  href="/support"
+                  className="text-xs hover:text-white transition-colors"
+                >
+                  Donate
+                </Link>
+                <Link
+                  href="/community"
+                  className="text-xs hover:text-white transition-colors"
+                >
+                  Discord
+                </Link>
+              </div>
+            </div>
+
+            {/* Status Section */}
+            <div className="bg-[#1f242d] p-6 rounded-2xl border border-white/5 shadow-shadowOne">
+              <p className="text-[9px] font-black text-[#c4cfde]/20 uppercase tracking-[0.3em] mb-2">
+                System Status
+              </p>
+              <div className="flex items-center gap-3">
+                <div className="w-2 h-2 rounded-full bg-[#0ef] animate-pulse"></div>
+                <p className="text-[10px] font-bold text-white uppercase tracking-widest">
+                  Operational // 2026
+                </p>
+              </div>
+            </div>
+          </div>
+
+          <div className="flex flex-col md:flex-row justify-between items-center pt-8 border-t border-white/5 gap-4">
+            <p className="text-[9px] font-bold text-[#c4cfde]/20 uppercase tracking-widest">
+              © 2026 NIHONGOPATH. ALL RIGHTS RESERVED.
+            </p>
+            <div className="flex gap-8">
+              <span className="text-[9px] font-bold text-[#c4cfde]/20 uppercase tracking-[0.2em] hover:text-[#0ef] cursor-pointer transition-colors">
+                Privacy
+              </span>
+              <span className="text-[9px] font-bold text-[#c4cfde]/20 uppercase tracking-[0.2em] hover:text-[#0ef] cursor-pointer transition-colors">
+                Terms
+              </span>
+            </div>
+          </div>
+        </div>
+      </footer>
+
+      {/* --- MODAL SIMULASI --- */}
       {showModal && (
-        <div className="fixed inset-0 z-[100] flex items-center justify-center p-6 bg-slate-900/40 backdrop-blur-sm animate-in fade-in">
-          <div className="bg-white w-full max-w-md rounded-[3rem] p-10 shadow-2xl animate-in zoom-in duration-300 relative">
-            <div className="flex justify-between items-center mb-8">
-              <h3 className="text-2xl font-black italic tracking-tighter">
-                Pilih Paket.
-              </h3>
+        <div className="fixed inset-0 z-[100] flex items-center justify-center p-6 transition-all">
+          <div
+            className="absolute inset-0 bg-[#1f242d]/90 backdrop-blur-md animate-in fade-in duration-300"
+            onClick={() => setShowModal(false)}
+          />
+          <div className="relative w-full max-w-xl bg-[#1e2024] shadow-shadowOne rounded-[3rem] border border-white/10 overflow-hidden animate-in zoom-in-95 duration-300">
+            <div className="p-10 border-b border-white/5 flex justify-between items-center bg-gradient-to-r from-transparent to-white/[0.02]">
+              <div>
+                <p className="text-[#0ef] font-black text-[9px] uppercase tracking-[0.5em] mb-2">
+                  Available Sessions
+                </p>
+                <h2 className="text-3xl font-black italic text-white font-titleFont tracking-tighter uppercase">
+                  Tryout Terminal
+                </h2>
+              </div>
               <button
                 onClick={() => setShowModal(false)}
-                className="text-slate-300 hover:text-slate-900 text-3xl font-light"
+                className="w-12 h-12 rounded-2xl bg-[#1f242d] shadow-shadowOne flex items-center justify-center text-[#c4cfde] hover:text-[#0ef] hover:rotate-90 transition-all duration-300 border border-white/5"
               >
-                ×
+                ✕
               </button>
             </div>
-            <div className="space-y-3">
-              {packages.map((pkg) => (
-                <button
-                  key={pkg}
-                  onClick={() => {
-                    setShowModal(false);
-                    router.push(`/tryout/${encodeURIComponent(pkg)}`);
-                  }}
-                  className="w-full p-6 border border-slate-50 bg-slate-50 rounded-[2rem] flex justify-between items-center hover:border-blue-600 hover:bg-blue-50 transition-all group"
-                >
-                  <div className="text-left">
-                    <p className="font-black text-slate-800">Paket #{pkg}</p>
-                    <p className="text-[9px] text-slate-400 font-black uppercase tracking-widest mt-1">
-                      60 Mins • Standard
-                    </p>
-                  </div>
-                  <span className="w-10 h-10 rounded-full bg-white flex items-center justify-center text-blue-600 shadow-sm group-hover:bg-blue-600 group-hover:text-white transition-all">
-                    →
-                  </span>
-                </button>
-              ))}
+            <div className="p-10 space-y-5 max-h-[450px] overflow-y-auto custom-scrollbar">
+              {packages.length > 0 ? (
+                packages.map((pkg) => (
+                  <Link
+                    key={pkg.slug}
+                    href={`/tryout/${pkg.slug}`}
+                    className="flex items-center justify-between p-8 bg-[#1f242d] border border-white/5 hover:border-[#0ef]/40 rounded-3xl group transition-all shadow-shadowOne"
+                  >
+                    <div className="flex flex-col gap-2">
+                      <div className="flex items-center gap-2">
+                        <span className="w-2 h-2 rounded-full bg-[#0ef] shadow-[0_0_8px_#0ef]"></span>
+                        <span className="text-[9px] font-black text-[#0ef] uppercase tracking-widest opacity-60">
+                          Status: Active
+                        </span>
+                      </div>
+                      <span className="text-2xl font-black text-white group-hover:text-[#0ef] transition-colors font-titleFont italic uppercase tracking-tighter">
+                        {pkg.packageName}
+                      </span>
+                    </div>
+                    <div className="flex items-center gap-4">
+                      <span className="text-[10px] font-black text-[#c4cfde]/20 group-hover:text-[#0ef] transition-all tracking-widest uppercase">
+                        Start
+                      </span>
+                      <div className="w-10 h-10 rounded-full border border-white/10 flex items-center justify-center group-hover:bg-[#0ef] transition-all">
+                        <span className="text-white group-hover:text-[#1f242d]">
+                          →
+                        </span>
+                      </div>
+                    </div>
+                  </Link>
+                ))
+              ) : (
+                <div className="text-center py-20 opacity-20 text-[10px] font-black uppercase tracking-[0.5em]">
+                  No Terminal Available
+                </div>
+              )}
+            </div>
+            <div className="p-8 bg-black/30 text-center border-t border-white/5">
+              <p className="text-[9px] font-bold text-[#c4cfde]/40 uppercase tracking-[0.3em] flex items-center justify-center gap-3">
+                <span className="text-red-500">⚠️</span> Timer will be initiated
+                upon entry
+              </p>
             </div>
           </div>
         </div>

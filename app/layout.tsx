@@ -1,43 +1,23 @@
-import type { Metadata, Viewport } from "next";
 import { Inter } from "next/font/google";
 import "./globals.css";
-import { ReactNode } from "react";
+import Navbar from "@/components/Navbar";
 
 const inter = Inter({ subsets: ["latin"] });
 
-// Konfigurasi Metadata untuk SEO dan PWA
-export const metadata: Metadata = {
+export const metadata = {
   title: "NihongoPath | Belajar Bahasa Jepang Gratis",
-  description:
-    "Platform belajar bahasa Jepang mandiri dengan kurikulum terstruktur dan simulasi kuis JLPT.",
-  manifest: "/manifest.json",
-  icons: {
-    apple: "/icons/icon-192x192.png",
-  },
+  description: "Platform belajar mandiri dengan kurikulum terstruktur.",
 };
 
-// Konfigurasi Viewport (Penting agar UI tidak zoom otomatis di mobile)
-export const viewport: Viewport = {
-  themeColor: "#2563eb",
-  width: "device-width",
-  initialScale: 1,
-  maximumScale: 1,
-};
-
-// Definisi Interface untuk Props
-interface RootLayoutProps {
-  children: ReactNode;
-}
-
-export default function RootLayout({ children }: RootLayoutProps) {
+export default function RootLayout({ children }) {
   return (
     <html lang="id">
-      <head>
-        {/* Kamu bisa menambahkan script atau link font tambahan di sini jika perlu */}
-      </head>
-      <body className={`${inter.className} antialiased bg-white`}>
-        {/* Pembungkus Utama */}
-        <div className="min-h-screen">{children}</div>
+      <body
+        className={`${inter.className} antialiased bg-[#1f242d] text-[#c4cfde]`}
+      >
+        <Navbar />
+        {/* Main tanpa padding-top global agar Hero Landing Page bisa presisi */}
+        <main className="min-h-screen">{children}</main>
       </body>
     </html>
   );

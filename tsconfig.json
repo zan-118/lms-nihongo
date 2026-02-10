@@ -30,7 +30,16 @@
     ".next/dev/types/**/*.ts",
     "**/*.mts",
     "lib/supabase.js",
-    "app/materi/[slug]/page.js"
+    "app/materi/[slug]/page.js",
+    "sanity.config.js",
+    "sanity.cli.js",
+    "sanity/structure.js",
+    "sanity/env.js",
+    "sanity/schemaTypes/question.js",
+    "sanity/schemaTypes/index.js",
+    "sanity/lib/live.js",
+    "sanity/lib/image.js",
+    "sanity/lib/client.js"
   ],
   "exclude": ["node_modules"]
 }
