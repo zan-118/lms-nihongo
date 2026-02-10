@@ -33,13 +33,13 @@
     "app/materi/[slug]/page.js",
     "sanity.config.js",
     "sanity.cli.js",
-    "sanity/structure.js",
-    "sanity/env.js",
+    "sanity/structure.ts",
+    "sanity/env.ts",
     "sanity/schemaTypes/question.js",
     "sanity/schemaTypes/index.js",
-    "sanity/lib/live.js",
-    "sanity/lib/image.js",
-    "sanity/lib/client.js"
+    "sanity/lib/live.ts",
+    "sanity/lib/image.ts",
+    "sanity/lib/client.ts"
   ],
   "exclude": ["node_modules"]
 }
