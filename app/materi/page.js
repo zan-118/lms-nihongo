@@ -1,8 +1,12 @@
 import { client } from "@/sanity/lib/client";
 import Link from "next/link";
 
+// PAKSA NEXT.JS UNTUK MENGAMBIL DATA TERBARU (NO CACHE)
+export const revalidate = 0;
+
 export default async function MateriPage() {
   // Query mengambil data materi dari Sanity
+  // Tambahkan filter status agar hanya yang sudah di-publish muncul (opsional)
   const query = `*[_type == "materi"] | order(orderIndex asc) {
     title,
     "slug": slug.current,
@@ -10,13 +14,12 @@ export default async function MateriPage() {
     orderIndex
   }`;
 
-  const lessons = await client.fetch(query);
+  // Gunakan cache: 'no-store' untuk keamanan ekstra di level fetch
+  const lessons = await client.fetch(query, {}, { cache: "no-store" });
 
   return (
     <div className="min-h-screen bg-[#1f242d] py-20 px-8 font-bodyFont">
       <div className="max-w-6xl mx-auto">
-        {/* BREADCRUMBS */}
-
         {/* HEADER */}
         <header className="mb-20">
           <p className="text-[#0ef] font-bold text-[10px] uppercase tracking-[0.5em] mb-4 font-titleFont">
@@ -37,9 +40,8 @@ export default async function MateriPage() {
               className="group"
             >
               <div className="bg-gradient-to-br from-[#1e2024] to-[#23272b] shadow-shadowOne p-10 h-full border border-white/5 rounded-[2rem] transition-all duration-500 group-hover:border-[#0ef]/40 group-hover:-translate-y-3 relative overflow-hidden">
-                {/* Decorative Background Icon */}
                 <span className="absolute -right-4 -bottom-4 text-white/[0.03] text-7xl font-black italic group-hover:text-[#0ef]/5 transition-colors">
-                  {lesson.orderIndex || "01"}
+                  {(lesson.orderIndex || 0).toString().padStart(2, "0")}
                 </span>
 
                 <span className="text-[#0ef] font-bold text-[9px] uppercase tracking-[0.2em] block mb-6 font-titleFont">
@@ -59,10 +61,10 @@ export default async function MateriPage() {
           ))}
         </div>
 
-        {lessons.length === 0 && (
+        {(!lessons || lessons.length === 0) && (
           <div className="text-center py-20 bg-[#1e2024] rounded-[2rem] shadow-shadowOne border border-white/5">
             <p className="text-[#c4cfde]/40 italic font-medium tracking-widest uppercase text-xs">
-              Materi sedang disinkronisasi...
+              Materi sedang disinkronisasi atau belum dipublikasikan...
             </p>
           </div>
         )}
