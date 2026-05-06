@@ -115,6 +115,7 @@ export default function RootLayout({
   return (
     <html lang="id" suppressHydrationWarning>
       <body
+        suppressHydrationWarning
         className={cn(
           inter.variable,
           notoJsonJP.variable,

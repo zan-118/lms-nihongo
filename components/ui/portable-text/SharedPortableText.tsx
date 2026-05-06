@@ -85,7 +85,7 @@ export const sharedPtComponents: PortableTextComponents = {
       const { icon: Icon, color, bg, border } = config[value.type] || config.info;
 
       return (
-        <div className={`my-10 md:my-14 p-6 md:p-10 rounded-[2.5rem] border ${border} ${bg} backdrop-blur-xl relative overflow-hidden group shadow-2xl transition-all duration-500 hover:scale-[1.01]`}>
+        <div className={`my-10 md:my-14 p-6 md:p-10 rounded-[2.5rem] border ${border} ${bg.replace("/5", "/20")} bg-card/80 backdrop-blur-xl relative overflow-hidden group shadow-2xl transition-all duration-500 hover:scale-[1.01]`}>
           <div className={`absolute top-0 left-0 w-1.5 h-full ${color.replace("text", "bg")} opacity-50`} />
           <div className="flex items-start gap-6 relative z-10">
             <div className={`p-4 rounded-2xl ${bg} border ${border} ${color} shadow-lg group-hover:rotate-12 transition-transform`}>
@@ -108,7 +108,7 @@ export const sharedPtComponents: PortableTextComponents = {
       
       return (
         <div className="my-10 md:my-16 group">
-          <div className="p-8 md:p-12 rounded-[3rem] bg-white/[0.02] backdrop-blur-3xl border border-white/5 shadow-2xl relative overflow-hidden transition-all duration-500 hover:border-primary/40 hover:bg-white/[0.04]">
+          <div className="p-8 md:p-12 rounded-[3rem] bg-card/80 backdrop-blur-3xl border border-white/5 shadow-2xl relative overflow-hidden transition-all duration-500 hover:border-primary/40 hover:bg-card/90">
             {/* Background Glow */}
             <div className="absolute top-0 right-0 w-48 h-48 bg-primary/5 blur-[80px] rounded-full -mr-24 -mt-24 group-hover:bg-primary/10 transition-all" />
             
@@ -138,6 +138,48 @@ export const sharedPtComponents: PortableTextComponents = {
                     <TTSReader text={value.jp} minimal={true} />
                   </div>
                </div>
+            </div>
+          </div>
+        </div>
+      );
+    },
+    exampleSentence: ({ value }: { value: { jp: string; furigana: string; id: string } }) => {
+      const parts = splitFurigana(value.jp, value.furigana);
+      
+      return (
+        <div className="my-10 md:my-14 p-8 md:p-10 rounded-[2.5rem] bg-card/80 backdrop-blur-xl border border-white/5 relative overflow-hidden group shadow-2xl transition-all duration-500 hover:scale-[1.01]">
+          {/* Subtle Accent Glow */}
+          <div className="absolute top-0 left-0 w-full h-1 bg-gradient-to-r from-primary/30 to-transparent" />
+          
+          <div className="flex flex-col gap-8 relative z-10">
+            <div>
+              <span className="text-[10px] font-black uppercase tracking-[0.4em] text-primary mb-4 block opacity-60">
+                Contoh Kalimat
+              </span>
+              <div className="flex flex-wrap items-end gap-x-1.5 gap-y-4">
+                {parts.map((part, i) => (
+                  <div key={i} className="flex flex-col items-center">
+                    {part.furi && (
+                      <span className="text-[10px] md:text-sm font-black text-primary/60 mb-1 tracking-wider">
+                        {part.furi}
+                      </span>
+                    )}
+                    <span className="text-xl md:text-3xl font-black text-foreground/90 group-hover:text-foreground transition-colors">
+                      {part.text}
+                    </span>
+                  </div>
+                ))}
+              </div>
+            </div>
+
+            <div className="flex items-start gap-4 py-4 px-6 rounded-2xl bg-white/[0.03] border-l-4 border-primary/40">
+              <p className="text-sm md:text-lg font-medium text-muted-foreground/90 italic leading-relaxed">
+                &quot;{value.id}&quot;
+              </p>
+            </div>
+
+            <div className="flex justify-end">
+              <TTSReader text={value.jp} minimal={true} />
             </div>
           </div>
         </div>
