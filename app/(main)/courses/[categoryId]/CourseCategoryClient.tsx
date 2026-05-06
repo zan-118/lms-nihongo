@@ -166,7 +166,7 @@ export default function CourseCategoryClient({
                 </Card>
               </Link>
 
-              <Link href={`/courses/${categoryId}/kanji`} className="group flex flex-col h-full">
+              <Link href={`/tools/flashcards?category=${categoryId}`} className="group flex flex-col h-full">
                 <Card className="p-6 md:p-8 bg-card border border-border rounded-2xl hover:border-purple-500/40 hover:bg-purple-500/[0.02] transition-all duration-300 flex flex-col items-center text-center gap-5 h-full cursor-pointer relative overflow-hidden group hover:shadow-xl">
                   <div className="w-12 h-12 md:w-14 md:h-14 bg-muted border border-border rounded-xl text-purple-500 dark:text-purple-400 flex items-center justify-center group-hover:bg-purple-500 group-hover:text-white transition-all duration-300 shadow-inner relative z-10">
                     <PenTool size={24} />
@@ -182,7 +182,7 @@ export default function CourseCategoryClient({
                 </Card>
               </Link>
 
-              <Link href={`/courses/${categoryId}/survival`} className="group flex flex-col h-full">
+              <Link href={`/tools/flashcards?category=${categoryId}`} className="group flex flex-col h-full">
                 <Card className="p-6 md:p-8 bg-card border border-border rounded-2xl hover:border-red-500/40 hover:bg-red-500/[0.02] transition-all duration-300 flex flex-col items-center text-center gap-5 h-full cursor-pointer relative overflow-hidden group hover:shadow-xl">
                   <div className="w-12 h-12 md:w-14 md:h-14 bg-muted border border-border rounded-xl text-red-500 flex items-center justify-center group-hover:bg-red-500 group-hover:text-white transition-all duration-300 shadow-inner relative z-10">
                     <Flame size={24} />

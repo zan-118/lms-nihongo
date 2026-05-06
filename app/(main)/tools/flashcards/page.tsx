@@ -1,7 +1,7 @@
 /**
  * @file app/(main)/tools/flashcards/page.tsx
  * @description Pusat Latihan Flashcard (General Flashcards).
- * Memungkinkan user memilih level atau otomatis masuk ke kategori tertentu (via URL slug).
+ * Terdiri dari 3 langkah: Pilih Kategori -> Pilih Mode Latihan -> Sesi Master.
  * @module FlashcardsPage
  */
 
@@ -18,7 +18,9 @@ import {
   ChevronLeft, 
   Layers,
   ArrowRight,
-  BookOpen
+  BookOpen,
+  Flame,
+  PenTool
 } from "lucide-react";
 import FlashcardMaster from "@/components/features/flashcards/master/FlashcardMaster";
 import { MasterCardData } from "@/components/features/flashcards/master/types";
@@ -33,19 +35,25 @@ interface Category {
   slug: { current: string };
 }
 
+type ModeLatihan = "vocab" | "kanji" | "survival";
+
 function FlashcardsContent() {
   const router = useRouter();
   const searchParams = useSearchParams();
   const categorySlug = searchParams.get("category");
 
+  // State Step Alur
   const [categories, setCategories] = useState<Category[]>([]);
   const [selectedCategory, setSelectedCategory] = useState<string | "all" | null>(null);
+  const [selectedMode, setSelectedMode] = useState<ModeLatihan | null>(null);
+  
+  // State Data
   const [cards, setCards] = useState<MasterCardData[]>([]);
   const [isLoading, setIsLoading] = useState(true);
   const [isFetchingCards, setIsFetchingCards] = useState(false);
   const [hasAutoFetched, setHasAutoFetched] = useState(false);
 
-  // Mengambil daftar kategori untuk menu
+  // Mengambil daftar kategori untuk Layar 1
   useEffect(() => {
     const fetchCategories = async () => {
       try {
@@ -62,60 +70,79 @@ function FlashcardsContent() {
     fetchCategories();
   }, []);
 
-  // Memulai sesi berdasarkan id atau slug (slug dari URL param)
-  const startSession = async (idOrSlug: string) => {
+  // Trigger otomatis jika masuk via URL ?category=slug (Bypass Layar 1)
+  useEffect(() => {
+    if (categorySlug && !hasAutoFetched) {
+      setHasAutoFetched(true);
+      setSelectedCategory(categorySlug);
+    }
+  }, [categorySlug, hasAutoFetched]);
+
+  // Fungsi Fetch Cards dan Eksekusi Layar 3
+  const fetchCardsAndStart = async (mode: ModeLatihan) => {
     setIsFetchingCards(true);
-    setSelectedCategory(idOrSlug);
+    setSelectedMode(mode);
     try {
       let query = "";
       let params = {};
+      const idOrSlug = selectedCategory;
 
       if (idOrSlug === "all") {
-        query = `{
-          "vocab": *[_type == "vocab" && showInFlashcard != false][0...50] { _id, word, meaning, romaji, furigana },
-          "verbs": *[_type == "verb_dictionary" && showInFlashcard != false][0...50] { _id, "word": jisho, meaning, romaji, furigana }
-        }`;
+        if (mode === "kanji") {
+          query = `*[_type == "kanji" && showInFlashcard != false][0...50] { _id, "word": character, meaning, "details": { onyomi, kunyomi }, examples }`;
+        } else {
+          query = `{
+            "vocab": *[_type == "vocab" && showInFlashcard != false][0...50] { _id, word, meaning, romaji, furigana },
+            "verbs": *[_type == "verb_dictionary" && showInFlashcard != false][0...50] { _id, "word": jisho, meaning, romaji, furigana }
+          }`;
+        }
       } else {
-        query = `{
-          "vocab": *[_type == "vocab" && showInFlashcard != false && (course_category->_id == $id || course_category->slug.current == $id)] { _id, word, meaning, romaji, furigana },
-          "verbs": *[_type == "verb_dictionary" && showInFlashcard != false && (course_category->_id == $id || course_category->slug.current == $id)] { _id, "word": jisho, meaning, romaji, furigana }
-        }`;
         params = { id: idOrSlug };
+        if (mode === "kanji") {
+          query = `*[_type == "kanji" && showInFlashcard != false && (course_category->_id == $id || course_category->slug.current == $id)] { _id, "word": character, meaning, "details": { onyomi, kunyomi }, examples }`;
+        } else {
+          query = `{
+            "vocab": *[_type == "vocab" && showInFlashcard != false && (course_category->_id == $id || course_category->slug.current == $id)] { _id, word, meaning, romaji, furigana },
+            "verbs": *[_type == "verb_dictionary" && showInFlashcard != false && (course_category->_id == $id || course_category->slug.current == $id)] { _id, "word": jisho, meaning, romaji, furigana }
+          }`;
+        }
       }
 
-      const data = await client.fetch(query, params);
-      const combined = [...(data.vocab || []), ...(data.verbs || [])].sort(() => Math.random() - 0.5);
+      const rawData = await client.fetch(query, params);
+      let combined = [];
+      if (mode === "kanji") {
+         combined = rawData;
+      } else {
+         combined = [...(rawData.vocab || []), ...(rawData.verbs || [])];
+      }
+      
+      combined = combined.sort(() => Math.random() - 0.5);
       
       if (combined.length === 0) {
-        toast.error("Moushiwake arimasen - Data kartu untuk kategori ini belum tersedia.");
-        setSelectedCategory(null);
-        if (categorySlug) {
-           router.push("/courses/" + categorySlug);
-        }
+        toast.error("Moushiwake arimasen - Data kartu untuk mode ini belum tersedia.");
+        setSelectedMode(null); // Kembali ke Layar 2 (Pilih Mode) jika kosong
       } else {
         setCards(combined);
       }
     } catch (error) {
       console.error("Gagal memuat kartu:", error);
       toast.error("Terjadi kendala saat memuat kartu.");
-      setSelectedCategory(null);
-      if (categorySlug) {
-         router.push("/courses/" + categorySlug);
-      }
+      setSelectedMode(null);
     } finally {
       setIsFetchingCards(false);
     }
   };
 
-  // Trigger otomatis jika masuk via URL ?category=slug
-  useEffect(() => {
-    if (categorySlug && !hasAutoFetched) {
-      setHasAutoFetched(true);
-      startSession(categorySlug);
+  // Navigasi Kembali Dinamis untuk Layar 2 (Pilih Mode)
+  const handleBackFromMode = () => {
+    if (categorySlug) {
+      router.push(`/courses/${categorySlug}`);
+    } else {
+      setSelectedCategory(null);
     }
-  }, [categorySlug, hasAutoFetched]);
+  };
 
-  // Status Loading (Kategori)
+  // Status Loading (Awal)
   if (isLoading && !categorySlug) {
     return (
       <div className="flex-1 flex flex-col items-center justify-center px-4">
@@ -127,8 +154,8 @@ function FlashcardsContent() {
     );
   }
 
-  // Tampilan Loading Kartu (saat Auto-Fetch atau manual fetch)
-  if (isFetchingCards || (categorySlug && !selectedCategory)) {
+  // Tampilan Loading Kartu (Transisi ke Layar 3)
+  if (isFetchingCards) {
     return (
       <div className="flex-1 flex flex-col items-center justify-center px-4">
         <RotateCw className="text-primary animate-spin mb-4" size={32} />
@@ -143,7 +170,7 @@ function FlashcardsContent() {
     <AnimatePresence mode="wait">
       {!selectedCategory ? (
         // ======================
-        // MODE SELEKSI KATEGORI
+        // LAYAR 1: SELEKSI KATEGORI
         // ======================
         <motion.div 
           key="selection"
@@ -163,14 +190,13 @@ function FlashcardsContent() {
               Pilih <span className="text-primary">Materi</span>
             </h1>
             <p className="text-muted-foreground text-sm mt-2 max-w-xl font-medium leading-relaxed">
-              Pilih level atau kategori yang ingin kamu latih menggunakan flashcard. 
-              Latihan berulang adalah kunci penguasaan kosakata yang cepat.
+              Pilih level atau kategori yang ingin kamu latih.
             </p>
           </header>
 
           <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 md:gap-6">
             <Card 
-              onClick={() => startSession("all")}
+              onClick={() => setSelectedCategory("all")}
               className="group p-6 rounded-3xl border border-primary/20 bg-primary/5 hover:border-primary/50 hover:bg-primary/10 transition-all duration-300 cursor-pointer flex flex-col gap-4 relative overflow-hidden"
             >
               <div className="w-12 h-12 rounded-2xl bg-primary flex items-center justify-center text-white shadow-lg">
@@ -179,7 +205,7 @@ function FlashcardsContent() {
               <div>
                 <h3 className="text-lg font-black uppercase tracking-tight text-foreground">Semua Materi</h3>
                 <p className="text-xs text-muted-foreground font-medium mt-1 leading-relaxed">
-                  Campuran acak kartu dari seluruh koleksi yang tersedia.
+                  Campuran dari seluruh koleksi yang tersedia.
                 </p>
               </div>
               <ArrowRight size={20} className="absolute bottom-6 right-6 text-primary opacity-0 group-hover:opacity-100 group-hover:translate-x-1 transition-all" />
@@ -188,7 +214,7 @@ function FlashcardsContent() {
             {categories.map((cat) => (
               <Card 
                 key={cat._id}
-                onClick={() => startSession(cat.slug.current)}
+                onClick={() => setSelectedCategory(cat.slug.current)}
                 className="group p-6 rounded-3xl border border-border bg-card/50 hover:border-primary/40 hover:bg-primary/[0.02] transition-all duration-300 cursor-pointer flex flex-col gap-4 relative overflow-hidden"
               >
                 <div className="w-12 h-12 rounded-2xl bg-muted border border-border flex items-center justify-center text-muted-foreground group-hover:bg-primary/10 group-hover:text-primary group-hover:border-primary/20 transition-all">
@@ -197,7 +223,7 @@ function FlashcardsContent() {
                 <div>
                   <h3 className="text-lg font-black uppercase tracking-tight text-foreground">{cat.title}</h3>
                   <p className="text-xs text-muted-foreground font-medium mt-1 leading-relaxed">
-                    Fokus latihan khusus pada materi level {cat.title}.
+                    Fokus pada materi level {cat.title}.
                   </p>
                 </div>
                 <ArrowRight size={20} className="absolute bottom-6 right-6 text-primary opacity-0 group-hover:opacity-100 group-hover:translate-x-1 transition-all" />
@@ -205,9 +231,86 @@ function FlashcardsContent() {
             ))}
           </div>
         </motion.div>
+      ) : !selectedMode ? (
+        // ======================
+        // LAYAR 2: SELEKSI MODE LATIHAN
+        // ======================
+        <motion.div 
+          key="mode"
+          initial={{ opacity: 0, y: 20 }}
+          animate={{ opacity: 1, y: 0 }}
+          exit={{ opacity: 0, y: -20 }}
+          transition={{ duration: 0.3 }}
+          className="flex-1 w-full max-w-4xl mx-auto px-4 md:px-8 py-12"
+        >
+          <header className="mb-12">
+            <nav className="mb-6 italic">
+              <Button 
+                onClick={handleBackFromMode}
+                variant="ghost" 
+                className="h-auto text-muted-foreground text-xs font-bold uppercase tracking-widest px-0 hover:bg-transparent hover:text-foreground"
+              >
+                {categorySlug ? "← Kembali ke Materi" : "← Kembali ke Kategori"}
+              </Button>
+            </nav>
+            <h1 className="text-4xl md:text-5xl font-black text-foreground uppercase tracking-tight italic">
+              Mode <span className="text-primary">Latihan</span>
+            </h1>
+            <p className="text-muted-foreground text-sm mt-2 max-w-xl font-medium leading-relaxed">
+              Kamu memilih kategori <strong className="text-foreground uppercase">{selectedCategory === "all" ? "Semua Materi" : selectedCategory}</strong>. Sekarang pilih cara kamu ingin berlatih.
+            </p>
+          </header>
+
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
+            <Card 
+              onClick={() => fetchCardsAndStart('vocab')}
+              className="group p-8 rounded-3xl border border-cyan-500/20 bg-card hover:border-cyan-400/60 hover:bg-cyan-500/[0.02] transition-all duration-300 cursor-pointer flex flex-col items-center text-center gap-5 relative overflow-hidden shadow-sm hover:shadow-xl"
+            >
+              <div className="w-16 h-16 rounded-2xl bg-muted border border-border text-cyan-500 flex items-center justify-center group-hover:bg-cyan-500 group-hover:text-white group-hover:scale-110 transition-all duration-500 shadow-inner">
+                <Layers size={28} />
+              </div>
+              <div>
+                <h3 className="text-xl font-black uppercase tracking-tight text-foreground group-hover:text-cyan-500 transition-colors">Kosakata</h3>
+                <p className="text-xs text-muted-foreground font-medium mt-2 leading-relaxed">
+                  Latihan flashcard memori standar. Ingat arti dan bacaan kartu dengan santai.
+                </p>
+              </div>
+            </Card>
+
+            <Card 
+              onClick={() => fetchCardsAndStart('kanji')}
+              className="group p-8 rounded-3xl border border-purple-500/20 bg-card hover:border-purple-400/60 hover:bg-purple-500/[0.02] transition-all duration-300 cursor-pointer flex flex-col items-center text-center gap-5 relative overflow-hidden shadow-sm hover:shadow-xl"
+            >
+              <div className="w-16 h-16 rounded-2xl bg-muted border border-border text-purple-500 flex items-center justify-center group-hover:bg-purple-500 group-hover:text-white group-hover:scale-110 transition-all duration-500 shadow-inner">
+                <PenTool size={28} />
+              </div>
+              <div>
+                <h3 className="text-xl font-black uppercase tracking-tight text-foreground group-hover:text-purple-500 transition-colors">Kamus Kanji</h3>
+                <p className="text-xs text-muted-foreground font-medium mt-2 leading-relaxed">
+                  Fitur lengkap Canvas menulis huruf. Pahami Onyomi, Kunyomi dan contoh katanya.
+                </p>
+              </div>
+            </Card>
+
+            <Card 
+              onClick={() => fetchCardsAndStart('survival')}
+              className="group p-8 rounded-3xl border border-red-500/20 bg-card hover:border-red-400/60 hover:bg-red-500/[0.02] transition-all duration-300 cursor-pointer flex flex-col items-center text-center gap-5 relative overflow-hidden shadow-sm hover:shadow-xl"
+            >
+              <div className="w-16 h-16 rounded-2xl bg-muted border border-border text-red-500 flex items-center justify-center group-hover:bg-red-500 group-hover:text-white group-hover:scale-110 transition-all duration-500 shadow-inner">
+                <Flame size={28} />
+              </div>
+              <div>
+                <h3 className="text-xl font-black uppercase tracking-tight text-foreground group-hover:text-red-500 transition-colors">Survival</h3>
+                <p className="text-xs text-muted-foreground font-medium mt-2 leading-relaxed">
+                  Uji nyali! Modus tantangan ketat dengan Hit Points (HP) dan batas waktu.
+                </p>
+              </div>
+            </Card>
+          </div>
+        </motion.div>
       ) : (
         // ======================
-        // MODE LATIHAN FLASHCARD
+        // LAYAR 3: MODE LATIHAN FLASHCARD MASTER
         // ======================
         <motion.div 
           key="session"
@@ -219,37 +322,33 @@ function FlashcardsContent() {
         >
           <div className="relative z-10 w-full max-w-2xl mt-4 sm:mt-8">
             <header className="flex justify-between items-center mb-10">
-              {categorySlug ? (
-                 <Button
-                    onClick={() => router.push(`/courses/${categorySlug}`)}
-                    variant="ghost"
-                    className="text-muted-foreground hover:text-foreground text-xs font-bold uppercase tracking-widest bg-muted/50 h-auto px-4 py-2.5 rounded-xl border border-border"
-                  >
-                    <ChevronLeft size={14} className="mr-2" /> Kembali ke Materi
-                  </Button>
-              ) : (
-                 <Button
-                    onClick={() => setSelectedCategory(null)}
-                    variant="ghost"
-                    className="text-muted-foreground hover:text-foreground text-xs font-bold uppercase tracking-widest bg-muted/50 h-auto px-4 py-2.5 rounded-xl border border-border"
-                  >
-                    <ChevronLeft size={14} className="mr-2" /> Ganti Materi
-                  </Button>
-              )}
+              <Button
+                onClick={() => setSelectedMode(null)}
+                variant="ghost"
+                className="text-muted-foreground hover:text-foreground text-xs font-bold uppercase tracking-widest bg-muted/50 h-auto px-4 py-2.5 rounded-xl border border-border"
+              >
+                <ChevronLeft size={14} className="mr-2" /> Ganti Mode
+              </Button>
               <Badge
                 variant="outline"
-                className="bg-primary/10 border-primary/30 text-primary px-4 py-2 rounded-xl text-xs font-bold uppercase tracking-widest flex items-center gap-2 h-auto"
+                className={`px-4 py-2 rounded-xl text-xs font-bold uppercase tracking-widest flex items-center gap-2 h-auto ${
+                  selectedMode === "kanji" 
+                    ? "bg-purple-500/10 border-purple-500/30 text-purple-500" 
+                    : selectedMode === "survival"
+                    ? "bg-red-500/10 border-red-500/30 text-red-500"
+                    : "bg-cyan-500/10 border-cyan-500/30 text-cyan-500"
+                }`}
               >
-                <Zap size={16} />
-                <span>Latihan Mode</span>
+                {selectedMode === "survival" ? <Flame size={16} /> : selectedMode === "kanji" ? <PenTool size={16} /> : <Zap size={16} />}
+                <span>Mode {selectedMode}</span>
               </Badge>
             </header>
 
             <FlashcardMaster
               key={cards[0]?._id}
               cards={cards}
-              type="vocab"
-              mode="latihan"
+              type={selectedMode === "kanji" ? "kanji" : "vocab"}
+              mode={selectedMode === "survival" ? "tantangan" : "latihan"}
               isFixedMode={true}
             />
           </div>
