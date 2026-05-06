@@ -251,6 +251,17 @@ export default function Sidebar({ isOpen, onClose }: { isOpen: boolean; onClose:
          )}
 
       </div>
+
+      {/* MINI FOOTER - LEGAL & INFO */}
+      <div className="mt-6 pt-4 border-t border-white/5 relative z-10">
+        <div className="flex items-center justify-center gap-4 text-[10px] font-bold uppercase tracking-widest text-muted-foreground/30">
+          <Link href="/privacy" className="hover:text-primary transition-colors">Privacy</Link>
+          <span className="w-1 h-1 rounded-full bg-white/5" />
+          <Link href="/terms" className="hover:text-primary transition-colors">Terms</Link>
+          <span className="w-1 h-1 rounded-full bg-white/5" />
+          <span className="opacity-50">© 2024</span>
+        </div>
+      </div>
     </aside>
     </>
   );

@@ -15,6 +15,7 @@ import { useRouter } from "next/navigation";
 import Image from "next/image";
 import {
   ChevronLeft,
+  ChevronRight,
   Coffee,
   Heart,
   ShieldCheck,
@@ -165,6 +166,19 @@ export default function SupportPage() {
         </Card>
 
         <footer className="mt-16 sm:mt-24 mb-20 text-center pb-8 sm:pb-12">
+          <div className="mb-12 flex flex-col items-center">
+            <p className="text-[10px] sm:text-xs font-black uppercase tracking-[0.4em] text-muted-foreground/40 mb-6">
+              Butuh Panduan Awal?
+            </p>
+            <Button 
+              onClick={() => router.push("/onboarding")}
+              variant="outline" 
+              className="rounded-2xl h-14 px-8 border-primary/20 bg-primary/5 hover:bg-primary/10 text-primary font-black uppercase tracking-widest text-xs transition-all group"
+            >
+              Mulai Ulang Tutorial <ChevronRight size={16} className="ml-2 group-hover:translate-x-1 transition-transform" />
+            </Button>
+          </div>
+
           <p className="text-xs sm:text-xs font-black uppercase tracking-[0.5em] text-primary/50 mb-3 sm:mb-4 bg-primary/5 w-max mx-auto px-4 py-1.5 rounded-full border border-primary/10">
             Kontribusi Langsung
           </p>

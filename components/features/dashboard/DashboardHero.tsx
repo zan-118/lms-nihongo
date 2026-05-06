@@ -139,29 +139,37 @@ export default function DashboardHero({ guestId, itemVariants }: DashboardHeroPr
 
             {dueCount > 0 ? (
               <div className="flex flex-col sm:flex-row gap-4 w-full">
-                <Button asChild className="flex-1 h-16 bg-primary hover:bg-foreground text-primary-foreground font-black uppercase tracking-widest rounded-2xl text-xs transition-all shadow-[0_0_20px_rgba(0,238,255,0.3)] hover:shadow-[0_0_40px_rgba(0,238,255,0.5)] border-none">
-                  <Link href="/review">
-                    Mulai Review Sekarang <ArrowRight size={18} className="ml-2" />
-                  </Link>
-                </Button>
-                <Button asChild variant="outline" className="flex-1 h-16 bg-background/50 backdrop-blur-md border-white/10 hover:border-primary/50 hover:bg-primary/5 rounded-2xl text-xs font-black uppercase tracking-widest transition-all">
-                  <Link href="/review?mode=quick">
-                    <Zap size={18} className="mr-2 text-primary" /> Kuis Cepat
-                  </Link>
-                </Button>
+                <motion.div whileHover={{ scale: 1.02 }} whileTap={{ scale: 0.98 }} className="flex-1">
+                  <Button asChild className="w-full h-16 bg-primary hover:bg-foreground text-primary-foreground font-black uppercase tracking-widest rounded-2xl text-xs transition-all shadow-[0_0_20px_rgba(0,238,255,0.3)] hover:shadow-[0_0_40px_rgba(0,238,255,0.5)] border-none">
+                    <Link href="/review">
+                      Mulai Review Sekarang <ArrowRight size={18} className="ml-2" />
+                    </Link>
+                  </Button>
+                </motion.div>
+                <motion.div whileHover={{ scale: 1.02 }} whileTap={{ scale: 0.98 }} className="flex-1">
+                  <Button asChild variant="outline" className="w-full h-16 bg-background/50 backdrop-blur-md border-white/10 hover:border-primary/50 hover:bg-primary/5 rounded-2xl text-xs font-black uppercase tracking-widest transition-all">
+                    <Link href="/review?mode=quick">
+                      <Zap size={18} className="mr-2 text-primary" /> Kuis Cepat
+                    </Link>
+                  </Button>
+                </motion.div>
               </div>
             ) : (
               <div className="flex flex-col sm:flex-row gap-4 w-full">
-                <Button asChild className="flex-1 h-16 bg-foreground text-background hover:bg-emerald-500 hover:text-white font-black uppercase tracking-widest rounded-2xl text-xs transition-all shadow-xl border-none">
-                  <Link href="/courses">
-                    Pelajari Materi Baru <BookMarked size={18} className="ml-2" />
-                  </Link>
-                </Button>
-                <Button asChild variant="outline" className="flex-1 h-16 bg-background/50 backdrop-blur-md border-white/10 hover:border-primary/50 hover:bg-primary/5 rounded-2xl text-xs font-black uppercase tracking-widest transition-all">
-                  <Link href="/review?mode=quick">
-                    <Zap size={18} className="mr-2 text-primary" /> Kuis Cepat
-                  </Link>
-                </Button>
+                <motion.div whileHover={{ scale: 1.02 }} whileTap={{ scale: 0.98 }} className="flex-1">
+                  <Button asChild className="w-full h-16 bg-foreground text-background hover:bg-emerald-500 hover:text-white font-black uppercase tracking-widest rounded-2xl text-xs transition-all shadow-xl border-none">
+                    <Link href="/courses">
+                      Pelajari Materi Baru <BookMarked size={18} className="ml-2" />
+                    </Link>
+                  </Button>
+                </motion.div>
+                <motion.div whileHover={{ scale: 1.02 }} whileTap={{ scale: 0.98 }} className="flex-1">
+                  <Button asChild variant="outline" className="w-full h-16 bg-background/50 backdrop-blur-md border-white/10 hover:border-primary/50 hover:bg-primary/5 rounded-2xl text-xs font-black uppercase tracking-widest transition-all">
+                    <Link href="/review?mode=quick">
+                      <Zap size={18} className="mr-2 text-primary" /> Kuis Cepat
+                    </Link>
+                  </Button>
+                </motion.div>
               </div>
             )}
           </div>
