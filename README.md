@@ -9,7 +9,7 @@
 
 ## 📝 Deskripsi
 
-**NihongoRoute** adalah ekosistem pembelajaran bahasa Jepang profesional yang menggabungkan **Big Data Pedagogis** dengan antarmuka **Cyber-Dark Neumorphic**. Dirancang untuk pembelajar Indonesia (JLPT N5 - N2), platform ini menawarkan lebih dari sekadar materi—ia menyediakan rute belajar yang cerdas, lokal, dan terstruktur secara masif.
+**NihongoRoute** adalah ekosistem pembelajaran bahasa Jepang profesional yang menggabungkan **Big Data Pedagogis** dengan antarmuka **Cyber-Glass Neumorphic**. Dirancang untuk pembelajar Indonesia (JLPT N5 - N2), platform ini menawarkan rute belajar yang cerdas, lokal, dan terstruktur secara masif dengan estetika visual premium yang mendukung fokus tinggi.
 
 Dengan basis data lebih dari **10.000+ kosakata** dan **1.500+ kata kerja**, NihongoRoute menghadirkan kedalaman informasi yang jarang ditemukan di aplikasi lain, termasuk status transitivitas kata kerja, rumus tata bahasa yang presisi, hingga catatan nuansa budaya yang dilokalisasi penuh.
 
@@ -19,17 +19,17 @@ Dengan basis data lebih dari **10.000+ kosakata** dan **1.500+ kata kerja**, Nih
 
 ### 📚 Big Data Pedagogis & Library
 - **AI-Enriched Dictionary** — Akses ke 10.000+ kosakata dan 1.500+ kata kerja dengan metadata lengkap (transitivitas, mnemonik, dan contoh penggunaan).
-- **Comprehensive Grammar Guides** — Ratusan panduan tata bahasa yang dilengkapi dengan **Rumus (Formation)** dan **Catatan Nuansa (Notes)** untuk pemahaman yang lebih mendalam.
-- **75-Chapter Structured Curriculum** — Kurikulum terbagi rata (25 Umum, 25 N5, 25 N4) untuk memastikan progres belajar yang linear dan terukur.
+- **Comprehensive Grammar Guides** — Ratusan panduan tata bahasa yang dilengkapi dengan **Rumus (Formation)** dan **Catatan Nuansa (Notes)**.
+- **75-Chapter Structured Curriculum** — Kurikulum terbagi rata (25 Umum, 25 N5, 25 N4) untuk progres belajar yang linear.
 
 ### 🧠 Smart Learning Engine
-- **Hybrid SRS (Spaced Repetition System)** — Algoritma cerdas yang menjamin hafalan terkunci di ingatan jangka panjang melalui kartu flashcard interaktif.
-- **Smart Furigana & Audio TTS** — Rendering Furigana granular dan integrasi Text-to-Speech (TTS) di setiap kata dan contoh kalimat untuk melatih pendengaran.
-- **Dynamic PDF Generator** — Ekspor bab belajar atau daftar kosakata ke format PDF profesional secara instan untuk belajar offline.
+- **Hybrid SRS (Spaced Repetition System)** — Algoritma cerdas (Local-First) yang menjamin hafalan terkunci di ingatan jangka panjang.
+- **Smart Furigana & Audio TTS** — Rendering Furigana granular dan integrasi TTS untuk melatih pendengaran secara akurat.
+- **Dynamic PDF Generator** — Ekspor bab belajar atau daftar kosakata ke format PDF profesional secara instan.
 
 ### 📝 Tipografi & Visual Premium
-- **Cyber-Dark Neumorphic UI** — Antarmuka modern yang dioptimalkan untuk fokus tinggi dan keindahan visual di perangkat mobile maupun desktop.
-- **Interactive Verb Matrix** — Visualisasi konjugasi kata kerja yang dinamis, memudahkan pemahaman perubahan bentuk kata secara visual.
+- **Cyber-Glass UI** — Antarmuka modern dengan efek `backdrop-blur`, `glassmorphism`, dan aksen neon yang dioptimalkan untuk pengalaman belajar imersif.
+- **Interactive Verb Matrix** — Visualisasi konjugasi kata kerja yang dinamis untuk memahami perubahan bentuk kata secara intuitif.
 
 ---
 
@@ -38,19 +38,45 @@ Dengan basis data lebih dari **10.000+ kosakata** dan **1.500+ kata kerja**, Nih
 | Kategori | Teknologi |
 |---|---|
 | **Core Framework** | [Next.js 15+](https://nextjs.org/) (App Router), React 19, TypeScript |
-| **Styling & UI** | [Tailwind CSS](https://tailwindcss.com/), Shadcn UI, Framer Motion |
+| **Styling & UI** | [Tailwind CSS](https://tailwindcss.com/), Radix UI, Framer Motion |
 | **Backend & Auth** | [Supabase](https://supabase.com/) (Auth & Sync), [Sanity CMS](https://www.sanity.io/) (Content Hub) |
-| **State & Storage** | [Zustand](https://zustand-demo.pmnd.rs/), IndexedDB via `idb-keyval` (Local-First) |
+| **State & Storage** | [Zustand](https://zustand-demo.pmnd.rs/), IndexedDB (Local-First) |
 | **Performance** | Incremental Static Regeneration (ISR) & PWA Support |
+
+---
+
+## 📂 Struktur Proyek
+
+Pohon direktori NihongoRoute dirancang untuk modularitas dan pemisahan logika yang ketat:
+
+```text
+├── app/                  # Routing & Layout (Next.js App Router)
+│   ├── (main)/           # Core Experience (Dashboard, Library, Review, etc.)
+│   ├── auth/             # Autentikasi (Login, Register, Password Recovery)
+│   ├── onboarding/       # Setup Awal & Tutorial Pengguna
+│   └── studio/           # Embedded Sanity CMS Studio
+├── components/           # UI Component Library
+│   ├── features/         # Domain-specific components (SRS, Kanji, Quiz, etc.)
+│   ├── layout/           # Global Shell (Sidebar, Topbar, Navbar)
+│   ├── ui/               # Reusable atomic primitives (shadcn-based)
+│   └── providers/        # Context Providers (Theme, Auth, QueryClient)
+├── hooks/                # Business Logic & Side Effects (useSyncProgress, etc.)
+├── lib/                  # Utilities, Helper Functions, & GROQ Queries
+├── store/                # Zustand Global State Management
+├── supabase/             # SQL Migrations, Types, & Functions
+├── sanity/               # Content Schema & Sanity Configurations
+├── public/               # Static Assets (Images, Icons, Fonts)
+└── __tests__/            # Unit & Integration Testing Suites
+```
 
 ---
 
 ## 🏗️ Arsitektur Data
 
-NihongoRoute menggunakan pola **Local-First Architecture** untuk memastikan kecepatan akses data raksasa:
-- **Fast Search:** Pencarian kosakata dan kata kerja dioptimalkan melalui debouncing dan caching client-side.
-- **Content Sync:** Data pedagogis dikelola melalui Sanity Studio yang terhubung langsung ke frontend untuk update konten tanpa redeploy.
-- **Type-Safety:** Skema data 100% tersinkronisasi antara database CMS dan TypeScript frontend.
+NihongoRoute menggunakan pola **Local-First Architecture**:
+- **Offline-First:** Semua interaksi utama (SRS, Gamification) dilakukan di Zustand store lokal (IndexedDB) sehingga aplikasi tetap berjalan tanpa internet.
+- **Background Sync:** Sinkronisasi ke Supabase dilakukan secara debounced di latar belakang menggunakan hook `useSyncProgress`.
+- **Hybrid Content:** Konten statis berasal dari Sanity CMS, sementara progres dinamis disimpan di Supabase.
 
 ---
 
