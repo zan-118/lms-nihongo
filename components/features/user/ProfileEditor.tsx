@@ -101,6 +101,7 @@ export default function ProfileEditor() {
               onClick={handleSave}
               disabled={isLoading}
               className="w-10 h-10 rounded-xl bg-emerald-500/10 text-emerald-600 dark:text-emerald-400 hover:bg-emerald-500 hover:text-white dark:hover:text-black transition-all"
+              aria-label="Simpan Nama"
             >
               {isLoading ? <Loader2 size={16} className="animate-spin" /> : <Check size={18} />}
             </Button>
@@ -110,6 +111,7 @@ export default function ProfileEditor() {
               onClick={() => setIsEditing(false)}
               disabled={isLoading}
               className="w-10 h-10 rounded-xl bg-muted border border-border text-muted-foreground hover:bg-background hover:text-foreground transition-all"
+              aria-label="Batal Edit"
             >
               <X size={18} />
             </Button>
@@ -131,7 +133,8 @@ export default function ProfileEditor() {
               </span>
               <button
                 onClick={() => setIsEditing(true)}
-                className="opacity-0 group-hover:opacity-100 transition-opacity p-2 text-muted-foreground hover:text-primary"
+                className="opacity-0 group-hover:opacity-100 transition-opacity p-2 text-muted-foreground hover:text-primary outline-none focus-visible:ring-2 focus-visible:ring-primary rounded-lg"
+                aria-label="Edit Nama Profil"
               >
                 <Edit2 size={24} />
               </button>

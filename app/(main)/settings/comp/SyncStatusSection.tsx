@@ -20,27 +20,40 @@ export default function SyncStatusSection({
 }: SyncStatusSectionProps) {
   return (
     <motion.div variants={itemVariants}>
-      <Card className="bg-card backdrop-blur-xl border border-border rounded-2xl p-6 neo-card shadow-sm">
-        <div className="flex items-center justify-between">
-          <div className="flex items-center gap-4">
-            <div className={`w-12 h-12 rounded-2xl flex items-center justify-center border ${dirtySrsCount > 0 ? 'bg-amber-500/10 border-amber-500/20 text-amber-500' : 'bg-emerald-500/10 border-emerald-500/20 text-emerald-500'}`}>
-              {dirtySrsCount > 0 ? <Cloud size={24} /> : <CloudCheck size={24} />}
+      <Card className="bg-white/[0.01] backdrop-blur-3xl border border-white/5 rounded-[2.5rem] p-8 shadow-2xl relative overflow-hidden group">
+        <div className="flex flex-col md:flex-row items-center justify-between gap-6">
+          <div className="flex items-center gap-6">
+            <div className={`w-16 h-16 rounded-2xl flex items-center justify-center border transition-all duration-500 shadow-xl ${
+              dirtySrsCount > 0 
+                ? 'bg-amber-500/10 border-amber-500/20 text-amber-500 shadow-amber-500/10' 
+                : 'bg-emerald-500/10 border-emerald-500/20 text-emerald-500 shadow-emerald-500/10'
+            }`}>
+              {dirtySrsCount > 0 ? (
+                <Cloud size={32} className="animate-pulse" />
+              ) : (
+                <CloudCheck size={32} className="drop-shadow-[0_0_8px_rgba(16,185,129,0.4)]" />
+              )}
             </div>
             <div>
-              <h3 className="text-sm font-black uppercase tracking-tight text-foreground">Status Sinkronisasi</h3>
-              <p className="text-xs text-muted-foreground font-medium uppercase tracking-widest mt-0.5">
-                {dirtySrsCount > 0 ? `${dirtySrsCount} Item belum tersinkron` : "Semua data aman di Cloud"}
+              <h3 className="text-lg font-black uppercase italic tracking-tighter text-foreground">Sirkuit Sinkronisasi</h3>
+              <p className="text-[10px] text-muted-foreground font-black uppercase tracking-[0.2em] mt-1 opacity-60">
+                {dirtySrsCount > 0 
+                  ? `${dirtySrsCount} data tertahan di buffer lokal` 
+                  : "Enkripsi cloud terverifikasi & aman"}
               </p>
             </div>
           </div>
           <Button 
             onClick={handleManualSync}
             disabled={isSyncing || dirtySrsCount === 0}
-            variant="outline" 
-            className="h-10 px-4 bg-muted/30 border-border rounded-xl text-xs font-black uppercase tracking-widest transition-all"
+            className={`h-14 px-8 rounded-2xl text-[10px] font-black uppercase tracking-[0.2em] transition-all duration-300 shadow-xl ${
+              dirtySrsCount > 0
+                ? 'bg-primary text-primary-foreground hover:scale-[1.02] shadow-primary/20'
+                : 'bg-white/5 text-muted-foreground border border-white/10 opacity-50 cursor-not-allowed'
+            }`}
           >
-            <RefreshCw size={14} className={`mr-2 ${isSyncing ? 'animate-spin' : ''}`} />
-            {isSyncing ? "Sinkron..." : "Sinkron Sekarang"}
+            <RefreshCw size={18} className={`mr-3 ${isSyncing ? 'animate-spin' : ''}`} />
+            {isSyncing ? "Transmitting..." : "Manual Sync"}
           </Button>
         </div>
       </Card>

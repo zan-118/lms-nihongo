@@ -4,11 +4,12 @@ import { useState, useEffect } from "react";
 import { client } from "@/sanity/lib/client";
 import Link from "next/link";
 import { motion, AnimatePresence } from "framer-motion";
-import { BookOpen, Home, Library, Bookmark, Search, BookText, ArrowRight } from "lucide-react";
+import { BookOpen, Home, Library, Search, BookText } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Card } from "@/components/ui/card";
-import { Badge } from "@/components/ui/badge";
 import { Input } from "@/components/ui/input";
+import { GrammarCard } from "@/components/features/grammar/GrammarCard";
+import { Skeleton } from "@/components/ui/skeleton";
 
 const LEVELS = ["n5", "n4", "n3", "n2", "n1"];
 
@@ -92,118 +93,100 @@ export default function GrammarClient({ initialArticles = [] }: GrammarClientPro
             </div>
           </div>
 
-          <nav className="inline-flex p-1 bg-muted/50 dark:bg-black/40 rounded-xl md:rounded-[2rem] border border-border dark:border-white/5 neo-card shadow-none overflow-x-auto w-full xl:w-auto no-scrollbar">
+          <nav className="inline-flex p-1.5 bg-muted/50 dark:bg-black/40 backdrop-blur-md rounded-2xl md:rounded-[2rem] border border-border dark:border-white/5 shadow-2xl overflow-x-auto w-full xl:w-auto no-scrollbar relative">
             {LEVELS.map((lvl) => (
-              <Button
+              <button
                 key={lvl}
-                variant="ghost"
                 onClick={() => {
                   setSelectedLevel(lvl);
                   setSearchTerm("");
                 }}
-                className={`flex-1 md:flex-none px-4 md:px-10 py-3 md:py-5 h-auto rounded-lg md:rounded-2xl text-[10px] md:text-xs font-bold uppercase tracking-widest transition-all duration-300 ${
+                className={`relative flex-1 md:flex-none px-6 md:px-10 py-3 md:py-4 h-auto rounded-xl md:rounded-[1.5rem] text-[10px] md:text-xs font-black uppercase tracking-[0.2em] transition-all duration-500 z-10 ${
                   selectedLevel === lvl
-                    ? "bg-primary text-primary-foreground shadow-lg"
-                    : "text-muted-foreground hover:text-foreground hover:bg-muted"
+                    ? "text-primary-foreground"
+                    : "text-muted-foreground hover:text-foreground"
                 }`}
               >
-                {lvl}
-              </Button>
+                {selectedLevel === lvl && (
+                  <motion.div
+                    layoutId="activeTab"
+                    className="absolute inset-0 bg-primary rounded-xl md:rounded-[1.5rem] shadow-[0_0_20px_rgba(0,238,255,0.4)] z-[-1]"
+                    transition={{ type: "spring", bounce: 0.2, duration: 0.6 }}
+                  />
+                )}
+                <span className="relative z-10">{lvl}</span>
+              </button>
             ))}
           </nav>
         </div>
       </header>
 
       {/* SEARCH SECTION */}
-      <div className="mb-6 md:mb-12 relative group max-w-2xl">
-        <Search className="absolute left-4 md:left-6 top-1/2 -translate-y-1/2 text-muted-foreground group-focus-within:text-primary transition-colors z-10" size={18} />
+      <div className="mb-10 md:mb-16 relative group max-w-2xl">
+        <div className="absolute inset-y-0 left-5 md:left-7 flex items-center pointer-events-none z-10">
+          <Search className="text-muted-foreground group-focus-within:text-primary transition-colors duration-300" size={20} />
+        </div>
         <Input
-          placeholder="Cari pola kalimat..."
-          className="w-full pl-11 md:pl-14 pr-6 py-4 md:py-6 h-auto bg-muted/30 border-border rounded-xl md:rounded-[1.5rem] text-xs md:text-base text-foreground placeholder:text-muted-foreground/50 font-medium neo-inset shadow-none focus-visible:ring-primary/30"
+          placeholder="Cari pola kalimat (contoh: ~te kureru)..."
+          className="w-full pl-14 md:pl-16 pr-8 py-5 md:py-7 h-auto bg-card/40 backdrop-blur-xl border-white/5 rounded-2xl md:rounded-[2rem] text-sm md:text-lg text-foreground placeholder:text-muted-foreground/30 font-bold shadow-2xl focus-visible:ring-primary/30 focus-visible:border-primary/50 transition-all duration-500"
           value={searchTerm}
           onChange={(e: React.ChangeEvent<HTMLInputElement>) => setSearchTerm(e.target.value)}
         />
+        {/* Decorative Ring */}
+        <div className="absolute inset-0 rounded-2xl md:rounded-[2rem] border border-primary/0 group-focus-within:border-primary/20 pointer-events-none transition-all duration-500 scale-[1.01]" />
       </div>
 
       <section className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4 md:gap-5 items-stretch">
         <AnimatePresence mode="popLayout">
           {loading ? (
             [...Array(6)].map((_, i) => (
-              <div
-                key={i}
-                className="h-48 md:h-52 bg-muted/50 border border-border rounded-2xl animate-pulse"
-              />
+              <Card key={i} className="h-48 md:h-56 bg-card/40 backdrop-blur-xl border-white/5 rounded-[2rem] overflow-hidden p-6 relative">
+                <div className="flex justify-between items-start mb-6">
+                  <Skeleton className="w-10 h-10 rounded-2xl bg-white/5" />
+                  <Skeleton className="w-16 h-6 rounded-xl bg-white/5" />
+                </div>
+                <Skeleton className="w-3/4 h-8 rounded-xl bg-white/5 mb-4" />
+                <Skeleton className="w-1/2 h-4 rounded-lg bg-white/5 mt-auto" />
+                {/* Aura Shimmer */}
+                <div className="absolute inset-0 bg-gradient-to-r from-transparent via-white/[0.03] to-transparent -translate-x-full animate-[shimmer_2s_infinite] pointer-events-none" />
+              </Card>
             ))
           ) : filteredArticles.length > 0 ? (
             filteredArticles.map((article, idx) => (
-              <motion.div
+              <GrammarCard
                 key={article._id}
-                initial={{ opacity: 0, y: 12 }}
-                animate={{ opacity: 1, y: 0 }}
-                exit={{ opacity: 0, y: -8 }}
-                transition={{ delay: (idx % 12) * 0.03 }}
-                className="group flex h-full w-full"
-              >
-                <Link
-                  href={`/library/grammar/${article.slug}`}
-                  className="block w-full h-full"
-                >
-                  <Card className="h-full p-5 md:p-6 bg-card border border-border rounded-2xl hover:border-primary/40 hover:bg-primary/[0.03] hover:shadow-xl transition-all duration-300 flex flex-col justify-between cursor-pointer group">
-                    <div className="flex-1">
-                      {/* Top row */}
-                      <div className="flex justify-between items-center mb-4">
-                        <div className="w-9 h-9 md:w-10 md:h-10 rounded-xl bg-muted border border-border flex items-center justify-center group-hover:border-primary/30 group-hover:bg-primary/10 transition-all duration-300">
-                          <Bookmark
-                            size={16}
-                            className="text-muted-foreground group-hover:text-primary transition-colors duration-300 md:w-[18px] md:h-[18px]"
-                          />
-                        </div>
-                        <Badge variant="outline" className="text-xs md:text-xs font-bold uppercase tracking-wider text-muted-foreground border-border px-2.5 py-1 rounded-lg h-auto">
-                          {article.slug.substring(0, 8).toUpperCase()}
-                        </Badge>
-                      </div>
-                      
-                      {/* Title */}
-                      <h2 className="text-lg md:text-xl font-black text-foreground tracking-tight leading-snug group-hover:text-primary transition-colors duration-300 mb-2 line-clamp-3">
-                        {article.title}
-                      </h2>
-                      <span className="text-xs md:text-xs font-bold text-muted-foreground/50 uppercase tracking-widest">Sintaksis</span>
-                    </div>
-
-                    {/* Bottom CTA */}
-                    <div className="mt-4 pt-3 border-t border-border flex items-center justify-between">
-                      <span className="text-xs md:text-xs font-bold text-muted-foreground/60 uppercase tracking-wider group-hover:text-primary transition-colors">
-                        Pelajari Modul
-                      </span>
-                      <div className="w-7 h-7 md:w-8 md:h-8 rounded-lg bg-muted border border-border flex items-center justify-center group-hover:bg-primary group-hover:text-primary-foreground group-hover:border-none transition-all duration-300">
-                         <ArrowRight size={14} />
-                      </div>
-                    </div>
-                  </Card>
-                </Link>
-              </motion.div>
+                article={article}
+                index={idx}
+                selectedLevel={selectedLevel}
+              />
             ))
           ) : (
-            <Card className="col-span-full py-16 md:py-24 border border-dashed border-border bg-muted/20 rounded-2xl text-center px-4">
-              <div className="flex justify-center mb-5">
-                 <div className="w-14 h-14 rounded-full bg-primary/5 flex items-center justify-center border border-primary/10">
-                    <BookText size={24} className="text-muted-foreground" />
-                 </div>
+            <Card className="col-span-full py-20 md:py-32 bg-card/20 backdrop-blur-sm border border-dashed border-white/10 rounded-[2.5rem] text-center px-6 relative overflow-hidden">
+              <div className="relative z-10">
+                <div className="flex justify-center mb-8">
+                  <div className="w-20 h-20 rounded-[2rem] bg-primary/5 flex items-center justify-center border border-primary/10 shadow-[0_0_30px_rgba(0,238,255,0.1)]">
+                    <BookText size={32} className="text-primary/40" />
+                  </div>
+                </div>
+                <h3 className="text-xl md:text-2xl font-black text-foreground uppercase tracking-tight mb-4">
+                  {searchTerm ? "Pola Kalimat Tidak Ditemukan" : "Materi Belum Tersedia"}
+                </h3>
+                <p className="text-muted-foreground font-medium text-sm md:text-base max-w-md mx-auto mb-10 leading-relaxed">
+                  {searchTerm 
+                    ? `Waduh, hasil buat "${searchTerm}" gak ketemu nih. Coba cari kata kunci lain atau periksa ejaanmu.` 
+                    : `Sabar ya, Sensei kami lagi ngeracik materi buat level ${selectedLevel.toUpperCase()}. Pantau terus!`}
+                </p>
+                {searchTerm && (
+                  <Button 
+                    onClick={() => setSearchTerm("")}
+                    className="bg-primary hover:bg-primary/90 text-primary-foreground rounded-2xl px-10 py-6 h-auto font-black uppercase tracking-[0.2em] text-xs transition-all shadow-[0_0_20px_rgba(0,238,255,0.3)]"
+                  >
+                    Reset Pencarian
+                  </Button>
+                )}
               </div>
-              <p className="text-muted-foreground font-bold uppercase tracking-widest text-xs md:text-sm mb-6">
-                {searchTerm 
-                  ? `Waduh, hasil buat "${searchTerm}" gak ketemu nih...` 
-                  : `Sabar ya, materi tata bahasa buat level ${selectedLevel.toUpperCase()} belum ada nih.`}
-              </p>
-              {searchTerm && (
-                <Button 
-                  onClick={() => setSearchTerm("")}
-                  variant="outline"
-                  className="bg-primary/10 border-primary/30 text-primary hover:bg-primary hover:text-primary-foreground rounded-xl px-6 font-bold uppercase tracking-widest text-xs transition-all"
-                >
-                  Hapus Filter
-                </Button>
-              )}
+              {/* Background Ambient Glow */}
+              <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-64 h-64 bg-primary/5 blur-[100px] pointer-events-none" />
             </Card>
           )}
         </AnimatePresence>

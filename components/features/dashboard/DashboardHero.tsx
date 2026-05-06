@@ -13,6 +13,7 @@ import { useAuthStore } from "@/store/useAuthStore";
 import { useUIStore } from "@/store/useUIStore";
 import ProfileEditor from "../user/ProfileEditor";
 import { Trophy, Flame, Star, ArrowRight } from "lucide-react";
+import AnimatedCounter from "@/components/ui/AnimatedCounter";
 
 interface DashboardHeroProps {
   guestId: string;
@@ -33,6 +34,7 @@ export default function DashboardHero({ guestId, itemVariants }: DashboardHeroPr
   const now = Date.now();
   const dueCount = Object.values(srs).filter(card => card.nextReview <= now).length;
   const xpProgress = (xp % 1000) / 10;
+
   return (
     <motion.div variants={itemVariants} className="flex flex-col gap-10 items-start w-full">
       <div className="flex-1 w-full flex flex-col items-center lg:items-start text-center lg:text-left">
@@ -75,7 +77,7 @@ export default function DashboardHero({ guestId, itemVariants }: DashboardHeroPr
         {loading ? (
           <Skeleton className="h-[320px] w-full rounded-[2.5rem]" />
         ) : (
-        <Card className="p-8 md:p-12 rounded-[2.5rem] bg-card/40 backdrop-blur-3xl border border-white/10 shadow-2xl relative overflow-hidden group transition-all duration-500 hover:border-primary/40 hover:shadow-primary/10">
+        <Card className="p-6 md:p-12 rounded-[2.5rem] bg-card/40 backdrop-blur-3xl border border-white/10 shadow-2xl relative overflow-hidden group transition-all duration-500 hover:border-primary/40 hover:shadow-primary/10">
           <div className="absolute inset-0 bg-gradient-to-br from-primary/5 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-700" />
           
           <div className="relative z-10 flex flex-col items-center text-center">
@@ -113,7 +115,9 @@ export default function DashboardHero({ guestId, itemVariants }: DashboardHeroPr
               <div className="flex flex-col items-center gap-1">
                 <div className="flex items-center gap-1.5 text-amber-500">
                   <Flame size={14} className="fill-current" />
-                  <span className="text-sm font-black">{streak}</span>
+                  <span className="text-sm font-black">
+                    <AnimatedCounter value={streak} />
+                  </span>
                 </div>
                 <span className="text-[8px] font-black uppercase tracking-widest text-muted-foreground">Streak</span>
               </div>
@@ -141,7 +145,7 @@ export default function DashboardHero({ guestId, itemVariants }: DashboardHeroPr
                   </Link>
                 </Button>
                 <Button asChild variant="outline" className="flex-1 h-16 bg-background/50 backdrop-blur-md border-white/10 hover:border-primary/50 hover:bg-primary/5 rounded-2xl text-xs font-black uppercase tracking-widest transition-all">
-                  <Link href="/review/quick">
+                  <Link href="/review?mode=quick">
                     <Zap size={18} className="mr-2 text-primary" /> Kuis Cepat
                   </Link>
                 </Button>
@@ -154,7 +158,7 @@ export default function DashboardHero({ guestId, itemVariants }: DashboardHeroPr
                   </Link>
                 </Button>
                 <Button asChild variant="outline" className="flex-1 h-16 bg-background/50 backdrop-blur-md border-white/10 hover:border-primary/50 hover:bg-primary/5 rounded-2xl text-xs font-black uppercase tracking-widest transition-all">
-                  <Link href="/review/quick">
+                  <Link href="/review?mode=quick">
                     <Zap size={18} className="mr-2 text-primary" /> Kuis Cepat
                   </Link>
                 </Button>

@@ -64,7 +64,7 @@ export default function SettingsPage() {
   const isAuthenticated = useAuthStore((state) => state.isAuthenticated);
   const resetAuth = useAuthStore((state) => state.resetAuth);
   
-  const hasMounted = useHasMounted();
+   const hasMounted = useHasMounted();
   const [isSyncing, setIsSyncing] = useState(false);
   const router = useRouter();
   const supabase = createClient();
@@ -184,9 +184,13 @@ export default function SettingsPage() {
   }
 
   return (
-    <div className="w-full min-h-screen bg-background relative overflow-hidden pt-12 pb-20 px-4 md:px-6 transition-colors duration-300">
-      <div className="absolute top-0 left-1/2 -translate-x-1/2 w-full max-w-[600px] h-[300px] bg-primary/5 blur-[100px] rounded-full pointer-events-none opacity-40" />
-      
+    <div className="relative min-h-screen">
+      {/* Ambient Background Glow */}
+      <div className="fixed inset-0 pointer-events-none overflow-hidden z-0">
+        <div className="absolute top-[10%] -left-[10%] w-[40%] h-[40%] bg-primary/5 blur-[120px] rounded-full animate-pulse" />
+        <div className="absolute bottom-[10%] -right-[10%] w-[40%] h-[40%] bg-blue-500/5 blur-[120px] rounded-full animate-pulse" style={{ animationDelay: '1s' }} />
+      </div>
+
       <ConfirmModal
         isOpen={confirmModal.isOpen}
         onClose={closeConfirm}
@@ -197,32 +201,41 @@ export default function SettingsPage() {
         onConfirm={confirmModal.onConfirm}
       />
 
-      <motion.div
-        className="max-w-3xl mx-auto relative z-10"
+      <motion.div 
         initial="hidden"
         animate="visible"
         variants={containerVariants}
+        className="container max-w-4xl mx-auto py-12 md:py-20 relative z-10 px-4 md:px-6"
       >
-        <header className="mb-8 px-1">
+        <header className="mb-12 px-1">
           <motion.div variants={itemVariants}>
-            <Badge variant="outline" className="bg-muted text-muted-foreground border-border px-3 py-1 rounded-full text-xs font-bold uppercase tracking-wider mb-4 flex items-center gap-1.5 w-fit shadow-none">
-              <SettingsIcon size={12} /> Konfigurasi
+            <Badge variant="outline" className="bg-white/5 text-primary border-primary/20 px-4 py-1.5 rounded-full text-[10px] font-black uppercase tracking-[0.2em] mb-6 flex items-center gap-2 w-fit shadow-xl backdrop-blur-md">
+              <SettingsIcon size={14} className="animate-spin-slow" /> Protokol Sistem
             </Badge>
           </motion.div>
-          <motion.h1 variants={itemVariants} className="text-3xl md:text-4xl font-black text-foreground italic tracking-tighter uppercase mb-3">
-            Pengaturan
+          <motion.h1 variants={itemVariants} className="text-4xl md:text-5xl font-black text-foreground italic tracking-tighter uppercase mb-4 leading-none">
+            The Pilot&apos;s Cabin
           </motion.h1>
-          <motion.p variants={itemVariants} className="text-muted-foreground text-sm font-medium max-w-lg leading-relaxed">
-            Atur data belajar dan akunmu di sini. Jangan lupa backup biar progresmu selalu aman!
+          <motion.p variants={itemVariants} className="text-muted-foreground text-sm md:text-base font-medium max-w-xl leading-relaxed opacity-70">
+            Pusat kendali identitas dan data belajarmu. Pastikan transmisi data ke Cloud selalu terverifikasi untuk keamanan progres maksimal.
           </motion.p>
         </header>
 
-        <div className="grid grid-cols-1 gap-5 px-1">
+        <div className="grid grid-cols-1 gap-8 px-1">
           <ProfileSection 
             name={name || ""} 
+            xp={xp}
+            streak={streak}
             isAuthenticated={isAuthenticated} 
             updateProfileName={updateProfileName} 
             itemVariants={itemVariants} 
+          />
+
+          <SyncStatusSection 
+            dirtySrsCount={dirtySrs.size}
+            isSyncing={isSyncing}
+            handleManualSync={handleManualSync}
+            itemVariants={itemVariants}
           />
 
           <DataManagementSection 
@@ -234,23 +247,16 @@ export default function SettingsPage() {
             itemVariants={itemVariants}
           />
 
-          <SyncStatusSection 
-            dirtySrsCount={dirtySrs.size}
-            isSyncing={isSyncing}
-            handleManualSync={handleManualSync}
-            itemVariants={itemVariants}
-          />
-
           {/* DANGER ZONE INFO */}
           <motion.div variants={itemVariants}>
-            <Card className="bg-destructive/[0.02] border-destructive/10 rounded-2xl p-5 md:p-6 shadow-sm flex items-start gap-4">
-              <div className="w-10 h-10 shrink-0 rounded-xl bg-destructive/10 flex items-center justify-center border border-destructive/15">
-                <ShieldAlert size={20} className="text-destructive" />
+            <Card className="bg-red-500/[0.02] border border-red-500/10 rounded-[2rem] p-6 md:p-8 shadow-2xl flex flex-col md:flex-row items-center md:items-start gap-6 group hover:bg-red-500/[0.04] transition-all duration-500">
+              <div className="w-14 h-14 shrink-0 rounded-2xl bg-red-500/10 flex items-center justify-center border border-red-500/20 shadow-lg group-hover:scale-110 transition-transform">
+                <ShieldAlert size={28} className="text-red-500" />
               </div>
-              <div className="flex-1">
-                <h4 className="text-foreground font-bold uppercase text-sm mb-1">Zona Bahaya!</h4>
-                <p className="text-muted-foreground text-xs leading-relaxed">
-                  Ingat ya, hapus data berarti semua XP dan hafalanmu hilang selamanya. Pikir-pikir dulu atau simpan backup-nya ya!
+              <div className="flex-1 text-center md:text-left">
+                <h4 className="text-red-500 font-black uppercase italic tracking-tighter text-lg mb-2">Peringatan Keamanan</h4>
+                <p className="text-muted-foreground text-sm leading-relaxed opacity-60 font-medium">
+                  Penghapusan database bersifat destruktif dan tidak dapat dipulihkan. Seluruh riwayat XP, streak, dan memori SRS akan dimusnahkan dari server dan penyimpanan lokal.
                 </p>
               </div>
             </Card>
@@ -258,11 +264,11 @@ export default function SettingsPage() {
 
           {/* MOBILE EXTRA NAV */}
           <motion.div variants={itemVariants} className="md:hidden">
-            <Card className="bg-muted/40 border border-border rounded-2xl p-5 shadow-sm">
-              <h3 className="text-muted-foreground font-bold uppercase tracking-wider text-xs mb-3">Eksplorasi Lainnya</h3>
-              <Button asChild variant="outline" className="w-full h-11 bg-muted/30 border-border justify-start hover:bg-background text-foreground rounded-xl font-bold uppercase tracking-wider text-xs">
+            <Card className="bg-white/[0.02] backdrop-blur-xl border border-white/5 rounded-[2rem] p-6 shadow-2xl">
+              <h3 className="text-primary font-black uppercase tracking-[0.2em] text-[10px] mb-4">Navigasi Lanjutan</h3>
+              <Button asChild variant="ghost" className="w-full h-14 bg-white/[0.03] border border-white/5 justify-start hover:bg-primary/10 hover:text-primary rounded-2xl font-black uppercase tracking-widest text-[10px] transition-all">
                 <Link href="/library">
-                  <Layers size={16} className="mr-2 text-primary" /> Buka Pustaka Data
+                  <Layers size={18} className="mr-3 text-primary" /> Buka Pustaka Data
                 </Link>
               </Button>
             </Card>
