@@ -5,7 +5,9 @@ import { useRouter } from "next/navigation";
 import { motion, AnimatePresence } from "framer-motion";
 import { Button } from "@/components/ui/button";
 import { Card } from "@/components/ui/card";
-import { BookOpen, Briefcase, Plane, Tv, ChevronRight, CheckCircle2 } from "lucide-react";
+import { BookOpen, Briefcase, Plane, Tv, ChevronRight, CheckCircle2, Loader2 } from "lucide-react";
+import { createClient } from "@/lib/supabase/client";
+import { useUIStore } from "@/store/useUIStore";
 
 const JLPT_LEVELS = [
   { id: "N5", label: "Pemula (N5)" },
@@ -27,11 +29,39 @@ export default function OnboardingPage() {
   const [step, setStep] = useState(1);
   const [targetLevel, setTargetLevel] = useState<string | null>(null);
   const [motivation, setMotivation] = useState<string | null>(null);
+  const [isSubmitting, setIsSubmitting] = useState(false);
 
-  const handleComplete = () => {
-    // TODO: Update ke tabel profiles Supabase
-    // Saat ini sekadar navigasi untuk menyempurnakan UI/UX Flow.
-    router.push("/dashboard");
+  const handleComplete = async () => {
+    if (!targetLevel || !motivation) return;
+    
+    setIsSubmitting(true);
+    try {
+      const supabase = createClient();
+      const { data: { user } } = await supabase.auth.getUser();
+
+      if (user) {
+        const { error } = await supabase
+          .from("profiles")
+          .update({ 
+            jlpt_target: targetLevel, 
+            motivation: motivation 
+          })
+          .eq("id", user.id);
+
+        if (error) throw error;
+      }
+      
+      router.push("/dashboard");
+    } catch (error) {
+      console.error("Gagal menyimpan profil:", error);
+      useUIStore.getState().addNotification({
+        title: "Gagal Menyimpan",
+        message: "Terjadi kendala saat menyimpan profil Anda. Silakan coba lagi.",
+        type: "warning"
+      });
+    } finally {
+      setIsSubmitting(false);
+    }
   };
 
   // Variasi Animasi Framer Motion untuk transisi elegan
@@ -193,10 +223,18 @@ export default function OnboardingPage() {
                 </Button>
                 <Button 
                   onClick={handleComplete}
-                  disabled={!motivation}
+                  disabled={!motivation || isSubmitting}
                   className="rounded-xl px-8 h-12 font-black uppercase tracking-widest bg-indigo-500 hover:bg-indigo-600 text-white shadow-lg shadow-indigo-500/20"
                 >
-                  <CheckCircle2 className="mr-2 h-4 w-4" /> Selesaikan Profil
+                  {isSubmitting ? (
+                    <>
+                      <Loader2 className="mr-2 h-4 w-4 animate-spin" /> Menyimpan...
+                    </>
+                  ) : (
+                    <>
+                      <CheckCircle2 className="mr-2 h-4 w-4" /> Selesaikan Profil
+                    </>
+                  )}
                 </Button>
               </div>
             </motion.div>
