@@ -37,9 +37,10 @@ export function useFlashcardMaster({
   const [combo, setCombo] = useState(0);
 
 
-  const { srs, updateProgress } = useSRSStore();
-  const { xp } = useUserStore();
-  const { isSyncing } = useUIStore();
+  const srs = useSRSStore((state) => state.srs);
+  const updateProgress = useSRSStore((state) => state.updateProgress);
+  const xp = useUserStore((state) => state.xp);
+  const isSyncing = useUIStore((state) => state.isSyncing);
   const router = useRouter();
 
   useEffect(() => {

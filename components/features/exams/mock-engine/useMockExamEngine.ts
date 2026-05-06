@@ -61,7 +61,7 @@ export function useMockExamEngine(exam: ExamData) {
     return groups;
   }, [exam.questions]);
 
-  const { addXP } = useUserStore();
+  const addXP = useUserStore((state) => state.addXP);
   const audioRef = useRef<HTMLAudioElement | null>(null);
 
   // Order of sections

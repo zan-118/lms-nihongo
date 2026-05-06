@@ -4,10 +4,18 @@ import { useSRSStore } from "@/store/useSRSStore";
 import { useUIStore } from "@/store/useUIStore";
 
 export function useAddToSRS(wordId: string) {
-  const { addToSRS } = useSRSStore();
-    const { name, xp, level, streak, todayReviewCount, lastStudyDate, studyDays, inventory } = useUserStore();
-    const { srs } = useSRSStore();
-    const { notifications, settings } = useUIStore();
+  const addToSRS = useSRSStore((state) => state.addToSRS);
+  const name = useUserStore((state) => state.name);
+  const xp = useUserStore((state) => state.xp);
+  const level = useUserStore((state) => state.level);
+  const streak = useUserStore((state) => state.streak);
+  const todayReviewCount = useUserStore((state) => state.todayReviewCount);
+  const lastStudyDate = useUserStore((state) => state.lastStudyDate);
+  const studyDays = useUserStore((state) => state.studyDays);
+  const inventory = useUserStore((state) => state.inventory);
+  const srs = useSRSStore((state) => state.srs);
+  const notifications = useUIStore((state) => state.notifications);
+  const settings = useUIStore((state) => state.settings);
     const progress = { name, xp, level, streak, todayReviewCount, lastStudyDate, studyDays, inventory, srs, notifications, settings };
   const [isAdded, setIsAdded] = useState(false);
   const [isLoaded, setIsLoaded] = useState(false);

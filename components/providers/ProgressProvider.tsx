@@ -16,9 +16,9 @@ export const ProgressProvider = ({
   children: React.ReactNode;
 }) => {
   const hasMounted = useHasMounted();
-  const { setAuth } = useAuthStore();
-  const { syncUserData } = useUserStore();
-  const { dirtySrs } = useSRSStore();
+  const setAuth = useAuthStore((state) => state.setAuth);
+  const syncUserData = useUserStore((state) => state.syncUserData);
+  const dirtySrs = useSRSStore((state) => state.dirtySrs);
   
   const supabase = createClient();
 

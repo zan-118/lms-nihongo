@@ -13,8 +13,9 @@ export function useQuizEngine(questions: QuizQuestion[]) {
   const [showXP, setShowXP] = useState(false);
   const [xpGained, setXpGained] = useState(0);
 
-  const { updateProgress, srs } = useSRSStore();
-  const { xp } = useUserStore();
+  const updateProgress = useSRSStore((state) => state.updateProgress);
+  const srs = useSRSStore((state) => state.srs);
+  const xp = useUserStore((state) => state.xp);
 
   const handleFinish = useCallback((finalScore: number) => {
     setIsFinished(true);

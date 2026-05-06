@@ -21,7 +21,7 @@ export function useWritingCanvas({ strokeColor }: UseWritingCanvasProps) {
   const [hasDrawn, setHasDrawn] = useState(false);
   const [showXP, setShowXP] = useState(false);
   
-  const { addXP } = useUserStore();
+  const addXP = useUserStore((state) => state.addXP);
 
 
   useEffect(() => {

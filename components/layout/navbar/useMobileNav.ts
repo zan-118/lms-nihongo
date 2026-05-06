@@ -5,8 +5,8 @@ import { useAuthStore } from "@/store/useAuthStore";
 
 export function useMobileNav() {
   const pathname = usePathname();
-  const { isAuthenticated } = useAuthStore();
-  const { name: userFullName } = useUserStore();
+  const isAuthenticated = useAuthStore((state) => state.isAuthenticated);
+  const userFullName = useUserStore((state) => state.name);
 
   const navItems = [
     { href: "/dashboard", icon: Home, label: "Beranda" },

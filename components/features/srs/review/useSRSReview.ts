@@ -22,9 +22,10 @@ export function useSRSReview(cards: FlashcardType[]) {
   const [flash, setFlash] = useState<"correct" | "wrong" | null>(null);
   const [earnedXP, setEarnedXP] = useState(0);
 
-  const { srs, updateProgress } = useSRSStore();
-  const { xp } = useUserStore();
-  const { isSyncing } = useUIStore();
+  const srs = useSRSStore((state) => state.srs);
+  const updateProgress = useSRSStore((state) => state.updateProgress);
+  const xp = useUserStore((state) => state.xp);
+  const isSyncing = useUIStore((state) => state.isSyncing);
   const router = useRouter();
 
   useEffect(() => {

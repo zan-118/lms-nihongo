@@ -5,8 +5,8 @@ import { useSRSStore } from "@/store/useSRSStore";
 import { useUIStore } from "@/store/useUIStore";
 
 export default function ReminderSystem() {
-  const { srs } = useSRSStore();
-  const { settings } = useUIStore();
+  const srs = useSRSStore((state) => state.srs);
+  const settings = useUIStore((state) => state.settings);
 
   const lastNotifiedRef = useRef<number>(0);
 

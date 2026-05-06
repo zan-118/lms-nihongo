@@ -9,7 +9,8 @@ import { toast } from "sonner";
 import { useUIStore } from "@/store/useUIStore";
 
 export default function NotificationManager() {
-  const { settings, toggleNotifications } = useUIStore();
+  const settings = useUIStore((state) => state.settings);
+  const toggleNotifications = useUIStore((state) => state.toggleNotifications);
   const notificationsEnabled = settings?.notificationsEnabled || false;
   
   const [permission, setPermission] = useState<NotificationPermission>("default");

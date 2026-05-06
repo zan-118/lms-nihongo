@@ -19,9 +19,9 @@ import { useUIStore } from "@/store/useUIStore";
 import { useAuthStore } from "@/store/useAuthStore";
 
 // Sub-components
-import ProfileSection from "./components/ProfileSection";
-import DataManagementSection from "./components/DataManagementSection";
-import SyncStatusSection from "./components/SyncStatusSection";
+import ProfileSection from "./comp/ProfileSection";
+import DataManagementSection from "./comp/DataManagementSection";
+import SyncStatusSection from "./comp/SyncStatusSection";
 
 const containerVariants: Variants = {
   hidden: { opacity: 0 },
@@ -37,10 +37,32 @@ const itemVariants: Variants = {
 };
 
 export default function SettingsPage() {
-  const { updateProfileName, resetUser, id, isGuest, name, xp, level, streak, todayReviewCount, lastStudyDate, studyDays, inventory } = useUserStore();
-  const { dirtySrs, clearDirtySrs, resetSRS, srs } = useSRSStore();
-  const { exportData, importData, resetUI, notifications, settings } = useUIStore();
-  const { isAuthenticated, resetAuth } = useAuthStore();
+  const updateProfileName = useUserStore((state) => state.updateProfileName);
+  const resetUser = useUserStore((state) => state.resetUser);
+  const id = useUserStore((state) => state.id);
+  const isGuest = useUserStore((state) => state.isGuest);
+  const name = useUserStore((state) => state.name);
+  const xp = useUserStore((state) => state.xp);
+  const level = useUserStore((state) => state.level);
+  const streak = useUserStore((state) => state.streak);
+  const todayReviewCount = useUserStore((state) => state.todayReviewCount);
+  const lastStudyDate = useUserStore((state) => state.lastStudyDate);
+  const studyDays = useUserStore((state) => state.studyDays);
+  const inventory = useUserStore((state) => state.inventory);
+  
+  const dirtySrs = useSRSStore((state) => state.dirtySrs);
+  const clearDirtySrs = useSRSStore((state) => state.clearDirtySrs);
+  const resetSRS = useSRSStore((state) => state.resetSRS);
+  const srs = useSRSStore((state) => state.srs);
+  
+  const exportData = useUIStore((state) => state.exportData);
+  const importData = useUIStore((state) => state.importData);
+  const resetUI = useUIStore((state) => state.resetUI);
+  const notifications = useUIStore((state) => state.notifications);
+  const settings = useUIStore((state) => state.settings);
+  
+  const isAuthenticated = useAuthStore((state) => state.isAuthenticated);
+  const resetAuth = useAuthStore((state) => state.resetAuth);
   
   const hasMounted = useHasMounted();
   const [isSyncing, setIsSyncing] = useState(false);

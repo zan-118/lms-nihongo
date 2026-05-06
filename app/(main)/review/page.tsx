@@ -33,8 +33,8 @@ import { useUIStore } from "@/store/useUIStore";
 type SessionMode = "srs" | "quick" | null;
 
 export default function ReviewPage() {
-  const { loading } = useUIStore();
-  const { srs } = useSRSStore();
+  const loading = useUIStore((state) => state.loading);
+  const srs = useSRSStore((state) => state.srs);
 
   const [mode, setMode] = useState<SessionMode>(null);
   const [cards, setCards] = useState<MasterCardData[]>([]);
