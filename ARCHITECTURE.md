@@ -20,7 +20,11 @@ NihongoRoute is built using a modern, scalable Frontend-heavy architecture, with
 The application architecture strictly separates routing, business logic, and global state to maintain modularity.
 
 ### `app/` (Routing & Layouts)
-The Next.js App Router dictates the navigation and page-level layouts. Pages inside `app/` are generally kept thin. Their primary role is to compose feature components from `components/features/` and provide the necessary layout boundaries (e.g., `layout.tsx`, `loading.tsx`, `error.tsx`).
+The Next.js App Router dictates the navigation and page-level layouts. Pages inside `app/` are generally kept thin. Their primary role is to compose feature components from `components/features/` and provide the necessary layout boundaries (e.g., `layout.tsx`, `loading.tsx`, `error.tsx`). 
+
+**Routing Strategy (Centralized Hubs):** To uphold the DRY principle, redundant dynamic routes (e.g., nesting tools inside specific course categories) are strictly avoided. Instead, modular feature hubs (like `/tools/flashcards`) serve as centralized engines that dynamically adapt content based on URL query parameters (`?category=[slug]`), streamlining maintenance and unifying the user experience.
+
+**Immersive Layouts:** Dedicated experiences (such as `/onboarding`) live outside the `(main)` route group to intentionally bypass standard navigation shells, creating focused, distraction-free environments.
 
 ### `components/features/` (UI Components)
 The UI components are grouped by domain logic rather than being flat. For instance, `features/srs/`, `features/exams/`, and `features/gamification/` contain specific logic, isolating complex UI rendering from page layouts.
@@ -34,6 +38,10 @@ State management is handled by Zustand and split into modular domains:
 - `useUserStore`: Manages gamification state (XP, Level, Streak, Inventory).
 - `useSRSStore`: Manages the spaced repetition algorithm's local state (intervals, ease factors).
 - `useUIStore`: Manages ephemeral UI states like loading screens and notifications.
+
+**Architectural Strictness:**
+1. **Guest-First Design:** By default, the application treats all users as active "Guests". Default states are explicitly seeded so that local offline play works flawlessly without a database connection. Cloud synchronization is only engaged once a user authenticates.
+2. **Atomic Selectors:** To guarantee a 100% crash-safe production environment and prevent infinite re-render loops, components **must** subscribe to granular state slices (e.g., `useUserStore(state => state.xp)`) rather than destructing the entire store or relying on generic wrapper hooks (facades).
 
 **Relationship Flow:** `app/` renders `components/` -> `components/` consume `hooks/` and `store/` -> `hooks/` mutate `store/` and communicate with APIs.
 
