@@ -1,10 +1,10 @@
 import { motion, AnimatePresence } from "framer-motion";
 import { Card } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
-import { Progress } from "@/components/ui/progress";
 import { Brain, AlertCircle, ArrowRight } from "lucide-react";
 import { QuizQuestion } from "./types";
 import { Button } from "@/components/ui/button";
+import { QuizProgress } from "../../quiz/QuizProgress";
 
 interface QuizPlayingProps {
   currentQ: QuizQuestion;
@@ -50,11 +50,13 @@ export function QuizPlaying({
           </div>
         </header>
 
-        <Progress
-          value={(currentIndex / totalQuestions) * 100}
-          className="h-1.5 md:h-2 mb-8 md:mb-12 bg-muted"
-          indicatorClassName="bg-red-500 shadow-[0_0_15px_rgba(239,68,68,0.8)]"
+        <QuizProgress
+          current={currentIndex + 1}
+          total={totalQuestions}
+          color="bg-red-500"
+          indicatorClassName="shadow-[0_0_15px_rgba(239,68,68,0.8)]"
         />
+        <div className="mb-8 md:mb-12" />
 
         <div className="mb-8 md:mb-14 min-h-[100px] md:min-h-[140px] flex items-center">
           <AnimatePresence mode="wait">

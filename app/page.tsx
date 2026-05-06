@@ -81,15 +81,20 @@ export default function LandingPage() {
             animate={{ scale: 1, opacity: 1 }}
             className="mb-8"
           >
-            <Badge
-              variant="outline"
-              className="bg-cyan-400/10 border-cyan-400/20 px-4 py-2 rounded-xl flex items-center gap-2 shadow-none"
+            <motion.div
+              animate={{ y: [0, -8, 0] }}
+              transition={{ duration: 4, repeat: Infinity, ease: "easeInOut" }}
             >
-              <Sparkles size={14} className="text-cyan-600 dark:text-cyan-400 animate-pulse" />
-              <span className="text-xs font-black uppercase tracking-widest text-cyan-600 dark:text-cyan-400">
-                Next-Gen Learning Platform
-              </span>
-            </Badge>
+              <Badge
+                variant="outline"
+                className="bg-cyan-400/10 border-cyan-400/20 px-4 py-2 rounded-xl flex items-center gap-2 shadow-none backdrop-blur-md"
+              >
+                <Sparkles size={14} className="text-cyan-600 dark:text-cyan-400 animate-pulse" />
+                <span className="text-xs font-black uppercase tracking-widest text-cyan-600 dark:text-cyan-400">
+                  Next-Gen Learning Platform
+                </span>
+              </Badge>
+            </motion.div>
           </motion.div>
 
           <motion.h1
@@ -98,9 +103,14 @@ export default function LandingPage() {
             className="text-5xl md:text-7xl lg:text-8xl font-black uppercase tracking-tighter leading-[0.9] text-foreground mb-8"
           >
             Kuasai <br />
-            <span className="text-transparent bg-clip-text bg-gradient-to-r from-cyan-500 to-blue-600 dark:from-cyan-400 dark:to-blue-500 drop-shadow-sm dark:drop-shadow-[0_0_15px_rgba(34,211,238,0.3)]">
+            <motion.span 
+              initial={{ filter: "blur(20px)" }}
+              animate={{ filter: "blur(0px)" }}
+              transition={{ delay: 0.2, duration: 1 }}
+              className="text-transparent bg-clip-text bg-gradient-to-r from-cyan-500 to-blue-600 dark:from-cyan-400 dark:to-blue-500 drop-shadow-sm dark:drop-shadow-[0_0_25px_rgba(34,211,238,0.4)]"
+            >
               Bahasa Jepang.
-            </span>
+            </motion.span>
           </motion.h1>
 
           <motion.p
@@ -121,7 +131,7 @@ export default function LandingPage() {
           >
             <Button
               asChild
-              className="bg-primary hover:bg-foreground text-primary-foreground font-black uppercase tracking-widest h-auto py-4 px-10 rounded-xl shadow-xl transition-all group border-none"
+              className="bg-primary hover:bg-foreground text-primary-foreground font-black uppercase tracking-widest h-auto py-4 px-10 rounded-xl shadow-[0_0_20px_rgba(0,238,255,0.3)] hover:shadow-[0_0_40px_rgba(0,238,255,0.5)] transition-all group border-none"
             >
               <Link href="/dashboard">
                 Mulai Belajar Sekarang{" "}
@@ -213,18 +223,22 @@ export default function LandingPage() {
           viewport={{ once: true }}
           className="w-full"
         >
-          <Card className="p-8 md:p-12 rounded-[2rem] flex flex-col lg:flex-row items-center justify-between gap-10 bg-card border border-border shadow-2xl relative overflow-hidden group transition-all duration-300 hover:border-primary/30">
+          <Card className="p-8 md:p-12 rounded-[2.5rem] flex flex-col lg:flex-row items-center justify-between gap-10 bg-card/50 backdrop-blur-2xl border border-white/10 shadow-2xl relative overflow-hidden group transition-all duration-500 hover:border-primary/40 hover:shadow-primary/10">
+            {/* Ambient Glows Inside Card */}
+            <div className="absolute -top-24 -left-24 w-64 h-64 bg-primary/10 rounded-full blur-[80px] group-hover:bg-primary/20 transition-all duration-700" />
+            <div className="absolute -bottom-24 -right-24 w-64 h-64 bg-blue-500/10 rounded-full blur-[80px] group-hover:bg-blue-500/20 transition-all duration-700" />
+            
             <div className="flex flex-col md:flex-row items-center gap-6 relative z-10">
-              <div className="w-16 h-16 md:w-20 md:h-20 bg-muted border border-border flex items-center justify-center rounded-2xl shrink-0 group-hover:border-primary/40 transition-all duration-500">
+              <div className="w-16 h-16 md:w-20 md:h-20 bg-muted/50 backdrop-blur-xl border border-white/10 flex items-center justify-center rounded-2xl shrink-0 group-hover:border-primary/40 group-hover:scale-110 transition-all duration-500 shadow-xl">
                 <ShieldCheck size={36} className="text-primary" />
               </div>
               <div className="text-center md:text-left">
                 <h4 className="text-foreground font-black uppercase text-2xl md:text-3xl tracking-tight mb-2">
-                  Sepenuhnya <span className="text-primary">Gratis Untukmu</span>
+                  Sepenuhnya <span className="text-primary drop-shadow-[0_0_10px_rgba(0,238,255,0.4)]">Gratis Untukmu</span>
                 </h4>
-                <p className="text-muted-foreground text-sm md:text-base font-medium">
+                <p className="text-muted-foreground text-sm md:text-base font-medium max-w-xl leading-relaxed">
                   Dibuat dengan sepenuh hati untuk membantu siapa saja yang ingin belajar 
-                  bahasa Jepang tanpa harus terhalang biaya.
+                  bahasa Jepang tanpa harus terhalang biaya. Bergabunglah dengan komunitas pembelajar kami.
                 </p>
               </div>
             </div>

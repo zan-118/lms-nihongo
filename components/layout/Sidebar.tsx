@@ -23,31 +23,35 @@ function SidebarItem({ item, pathname, onClick }: { item: { href: string; label:
       <motion.div
         whileHover={{ x: 4 }}
         whileTap={{ scale: 0.98 }}
-        className={`flex items-center gap-4 px-4 py-3 rounded-2xl transition-all duration-300 relative group overflow-hidden ${
+        className={`flex items-center gap-4 px-4 py-3 rounded-2xl transition-all duration-500 relative group overflow-hidden ${
           isActive 
-            ? "bg-primary/10 text-primary border border-primary/20 shadow-[0_0_20px_rgba(0,238,255,0.05)]" 
-            : "text-muted-foreground hover:bg-muted hover:text-foreground border border-transparent"
+            ? "bg-primary/10 text-primary border border-primary/30 shadow-[0_0_25px_rgba(0,238,255,0.1)]" 
+            : "text-muted-foreground hover:bg-white/5 hover:text-foreground border border-transparent"
         }`}
       >
         {/* Active Side Glow */}
         {isActive && (
           <motion.div 
             layoutId="active-side-glow"
-            className="absolute left-0 top-1/4 bottom-1/4 w-[2px] bg-primary shadow-[0_0_12px_rgba(0,238,255,1)] rounded-full"
+            className="absolute left-0 top-1/4 bottom-1/4 w-[3px] bg-primary shadow-[0_0_15px_rgba(0,238,255,1)] rounded-full"
+            animate={{ 
+              boxShadow: ["0 0 10px rgba(0,238,255,0.6)", "0 0 20px rgba(0,238,255,0.9)", "0 0 10px rgba(0,238,255,0.6)"] 
+            }}
+            transition={{ duration: 2, repeat: Infinity }}
           />
         )}
 
-        <item.icon size={18} className={`${isActive ? "drop-shadow-[0_0_8px_rgba(0,238,255,0.5)]" : ""} group-hover:scale-110 transition-transform`} />
-        <span className="text-xs font-bold uppercase tracking-widest flex-1">
+        <item.icon size={18} className={`${isActive ? "text-primary drop-shadow-[0_0_8px_rgba(0,238,255,0.6)]" : "text-muted-foreground"} group-hover:scale-110 transition-all duration-300`} />
+        <span className={`text-xs font-black uppercase tracking-widest flex-1 transition-colors duration-300 ${isActive ? 'text-foreground' : 'text-muted-foreground group-hover:text-foreground'}`}>
           {item.label}
         </span>
         {isActive && (
           <motion.div 
             layoutId="sidebar-active-indicator"
-            className="w-1 h-1 rounded-full bg-primary shadow-[0_0_10px_rgba(0,238,255,0.8)]" 
+            className="w-1.5 h-1.5 rounded-full bg-primary shadow-[0_0_12px_rgba(0,238,255,1)]" 
           />
         )}
-        <ChevronRight size={14} className={`opacity-0 group-hover:opacity-100 transition-all ${isActive ? 'text-primary' : 'text-muted-foreground'} group-hover:translate-x-0.5`} />
+        <ChevronRight size={14} className={`opacity-0 group-hover:opacity-100 transition-all ${isActive ? 'text-primary' : 'text-muted-foreground'} group-hover:translate-x-1`} />
       </motion.div>
     </Link>
   );
@@ -78,7 +82,7 @@ export default function Sidebar({ isOpen, onClose }: { isOpen: boolean; onClose:
         />
       )}
 
-      <aside className={`fixed top-0 left-0 h-screen bg-card/95 md:bg-card/30 backdrop-blur-2xl border-r border-border p-6 z-[60] flex flex-col w-72 transition-transform duration-500 md:translate-x-0 ${isOpen ? 'translate-x-0' : '-translate-x-full'}`}>
+      <aside className={`fixed top-0 left-0 h-screen bg-background/60 backdrop-blur-3xl border-r border-white/5 p-6 z-[60] flex flex-col w-72 transition-transform duration-500 md:translate-x-0 ${isOpen ? 'translate-x-0' : '-translate-x-full'}`}>
       {/* Background Neural Overlays */}
       <div className="absolute inset-0 bg-[radial-gradient(circle_at_20%_20%,rgba(0,238,255,0.02)_0%,transparent_50%)] pointer-events-none" />
       
@@ -187,17 +191,35 @@ export default function Sidebar({ isOpen, onClose }: { isOpen: boolean; onClose:
            </div>
          ) : isAuthenticated ? (
             <div className="space-y-4">
-              <div className="flex items-center gap-3 p-3 bg-muted/50 rounded-2xl border border-border">
-                <div className="w-10 h-10 rounded-xl bg-gradient-to-br from-primary to-blue-600 flex items-center justify-center text-primary-foreground text-sm font-black shadow-lg">
-                  {userFullName ? userFullName.charAt(0).toUpperCase() : "U"}
+              <div className="flex items-center gap-3 p-3 bg-white/[0.03] backdrop-blur-md rounded-2xl border border-white/5 group hover:border-primary/30 transition-all duration-500">
+                {/* Animated Gradient Avatar Border */}
+                <div className="relative w-12 h-12 shrink-0">
+                  <motion.div 
+                    animate={{ rotate: 360 }}
+                    transition={{ duration: 8, repeat: Infinity, ease: "linear" }}
+                    className="absolute inset-0 rounded-xl bg-gradient-to-tr from-primary via-blue-500 to-cyan-400 opacity-40 blur-[2px]"
+                  />
+                  <div className="absolute inset-[2px] rounded-xl bg-background flex items-center justify-center text-primary-foreground text-sm font-black shadow-lg overflow-hidden z-10">
+                    <div className="w-full h-full bg-gradient-to-br from-primary to-blue-600 flex items-center justify-center">
+                      {userFullName ? userFullName.charAt(0).toUpperCase() : "U"}
+                    </div>
+                  </div>
+                  {/* Level Badge Overlay */}
+                  <div className="absolute -bottom-1 -right-1 w-5 h-5 bg-foreground text-background text-[8px] font-black rounded-full border-2 border-background flex items-center justify-center z-20 shadow-lg">
+                    L
+                  </div>
                 </div>
+                
                 <div className="flex flex-col min-w-0">
-                  <span className="text-xs font-black text-foreground uppercase truncate tracking-wider">
+                  <span className="text-xs font-black text-foreground uppercase truncate tracking-wider group-hover:text-primary transition-colors">
                     {userFullName || "Pelajar"}
                   </span>
-                  <span className="text-[8px] font-bold text-muted-foreground uppercase tracking-widest">
-                    Akun Aktif
-                  </span>
+                  <div className="flex items-center gap-1.5 mt-0.5">
+                    <div className="w-1 h-1 rounded-full bg-emerald-500 animate-pulse" />
+                    <span className="text-[8px] font-black text-muted-foreground uppercase tracking-widest">
+                      Cloud Synced
+                    </span>
+                  </div>
                 </div>
               </div>
               

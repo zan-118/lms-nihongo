@@ -7,29 +7,52 @@ import { Card } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { Skeleton } from "@/components/ui/skeleton";
 import Link from "next/link";
+import { useUserStore } from "@/store/useUserStore";
+import { useSRSStore } from "@/store/useSRSStore";
+import { useAuthStore } from "@/store/useAuthStore";
+import { useUIStore } from "@/store/useUIStore";
 import ProfileEditor from "../user/ProfileEditor";
+import { Trophy, Flame, Star, ArrowRight } from "lucide-react";
 
 interface DashboardHeroProps {
-  loading: boolean;
   guestId: string;
-  dueCount: number;
   itemVariants: Variants;
-  isAuthenticated?: boolean;
 }
 
-export default function DashboardHero({ loading, guestId, dueCount, itemVariants, isAuthenticated }: DashboardHeroProps) {
+export default function DashboardHero({ guestId, itemVariants }: DashboardHeroProps) {
+  // ATOMIC SELECTORS (Strictly no destructuring)
+  const name = useUserStore(s => s.name);
+  const xp = useUserStore(s => s.xp);
+  const level = useUserStore(s => s.level);
+  const streak = useUserStore(s => s.streak);
+  const srs = useSRSStore(s => s.srs);
+  const isAuthenticated = useAuthStore(s => s.isAuthenticated);
+  const loading = useUIStore(s => s.loading);
+
+  // Calculated values
+  const now = Date.now();
+  const dueCount = Object.values(srs).filter(card => card.nextReview <= now).length;
+  const xpProgress = (xp % 1000) / 10;
   return (
-    <motion.div variants={itemVariants} className="flex flex-col gap-6 items-start w-full">
+    <motion.div variants={itemVariants} className="flex flex-col gap-10 items-start w-full">
       <div className="flex-1 w-full flex flex-col items-center lg:items-start text-center lg:text-left">
         {loading ? (
           <Skeleton className="h-6 w-32 rounded-full mb-6" />
         ) : (
-          <div className="flex flex-col items-center lg:items-start gap-1 mb-8">
-            <Badge variant="outline" className={`px-4 py-1.5 rounded-full text-xs md:text-xs font-bold uppercase tracking-widest flex items-center gap-2 w-fit shadow-none transition-all ${isAuthenticated ? 'bg-emerald-500/10 text-emerald-500 border-emerald-500/30' : 'bg-primary/10 text-primary border-primary/30'}`}>
-              <Sparkles size={14} /> {isAuthenticated ? 'Student ID:' : 'Guest ID:'} {guestId}
+          <div className="flex flex-col items-center lg:items-start gap-3 mb-10">
+            <Badge 
+              variant="outline" 
+              className={`px-5 py-2 rounded-xl text-[10px] font-black uppercase tracking-[0.2em] flex items-center gap-2 w-fit border-white/10 backdrop-blur-md shadow-xl transition-all ${
+                isAuthenticated 
+                  ? 'bg-gradient-to-r from-emerald-500/20 to-teal-500/20 text-emerald-400 border-emerald-500/30' 
+                  : 'bg-gradient-to-r from-primary/20 to-blue-500/20 text-primary border-primary/30'
+              }`}
+            >
+              <Sparkles size={14} className="animate-pulse" /> 
+              {isAuthenticated ? 'Student ID:' : 'Guest ID:'} {guestId}
             </Badge>
-            <span className="text-xs text-muted-foreground font-medium uppercase tracking-tighter opacity-60 ml-1">
-              {isAuthenticated ? 'Data Anda aman di sinkronisasi Cloud' : 'Data disimpan secara lokal di browser Anda'}
+            <span className="text-[10px] text-muted-foreground font-bold uppercase tracking-widest opacity-40 ml-1">
+              {isAuthenticated ? 'Cloud Sync Active' : 'Local Storage Mode'}
             </span>
           </div>
         )}
@@ -44,55 +67,95 @@ export default function DashboardHero({ loading, guestId, dueCount, itemVariants
         )}
       </div>
 
-      {/* MAIN CALL TO ACTION */}
-      <div className="w-full">
+      {/* MAIN CALL TO ACTION - GLASSMORPHISM CARD */}
+      <div className="w-full relative">
+        {/* Background Decorative Glow */}
+        <div className="absolute -top-10 -right-10 w-40 h-40 bg-primary/10 rounded-full blur-[80px] pointer-events-none" />
+        
         {loading ? (
-          <Skeleton className="h-[280px] w-full rounded-2xl" />
+          <Skeleton className="h-[320px] w-full rounded-[2.5rem]" />
         ) : (
-        <Card className="p-6 md:p-8 rounded-2xl bg-card border border-border shadow-lg relative overflow-hidden group transition-all duration-300 hover:border-primary/40 hover:bg-primary/[0.02]">
-          <div className="absolute inset-0 bg-gradient-to-br from-primary/10 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-700" />
+        <Card className="p-8 md:p-12 rounded-[2.5rem] bg-card/40 backdrop-blur-3xl border border-white/10 shadow-2xl relative overflow-hidden group transition-all duration-500 hover:border-primary/40 hover:shadow-primary/10">
+          <div className="absolute inset-0 bg-gradient-to-br from-primary/5 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-700" />
           
           <div className="relative z-10 flex flex-col items-center text-center">
-            <div className={`w-20 h-20 rounded-full flex items-center justify-center mb-6 shadow-lg border ${dueCount > 0 ? 'bg-primary/20 border-primary/50' : 'bg-emerald-500/20 border-emerald-500/50 animate-pulse'}`}>
+            {/* Pulsing Icon */}
+            <motion.div 
+              animate={dueCount > 0 ? {
+                scale: [1, 1.05, 1],
+                boxShadow: ["0 0 0px rgba(0,238,255,0)", "0 0 20px rgba(0,238,255,0.3)", "0 0 0px rgba(0,238,255,0)"]
+              } : {}}
+              transition={{ duration: 3, repeat: Infinity, ease: "easeInOut" }}
+              className={`w-24 h-24 rounded-3xl flex items-center justify-center mb-8 shadow-2xl border transition-all duration-500 ${
+                dueCount > 0 
+                  ? 'bg-primary/20 border-primary/40 text-primary' 
+                  : 'bg-emerald-500/20 border-emerald-500/40 text-emerald-400'
+              }`}
+            >
               {dueCount > 0 ? (
-                <BrainCircuit size={40} className="text-primary" />
+                <BrainCircuit size={48} className="drop-shadow-[0_0_10px_rgba(0,238,255,0.5)]" />
               ) : (
-                <Sparkles size={40} className="text-emerald-400" />
+                <Trophy size={48} className="drop-shadow-[0_0_10px_rgba(52,211,153,0.5)]" />
               )}
-            </div>
+            </motion.div>
             
-            <h3 className={`text-lg md:text-xl font-black uppercase tracking-tight mb-2 ${dueCount > 0 ? 'text-foreground' : 'text-emerald-500'}`}>
-              {dueCount > 0 ? "Waktunya Sapa Ingatan!" : "Ingatanmu Hebat!"}
+            <h3 className={`text-2xl md:text-3xl font-black uppercase tracking-tight mb-3 ${dueCount > 0 ? 'text-foreground' : 'text-emerald-400'}`}>
+              {dueCount > 0 ? `Waktunya Sapa Ingatan, ${name}!` : `Ingatanmu Tajam, ${name}!`}
             </h3>
-            <p className="text-muted-foreground text-xs md:text-sm mb-6 font-medium">
+            <p className="text-muted-foreground text-sm md:text-base mb-10 font-medium max-w-md leading-relaxed">
               {dueCount > 0 
-                ? `Ada ${dueCount} kosakata yang kangen kamu nih. Yuk, segarkan ingatanmu sebentar!` 
-                : "Semua hafalanmu masih segar bugar! Mau coba pelajari materi baru?"}
+                ? `Ada ${dueCount} kosakata yang mulai memudar. Yuk, segarkan kembali ingatanmu!` 
+                : "Luar biasa! Semua hafalanmu sudah aman. Siap untuk tantangan baru hari ini?"}
             </p>
 
+            {/* QUICK STATS INSIDE HERO */}
+            <div className="grid grid-cols-3 gap-4 mb-10 w-full max-w-sm">
+              <div className="flex flex-col items-center gap-1">
+                <div className="flex items-center gap-1.5 text-amber-500">
+                  <Flame size={14} className="fill-current" />
+                  <span className="text-sm font-black">{streak}</span>
+                </div>
+                <span className="text-[8px] font-black uppercase tracking-widest text-muted-foreground">Streak</span>
+              </div>
+              <div className="flex flex-col items-center gap-1 border-x border-white/5">
+                <div className="flex items-center gap-1.5 text-primary">
+                  <Star size={14} className="fill-current" />
+                  <span className="text-sm font-black">Lvl {level}</span>
+                </div>
+                <span className="text-[8px] font-black uppercase tracking-widest text-muted-foreground">Level</span>
+              </div>
+              <div className="flex flex-col items-center gap-1">
+                <div className="flex items-center gap-1.5 text-blue-400">
+                  <Target size={14} />
+                  <span className="text-sm font-black">{Math.floor(xpProgress)}%</span>
+                </div>
+                <span className="text-[8px] font-black uppercase tracking-widest text-muted-foreground">Progress</span>
+              </div>
+            </div>
+
             {dueCount > 0 ? (
-              <div className="flex flex-col sm:flex-row gap-3 w-full">
-                <Button asChild className="flex-1 h-14 bg-primary hover:bg-foreground text-primary-foreground font-black uppercase tracking-widest rounded-2xl text-xs md:text-xs transition-all shadow-lg border-none">
+              <div className="flex flex-col sm:flex-row gap-4 w-full">
+                <Button asChild className="flex-1 h-16 bg-primary hover:bg-foreground text-primary-foreground font-black uppercase tracking-widest rounded-2xl text-xs transition-all shadow-[0_0_20px_rgba(0,238,255,0.3)] hover:shadow-[0_0_40px_rgba(0,238,255,0.5)] border-none">
                   <Link href="/review">
-                    Mulai Sesi Review <Target size={16} className="ml-2" />
+                    Mulai Review Sekarang <ArrowRight size={18} className="ml-2" />
                   </Link>
                 </Button>
-                <Button asChild variant="outline" className="flex-1 h-14 bg-background border-border hover:bg-primary/10 hover:border-primary hover:text-primary rounded-2xl text-xs md:text-xs font-black uppercase tracking-widest transition-all">
+                <Button asChild variant="outline" className="flex-1 h-16 bg-background/50 backdrop-blur-md border-white/10 hover:border-primary/50 hover:bg-primary/5 rounded-2xl text-xs font-black uppercase tracking-widest transition-all">
                   <Link href="/review/quick">
-                    <Zap size={16} className="mr-2" /> Kuis Cepat
+                    <Zap size={18} className="mr-2 text-primary" /> Kuis Cepat
                   </Link>
                 </Button>
               </div>
             ) : (
-              <div className="flex flex-col sm:flex-row gap-3 w-full">
-                <Button asChild className="flex-1 h-14 bg-foreground text-background hover:bg-emerald-500 hover:text-white font-black uppercase tracking-widest rounded-2xl text-xs md:text-xs transition-all shadow-lg border-none">
+              <div className="flex flex-col sm:flex-row gap-4 w-full">
+                <Button asChild className="flex-1 h-16 bg-foreground text-background hover:bg-emerald-500 hover:text-white font-black uppercase tracking-widest rounded-2xl text-xs transition-all shadow-xl border-none">
                   <Link href="/courses">
-                    Pelajari Materi Baru <BookMarked size={16} className="ml-2" />
+                    Pelajari Materi Baru <BookMarked size={18} className="ml-2" />
                   </Link>
                 </Button>
-                <Button asChild variant="outline" className="flex-1 h-14 bg-background border-border hover:bg-primary/10 hover:border-primary hover:text-primary rounded-2xl text-xs md:text-xs font-black uppercase tracking-widest transition-all">
+                <Button asChild variant="outline" className="flex-1 h-16 bg-background/50 backdrop-blur-md border-white/10 hover:border-primary/50 hover:bg-primary/5 rounded-2xl text-xs font-black uppercase tracking-widest transition-all">
                   <Link href="/review/quick">
-                    <Zap size={16} className="mr-2" /> Kuis Cepat
+                    <Zap size={18} className="mr-2 text-primary" /> Kuis Cepat
                   </Link>
                 </Button>
               </div>
@@ -101,23 +164,21 @@ export default function DashboardHero({ loading, guestId, dueCount, itemVariants
         </Card>
         )}
         
-        {/* SMART TIPS / ONBOARDING */}
+        {/* SMART TIPS */}
         {!loading && (
           <motion.div 
             initial={{ opacity: 0, y: 10 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ delay: 1 }}
-            className="mt-6 p-4 rounded-xl bg-primary/5 border border-primary/20 flex gap-4 items-center"
+            className="mt-8 p-6 rounded-[1.5rem] bg-white/[0.02] backdrop-blur-xl border border-white/5 flex gap-5 items-center group hover:bg-white/[0.04] transition-all duration-300"
           >
-            <div className="shrink-0 w-8 h-8 rounded-lg bg-primary/10 flex items-center justify-center text-primary">
-              <Zap size={14} />
+            <div className="shrink-0 w-10 h-10 rounded-xl bg-primary/10 flex items-center justify-center text-primary group-hover:scale-110 transition-transform">
+              <Sparkles size={18} />
             </div>
             <div>
-              <h4 className="text-xs font-bold text-primary uppercase tracking-widest mb-0.5">Tips Ahli</h4>
-              <p className="text-xs text-muted-foreground leading-snug font-medium">
-                {Math.random() > 0.5 
-                  ? "Aktifkan notifikasi di pengaturan agar tidak ketinggalan sesi review krusial." 
-                  : "Gunakan 'Pelindung Streak' dari toko untuk menjaga progresmu saat sedang sibuk."}
+              <h4 className="text-[10px] font-black text-primary uppercase tracking-[0.2em] mb-1">Tips Ahli</h4>
+              <p className="text-xs text-muted-foreground leading-relaxed font-medium">
+                Selesaikan sesi review sebelum jam 10 malam untuk mempertahankan bonus XP harianmu!
               </p>
             </div>
           </motion.div>

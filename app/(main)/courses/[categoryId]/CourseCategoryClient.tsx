@@ -16,12 +16,12 @@ import {
   Layers,
   PenTool,
   Flame,
-  ChevronRight,
   Sparkles,
 } from "lucide-react";
 import { Card } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import AppBreadcrumbs from "@/components/layout/AppBreadcrumbs";
+import { LessonCard } from "@/components/features/course/LessonCard";
 
 // ======================
 // CONFIG / CONSTANTS
@@ -215,48 +215,14 @@ export default function CourseCategoryClient({
           {data.lessons && data.lessons.length > 0 ? (
             <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 md:gap-8">
               {data.lessons.map((lesson: Lesson, index: number) => (
-                <motion.div
+                <LessonCard
                   key={lesson._id}
-                  variants={itemVariants}
-                  whileHover={{ y: -8 }}
-                >
-                  <Link
-                    href={`/courses/${categoryId}/${lesson.slug}`}
-                    className="group flex flex-col h-full"
-                  >
-                    <Card
-                      className={`p-6 md:p-8 bg-card border border-border rounded-3xl group transition-all duration-300 flex flex-col items-start gap-6 cursor-pointer hover:border-cyan-400/40 hover:bg-cyan-400/[0.02] h-full shadow-lg hover:shadow-2xl relative overflow-hidden`}
-                    >
-                      <div
-                        className={`w-10 h-10 shrink-0 rounded-xl flex items-center justify-center font-black text-base font-mono bg-muted border border-border transition-all duration-300 ${isSideQuest ? "text-amber-500 group-hover:bg-amber-500 group-hover:text-white" : "text-cyan-500 dark:text-cyan-400 group-hover:bg-cyan-500 dark:group-hover:bg-cyan-400 group-hover:text-white dark:group-hover:text-black"}`}
-                      >
-                        {(index + 1).toString().padStart(2, "0")}
-                      </div>
-
-                      <div className="flex-1">
-                        <h4 className="text-xl md:text-2xl font-black text-foreground group-hover:text-cyan-500 dark:group-hover:text-cyan-400 transition-all uppercase tracking-tight mb-3 leading-tight">
-                          {lesson.title}
-                        </h4>
-                        {lesson.summary && (
-                          <p className="text-muted-foreground text-xs font-medium line-clamp-3 opacity-70 group-hover:opacity-100 transition-opacity leading-relaxed">
-                            {lesson.summary}
-                          </p>
-                        )}
-                      </div>
-
-                      <div className="mt-auto pt-6 w-full flex items-center justify-between border-t border-border">
-                        <span className={`text-[9px] font-bold uppercase tracking-widest ${isSideQuest ? "text-amber-500/50 group-hover:text-amber-500" : "text-cyan-500 dark:text-cyan-400/50 group-hover:text-cyan-500 dark:group-hover:text-cyan-400"}`}>
-                          Baca Materi
-                        </span>
-                        <div
-                          className={`w-8 h-8 rounded-lg border border-border flex items-center justify-center transition-all duration-300 bg-muted/50 ${isSideQuest ? "group-hover:bg-amber-500 group-hover:text-white" : "group-hover:bg-cyan-500 dark:group-hover:bg-cyan-400 group-hover:text-white dark:group-hover:text-black"}`}
-                        >
-                          <ChevronRight size={14} />
-                        </div>
-                      </div>
-                    </Card>
-                  </Link>
-                </motion.div>
+                  lesson={lesson}
+                  index={index}
+                  categoryId={categoryId}
+                  isSideQuest={isSideQuest}
+                  progress={0} // Future: Connect to SRS/Progress store
+                />
               ))}
             </div>
           ) : (
