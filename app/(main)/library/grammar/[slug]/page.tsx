@@ -8,6 +8,7 @@
 // ======================
 // IMPORTS
 // ======================
+import { Metadata } from "next";
 import { client } from "@/sanity/lib/client";
 import { PortableText } from "@portabletext/react";
 import Link from "next/link";
@@ -121,6 +122,32 @@ const ptComponents = {
     ),
   },
 };
+
+// ======================
+// METADATA
+// ======================
+export async function generateMetadata({
+  params,
+}: {
+  params: Promise<{ slug: string }>;
+}): Promise<Metadata> {
+  const { slug } = await params;
+  const article = await client.fetch(articleQuery, { slug });
+
+  if (!article) {
+    return {
+      title: "Grammar Tidak Ditemukan | NihongoRoute",
+      description: "Halaman panduan tata bahasa Jepang yang Anda cari tidak tersedia atau telah dipindahkan.",
+    };
+  }
+
+  return {
+    title: `Belajar Grammar ${article.title} | NihongoRoute`,
+    description: article.notes 
+      ? article.notes.slice(0, 150) + "..."
+      : `Pelajari rumus dan cara penggunaan tata bahasa ${article.title} secara mendalam beserta contoh kalimatnya.`,
+  };
+}
 
 // ======================
 // MAIN EXECUTION
