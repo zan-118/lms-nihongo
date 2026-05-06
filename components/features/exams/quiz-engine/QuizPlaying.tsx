@@ -72,7 +72,7 @@ export function QuizPlaying({
 
         <div className="grid grid-cols-1 md:grid-cols-2 gap-3 md:gap-5">
           <AnimatePresence mode="wait">
-            {currentQ.options.map((option, index) => {
+            {(currentQ.options || []).map((option, index) => {
               const isSelected = selectedOption === option;
               const isCorrect = option === currentQ.answer;
 

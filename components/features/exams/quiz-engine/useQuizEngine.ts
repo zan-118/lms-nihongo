@@ -14,7 +14,6 @@ export function useQuizEngine(questions: QuizQuestion[]) {
   const [xpGained, setXpGained] = useState(0);
 
   const updateProgress = useSRSStore((state) => state.updateProgress);
-  const srs = useSRSStore((state) => state.srs);
   const xp = useUserStore((state) => state.xp);
 
   const handleFinish = useCallback((finalScore: number) => {
@@ -26,10 +25,10 @@ export function useQuizEngine(questions: QuizQuestion[]) {
     if (totalXP > 0) {
       setXpGained(totalXP);
       setShowXP(true);
-      updateProgress(xp + totalXP, srs);
+      updateProgress(xp + totalXP, {});
       setTimeout(() => setShowXP(false), 2000);
     }
-  }, [questions.length, xp, srs, updateProgress]);
+  }, [questions.length, xp, updateProgress]);
 
   const nextQuestion = useCallback(() => {
     if (currentIndex < questions.length - 1) {
@@ -67,6 +66,7 @@ export function useQuizEngine(questions: QuizQuestion[]) {
     setSelectedOption(null);
     setIsAnswered(false);
     setIsFinished(false);
+    setShowXP(false);
   }, []);
 
   const currentQ = questions && questions.length > 0 ? questions[currentIndex] : null;

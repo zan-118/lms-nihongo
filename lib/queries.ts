@@ -40,5 +40,10 @@ export const lessonQuery = `*[_type == "lesson" && slug.current == $slug][0] {
   examples,
   conversation,
   grammar,
-  quizzes
+  quizzes[] {
+    question,
+    "options": options[].text,
+    "answer": options[isCorrect == true][0].text,
+    explanation
+  }
 }`;

@@ -3,6 +3,15 @@
     "next/core-web-vitals",
     "next/typescript"
   ],
+  "rules": {
+    "no-restricted-syntax": [
+      "warn",
+      {
+        "selector": "VariableDeclarator[id.type='ObjectPattern'][init.callee.name=/^(useUserStore|useSRSStore|useUIStore|useAuthStore)$/]",
+        "message": "Zustand destructuring is forbidden to prevent infinite re-renders. Use Atomic Selectors instead: `const value = useStore(state => state.value)`. See ARCHITECTURE.md."
+      }
+    ]
+  },
   "ignorePatterns": [
     "node_modules/**",
     ".next/**",
