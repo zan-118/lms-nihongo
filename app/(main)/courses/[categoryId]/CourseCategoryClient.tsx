@@ -150,7 +150,7 @@ export default function CourseCategoryClient({
             </div>
 
             <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-6 md:gap-8">
-              <Link href={`/courses/${categoryId}/flashcards`} className="group flex flex-col h-full">
+              <Link href={`/tools/flashcards?category=${categoryId}`} className="group flex flex-col h-full">
                 <Card className="p-6 md:p-8 bg-card border border-border rounded-2xl hover:border-cyan-400/40 hover:bg-cyan-400/[0.02] transition-all duration-300 flex flex-col items-center text-center gap-5 h-full cursor-pointer relative overflow-hidden group hover:shadow-xl">
                   <div className="w-12 h-12 md:w-14 md:h-14 bg-muted border border-border rounded-xl text-cyan-500 dark:text-cyan-400 flex items-center justify-center group-hover:bg-cyan-500 dark:group-hover:bg-cyan-400 group-hover:text-white dark:group-hover:text-black transition-all duration-300 shadow-inner relative z-10">
                     <Layers size={24} />
