@@ -13,13 +13,10 @@ import { client } from "@/sanity/lib/client";
 import { PortableText } from "@portabletext/react";
 import Link from "next/link";
 import { notFound } from "next/navigation";
-import { ChevronLeft, Home, Library, BookOpen, Activity, BookText, FileText, Lightbulb } from "lucide-react";
-import TTSReader from "@/components/features/tools/tts/TTSReader";
+import { ChevronLeft, Home, Library, BookOpen, Activity, BookText, Lightbulb } from "lucide-react";
 import { Card } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
-import SanityImage from "@/components/ui/SanityImage";
-import * as wanakana from "wanakana";
-import { splitFurigana } from "@/lib/furigana";
+import { sharedPtComponents } from "@/components/ui/portable-text/SharedPortableText";
 
 // ======================
 // CONFIG / CONSTANTS
@@ -46,82 +43,7 @@ const articleQuery = `*[_type == "grammar_article" && slug.current == $slug][0] 
 /**
  * Konfigurasi Pemetaan Portable Text untuk Detail Tata Bahasa.
  */
-const ptComponents = {
-  types: {
-    exampleSentence: ({ value }: { value: { jp: string; furigana?: string; id: string } }) => {
-      if (!value) return null;
-      const isRomaji = value.furigana && /^[a-zA-Z\s.,?!'-]+$/.test(value.furigana);
-      
-      return (
-        <div className="my-8 p-6 md:p-10 bg-card border border-border rounded-[2rem] md:rounded-[3rem] shadow-sm hover:border-primary/30 transition-all duration-500 group relative overflow-hidden">
-          <div className="absolute top-0 right-0 p-8 opacity-[0.03] pointer-events-none group-hover:scale-110 transition-transform duration-700">
-             <FileText size={120} />
-          </div>
-          
-          <div className="relative z-10 space-y-6">
-            <div className="flex flex-col gap-3">
-            <div className="text-xl md:text-3xl font-black text-foreground font-japanese leading-relaxed tracking-tight">
-               {(() => {
-                 const hiraReading = isRomaji ? wanakana.toHiragana(value.furigana || "") : (value.furigana || "");
-                 // Strip spaces/dots for sentence splitting robustness
-                 return splitFurigana(value.jp || "", hiraReading.replace(/[\s.]/g, "")).map((chunk, i) => (
-                    chunk.furi ? (
-                      <ruby key={i}>
-                        {chunk.text}
-                        <rt className="text-[10px] md:text-xs text-primary/80 font-bold tracking-[0.1em] not-italic mb-1">
-                           {chunk.furi}
-                        </rt>
-                      </ruby>
-                    ) : (
-                      <span key={i}>{chunk.text}</span>
-                    )
-                 ));
-               })()}
-            </div>
-            <p className="text-[10px] md:text-sm font-bold text-muted-foreground/40 uppercase tracking-[0.1em] group-hover:text-muted-foreground transition-colors leading-relaxed">
-               {isRomaji ? value.furigana : (value.furigana ? wanakana.toRomaji(value.furigana) : "")}
-            </p>
-            </div>
 
-            <div className="flex flex-col md:flex-row md:items-center justify-between gap-6 pt-6 border-t border-border/50">
-               <div className="flex-1">
-                  <span className="text-[10px] font-black uppercase tracking-widest text-primary/60 block mb-2">Arti Kalimat</span>
-                  <p className="text-sm md:text-lg font-medium text-muted-foreground leading-relaxed italic">
-                     &quot;{value.id}&quot;
-                  </p>
-               </div>
-               <div className="shrink-0 flex items-center gap-3">
-                  <div className="neo-inset p-2 rounded-2xl bg-muted/30 group-hover:shadow-none transition-all">
-                    <TTSReader text={value.jp} minimal={true} />
-                  </div>
-               </div>
-            </div>
-          </div>
-        </div>
-      );
-    },
-    // eslint-disable-next-line @typescript-eslint/no-explicit-any
-    image: (props: any) => <SanityImage {...props} />,
-  },
-  block: {
-    h2: ({ children }: { children?: React.ReactNode }) => (
-      <h2 className="text-2xl md:text-3xl font-black text-foreground mt-12 md:mt-16 mb-6 md:mb-8 uppercase tracking-tight flex items-center gap-3 md:gap-4 group">
-        <span className="w-1.5 md:w-2 h-6 md:h-8 bg-primary rounded-full neo-card shadow-sm" />
-        {children}
-      </h2>
-    ),
-    h3: ({ children }: { children?: React.ReactNode }) => (
-      <h3 className="text-lg md:text-xl font-black text-primary mt-8 md:mt-10 mb-3 md:mb-4 uppercase tracking-widest">
-        {children}
-      </h3>
-    ),
-    normal: ({ children }: { children?: React.ReactNode }) => (
-      <p className="mb-4 md:mb-6 text-muted-foreground text-base md:text-lg leading-relaxed font-medium">
-        {children}
-      </p>
-    ),
-  },
-};
 
 // ======================
 // METADATA
@@ -247,7 +169,7 @@ export default async function GrammarDetailPage({
                 <div className="w-0.5 h-40 bg-gradient-to-b from-primary/30 to-transparent" />
              </div>
           </div>
-          <PortableText value={article.content} components={ptComponents} />
+          <PortableText value={article.content} components={sharedPtComponents} />
         </section>
 
         <footer className="pt-10 md:pt-12 border-t border-border dark:border-white/10 flex justify-center">

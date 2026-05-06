@@ -5,7 +5,7 @@ import { useAuthStore } from "@/store/useAuthStore";
 import { useUserStore } from "@/store/useUserStore";
 import { useSRSStore } from "@/store/useSRSStore";
 import { useUIStore } from "@/store/useUIStore";
-import { useShallow } from "zustand/react/shallow";
+
 import { motion, Variants } from "framer-motion";
 import dynamic from "next/dynamic";
 import DashboardHero from "@/components/features/dashboard/DashboardHero";
@@ -45,46 +45,30 @@ const itemVariants: Variants = {
 };
 
 export default function DashboardPage() {
-  const { isAuthenticated, resetAuth } = useAuthStore(
-    useShallow((s) => ({
-      isAuthenticated: s.isAuthenticated,
-      resetAuth: s.resetAuth,
-    }))
-  );
+  const isAuthenticated = useAuthStore(s => s.isAuthenticated);
+  const resetAuth = useAuthStore(s => s.resetAuth);
 
-  const { id, isGuest, name, xp, level, streak, todayReviewCount, lastStudyDate, studyDays, inventory, resetUser } = useUserStore(
-    useShallow((s) => ({
-      id: s.id,
-      isGuest: s.isGuest,
-      name: s.name,
-      xp: s.xp,
-      level: s.level,
-      streak: s.streak,
-      todayReviewCount: s.todayReviewCount,
-      lastStudyDate: s.lastStudyDate,
-      studyDays: s.studyDays,
-      inventory: s.inventory,
-      resetUser: s.resetUser,
-    }))
-  );
+  const id = useUserStore(s => s.id);
+  const isGuest = useUserStore(s => s.isGuest);
+  const name = useUserStore(s => s.name);
+  const xp = useUserStore(s => s.xp);
+  const level = useUserStore(s => s.level);
+  const streak = useUserStore(s => s.streak);
+  const todayReviewCount = useUserStore(s => s.todayReviewCount);
+  const lastStudyDate = useUserStore(s => s.lastStudyDate);
+  const studyDays = useUserStore(s => s.studyDays);
+  const inventory = useUserStore(s => s.inventory);
+  const resetUser = useUserStore(s => s.resetUser);
 
-  const { srs, resetSRS } = useSRSStore(
-    useShallow((s) => ({
-      srs: s.srs,
-      resetSRS: s.resetSRS,
-    }))
-  );
+  const srs = useSRSStore(s => s.srs);
+  const resetSRS = useSRSStore(s => s.resetSRS);
 
-  const { loading, resetUI, exportData, importData, notifications, settings } = useUIStore(
-    useShallow((s) => ({
-      loading: s.loading,
-      resetUI: s.resetUI,
-      exportData: s.exportData,
-      importData: s.importData,
-      notifications: s.notifications,
-      settings: s.settings,
-    }))
-  );
+  const loading = useUIStore(s => s.loading);
+  const resetUI = useUIStore(s => s.resetUI);
+  const exportData = useUIStore(s => s.exportData);
+  const importData = useUIStore(s => s.importData);
+  const notifications = useUIStore(s => s.notifications);
+  const settings = useUIStore(s => s.settings);
 
   const resetProgress = () => {
     resetAuth();
