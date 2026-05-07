@@ -312,7 +312,7 @@ export default async function LessonPage({ params }: Props) {
                 </h2>
                 <div className="h-[1px] flex-1 bg-border" />
               </div>
-              <QuizEngine questions={formattedQuizzes} />
+              <QuizEngine questions={formattedQuizzes} lessonId={lesson._id} />
             </section>
           )}
         </div>

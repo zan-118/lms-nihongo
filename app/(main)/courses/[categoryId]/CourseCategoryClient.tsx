@@ -22,6 +22,7 @@ import { Card } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import AppBreadcrumbs from "@/components/layout/AppBreadcrumbs";
 import { LessonCard } from "@/components/features/course/LessonCard";
+import { useUserStore } from "@/store/useUserStore";
 
 // ======================
 // CONFIG / CONSTANTS
@@ -70,7 +71,8 @@ export default function CourseCategoryClient({
   const isSideQuest = data.category.type === "general";
   const themeColor = isSideQuest ? "text-amber-600 dark:text-amber-500" : "text-cyan-600 dark:text-cyan-400";
   const themeBorder = isSideQuest ? "border-amber-500" : "border-cyan-400";
-    
+  const completedLessons = useUserStore((s) => s.completedLessons);
+
   // ======================
   // RENDER
   // ======================
@@ -221,7 +223,7 @@ export default function CourseCategoryClient({
                   index={index}
                   categoryId={categoryId}
                   isSideQuest={isSideQuest}
-                  progress={0} // Future: Connect to SRS/Progress store
+                  progress={completedLessons[lesson._id] && !completedLessons[lesson._id].isDeleted ? 100 : 0}
                 />
               ))}
             </div>

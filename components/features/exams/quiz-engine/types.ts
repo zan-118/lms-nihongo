@@ -7,4 +7,5 @@ export interface QuizQuestion {
 
 export interface QuizProps {
   questions: QuizQuestion[];
+  lessonId?: string;
 }

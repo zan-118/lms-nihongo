@@ -6,9 +6,9 @@ import { useQuizEngine } from "./useQuizEngine";
 import { QuizFinished } from "./QuizFinished";
 import { QuizPlaying } from "./QuizPlaying";
 
-export default function QuizEngine({ questions }: QuizProps) {
+export default function QuizEngine({ questions, lessonId }: QuizProps) {
   const [isClient, setIsClient] = useState(false);
-  const engine = useQuizEngine(questions);
+  const engine = useQuizEngine(questions, lessonId);
 
   useEffect(() => {
     setIsClient(true);

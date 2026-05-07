@@ -21,6 +21,8 @@ export function useSyncProgress() {
   const lastStudyDate = useUserStore((s) => s.lastStudyDate);
   const studyDays = useUserStore((s) => s.studyDays);
   const inventory = useUserStore((s) => s.inventory);
+  const completedLessons = useUserStore((s) => s.completedLessons);
+  const dirtyLessons = useUserStore((s) => s.dirtyLessons);
   const isGuest = useUserStore((s) => s.isGuest);
 
   // SRS Store Selectors
@@ -64,8 +66,8 @@ export function useSyncProgress() {
 
   // 5. DEBOUNCED AUTO-SYNC
   const currentProgressData = useMemo(() => ({
-    name, xp, streak, todayReviewCount, lastStudyDate, studyDays, inventory, settings, srs
-  }), [name, xp, streak, todayReviewCount, lastStudyDate, studyDays, inventory, settings, srs]);
+    name, xp, streak, todayReviewCount, lastStudyDate, studyDays, inventory, settings, srs, completedLessons
+  }), [name, xp, streak, todayReviewCount, lastStudyDate, studyDays, inventory, settings, srs, completedLessons]);
 
   const lastSyncedProgress = useRef<string>(JSON.stringify(currentProgressData));
 
@@ -73,20 +75,20 @@ export function useSyncProgress() {
     if (isFetching || !session?.user || isGuest) return;
 
     const currentProgressStr = JSON.stringify({
-      name, xp, streak, studyDays, inventory, settings, lastStudyDate, todayReviewCount
+      name, xp, streak, studyDays, inventory, settings, lastStudyDate, todayReviewCount, completedLessons
     });
 
     const isProfileChanged = currentProgressStr !== lastSyncedProgress.current;
 
-    if (!isProfileChanged && dirtySrs.size === 0) return;
+    if (!isProfileChanged && dirtySrs.size === 0 && dirtyLessons.size === 0) return;
 
     const timer = setTimeout(() => {
-      syncMutation.mutate({ progress: currentProgressData, dirtySrs });
+      syncMutation.mutate({ progress: currentProgressData, dirtySrs, dirtyLessons });
       lastSyncedProgress.current = currentProgressStr;
     }, 2000);
 
     return () => clearTimeout(timer);
-  }, [name, xp, streak, studyDays, inventory, settings, lastStudyDate, todayReviewCount, srs, dirtySrs, session?.user, isFetching, isGuest, syncMutation, currentProgressData]);
+  }, [name, xp, streak, studyDays, inventory, settings, lastStudyDate, todayReviewCount, srs, dirtySrs, dirtyLessons, session?.user, isFetching, isGuest, syncMutation, currentProgressData, completedLessons]);
 
-  return { isLoading: isFetching, syncNow: () => syncMutation.mutate({ progress: currentProgressData, dirtySrs }) };
+  return { isLoading: isFetching, syncNow: () => syncMutation.mutate({ progress: currentProgressData, dirtySrs, dirtyLessons }) };
 }

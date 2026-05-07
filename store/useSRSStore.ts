@@ -158,12 +158,45 @@ export const useSRSStore = create<SRSStateStore>()(
           }
         });
 
-        // 3. Update Stores
+        // 3. Merge Lessons
+        const localLessons = userState.completedLessons || {};
+        const cloudLessons = cloudData.completedLessons || {};
+        const mergedLessons = { ...cloudLessons };
+        const newDirtyLessons = new Set(userState.dirtyLessons);
+
+        Object.entries(localLessons).forEach(([id, localState]) => {
+          const cloudState = cloudLessons[id];
+          if (localState.isDeleted) {
+            if (cloudState && !cloudState.isDeleted) {
+              newDirtyLessons.add(id);
+              // In cloud it's not deleted, but locally it is. We keep it deleted.
+              mergedLessons[id] = localState;
+            }
+            return;
+          }
+          if (!cloudState) {
+            mergedLessons[id] = localState;
+            newDirtyLessons.add(id);
+          } else {
+            if (localState.updatedAt > cloudState.updatedAt) {
+              mergedLessons[id] = localState;
+              newDirtyLessons.add(id);
+            } else {
+              mergedLessons[id] = cloudState;
+              newDirtyLessons.delete(id);
+            }
+          }
+        });
+
+        // 4. Update Stores
         useUserStore.getState().setGamification({
           ...mergedGamification,
           name: cloudData.name || userState.name,
-          lastStudyDate: cloudData.lastStudyDate // Tetap sinkronkan tanggal terakhir dari cloud
+          lastStudyDate: cloudData.lastStudyDate,
+          completedLessons: mergedLessons,
         });
+
+        useUserStore.getState().setDirtyLessons(newDirtyLessons);
 
         uiState.toggleNotifications(cloudData.settings.notificationsEnabled);
 

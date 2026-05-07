@@ -8,7 +8,7 @@ import { useUIStore } from "@/store/useUIStore";
 import { SRSState } from "@/lib/srs";
 import { calculateLevel } from "@/lib/level";
 import { getLocalDateString } from "@/lib/utils";
-import { UserProgress } from "@/store/types";
+import { UserProgress, LessonProgress } from "@/store/types";
 import { handleLegacyMigration } from "@/lib/supabase/sync";
 import { Session } from "@supabase/supabase-js";
 
@@ -30,7 +30,7 @@ export function useCloudData(session: Session | null | undefined, hasMounted: bo
       }
 
       // Ambil data dari Cloud
-      const [profileRes, srsRes] = await Promise.all([
+      const [profileRes, srsRes, lessonsRes] = await Promise.all([
         supabase
           .from("profiles")
           .select("full_name, xp, level, streak, today_review_count, last_study_date, study_days, inventory, settings")
@@ -39,11 +39,16 @@ export function useCloudData(session: Session | null | undefined, hasMounted: bo
         supabase
           .from("user_srs")
           .select("word_id, interval, repetition, ease_factor, next_review, updated_at")
+          .eq("user_id", session.user.id),
+        supabase
+          .from("user_lessons")
+          .select("lesson_id, is_completed, completed_at, updated_at")
           .eq("user_id", session.user.id)
       ]);
 
       const profile = profileRes.data;
       const srsData = srsRes.data;
+      const lessonsData = lessonsRes.data;
 
       const parsedSrs: Record<string, SRSState> = {};
       if (srsData) {
@@ -54,6 +59,17 @@ export function useCloudData(session: Session | null | undefined, hasMounted: bo
             easeFactor: row.ease_factor,
             nextReview: new Date(row.next_review).getTime(),
             updatedAt: new Date(row.updated_at).getTime(),
+          };
+        });
+      }
+
+      const parsedLessons: Record<string, LessonProgress> = {};
+      if (lessonsData) {
+        lessonsData.forEach((row) => {
+          parsedLessons[row.lesson_id] = {
+            completedAt: new Date(row.completed_at).getTime(),
+            updatedAt: new Date(row.updated_at).getTime(),
+            isDeleted: !row.is_completed
           };
         });
       }
@@ -82,6 +98,7 @@ export function useCloudData(session: Session | null | undefined, hasMounted: bo
         lastStudyDate: profile?.last_study_date || null,
         studyDays: sanitizedStudyDays,
         srs: parsedSrs,
+        completedLessons: parsedLessons,
         inventory: profile?.inventory || { streakFreeze: 0 },
         settings: profile?.settings || { notificationsEnabled: false },
         notifications: useUIStore.getState().notifications || [],

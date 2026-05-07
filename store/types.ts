@@ -21,6 +21,12 @@ export interface Settings {
   notificationsEnabled: boolean;
 }
 
+export interface LessonProgress {
+  completedAt: number;
+  updatedAt: number;
+  isDeleted?: boolean;
+}
+
 export interface UserProgress {
   id: string;
   isGuest: boolean;
@@ -32,6 +38,7 @@ export interface UserProgress {
   lastStudyDate: string | null;
   studyDays: Record<string, number>;
   srs: Record<string, SRSState>;
+  completedLessons: Record<string, LessonProgress>;
   notifications: Notification[];
   inventory: Inventory;
   settings: Settings;

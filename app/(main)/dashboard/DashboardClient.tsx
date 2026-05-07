@@ -54,7 +54,20 @@ const TABS = [
   { id: "pengaturan", label: "Setelan", icon: "⚙️" },
 ];
 
-export default function DashboardPage() {
+interface DashboardClientProps {
+  courseMetadata: Array<{
+    _id: string;
+    title: string;
+    slug: string;
+    lessons: Array<{
+      _id: string;
+      title: string;
+      slug: string;
+    }>;
+  }>;
+}
+
+export default function DashboardClient({ courseMetadata }: DashboardClientProps) {
   const isAuthenticated = useAuthStore(s => s.isAuthenticated);
   const resetAuth = useAuthStore(s => s.resetAuth);
 
@@ -243,6 +256,7 @@ export default function DashboardPage() {
                 dueCount={dueCount}
                 itemVariants={itemVariants}
                 isAuthenticated={isAuthenticated}
+                courseMetadata={courseMetadata}
               />
               <div className="space-y-8">
                 <div className="flex flex-col">
@@ -272,6 +286,7 @@ export default function DashboardPage() {
               xpNeeded={xpNeeded} 
               xpProgress={xpProgress} 
               itemVariants={itemVariants} 
+              courseMetadata={courseMetadata}
             />
             <div className="space-y-8">
               <div className="flex flex-col">

@@ -4,7 +4,7 @@ import { useSRSStore } from "@/store/useSRSStore";
 import { sounds } from "@/lib/audio";
 import { QuizQuestion } from "./types";
 
-export function useQuizEngine(questions: QuizQuestion[]) {
+export function useQuizEngine(questions: QuizQuestion[], lessonId?: string) {
   const [currentIndex, setCurrentIndex] = useState(0);
   const [selectedOption, setSelectedOption] = useState<string | null>(null);
   const [isAnswered, setIsAnswered] = useState(false);
@@ -14,6 +14,7 @@ export function useQuizEngine(questions: QuizQuestion[]) {
   const [xpGained, setXpGained] = useState(0);
 
   const updateProgress = useSRSStore((state) => state.updateProgress);
+  const completeLesson = useUserStore((state) => state.completeLesson);
   const xp = useUserStore((state) => state.xp);
 
   const handleFinish = useCallback((finalScore: number) => {
@@ -26,9 +27,15 @@ export function useQuizEngine(questions: QuizQuestion[]) {
       setXpGained(totalXP);
       setShowXP(true);
       updateProgress(xp + totalXP, {});
+      
+      // Mark lesson as completed if score is at least 70%
+      if (lessonId && finalScore / questions.length >= 0.7) {
+        completeLesson(lessonId);
+      }
+
       setTimeout(() => setShowXP(false), 2000);
     }
-  }, [questions.length, xp, updateProgress]);
+  }, [questions.length, xp, updateProgress, completeLesson, lessonId]);
 
   const nextQuestion = useCallback(() => {
     if (currentIndex < questions.length - 1) {

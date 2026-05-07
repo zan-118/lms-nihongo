@@ -1,6 +1,5 @@
 "use client";
 
-import { useState, useEffect } from "react";
 import { motion, Variants } from "framer-motion";
 import { Sparkles, BrainCircuit, Target, BookMarked, Zap } from "lucide-react";
 import { Badge } from "@/components/ui/badge";
@@ -9,37 +8,44 @@ import { Button } from "@/components/ui/button";
 import { Skeleton } from "@/components/ui/skeleton";
 import Link from "next/link";
 import { useUserStore } from "@/store/useUserStore";
-import { useSRSStore } from "@/store/useSRSStore";
-import { useAuthStore } from "@/store/useAuthStore";
-import { useUIStore } from "@/store/useUIStore";
 import ProfileEditor from "../user/ProfileEditor";
 import { Trophy, Flame, Star, ArrowRight } from "lucide-react";
 import AnimatedCounter from "@/components/ui/AnimatedCounter";
+import ContinueLearning from "./ContinueLearning";
 
 interface DashboardHeroProps {
   guestId: string;
   itemVariants: Variants;
+  courseMetadata: Array<{
+    _id: string;
+    title: string;
+    slug: string;
+    lessons: Array<{
+      _id: string;
+      title: string;
+      slug: string;
+    }>;
+  }>;
+  loading: boolean;
+  dueCount: number;
+  isAuthenticated: boolean;
 }
 
-export default function DashboardHero({ guestId, itemVariants }: DashboardHeroProps) {
+export default function DashboardHero({ 
+  guestId, 
+  itemVariants, 
+  courseMetadata,
+  loading,
+  dueCount,
+  isAuthenticated
+}: DashboardHeroProps) {
   // ATOMIC SELECTORS (Strictly no destructuring)
   const name = useUserStore(s => s.name);
   const xp = useUserStore(s => s.xp);
   const level = useUserStore(s => s.level);
   const streak = useUserStore(s => s.streak);
-  const srs = useSRSStore(s => s.srs);
-  const isAuthenticated = useAuthStore(s => s.isAuthenticated);
-  const loading = useUIStore(s => s.loading);
 
-  // Calculated values
-  const [dueCount, setDueCount] = useState(0);
   const xpProgress = (xp % 1000) / 10;
-
-  useEffect(() => {
-    const now = Date.now();
-    const count = Object.values(srs).filter(card => card.nextReview <= now).length;
-    setDueCount(count);
-  }, [srs]);
 
   return (
     <motion.div variants={itemVariants} className="flex flex-col gap-10 items-start w-full">
@@ -180,6 +186,18 @@ export default function DashboardHero({ guestId, itemVariants }: DashboardHeroPr
             )}
           </div>
         </Card>
+        )}
+        
+        {/* CONTINUE LEARNING WIDGET */}
+        {!loading && (
+          <motion.div
+            initial={{ opacity: 0, y: 20 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ delay: 0.5 }}
+            className="mt-12"
+          >
+            <ContinueLearning courseMetadata={courseMetadata} />
+          </motion.div>
         )}
         
         {/* SMART TIPS */}

@@ -5,13 +5,14 @@ import { Card } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
 import { Progress } from "@/components/ui/progress";
 import { Skeleton } from "@/components/ui/skeleton";
-import { Flame } from "lucide-react";
+import { Flame, BookOpen, CheckCircle2 } from "lucide-react";
 import DailyQuests from "./quests/DailyQuests";
 import MemoryStats from "./dashboard-stats/MemoryStats";
 import SRSAnalytics from "../srs/analytics/SRSAnalytics";
 import Heatmap from "./heatmap/Heatmap";
 import StreakFreezeCard from "../gamification/StreakFreezeCard";
 import { UserProgress } from "@/store/types";
+import { useUserStore } from "@/store/useUserStore";
 
 interface DashboardStatsProps {
   loading: boolean;
@@ -19,9 +20,28 @@ interface DashboardStatsProps {
   xpNeeded: number;
   xpProgress: number;
   itemVariants: Variants;
+  courseMetadata: Array<{
+    _id: string;
+    title: string;
+    slug: string;
+    lessons: Array<{
+      _id: string;
+      title: string;
+      slug: string;
+    }>;
+  }>;
 }
 
-export default function DashboardStats({ loading, progress, xpNeeded, xpProgress, itemVariants }: DashboardStatsProps) {
+export default function DashboardStats({ 
+  loading, 
+  progress, 
+  xpNeeded, 
+  xpProgress, 
+  itemVariants,
+  courseMetadata 
+}: DashboardStatsProps) {
+  const completedLessons = useUserStore(s => s.completedLessons);
+
   return (
     <div className="grid grid-cols-1 md:grid-cols-12 gap-6 md:gap-8 mb-20">
       {/* LEVEL & XP CARD (SPAN 8) */}
@@ -29,7 +49,7 @@ export default function DashboardStats({ loading, progress, xpNeeded, xpProgress
         {loading ? (
           <Skeleton className="h-[250px] w-full rounded-2xl" />
         ) : (
-          <Card className="h-full bg-card border border-border rounded-2xl p-6 md:p-8 flex flex-col justify-center relative overflow-hidden group transition-all duration-300 hover:border-emerald-500/30 shadow-lg">
+          <Card className="h-full bg-card/40 backdrop-blur-xl border border-white/10 rounded-[2rem] p-6 md:p-8 flex flex-col justify-center relative overflow-hidden group transition-all duration-300 hover:border-emerald-500/30 shadow-lg">
             <div className="absolute top-0 right-0 w-64 h-64 bg-emerald-500/10 blur-[80px] rounded-full pointer-events-none" />
             <div className="relative z-10 flex flex-col md:flex-row justify-between items-start md:items-end gap-6 mb-8">
               <div>
@@ -40,7 +60,7 @@ export default function DashboardStats({ loading, progress, xpNeeded, xpProgress
                   <span className="text-5xl md:text-6xl font-black text-foreground tracking-tighter">
                     {progress.level}
                   </span>
-                  <Badge className="bg-emerald-500/10 text-emerald-500 border-emerald-500/20 px-3 py-1 font-bold uppercase tracking-widest text-[8px] md:text-xs shadow-none">
+                  <Badge className="bg-emerald-500/10 text-emerald-400 border-emerald-500/20 px-3 py-1 font-bold uppercase tracking-widest text-[8px] md:text-xs shadow-none">
                     Status Belajar
                   </Badge>
                 </div>
@@ -79,7 +99,7 @@ export default function DashboardStats({ loading, progress, xpNeeded, xpProgress
           </>
         ) : (
           <>
-            <Card className="h-[140px] bg-card border border-border rounded-2xl p-5 flex flex-col justify-between group overflow-hidden relative transition-all duration-300 hover:border-amber-500/30 shadow-lg">
+            <Card className="h-[140px] bg-card/40 backdrop-blur-xl border border-white/10 rounded-[1.5rem] p-5 flex flex-col justify-between group overflow-hidden relative transition-all duration-300 hover:border-amber-500/30 shadow-lg">
               <h3 className="text-amber-500/60 font-bold uppercase tracking-widest text-xs">
                 Semangat Belajar
               </h3>
@@ -97,6 +117,60 @@ export default function DashboardStats({ loading, progress, xpNeeded, xpProgress
             <StreakFreezeCard />
           </>
         )}
+      </motion.div>
+
+      {/* CURRICULUM MASTERY SECTION */}
+      <motion.div variants={itemVariants} className="md:col-span-12">
+        <div className="flex flex-col mb-8 mt-4">
+          <h2 className="text-muted-foreground font-bold uppercase tracking-widest text-[10px] mb-2 flex items-center gap-2">
+            <div className="w-1.5 h-1.5 rounded-full bg-primary shadow-[0_0_8px_rgba(0,238,255,0.8)]" />
+            Pencapaian Silabus
+          </h2>
+          <h3 className="text-xl md:text-2xl font-black text-foreground uppercase tracking-tight">
+            Penguasaan <span className="text-primary">Materi</span>
+          </h3>
+        </div>
+        
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
+          {courseMetadata.map((cat) => {
+             const total = cat.lessons.length;
+             const completed = cat.lessons.filter(l => completedLessons[l._id]?.isCompleted).length;
+             const percentage = total > 0 ? (completed / total) * 100 : 0;
+             
+             return (
+               <Card key={cat._id} className="bg-white/[0.03] backdrop-blur-xl border-white/10 p-6 rounded-[2rem] group hover:border-primary/40 transition-all duration-500">
+                  <div className="flex items-center gap-4 mb-5">
+                    <div className="w-12 h-12 rounded-2xl bg-primary/10 flex items-center justify-center text-primary border border-primary/20">
+                      {percentage === 100 ? <CheckCircle2 size={24} /> : <BookOpen size={24} />}
+                    </div>
+                    <div className="flex-1">
+                      <h4 className="text-sm font-black uppercase tracking-tight line-clamp-1">{cat.title}</h4>
+                      <p className="text-[10px] text-muted-foreground font-bold uppercase tracking-widest">
+                        {completed} / {total} Pelajaran
+                      </p>
+                    </div>
+                    <div className="text-lg font-black text-primary font-mono">
+                      {Math.round(percentage)}%
+                    </div>
+                  </div>
+                  
+                  <div className="relative h-2 w-full bg-white/5 rounded-full overflow-hidden border border-white/5">
+                    <motion.div 
+                      initial={{ width: 0 }}
+                      whileInView={{ width: `${percentage}%` }}
+                      transition={{ duration: 1, ease: "easeOut" }}
+                      viewport={{ once: true }}
+                      className={`h-full rounded-full ${
+                        percentage === 100 
+                          ? 'bg-emerald-500 shadow-[0_0_10px_rgba(16,185,129,0.5)]' 
+                          : 'bg-gradient-to-r from-primary to-blue-500 shadow-[0_0_10px_rgba(0,238,255,0.4)]'
+                      }`}
+                    />
+                  </div>
+               </Card>
+             );
+          })}
+        </div>
       </motion.div>
 
       {/* DAILY QUESTS, MEMORY STATS, SRS ANALYTICS */}

@@ -1,7 +1,7 @@
 import { create } from "zustand";
-import { persist, createJSONStorage } from "zustand/middleware";
+import { persist } from "zustand/middleware";
 import { get, set as idbSet, del } from "idb-keyval";
-import { Inventory } from "./types";
+import { Inventory, LessonProgress } from "./types";
 import { calculateLevel } from "@/lib/level";
 import { useUIStore } from "./useUIStore";
 
@@ -16,21 +16,22 @@ interface UserState {
   lastStudyDate: string | null;
   studyDays: Record<string, number>;
   inventory: Inventory;
+  completedLessons: Record<string, LessonProgress>;
+  dirtyLessons: Set<string>;
 
   updateProfileName: (name: string) => void;
   addXP: (amount: number) => void;
   setGamification: (data: Partial<UserState>) => void;
   buyStreakFreeze: () => boolean;
   claimQuest: (questId: string, date: string, rewardXP: number) => void;
+  completeLesson: (lessonId: string) => void;
+  setDirtyLessons: (updater: Set<string> | ((prev: Set<string>) => Set<string>)) => void;
+  clearDirtyLessons: (syncedIds?: string[]) => void;
   syncUserData: (data: { id: string; isGuest: boolean; name?: string | null }) => void;
   resetUser: () => void;
 }
 
-const idbStorage = {
-  getItem: async (name: string) => (await get(name)) || null,
-  setItem: async (name: string, value: string) => await idbSet(name, value),
-  removeItem: async (name: string) => await del(name),
-};
+
 
 export const useUserStore = create<UserState>()(
   persist(
@@ -51,7 +52,8 @@ export const useUserStore = create<UserState>()(
           quests: []
         }
       },
-      dirtySrs: new Set<string>(),
+      completedLessons: {},
+      dirtyLessons: new Set<string>(),
 
       updateProfileName: (name) => set({ name }),
 
@@ -127,6 +129,38 @@ export const useUserStore = create<UserState>()(
           state.addXP(rewardXP);
         }
       },
+
+      completeLesson: (lessonId) => {
+        const state = get();
+        if (state.completedLessons[lessonId] && !state.completedLessons[lessonId].isDeleted) return;
+
+        const now = Date.now();
+        const newCompleted = { ...state.completedLessons };
+        newCompleted[lessonId] = {
+          completedAt: state.completedLessons[lessonId]?.completedAt || now,
+          updatedAt: now,
+          isDeleted: false
+        };
+
+        const newDirty = new Set(state.dirtyLessons);
+        newDirty.add(lessonId);
+
+        set({
+          completedLessons: newCompleted,
+          dirtyLessons: newDirty
+        });
+      },
+
+      setDirtyLessons: (updater) => set((state) => ({ 
+        dirtyLessons: typeof updater === 'function' ? updater(state.dirtyLessons) : updater 
+      })),
+
+      clearDirtyLessons: (syncedIds) => set((state) => {
+        if (!syncedIds) return { dirtyLessons: new Set() };
+        const newDirty = new Set(state.dirtyLessons);
+        syncedIds.forEach(id => newDirty.delete(id));
+        return { dirtyLessons: newDirty };
+      }),
       
       syncUserData: (data) => set((state) => ({ 
         ...state, 
@@ -151,13 +185,46 @@ export const useUserStore = create<UserState>()(
             date: "",
             quests: []
           }
-        }
+        },
+        completedLessons: {},
+        dirtyLessons: new Set<string>()
       }),
     }),
     {
       name: "nihongoroute_user_data",
-      // eslint-disable-next-line @typescript-eslint/no-explicit-any
-      storage: createJSONStorage(() => idbStorage as unknown as any),
+      storage: {
+        getItem: async (name) => {
+          const data = await get(name);
+          if (!data) return null;
+          
+          try {
+            const parsed = JSON.parse(data, (key, value) => {
+              if (key === 'dirtyLessons' && Array.isArray(value)) {
+                return new Set(value);
+              }
+              return value;
+            });
+            return { state: parsed.state, version: parsed.version };
+          } catch (e) {
+            console.error("Failed to parse user store data:", e);
+            return null;
+          }
+        },
+        setItem: async (name, value) => {
+          try {
+            const stringified = JSON.stringify(value, (key, val) => {
+              if (val instanceof Set) {
+                return Array.from(val);
+              }
+              return val;
+            });
+            await idbSet(name, stringified);
+          } catch (e) {
+            console.error("Failed to save user store data:", e);
+          }
+        },
+        removeItem: async (name) => await del(name),
+      },
     }
   )
 );
