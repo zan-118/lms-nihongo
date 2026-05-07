@@ -32,7 +32,7 @@ export default function ContinueLearning({ courseMetadata }: ContinueLearningPro
     const stats = courseMetadata.map(cat => {
       const completedInCat = cat.lessons.filter(lesson => {
           const record = completedLessons[lesson._id];
-          return record && record.isCompleted;
+          return record && record.completedAt;
       });
       
       const totalLessons = cat.lessons.length;
@@ -53,18 +53,20 @@ export default function ContinueLearning({ courseMetadata }: ContinueLearningPro
     // If none has progress, pick the first category (usually N5)
     let active = stats
       .filter(s => s.progress > 0 && s.progress < 100)
-      .sort((a, b) => b.lastUpdate - a.lastUpdate)[0];
+      .sort((a, b) => b.lastUpdate - a.lastUpdate)[0] as typeof stats[number] | undefined;
 
     if (!active) {
        // If no partially completed course, check if any course is not 100%
        active = stats.find(s => s.progress < 100);
     }
 
-    if (!active) return null; // All courses 100% finished (congrats!)
+    if (!active || !active.lessons || active.lessons.length === 0) return null;
 
     // 3. Find next lesson in active course
-    const nextLessonIndex = active.lessons.findIndex(l => !completedLessons[l._id]?.isCompleted);
+    const nextLessonIndex = active.lessons.findIndex(l => !completedLessons[l._id]?.completedAt);
     const nextLesson = active.lessons[nextLessonIndex] || active.lessons[0];
+
+    if (!nextLesson) return null;
 
     return {
       courseTitle: active.title,

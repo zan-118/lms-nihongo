@@ -133,8 +133,9 @@ export default function DashboardStats({
         
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
           {courseMetadata.map((cat) => {
-             const total = cat.lessons.length;
-             const completed = cat.lessons.filter(l => completedLessons[l._id]?.isCompleted).length;
+             const lessons = cat.lessons || [];
+             const total = lessons.length;
+             const completed = lessons.filter(l => completedLessons[l._id]?.completedAt).length;
              const percentage = total > 0 ? (completed / total) * 100 : 0;
              
              return (
