@@ -9,207 +9,62 @@
 import { useState } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import Link from "next/link";
-import TTSReader from "@/components/features/tools/tts/TTSReader";
-import FlashcardMaster from "@/components/features/flashcards/master/FlashcardMaster";
 import {
   Search,
   Home,
   Library,
   Activity,
-  ArrowLeft,
-  RefreshCw,
   ChevronLeft,
   ChevronRight,
   ChevronsLeft,
   ChevronsRight,
-  X,
-  Sparkles,
-  Layers,
-  Volume2,
+  RefreshCw,
 } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Card } from "@/components/ui/card";
-import { Badge } from "@/components/ui/badge";
 import { Switch } from "@/components/ui/switch";
-import * as wanakana from "wanakana";
-import { splitFurigana } from "@/lib/furigana";
-import {
-  Dialog,
-  DialogContent,
-  DialogTitle,
-  DialogDescription,
-} from "@/components/ui/dialog";
 
-export interface VerbData {
-  _id: string;
-  group: number;
-  jisho: string;
-  meaning: string;
-  masu: string;
-  furigana?: string;
-  te?: string;
-  nai?: string;
-  ta?: string;
-  tai?: string;
-  kanou?: string;
-  shieki?: string;
-  ukemi?: string;
-  katei?: string;
-  ikou?: string;
-  meirei?: string;
-  transitivity?: string;
-}
-
-const ITEMS_PER_PAGE = 30;
+// Domain Components & Hooks
+import { VerbData } from "@/components/features/library/verbs/types";
+import { useVerbFilter } from "@/components/features/library/verbs/useVerbFilter";
+import { VerbCard } from "@/components/features/library/verbs/VerbCard";
+import { VerbDetailModal } from "@/components/features/library/verbs/VerbDetailModal";
+import { VerbFlashcardView } from "@/components/features/library/verbs/VerbFlashcardView";
 
 export default function VerbListClient({
   initialVerbs,
 }: {
   initialVerbs: VerbData[];
 }) {
-  const [searchTerm, setSearchTerm] = useState("");
-  const [activeGroup, setActiveGroup] = useState<number | null>(null);
   const [selectedVerb, setSelectedVerb] = useState<VerbData | null>(null);
   const [isFlashcardMode, setIsFlashcardMode] = useState(false);
   const [drillMode, setDrillMode] = useState<"meaning" | "masu" | "te" | "nai" | "ta">("meaning");
-  const [currentPage, setCurrentPage] = useState(1);
   const [showRomaji, setShowRomaji] = useState(true);
 
-  const filteredVerbs = initialVerbs.filter((verb) => {
-    const s = searchTerm.toLowerCase().trim();
-    if (s === "") return activeGroup ? verb.group === activeGroup : true;
+  const {
+    searchTerm,
+    handleSearchChange,
+    activeGroup,
+    handleGroupChange,
+    currentPage,
+    handlePageChange,
+    totalPages,
+    filteredVerbs,
+    paginatedVerbs,
+  } = useVerbFilter(initialVerbs);
 
-    const kanaSearch = wanakana.toHiragana(s);
-    const matchesSearch =
-      verb.jisho.toLowerCase().includes(s) ||
-      verb.meaning.toLowerCase().includes(s) ||
-      verb.masu.toLowerCase().includes(s) ||
-      verb.jisho.includes(kanaSearch) ||
-      (verb.furigana && verb.furigana.includes(kanaSearch));
-    
-    const matchesGroup = activeGroup ? verb.group === activeGroup : true;
-    return matchesSearch && matchesGroup;
-  });
-
-  const totalPages = Math.ceil(filteredVerbs.length / ITEMS_PER_PAGE);
-  const startIdx = (currentPage - 1) * ITEMS_PER_PAGE;
-  const paginatedVerbs = filteredVerbs.slice(startIdx, startIdx + ITEMS_PER_PAGE);
-
-  const handleSearchChange = (value: string) => {
-    setSearchTerm(value);
-    setCurrentPage(1);
-  };
-  const handleGroupChange = (group: number | null) => {
-    setActiveGroup(group);
-    setCurrentPage(1);
-  };
-
+  // Flashcard Mode View
   if (isFlashcardMode && filteredVerbs.length > 0) {
-    const flashcardData = filteredVerbs.map((verb) => {
-      let displayWord = verb.jisho;
-      let displayMeaning = verb.meaning;
-      let targetFurigana = verb.furigana || verb.jisho;
-
-      if (drillMode !== "meaning") {
-        // eslint-disable-next-line @typescript-eslint/no-explicit-any
-        const targetValue = (verb as any)[drillMode];
-        if (targetValue) {
-          displayWord = `${verb.jisho} (${drillMode.toUpperCase()})`;
-          displayMeaning = `Ubah "${verb.jisho}" ke bentuk ${drillMode.toUpperCase()}`;
-          targetFurigana = targetValue;
-        }
-      }
-
-      return {
-        _id: verb._id,
-        word: displayWord,
-        meaning: displayMeaning,
-        furigana: targetFurigana,
-        romaji: wanakana.toRomaji(targetFurigana),
-        level: { code: "library" },
-        // eslint-disable-next-line @typescript-eslint/no-explicit-any
-        mnemonic: (verb as any).mnemonic,
-        // eslint-disable-next-line @typescript-eslint/no-explicit-any
-        relatedKanji: (verb as any).relatedKanji,
-      };
-    });
-
     return (
-      <div className="animate-in fade-in zoom-in-95 duration-500 max-w-2xl mx-auto w-full mt-10 px-4 flex-1 pb-24">
-        <div className="flex flex-col sm:flex-row items-center justify-between gap-4 mb-8">
-          <Button
-            variant="ghost"
-            onClick={() => setIsFlashcardMode(false)}
-            className="flex items-center justify-center gap-3 px-8 py-6 rounded-2xl text-xs md:text-xs font-bold uppercase tracking-widest w-full sm:w-auto neo-card bg-muted border-border hover:bg-primary hover:text-white dark:hover:text-black transition-all"
-          >
-            <ArrowLeft size={18} /> Kembali
-          </Button>
-
-          <div className="flex bg-muted p-1 rounded-xl border border-border w-full sm:w-auto overflow-x-auto no-scrollbar">
-            {(["meaning", "masu", "te", "nai", "ta"] as const).map((m) => (
-              <Button
-                key={m}
-                variant="ghost"
-                size="sm"
-                onClick={() => setDrillMode(m)}
-                className={`flex-1 sm:flex-none px-4 py-2 rounded-lg text-[10px] font-bold uppercase tracking-wider transition-all ${
-                  drillMode === m ? "bg-background text-primary shadow-sm" : "text-muted-foreground"
-                }`}
-              >
-                {m === "meaning" ? "Arti" : m.toUpperCase()}
-              </Button>
-            ))}
-          </div>
-        </div>
-        <FlashcardMaster cards={flashcardData} />
-      </div>
+      <VerbFlashcardView
+        filteredVerbs={filteredVerbs}
+        drillMode={drillMode}
+        setDrillMode={setDrillMode}
+        onBack={() => setIsFlashcardMode(false)}
+      />
     );
   }
-
-  const getBadgeColor = (group: number) => {
-    if (group === 1) return "text-blue-600 dark:text-blue-400 bg-blue-500/10 border-blue-500/20";
-    if (group === 2) return "text-emerald-600 dark:text-emerald-400 bg-emerald-500/10 border-emerald-500/20";
-    return "text-purple-600 dark:text-purple-400 bg-purple-500/10 border-purple-500/20";
-  };
-
-  const getGroupAccent = (group: number) => {
-    if (group === 1) return { ring: "ring-blue-500/30", glow: "shadow-xl", accent: "text-blue-600 dark:text-blue-400", bg: "bg-blue-500/10", border: "border-blue-500/20" };
-    if (group === 2) return { ring: "ring-emerald-500/30", glow: "shadow-xl", accent: "text-emerald-600 dark:text-emerald-400", bg: "bg-emerald-500/10", border: "border-emerald-500/20" };
-    return { ring: "ring-purple-500/30", glow: "shadow-xl", accent: "text-purple-600 dark:text-purple-400", bg: "bg-purple-500/10", border: "border-purple-500/20" };
-  };
-
-  const getConjugationSections = (verb: VerbData) => [
-    {
-      title: "Bentuk Dasar",
-      icon: <Sparkles size={14} />,
-      items: [
-        { label: "Bentuk Masu (Sopan)", value: verb.masu },
-        { label: "Bentuk Te (Sambung)", value: verb.te },
-        { label: "Bentuk Nai (Negatif)", value: verb.nai },
-        { label: "Bentuk Ta (Lampau)", value: verb.ta },
-      ],
-    },
-    {
-      title: "Bentuk Ekspresif",
-      icon: <Volume2 size={14} />,
-      items: [
-        { label: "Ingin (Tai)", value: verb.tai },
-        { label: "Potensial (Bisa)", value: verb.kanou },
-        { label: "Volisional (Mari)", value: verb.ikou },
-        { label: "Kondisional (Jika)", value: verb.katei },
-      ],
-    },
-    {
-      title: "Bentuk Lanjut",
-      icon: <Layers size={14} />,
-      items: [
-        { label: "Kausatif (Menyuruh)", value: verb.shieki },
-        { label: "Pasif (Di-)", value: verb.ukemi },
-        { label: "Perintah", value: verb.meirei },
-      ],
-    },
-  ];
 
   return (
     <div className="w-full flex flex-col flex-1 pb-24 px-4 md:px-8 lg:px-12">
@@ -323,103 +178,15 @@ export default function VerbListClient({
               </p>
             </motion.div>
           ) : (
-            paginatedVerbs.map((verb, idx) => {
-              const badgeColor = getBadgeColor(verb.group);
-              return (
-                <motion.div
-                  key={verb._id}
-                  layout
-                  initial={{ opacity: 0, y: 12 }}
-                  animate={{ opacity: 1, y: 0 }}
-                  exit={{ opacity: 0, y: -8 }}
-                  transition={{ delay: (idx % 12) * 0.03 }}
-                  className="h-full"
-                >
-                  <Card
-                    onClick={() => setSelectedVerb(verb)}
-                    className="h-full bg-card border border-border rounded-2xl cursor-pointer group hover:border-primary/40 hover:bg-primary/[0.03] hover:shadow-xl active:scale-[0.99] transition-all duration-300 shadow-sm"
-                  >
-                    <div className="p-5 md:p-6 flex flex-col gap-4 h-full">
-                      <div className="flex justify-between items-center">
-                        <div className="flex items-center gap-2">
-                          <Badge
-                            variant="outline"
-                            className={`px-2.5 py-1 text-xs md:text-xs font-bold uppercase tracking-wider rounded-lg border h-auto ${badgeColor}`}
-                          >
-                            Gol. {verb.group}
-                          </Badge>
-                          {verb.transitivity && (
-                            <Badge
-                              variant="outline"
-                              className={`px-2.5 py-1 text-[10px] font-bold uppercase tracking-wider rounded-lg border h-auto ${
-                                verb.transitivity === "transitive" 
-                                  ? "text-orange-600 dark:text-orange-400 bg-orange-500/10 border-orange-500/20" 
-                                  : "text-blue-600 dark:text-blue-400 bg-blue-500/10 border-blue-500/20"
-                              }`}
-                            >
-                              {verb.transitivity === "transitive" ? "Tr" : "Intr"}
-                            </Badge>
-                          )}
-                        </div>
-                        <div className="flex items-center gap-2">
-                          <TTSReader text={verb.jisho} minimal={true} />
-                        </div>
-                      </div>
-
-                      <div className="flex-1 space-y-2">
-                        <div className="text-2xl md:text-3xl font-black text-foreground font-japanese block group-hover:text-primary transition-colors duration-300 leading-tight tracking-tight">
-                          {splitFurigana(verb.jisho, verb.furigana || "").map((chunk, i) => (
-                            chunk.furi ? (
-                              <ruby key={i}>
-                                {chunk.text}
-                                <rt className="text-xs md:text-xs text-primary/80 font-bold tracking-widest not-italic">
-                                  {chunk.furi}
-                                </rt>
-                              </ruby>
-                            ) : (
-                              <span key={i}>{chunk.text}</span>
-                            )
-                          ))}
-                        </div>
-                        <AnimatePresence>
-                          {showRomaji && (
-                            <motion.p 
-                              initial={{ opacity: 0, height: 0 }}
-                              animate={{ opacity: 1, height: "auto" }}
-                              exit={{ opacity: 0, height: 0 }}
-                              className="text-[10px] md:text-xs font-bold text-muted-foreground/40 uppercase tracking-widest group-hover:text-muted-foreground transition-colors overflow-hidden"
-                            >
-                              {wanakana.toRomaji(verb.furigana || verb.jisho)}
-                            </motion.p>
-                          )}
-                        </AnimatePresence>
-                        <p className="text-xs md:text-[13px] font-medium text-muted-foreground leading-snug group-hover:text-foreground transition-colors line-clamp-2">
-                          {verb.meaning}
-                        </p>
-                      </div>
-
-                      <div className="pt-3 border-t border-border flex items-center justify-between gap-2">
-                        <div className="flex gap-1.5 flex-wrap min-w-0">
-                          {verb.masu && (
-                            <span className="px-2 py-0.5 text-xs font-semibold text-muted-foreground bg-muted rounded-md border border-border font-japanese truncate">
-                              {verb.masu}
-                            </span>
-                          )}
-                          {verb.te && (
-                            <span className="px-2 py-0.5 text-xs font-semibold text-muted-foreground bg-muted rounded-md border border-border font-japanese truncate">
-                              {verb.te}
-                            </span>
-                          )}
-                        </div>
-                        <span className="text-xs font-bold text-muted-foreground uppercase tracking-wider group-hover:text-primary transition-colors whitespace-nowrap shrink-0">
-                          Detail →
-                        </span>
-                      </div>
-                    </div>
-                  </Card>
-                </motion.div>
-              );
-            })
+            paginatedVerbs.map((verb, idx) => (
+              <VerbCard
+                key={verb._id}
+                verb={verb}
+                idx={idx}
+                showRomaji={showRomaji}
+                onClick={() => setSelectedVerb(verb)}
+              />
+            ))
           )}
         </AnimatePresence>
       </div>
@@ -437,7 +204,7 @@ export default function VerbListClient({
             <Button
               variant="ghost"
               disabled={currentPage === 1}
-              onClick={() => { setCurrentPage(1); window.scrollTo({ top: 0, behavior: 'smooth' }); }}
+              onClick={() => handlePageChange(1)}
               className="w-10 h-10 md:w-12 md:h-12 p-0 rounded-xl bg-muted border border-border text-muted-foreground hover:text-foreground hover:border-primary/40 disabled:opacity-30 disabled:cursor-not-allowed transition-all"
             >
               <ChevronsLeft size={16} />
@@ -446,7 +213,7 @@ export default function VerbListClient({
             <Button
               variant="ghost"
               disabled={currentPage === 1}
-              onClick={() => { setCurrentPage((p) => Math.max(1, p - 1)); window.scrollTo({ top: 0, behavior: 'smooth' }); }}
+              onClick={() => handlePageChange(Math.max(1, currentPage - 1))}
               className="w-10 h-10 md:w-12 md:h-12 p-0 rounded-xl bg-muted border border-border text-muted-foreground hover:text-foreground hover:border-primary/40 disabled:opacity-30 disabled:cursor-not-allowed transition-all"
             >
               <ChevronLeft size={16} />
@@ -466,7 +233,7 @@ export default function VerbListClient({
                     <>
                       <Button
                         variant="ghost"
-                        onClick={() => { setCurrentPage(1); window.scrollTo({ top: 0, behavior: 'smooth' }); }}
+                        onClick={() => handlePageChange(1)}
                         className="w-10 h-10 md:w-12 md:h-12 p-0 rounded-xl bg-muted border border-border text-muted-foreground hover:text-foreground hover:border-primary/40 text-xs md:text-sm font-bold transition-all"
                       >
                         1
@@ -478,7 +245,7 @@ export default function VerbListClient({
                     <Button
                       key={page}
                       variant="ghost"
-                      onClick={() => { setCurrentPage(page); window.scrollTo({ top: 0, behavior: 'smooth' }); }}
+                      onClick={() => handlePageChange(page)}
                       className={`w-10 h-10 md:w-12 md:h-12 p-0 rounded-xl text-xs md:text-sm font-bold transition-all ${
                         page === currentPage
                           ? "bg-primary text-primary-foreground border-none shadow-lg"
@@ -493,7 +260,7 @@ export default function VerbListClient({
                       {end < totalPages - 1 && <span className="text-muted-foreground px-1">…</span>}
                       <Button
                         variant="ghost"
-                        onClick={() => { setCurrentPage(totalPages); window.scrollTo({ top: 0, behavior: 'smooth' }); }}
+                        onClick={() => handlePageChange(totalPages)}
                         className="w-10 h-10 md:w-12 md:h-12 p-0 rounded-xl bg-muted border border-border text-muted-foreground hover:text-foreground hover:border-primary/40 text-xs md:text-sm font-bold transition-all"
                       >
                         {totalPages}
@@ -507,7 +274,7 @@ export default function VerbListClient({
             <Button
               variant="ghost"
               disabled={currentPage === totalPages}
-              onClick={() => { setCurrentPage((p) => Math.min(totalPages, p + 1)); window.scrollTo({ top: 0, behavior: 'smooth' }); }}
+              onClick={() => handlePageChange(Math.min(totalPages, currentPage + 1))}
               className="w-10 h-10 md:w-12 md:h-12 p-0 rounded-xl bg-muted border border-border text-muted-foreground hover:text-foreground hover:border-primary/40 disabled:opacity-30 disabled:cursor-not-allowed transition-all"
             >
               <ChevronRight size={16} />
@@ -516,7 +283,7 @@ export default function VerbListClient({
             <Button
               variant="ghost"
               disabled={currentPage === totalPages}
-              onClick={() => { setCurrentPage(totalPages); window.scrollTo({ top: 0, behavior: 'smooth' }); }}
+              onClick={() => handlePageChange(totalPages)}
               className="w-10 h-10 md:w-12 md:h-12 p-0 rounded-xl bg-muted border border-border text-muted-foreground hover:text-foreground hover:border-primary/40 disabled:opacity-30 disabled:cursor-not-allowed transition-all"
             >
               <ChevronsRight size={16} />
@@ -526,133 +293,10 @@ export default function VerbListClient({
       )}
 
       {/* Conjugation Detail Modal */}
-      <Dialog open={!!selectedVerb} onOpenChange={(open) => !open && setSelectedVerb(null)}>
-        <DialogContent hideClose className="max-w-2xl w-[95vw] max-h-[90vh] overflow-y-auto bg-card border border-border rounded-3xl p-0 gap-0 shadow-2xl no-scrollbar z-[100]">
-          {selectedVerb && (() => {
-            const groupStyle = getGroupAccent(selectedVerb.group);
-            const sections = getConjugationSections(selectedVerb);
-            return (
-              <>
-                <div className="sticky top-0 z-20 bg-card/95 backdrop-blur-xl border-b border-border p-5 md:p-6">
-                  <div className="flex items-start justify-between gap-4">
-                    <div className="flex-1 min-w-0">
-                        <div className="flex items-center gap-2 mb-4">
-                          <Badge
-                            variant="outline"
-                            className={`px-3 py-1.5 text-xs md:text-xs font-black uppercase tracking-[0.2em] rounded-xl border h-auto bg-muted ${getBadgeColor(selectedVerb.group)}`}
-                          >
-                            Golongan {selectedVerb.group}
-                          </Badge>
-                          {selectedVerb.transitivity && (
-                            <Badge
-                              variant="outline"
-                              className={`px-3 py-1.5 text-xs md:text-xs font-black uppercase tracking-[0.2em] rounded-xl border h-auto ${
-                                selectedVerb.transitivity === "transitive" 
-                                  ? "text-orange-600 dark:text-orange-400 bg-orange-500/10 border-orange-500/20" 
-                                  : "text-blue-600 dark:text-blue-400 bg-blue-500/10 border-blue-500/20"
-                              }`}
-                            >
-                              {selectedVerb.transitivity === "transitive" ? "Transitif" : "Intransitif"}
-                            </Badge>
-                          )}
-                          <TTSReader text={selectedVerb.jisho} minimal={true} />
-                        </div>
-
-                      <DialogTitle asChild>
-                        <div className="text-3xl md:text-4xl font-black text-foreground font-japanese block leading-tight tracking-tight">
-                          {(() => {
-                            const jisho = selectedVerb.jisho;
-                            const furi = selectedVerb.furigana || "";
-                            const isRomaji = furi && /^[a-zA-Z\s.,?!'-]+$/.test(furi);
-                            const hiraReading = isRomaji ? wanakana.toHiragana(furi) : furi;
-                            
-                            // Note: If jisho is different from masu (the source of furigana),
-                            // we might need a better matching. But for most verbs, 
-                            // the Kanji part is consistent.
-                            return splitFurigana(jisho, hiraReading).map((chunk, i) => (
-                              chunk.furi ? (
-                                <ruby key={i}>
-                                  {chunk.text}
-                                  <rt className="text-xs md:text-xs text-primary/80 font-bold tracking-widest not-italic">
-                                    {chunk.furi}
-                                  </rt>
-                                </ruby>
-                              ) : (
-                                <span key={i}>{chunk.text}</span>
-                              )
-                            ));
-                          })()}
-                        </div>
-                      </DialogTitle>
-
-                      <DialogDescription asChild>
-                        <div className="mt-2 md:mt-3">
-                          <p className="text-sm md:text-base font-medium text-muted-foreground">
-                            {selectedVerb.meaning}
-                          </p>
-                        </div>
-                      </DialogDescription>
-                    </div>
-
-                    <button
-                      onClick={() => setSelectedVerb(null)}
-                      className="w-9 h-9 md:w-10 md:h-10 shrink-0 rounded-xl bg-muted border border-border flex items-center justify-center text-muted-foreground hover:text-foreground hover:bg-background transition-all duration-200"
-                    >
-                      <X size={18} />
-                    </button>
-                  </div>
-                </div>
-
-                <div className="p-5 md:p-6 space-y-5 md:space-y-6">
-                  {sections.map((section) => {
-                    const hasValues = section.items.some((item) => item.value);
-                    if (!hasValues) return null;
-
-                    return (
-                      <div key={section.title}>
-                        <div className="flex items-center gap-3 mb-4 md:mb-5">
-                          <div className={`w-8 h-8 md:w-9 md:h-9 rounded-xl flex items-center justify-center ${groupStyle.bg} ${groupStyle.border} border`}>
-                            <span className={groupStyle.accent}>{section.icon}</span>
-                          </div>
-                          <h3 className="text-xs md:text-sm font-black uppercase tracking-widest text-muted-foreground">
-                            {section.title}
-                          </h3>
-                        </div>
-
-                        <div className="grid grid-cols-2 md:grid-cols-2 lg:grid-cols-4 gap-4 md:gap-6">
-                          {section.items.map((item) => (
-                            <ConjugationCell
-                              key={item.label}
-                              label={item.label}
-                              value={item.value}
-                            />
-                          ))}
-                        </div>
-                      </div>
-                    );
-                  })}
-                </div>
-
-                <div className="sticky bottom-0 z-20 bg-card/95 backdrop-blur-xl border-t border-border px-5 md:px-6 py-3 md:py-4 flex items-center justify-between">
-                  <div className="flex items-center gap-2">
-                    <Activity size={12} className="text-primary animate-pulse" />
-                    <span className="text-xs md:text-xs font-bold text-muted-foreground uppercase tracking-widest">
-                      Matriks Konjugasi
-                    </span>
-                  </div>
-                  <Button
-                    variant="ghost"
-                    onClick={() => setSelectedVerb(null)}
-                    className="h-auto px-5 py-2.5 md:px-6 md:py-3 text-xs md:text-xs font-bold uppercase tracking-widest rounded-xl bg-muted border border-border text-muted-foreground hover:bg-primary hover:text-white dark:hover:text-black hover:border-none transition-all"
-                  >
-                    Tutup
-                  </Button>
-                </div>
-              </>
-            );
-          })()}
-        </DialogContent>
-      </Dialog>
+      <VerbDetailModal
+        selectedVerb={selectedVerb}
+        onClose={() => setSelectedVerb(null)}
+      />
 
       <footer className="mt-16 md:mt-24 pt-10 md:pt-16 border-t border-border flex flex-col sm:flex-row justify-between items-center gap-6">
          <div className="flex items-center gap-3">
@@ -661,25 +305,10 @@ export default function VerbListClient({
          </div>
          <Link href="/library" className="w-full sm:w-auto">
             <Button variant="ghost" className="w-full px-8 py-6 md:px-10 md:py-7 h-auto text-xs md:text-xs font-bold uppercase tracking-widest rounded-2xl bg-muted border border-border neo-card shadow-none hover:bg-primary hover:text-white dark:hover:text-black transition-all gap-3 group">
-               <ArrowLeft size={16} className="group-hover:-translate-x-1.5 transition-transform duration-300" /> Kembali ke Pustaka
+               <ChevronLeft size={16} className="group-hover:-translate-x-1.5 transition-transform duration-300" /> Kembali ke Pustaka
             </Button>
          </Link>
       </footer>
-    </div>
-  );
-}
-
-function ConjugationCell({ label, value }: { label: string; value?: string }) {
-  return (
-    <div className="flex flex-col gap-2">
-      <span className="text-[10px] md:text-xs font-black text-primary/90 uppercase tracking-widest leading-tight line-clamp-2 min-h-[2em]">
-        {label}
-      </span>
-      <div className="p-3 md:p-4 rounded-2xl bg-muted/50 border border-border hover:border-primary/40 transition-all duration-300 group/cell flex items-center justify-center min-h-[4rem] shadow-sm">
-        <p className="text-base md:text-lg font-japanese font-black text-foreground text-center leading-none group-hover/cell:text-primary transition-colors">
-          {value || "—"}
-        </p>
-      </div>
     </div>
   );
 }
