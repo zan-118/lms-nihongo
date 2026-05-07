@@ -25,6 +25,11 @@ export function VocabCard({ item, idx, showRomaji }: VocabCardProps) {
       animate={{ opacity: 1, y: 0 }}
       exit={{ opacity: 0, scale: 0.95 }}
       transition={{ delay: (idx % 12) * 0.02 }}
+      style={{ 
+        contentVisibility: 'auto', 
+        containIntrinsicSize: '0 250px',
+        willChange: 'transform'
+      }}
     >
       <Card className="p-5 md:p-6 bg-card border border-border rounded-2xl hover:border-primary/40 transition-all duration-300 group shadow-sm flex flex-col gap-4">
         <div className="flex justify-between items-start">

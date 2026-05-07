@@ -1,3 +1,4 @@
+import { useMemo } from "react";
 import { usePathname, useRouter } from "next/navigation";
 import { createClient } from "@/lib/supabase/client";
 import { 
@@ -41,7 +42,7 @@ export function useNavbar() {
     router.refresh();
   };
 
-  const links: NavLinks = {
+  const links: NavLinks = useMemo(() => ({
     main: [
       { href: "/dashboard", label: "Dasbor", icon: LayoutDashboard },
       { href: "/courses", label: "Materi", icon: BookOpen },
@@ -58,7 +59,7 @@ export function useNavbar() {
       { href: "/share", label: "Bagikan", icon: Share2 },
       { href: "/support", label: "Bantuan", icon: HelpCircle },
     ]
-  };
+  }), []);
 
   return { 
     pathname, 

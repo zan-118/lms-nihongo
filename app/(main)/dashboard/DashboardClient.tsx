@@ -193,10 +193,15 @@ export default function DashboardPage() {
     );
   };
 
-  const now = Date.now();
-  const dueCount = Object.values(progress.srs as Record<string, SRSState>).filter((card: SRSState) => card.nextReview <= now).length;
+  const [dueCount, setDueCount] = useState(0);
   const xpNeeded = 1000 - (progress.xp % 1000);
   const xpProgress = (progress.xp % 1000) / 10;
+
+  useEffect(() => {
+    const now = Date.now();
+    const count = Object.values(progress.srs as Record<string, SRSState>).filter((card: SRSState) => card.nextReview <= now).length;
+    setDueCount(count);
+  }, [progress.srs]);
 
   const [activeTab, setActiveTab] = useState("beranda");
 

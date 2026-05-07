@@ -1,5 +1,6 @@
 "use client";
 
+import { useState, useEffect } from "react";
 import { motion, Variants } from "framer-motion";
 import { Sparkles, BrainCircuit, Target, BookMarked, Zap } from "lucide-react";
 import { Badge } from "@/components/ui/badge";
@@ -31,9 +32,14 @@ export default function DashboardHero({ guestId, itemVariants }: DashboardHeroPr
   const loading = useUIStore(s => s.loading);
 
   // Calculated values
-  const now = Date.now();
-  const dueCount = Object.values(srs).filter(card => card.nextReview <= now).length;
+  const [dueCount, setDueCount] = useState(0);
   const xpProgress = (xp % 1000) / 10;
+
+  useEffect(() => {
+    const now = Date.now();
+    const count = Object.values(srs).filter(card => card.nextReview <= now).length;
+    setDueCount(count);
+  }, [srs]);
 
   return (
     <motion.div variants={itemVariants} className="flex flex-col gap-10 items-start w-full">

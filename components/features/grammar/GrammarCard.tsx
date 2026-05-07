@@ -41,6 +41,11 @@ export function GrammarCard({ article, index, selectedLevel }: GrammarCardProps)
         damping: 20
       }}
       className="group h-full"
+      style={{ 
+        contentVisibility: 'auto', 
+        containIntrinsicSize: '0 320px',
+        willChange: 'transform'
+      }}
     >
       <Link href={`/library/grammar/${article.slug}`} className="block h-full">
         <Card className="h-full p-6 bg-card/40 backdrop-blur-xl border border-white/5 rounded-[2rem] group transition-all duration-500 flex flex-col cursor-pointer hover:border-primary/50 hover:bg-card/60 shadow-2xl relative overflow-hidden">

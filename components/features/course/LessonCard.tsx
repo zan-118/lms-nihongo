@@ -25,6 +25,11 @@ export function LessonCard({ lesson, index, categoryId, isSideQuest, progress = 
     <motion.div
       whileHover={{ y: -8 }}
       transition={{ type: "spring", stiffness: 300, damping: 20 }}
+      style={{ 
+        contentVisibility: 'auto', 
+        containIntrinsicSize: '0 300px',
+        willChange: 'transform'
+      }}
     >
       <Link href={`/courses/${categoryId}/${lesson.slug}`} className="group flex flex-col h-full">
         <Card className="p-6 md:p-8 bg-card/40 backdrop-blur-xl border border-white/5 rounded-[2rem] group transition-all duration-500 flex flex-col items-start gap-6 cursor-pointer hover:border-primary/50 hover:bg-card/60 h-full shadow-2xl relative overflow-hidden">
