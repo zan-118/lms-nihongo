@@ -1,6 +1,7 @@
 import { createClient } from "./client";
 import { calculateLevel } from "@/lib/level";
 import { UserProgress } from "@/store/types";
+import { SupabaseClient } from "@supabase/supabase-js";
 
 /**
  * Sinkronisasi data progres dari LocalStorage (guest) ke Supabase (cloud)
@@ -10,8 +11,8 @@ import { UserProgress } from "@/store/types";
  * @param {UserProgress} localData - Data dari localStorage.
  * @returns {Promise<boolean>} Status keberhasilan sinkronisasi.
  */
-export async function syncLocalToCloud(userId: string, localData: UserProgress): Promise<boolean> {
-  const supabase = createClient();
+export async function syncLocalToCloud(userId: string, localData: UserProgress, supabaseClient?: SupabaseClient): Promise<boolean> {
+  const supabase = supabaseClient || createClient();
   
   try {
     // 1. Ambil data cloud saat ini untuk perbandingan (Conflict Resolution)
@@ -126,6 +127,67 @@ export async function syncLocalToCloud(userId: string, localData: UserProgress):
     return true;
   } catch (error) {
     console.error("Gagal melakukan sinkronisasi data ke cloud:", error);
+    return false;
+  }
+}
+
+/**
+ * Memeriksa dan memigrasi data dari LocalStorage lama ke Supabase.
+ * Digunakan untuk user yang baru login pertama kali setelah menggunakan mode guest.
+ * 
+ * @param {string} userId - ID Supabase user.
+ * @param {SupabaseClient} supabase - Instance Supabase client.
+ * @returns {Promise<boolean>} Status keberhasilan migrasi.
+ */
+export async function handleLegacyMigration(userId: string, supabase: SupabaseClient): Promise<boolean> {
+  const STATS_STORAGE_KEY = "nihongo-progress";
+  const gamificationData = localStorage.getItem(STATS_STORAGE_KEY);
+  
+  if (!gamificationData) return false;
+
+  try {
+    const parsedStats = JSON.parse(gamificationData);
+    const { useUserStore } = await import("@/store/useUserStore");
+    const { useSRSStore } = await import("@/store/useSRSStore");
+    const { useUIStore } = await import("@/store/useUIStore");
+    
+    const userState = useUserStore.getState();
+    const currentProgress: UserProgress = {
+      id: userState.id,
+      isGuest: userState.isGuest,
+      name: userState.name,
+      xp: userState.xp,
+      level: userState.level,
+      streak: userState.streak,
+      todayReviewCount: userState.todayReviewCount,
+      lastStudyDate: userState.lastStudyDate,
+      studyDays: userState.studyDays,
+      inventory: userState.inventory,
+      srs: useSRSStore.getState().srs,
+      notifications: useUIStore.getState().notifications,
+      settings: useUIStore.getState().settings,
+    };
+
+    currentProgress.streak = parsedStats.streak;
+    currentProgress.todayReviewCount = parsedStats.todayReviewCount;
+    currentProgress.lastStudyDate = parsedStats.lastStudyDate;
+    
+    const migratedStudyDays: Record<string, number> = {};
+    if (parsedStats.studyDays) {
+      Object.entries(parsedStats.studyDays).forEach(([date, val]) => {
+        migratedStudyDays[date] = typeof val === "boolean" ? (val ? 1 : 0) : (val as number);
+      });
+    }
+    currentProgress.studyDays = migratedStudyDays;
+
+    const syncSuccess = await syncLocalToCloud(userId, currentProgress, supabase);
+    if (syncSuccess) {
+      localStorage.removeItem(STATS_STORAGE_KEY);
+      return true;
+    }
+    return false;
+  } catch (e) {
+    console.error("Gagal melakukan migrasi data lokal:", e);
     return false;
   }
 }

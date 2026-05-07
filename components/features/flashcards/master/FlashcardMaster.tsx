@@ -1,5 +1,6 @@
 "use client";
 
+import { useEffect } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 
 import XPPop from "@/components/features/gamification/XPPop";
@@ -16,11 +17,13 @@ export default function FlashcardMaster({
   type = "vocab",
   mode = "latihan",
   isFixedMode = false,
+  onFinish,
 }: {
   cards: MasterCardData[];
   type?: "vocab" | "kanji";
   mode?: "latihan" | "ujian" | "tantangan";
   isFixedMode?: boolean;
+  onFinish?: () => void;
 }) {
   const {
     currentIndex,
@@ -51,6 +54,13 @@ export default function FlashcardMaster({
     combo,
     isSyncing,
   } = useFlashcardMaster({ cards, initialMode: mode });
+
+  // Pemicu onFinish untuk parent (ReviewClient)
+  useEffect(() => {
+    if (isFinished && onFinish) {
+      onFinish();
+    }
+  }, [isFinished, onFinish]);
 
   if (!isClient || !cards || cards.length === 0) return null;
 

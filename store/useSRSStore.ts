@@ -4,6 +4,7 @@ import { get, set as idbSet, del } from "idb-keyval";
 import { SRSState, createNewCardState } from "@/lib/srs";
 import { getLocalDateString } from "@/lib/utils";
 import { calculateLevel } from "@/lib/level";
+import { calculateNewStreak, mergeGamification } from "@/lib/gamification";
 import { useUserStore } from "./useUserStore";
 import { useUIStore } from "./useUIStore";
 import { UserProgress } from "./types";
@@ -60,47 +61,29 @@ export const useSRSStore = create<SRSStateStore>()(
         });
 
         if (srsChanged) {
-          let { streak, todayReviewCount, lastStudyDate } = userState;
-          const { inventory, studyDays } = userState;
+          const { streak, todayReviewCount, lastStudyDate, inventory, studyDays } = userState;
+          
+          const { streak: newStreak, streakFreezeUsed } = calculateNewStreak(
+            streak,
+            lastStudyDate,
+            inventory,
+            useUIStore.getState().addNotification
+          );
+
           const newStudyDays = { ...studyDays };
-          let newStreakFreeze = inventory?.streakFreeze || 0;
-
-          todayReviewCount += 1;
-
-          if (lastStudyDate !== today) {
-            const yesterday = new Date();
-            yesterday.setDate(yesterday.getDate() - 1);
-            const offset = yesterday.getTimezoneOffset() * 60000;
-            const yesterdayStr = new Date(yesterday.getTime() - offset).toISOString().split("T")[0];
-
-            if (lastStudyDate === yesterdayStr) {
-              streak += 1;
-            } else if (newStreakFreeze > 0 && lastStudyDate !== null) {
-              newStreakFreeze -= 1;
-              useUIStore.getState().addNotification({
-                title: "Streak Freeze Digunakan!",
-                message: "Streak Anda terselamatkan oleh item Streak Freeze.",
-                type: "warning"
-              });
-              streak += 1;
-            } else {
-              streak = 1;
-            }
-
-            lastStudyDate = today;
-            newStudyDays[today] = (newStudyDays[today] || 0) + 1;
-          } else {
-            newStudyDays[today] = (newStudyDays[today] || 0) + 1;
-          }
+          newStudyDays[today] = (newStudyDays[today] || 0) + 1;
 
           useUserStore.getState().setGamification({
             xp: newXp,
             level: calculateLevel(newXp),
-            streak,
-            todayReviewCount,
-            lastStudyDate,
+            streak: newStreak,
+            todayReviewCount: lastStudyDate === today ? todayReviewCount + 1 : 1,
+            lastStudyDate: today,
             studyDays: newStudyDays,
-            inventory: { ...inventory, streakFreeze: newStreakFreeze }
+            inventory: { 
+              ...inventory, 
+              streakFreeze: streakFreezeUsed ? inventory.streakFreeze - 1 : inventory.streakFreeze 
+            }
           });
         } else {
           useUserStore.getState().addXP(newXp - userState.xp);
@@ -134,28 +117,19 @@ export const useSRSStore = create<SRSStateStore>()(
         const userState = useUserStore.getState();
         const uiState = useUIStore.getState();
         
-        // 1. Merge Gamification
-        const mergedXP = Math.max(userState.xp, cloudData.xp);
-        const mergedStreak = Math.max(userState.streak, cloudData.streak);
-        
-        // 2. Merge Study Days
-        const mergedStudyDays = { ...cloudData.studyDays };
-        Object.entries(userState.studyDays).forEach(([date, count]) => {
-          mergedStudyDays[date] = Math.max(count, mergedStudyDays[date] || 0);
-        });
+        // 1. Merge Gamification (Extracted)
+        const mergedGamification = mergeGamification(userState, cloudData);
 
-        // 3. Merge SRS
+        // 2. Merge SRS
         const mergedSrs = { ...cloudData.srs };
         
-        // Safety check for dirtySrs iteration
         let recoveredDirty: Set<string>;
         try {
           const rawDirty = get().dirtySrs;
           recoveredDirty = rawDirty instanceof Set 
             ? rawDirty 
             : new Set(Array.isArray(rawDirty) ? rawDirty : []);
-        } catch (e) {
-          console.error("Failed to recover dirtySrs, resetting to empty", e);
+        } catch {
           recoveredDirty = new Set();
         }
         
@@ -184,23 +158,13 @@ export const useSRSStore = create<SRSStateStore>()(
           }
         });
 
-        // 4. Update User Store
+        // 3. Update Stores
         useUserStore.getState().setGamification({
+          ...mergedGamification,
           name: cloudData.name || userState.name,
-          xp: mergedXP,
-          level: calculateLevel(mergedXP),
-          streak: mergedStreak,
-          studyDays: mergedStudyDays,
-          inventory: {
-            streakFreeze: Math.max(userState.inventory.streakFreeze, cloudData.inventory.streakFreeze),
-            claimedQuests: userState.inventory.claimedQuests
-          },
-          todayReviewCount: userState.lastStudyDate === cloudData.lastStudyDate 
-            ? Math.max(userState.todayReviewCount, cloudData.todayReviewCount)
-            : (userState.lastStudyDate === getLocalDateString() ? userState.todayReviewCount : cloudData.todayReviewCount)
+          lastStudyDate: cloudData.lastStudyDate // Tetap sinkronkan tanggal terakhir dari cloud
         });
 
-        // 5. Update UI Store
         uiState.toggleNotifications(cloudData.settings.notificationsEnabled);
 
         set({ srs: mergedSrs, dirtySrs: newDirty });
