@@ -19,6 +19,9 @@ import { toast } from "sonner";
 import { UserProgress } from "@/store/types";
 import { SRSState } from "@/lib/srs";
 
+// Domain Components
+import { DashboardTabs } from "@/components/features/dashboard/DashboardTabs";
+
 const KanjiProgressGrid = dynamic(() => import("@/components/features/dashboard/KanjiProgressGrid"), { 
   ssr: false,
   loading: () => <div className="h-[200px] w-full animate-pulse bg-muted rounded-2xl" />
@@ -43,6 +46,13 @@ const itemVariants: Variants = {
     transition: { type: "spring", stiffness: 100, damping: 20 },
   },
 };
+
+const TABS = [
+  { id: "beranda", label: "Beranda", icon: "🏠" },
+  { id: "progres", label: "Progres", icon: "📈" },
+  { id: "pencapaian", label: "Koleksi", icon: "🏆" },
+  { id: "pengaturan", label: "Setelan", icon: "⚙️" },
+];
 
 export default function DashboardPage() {
   const isAuthenticated = useAuthStore(s => s.isAuthenticated);
@@ -77,8 +87,7 @@ export default function DashboardPage() {
     resetUI();
   };
 
-  // Reconstruct a lightweight progress object for legacy components if needed,
-  // but ideally we should update components to take individual props.
+  // Reconstruct a lightweight progress object for legacy components if needed
   const progress: UserProgress = {
     id: id || "guest", 
     isGuest: !!isGuest, 
@@ -165,7 +174,6 @@ export default function DashboardPage() {
       () => {
         resetProgress();
         toast.success("Semua data telah dihapus.");
-        // reload tidak wajib karena state reaktif, tapi bisa membantu reset state lokal lainnya
         window.location.reload(); 
       }
     );
@@ -192,13 +200,6 @@ export default function DashboardPage() {
 
   const [activeTab, setActiveTab] = useState("beranda");
 
-  const tabs = [
-    { id: "beranda", label: "Beranda", icon: "🏠" },
-    { id: "progres", label: "Progres", icon: "📈" },
-    { id: "pencapaian", label: "Koleksi", icon: "🏆" },
-    { id: "pengaturan", label: "Setelan", icon: "⚙️" },
-  ];
-
   return (
     <div className="max-w-7xl mx-auto relative z-10">
       <OnboardingTour />
@@ -213,33 +214,11 @@ export default function DashboardPage() {
         onConfirm={confirmModal.onConfirm}
       />
 
-      {/* TAB NAVIGATION */}
-      <div className="flex items-center gap-4 md:gap-5 mb-16">
-        <div 
-          role="tablist" 
-          aria-label="Dashboard Navigation" 
-          className="bg-muted/50 dark:bg-white/[0.03] p-1.5 rounded-[2rem] border border-border/50 dark:border-white/5 flex gap-1 shadow-sm max-w-full overflow-x-auto no-scrollbar"
-        >
-          {tabs.map((tab) => (
-            <motion.button
-              key={tab.id}
-              role="tab"
-              aria-selected={activeTab === tab.id}
-              aria-controls={`${tab.id}-panel`}
-              whileTap={{ scale: 0.95 }}
-              onClick={() => setActiveTab(tab.id)}
-              className={`px-6 py-3 rounded-full text-xs font-black uppercase tracking-widest transition-all duration-300 flex items-center gap-2 ${
-                activeTab === tab.id
-                  ? "bg-primary text-primary-foreground shadow-lg shadow-primary/20 scale-105"
-                  : "text-muted-foreground hover:text-foreground hover:bg-white/5"
-              }`}
-            >
-              <span className="text-base" aria-hidden="true">{tab.icon}</span>
-              <span className="hidden sm:inline">{tab.label}</span>
-            </motion.button>
-          ))}
-        </div>
-      </div>
+      <DashboardTabs 
+        tabs={TABS}
+        activeTab={activeTab}
+        onTabChange={setActiveTab}
+      />
 
       <motion.div
         key={activeTab}

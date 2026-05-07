@@ -3,13 +3,16 @@
 import { useState, useEffect } from "react";
 import { client } from "@/sanity/lib/client";
 import Link from "next/link";
-import { motion, AnimatePresence } from "framer-motion";
-import { BookOpen, Home, Library, Search, BookText } from "lucide-react";
-import { Button } from "@/components/ui/button";
+import { AnimatePresence } from "framer-motion";
+import { BookOpen, Home, Library } from "lucide-react";
 import { Card } from "@/components/ui/card";
-import { Input } from "@/components/ui/input";
-import { GrammarCard } from "@/components/features/grammar/GrammarCard";
 import { Skeleton } from "@/components/ui/skeleton";
+
+// Domain Components
+import { GrammarCard } from "@/components/features/grammar/GrammarCard";
+import { GrammarLevelNav } from "@/components/features/grammar/GrammarLevelNav";
+import { GrammarSearch } from "@/components/features/grammar/GrammarSearch";
+import { GrammarEmptyState } from "@/components/features/grammar/GrammarEmptyState";
 
 const LEVELS = ["n5", "n4", "n3", "n2", "n1"];
 
@@ -93,48 +96,18 @@ export default function GrammarClient({ initialArticles = [] }: GrammarClientPro
             </div>
           </div>
 
-          <nav className="inline-flex p-1.5 bg-muted/50 dark:bg-black/40 backdrop-blur-md rounded-2xl md:rounded-[2rem] border border-border dark:border-white/5 shadow-2xl overflow-x-auto w-full xl:w-auto no-scrollbar relative">
-            {LEVELS.map((lvl) => (
-              <button
-                key={lvl}
-                onClick={() => {
-                  setSelectedLevel(lvl);
-                  setSearchTerm("");
-                }}
-                className={`relative flex-1 md:flex-none px-6 md:px-10 py-3 md:py-4 h-auto rounded-xl md:rounded-[1.5rem] text-[10px] md:text-xs font-black uppercase tracking-[0.2em] transition-all duration-500 z-10 ${
-                  selectedLevel === lvl
-                    ? "text-primary-foreground"
-                    : "text-muted-foreground hover:text-foreground"
-                }`}
-              >
-                {selectedLevel === lvl && (
-                  <motion.div
-                    layoutId="activeTab"
-                    className="absolute inset-0 bg-primary rounded-xl md:rounded-[1.5rem] shadow-[0_0_20px_rgba(0,238,255,0.4)] z-[-1]"
-                    transition={{ type: "spring", bounce: 0.2, duration: 0.6 }}
-                  />
-                )}
-                <span className="relative z-10">{lvl}</span>
-              </button>
-            ))}
-          </nav>
+          <GrammarLevelNav 
+            levels={LEVELS}
+            selectedLevel={selectedLevel}
+            onLevelChange={(lvl) => {
+              setSelectedLevel(lvl);
+              setSearchTerm("");
+            }}
+          />
         </div>
       </header>
 
-      {/* SEARCH SECTION */}
-      <div className="mb-10 md:mb-16 relative group max-w-2xl">
-        <div className="absolute inset-y-0 left-5 md:left-7 flex items-center pointer-events-none z-10">
-          <Search className="text-muted-foreground group-focus-within:text-primary transition-colors duration-300" size={20} />
-        </div>
-        <Input
-          placeholder="Cari pola kalimat (contoh: ~te kureru)..."
-          className="w-full pl-14 md:pl-16 pr-8 py-5 md:py-7 h-auto bg-card/40 backdrop-blur-xl border-white/5 rounded-2xl md:rounded-[2rem] text-sm md:text-lg text-foreground placeholder:text-muted-foreground/30 font-bold shadow-2xl focus-visible:ring-primary/30 focus-visible:border-primary/50 transition-all duration-500"
-          value={searchTerm}
-          onChange={(e: React.ChangeEvent<HTMLInputElement>) => setSearchTerm(e.target.value)}
-        />
-        {/* Decorative Ring */}
-        <div className="absolute inset-0 rounded-2xl md:rounded-[2rem] border border-primary/0 group-focus-within:border-primary/20 pointer-events-none transition-all duration-500 scale-[1.01]" />
-      </div>
+      <GrammarSearch value={searchTerm} onChange={setSearchTerm} />
 
       <section className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4 md:gap-5 items-stretch">
         <AnimatePresence mode="popLayout">
@@ -147,7 +120,6 @@ export default function GrammarClient({ initialArticles = [] }: GrammarClientPro
                 </div>
                 <Skeleton className="w-3/4 h-8 rounded-xl bg-white/5 mb-4" />
                 <Skeleton className="w-1/2 h-4 rounded-lg bg-white/5 mt-auto" />
-                {/* Aura Shimmer */}
                 <div className="absolute inset-0 bg-gradient-to-r from-transparent via-white/[0.03] to-transparent -translate-x-full animate-[shimmer_2s_infinite] pointer-events-none" />
               </Card>
             ))
@@ -161,33 +133,11 @@ export default function GrammarClient({ initialArticles = [] }: GrammarClientPro
               />
             ))
           ) : (
-            <Card className="col-span-full py-20 md:py-32 bg-card/20 backdrop-blur-sm border border-dashed border-white/10 rounded-[2.5rem] text-center px-6 relative overflow-hidden">
-              <div className="relative z-10">
-                <div className="flex justify-center mb-8">
-                  <div className="w-20 h-20 rounded-[2rem] bg-primary/5 flex items-center justify-center border border-primary/10 shadow-[0_0_30px_rgba(0,238,255,0.1)]">
-                    <BookText size={32} className="text-primary/40" />
-                  </div>
-                </div>
-                <h3 className="text-xl md:text-2xl font-black text-foreground uppercase tracking-tight mb-4">
-                  {searchTerm ? "Pola Kalimat Tidak Ditemukan" : "Materi Belum Tersedia"}
-                </h3>
-                <p className="text-muted-foreground font-medium text-sm md:text-base max-w-md mx-auto mb-10 leading-relaxed">
-                  {searchTerm 
-                    ? `Waduh, hasil buat "${searchTerm}" gak ketemu nih. Coba cari kata kunci lain atau periksa ejaanmu.` 
-                    : `Sabar ya, Sensei kami lagi ngeracik materi buat level ${selectedLevel.toUpperCase()}. Pantau terus!`}
-                </p>
-                {searchTerm && (
-                  <Button 
-                    onClick={() => setSearchTerm("")}
-                    className="bg-primary hover:bg-primary/90 text-primary-foreground rounded-2xl px-10 py-6 h-auto font-black uppercase tracking-[0.2em] text-xs transition-all shadow-[0_0_20px_rgba(0,238,255,0.3)]"
-                  >
-                    Reset Pencarian
-                  </Button>
-                )}
-              </div>
-              {/* Background Ambient Glow */}
-              <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-64 h-64 bg-primary/5 blur-[100px] pointer-events-none" />
-            </Card>
+            <GrammarEmptyState 
+              searchTerm={searchTerm}
+              selectedLevel={selectedLevel}
+              onResetSearch={() => setSearchTerm("")}
+            />
           )}
         </AnimatePresence>
       </section>

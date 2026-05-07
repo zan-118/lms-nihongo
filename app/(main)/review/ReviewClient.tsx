@@ -10,19 +10,18 @@ import React from "react";
 import { 
   BrainCircuit, 
   RotateCw, 
-  Trophy, 
   ChevronLeft, 
   Zap, 
-  Sparkles,
-  ArrowRight
 } from "lucide-react";
 import FlashcardMaster from "@/components/features/flashcards/master/FlashcardMaster";
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
-import { Card } from "@/components/ui/card";
-import EmptyState from "@/components/ui/EmptyState";
 import { useUIStore } from "@/store/useUIStore";
 import { useReviewSession } from "@/hooks/useReviewSession";
+
+// Domain Components
+import { ReviewModeCard } from "@/components/features/review/ReviewModeCard";
+import { ReviewCompletionState } from "@/components/features/review/ReviewCompletionState";
 
 export function ReviewClient() {
   const loading = useUIStore((state) => state.loading);
@@ -68,65 +67,30 @@ export function ReviewClient() {
         </header>
 
         <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-          {/* Mode 1: SRS Review */}
-          <Card 
-            onClick={() => dueItemIds.length > 0 && startSession("srs")}
-            className={`group relative p-8 rounded-[2rem] border transition-all duration-500 overflow-hidden cursor-pointer ${
-              dueItemIds.length > 0 
-              ? "border-primary/20 bg-card/50 hover:border-primary/50 hover:shadow-2xl hover:shadow-primary/5" 
-              : "border-border bg-muted/20 opacity-80"
-            }`}
-          >
-            <div className="relative z-10 flex flex-col gap-6">
-              <div className="flex justify-between items-start">
-                <div className={`w-14 h-14 rounded-2xl flex items-center justify-center shadow-inner transition-transform duration-500 group-hover:scale-110 ${dueItemIds.length > 0 ? "bg-primary/10 border border-primary/20" : "bg-muted border border-border"}`}>
-                  <BrainCircuit className={dueItemIds.length > 0 ? "text-primary" : "text-muted-foreground"} size={28} />
-                </div>
-                <Badge variant="outline" className={dueItemIds.length > 0 ? "bg-primary/10 border-primary/30 text-primary" : "bg-muted text-muted-foreground"}>
-                  {dueItemIds.length} Kartu Menunggu
-                </Badge>
-              </div>
-              <div>
-                <h2 className="text-2xl font-black text-foreground uppercase tracking-tight mb-2">Hafalan Harian</h2>
-                <p className="text-muted-foreground text-sm leading-relaxed font-medium">
-                  Ulangi kosakata yang sudah masuk masa tenggang (SRS) untuk memindahkan ingatan ke memori jangka panjang.
-                </p>
-              </div>
-              <div className="flex items-center gap-2 pt-2 text-primary font-black uppercase tracking-widest text-[10px]">
-                {dueItemIds.length > 0 ? "Mulai Review" : "Semua Sudah Dihafal"} <ArrowRight size={14} />
-              </div>
-            </div>
-          </Card>
+          <ReviewModeCard
+            onClick={() => startSession("srs")}
+            isEnabled={dueItemIds.length > 0}
+            icon={BrainCircuit}
+            count={dueItemIds.length}
+            badgeLabel="Kartu Menunggu"
+            title="Hafalan Harian"
+            description="Ulangi kosakata yang sudah masuk masa tenggang (SRS) untuk memindahkan ingatan ke memori jangka panjang."
+            actionLabel="Mulai Review"
+            disabledLabel="Semua Sudah Dihafal"
+            accentColor="primary"
+          />
 
-          {/* Mode 2: Quick Practice */}
-          <Card 
-            onClick={() => allItemIds.length > 0 && startSession("quick")}
-            className={`group relative p-8 rounded-[2rem] border transition-all duration-500 overflow-hidden cursor-pointer ${
-              allItemIds.length > 0 
-              ? "border-amber-500/20 bg-card/50 hover:border-amber-500/50 hover:shadow-2xl hover:shadow-amber-500/5" 
-              : "border-border bg-muted/20 opacity-80"
-            }`}
-          >
-            <div className="relative z-10 flex flex-col gap-6">
-              <div className="flex justify-between items-start">
-                <div className={`w-14 h-14 rounded-2xl flex items-center justify-center shadow-inner transition-transform duration-500 group-hover:scale-110 ${allItemIds.length > 0 ? "bg-amber-500/10 border border-amber-500/20" : "bg-muted border border-border"}`}>
-                  <Zap className={allItemIds.length > 0 ? "text-amber-500" : "text-muted-foreground"} size={28} />
-                </div>
-                <Badge variant="outline" className="bg-muted text-muted-foreground">
-                  Random Challenge
-                </Badge>
-              </div>
-              <div>
-                <h2 className="text-2xl font-black text-foreground uppercase tracking-tight mb-2">Latihan Cepat</h2>
-                <p className="text-muted-foreground text-sm leading-relaxed font-medium">
-                  Sesi singkat 10 kartu acak dari seluruh koleksimu. Cocok untuk mengisi waktu luang kapan saja.
-                </p>
-              </div>
-              <div className="flex items-center gap-2 pt-2 text-amber-500 font-black uppercase tracking-widest text-[10px]">
-                {allItemIds.length > 0 ? "Gas Sekarang" : "Koleksi Masih Kosong"} <ArrowRight size={14} />
-              </div>
-            </div>
-          </Card>
+          <ReviewModeCard
+            onClick={() => startSession("quick")}
+            isEnabled={allItemIds.length > 0}
+            icon={Zap}
+            badgeLabel="Random Challenge"
+            title="Latihan Cepat"
+            description="Sesi singkat 10 kartu acak dari seluruh koleksimu. Cocok untuk mengisi waktu luang kapan saja."
+            actionLabel="Gas Sekarang"
+            disabledLabel="Koleksi Masih Kosong"
+            accentColor="amber"
+          />
         </div>
       </div>
     );
@@ -147,17 +111,10 @@ export function ReviewClient() {
   // Tampilan Selesai atau Kosong
   if (cards.length === 0 || isFinished) {
     return (
-      <div className="flex-1 flex flex-col items-center justify-center px-4 w-full">
-        <EmptyState 
-          icon={mode === "srs" ? Sparkles : Trophy}
-          title={mode === "srs" ? "Ingatan Terjaga!" : "Latihan Selesai"}
-          description={mode === "srs" 
-            ? "Kamu sudah menyelesaikan semua review yang jatuh tempo. Ingatanmu masih sangat tajam!" 
-            : "Bagus! Kamu baru saja menyelesaikan sesi latihan cepat. Mau coba sesi lainnya?"}
-          actionText="Kembali ke Menu"
-          onClick={() => setMode(null)}
-        />
-      </div>
+      <ReviewCompletionState 
+        mode={mode as "srs" | "quick"} 
+        onBack={() => setMode(null)} 
+      />
     );
   }
 

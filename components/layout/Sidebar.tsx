@@ -1,61 +1,17 @@
 "use client";
 
 import { useState, useEffect } from "react";
-import { DailyMission, loadDailyMission } from "@/lib/daily";
+import { loadDailyMission, DailyMission } from "@/lib/daily";
 import { motion } from "framer-motion";
 import Link from "next/link";
 import Image from "next/image";
-import { 
-  Trophy, 
-  LogOut,
-  ChevronRight
-} from "lucide-react";
 import { useNavbar } from "@/components/layout/navbar/useNavbar";
-import { ThemeToggle } from "@/components/layout/ThemeToggle";
-import { Button } from "@/components/ui/button";
 import { useHasMounted } from "@/hooks/useHasMounted";
-import { Skeleton } from "@/components/ui/skeleton";
 
-function SidebarItem({ item, pathname, onClick }: { item: { href: string; label: string; icon: React.ElementType }; pathname: string; onClick?: () => void }) {
-  const isActive = pathname.startsWith(item.href);
-  return (
-    <Link href={item.href} onClick={onClick}>
-      <motion.div
-        whileHover={{ x: 4 }}
-        whileTap={{ scale: 0.98 }}
-        className={`flex items-center gap-4 px-4 py-3 rounded-2xl transition-all duration-500 relative group overflow-hidden ${
-          isActive 
-            ? "bg-primary/10 text-primary border border-primary/30 shadow-[0_0_25px_rgba(0,238,255,0.1)]" 
-            : "text-muted-foreground hover:bg-white/5 hover:text-foreground border border-transparent"
-        }`}
-      >
-        {/* Active Side Glow */}
-        {isActive && (
-          <motion.div 
-            layoutId="active-side-glow"
-            className="absolute left-0 top-1/4 bottom-1/4 w-[3px] bg-primary shadow-[0_0_15px_rgba(0,238,255,1)] rounded-full"
-            animate={{ 
-              boxShadow: ["0 0 10px rgba(0,238,255,0.6)", "0 0 20px rgba(0,238,255,0.9)", "0 0 10px rgba(0,238,255,0.6)"] 
-            }}
-            transition={{ duration: 2, repeat: Infinity }}
-          />
-        )}
-
-        <item.icon size={18} className={`${isActive ? "text-primary drop-shadow-[0_0_8px_rgba(0,238,255,0.6)]" : "text-muted-foreground"} group-hover:scale-110 transition-all duration-300`} />
-        <span className={`text-xs font-black uppercase tracking-widest flex-1 transition-colors duration-300 ${isActive ? 'text-foreground' : 'text-muted-foreground group-hover:text-foreground'}`}>
-          {item.label}
-        </span>
-        {isActive && (
-          <motion.div 
-            layoutId="sidebar-active-indicator"
-            className="w-1.5 h-1.5 rounded-full bg-primary shadow-[0_0_12px_rgba(0,238,255,1)]" 
-          />
-        )}
-        <ChevronRight size={14} className={`opacity-0 group-hover:opacity-100 transition-all ${isActive ? 'text-primary' : 'text-muted-foreground'} group-hover:translate-x-1`} />
-      </motion.div>
-    </Link>
-  );
-}
+// Domain Components
+import { SidebarItem } from "./sidebar/SidebarItem";
+import { DailyMissionCard } from "./sidebar/DailyMissionCard";
+import { UserStatusSection } from "./sidebar/UserStatusSection";
 
 export default function Sidebar({ isOpen, onClose }: { isOpen: boolean; onClose: () => void }) {
   const hasMounted = useHasMounted();
@@ -145,111 +101,18 @@ export default function Sidebar({ isOpen, onClose }: { isOpen: boolean; onClose:
 
         {/* Quick Progress - UX Improvement */}
         <div className="pt-4 px-2 pb-2">
-          {!hasMounted || !mission ? (
-            <Skeleton className="h-32 w-full rounded-2xl" />
-          ) : (
-            <div className="bg-muted/30 border border-border/50 rounded-2xl p-4 relative overflow-hidden group/target">
-              <div className="absolute inset-0 bg-gradient-to-br from-primary/5 to-transparent pointer-events-none" />
-              <div className="flex justify-between items-start mb-3 relative z-10">
-                <span className="text-xs font-black text-foreground uppercase tracking-wider">Target Hari Ini</span>
-                <Trophy size={14} className="text-amber-500 group-hover/target:rotate-12 transition-transform" />
-              </div>
-              <div className="space-y-3 relative z-10">
-                 <div>
-                    <div className="flex justify-between text-xs font-bold text-muted-foreground uppercase mb-1.5">
-                      <span>Materi Selesai</span>
-                      <span className="text-foreground">{mission.lessonProgress}/{mission.lessonGoal}</span>
-                    </div>
-                    <div className="h-1.5 w-full bg-muted rounded-full overflow-hidden">
-                      <motion.div 
-                        initial={{ width: 0 }}
-                        animate={{ width: `${Math.min(100, (mission.lessonProgress / mission.lessonGoal) * 100)}%` }}
-                        className="h-full bg-primary shadow-[0_0_10px_rgba(0,238,255,0.5)]" 
-                      />
-                    </div>
-                 </div>
-                 <Link href="/courses">
-                   <Button variant="ghost" className="w-full h-8 rounded-xl bg-primary/5 hover:bg-primary/10 text-primary text-xs font-black uppercase tracking-widest border border-primary/10">
-                     Lanjutkan Belajar
-                   </Button>
-                 </Link>
-              </div>
-            </div>
-          )}
+          <DailyMissionCard hasMounted={hasMounted} mission={mission} />
         </div>
       </nav>
 
       {/* FOOTER ACTIONS */}
       <div className="mt-auto space-y-4 relative z-10 pt-6 border-t border-border">
-         {!hasMounted ? (
-           <div className="space-y-4">
-              <Skeleton className="h-16 w-full rounded-2xl" />
-              <div className="flex gap-2">
-                <Skeleton className="h-10 w-10 rounded-xl" />
-                <Skeleton className="h-10 flex-1 rounded-xl" />
-              </div>
-           </div>
-         ) : isAuthenticated ? (
-            <div className="space-y-4">
-              <div className="flex items-center gap-3 p-3 bg-white/[0.03] backdrop-blur-md rounded-2xl border border-white/5 group hover:border-primary/30 transition-all duration-500">
-                {/* Animated Gradient Avatar Border */}
-                <div className="relative w-12 h-12 shrink-0">
-                  <motion.div 
-                    animate={{ rotate: 360 }}
-                    transition={{ duration: 8, repeat: Infinity, ease: "linear" }}
-                    className="absolute inset-0 rounded-xl bg-gradient-to-tr from-primary via-blue-500 to-cyan-400 opacity-40 blur-[2px]"
-                  />
-                  <div className="absolute inset-[2px] rounded-xl bg-background flex items-center justify-center text-primary-foreground text-sm font-black shadow-lg overflow-hidden z-10">
-                    <div className="w-full h-full bg-gradient-to-br from-primary to-blue-600 flex items-center justify-center">
-                      {userFullName ? userFullName.charAt(0).toUpperCase() : "U"}
-                    </div>
-                  </div>
-                  {/* Level Badge Overlay */}
-                  <div className="absolute -bottom-1 -right-1 w-5 h-5 bg-foreground text-background text-[8px] font-black rounded-full border-2 border-background flex items-center justify-center z-20 shadow-lg">
-                    L
-                  </div>
-                </div>
-                
-                <div className="flex flex-col min-w-0">
-                  <span className="text-xs font-black text-foreground uppercase truncate tracking-wider group-hover:text-primary transition-colors">
-                    {userFullName || "Pelajar"}
-                  </span>
-                  <div className="flex items-center gap-1.5 mt-0.5">
-                    <div className="w-1 h-1 rounded-full bg-emerald-500 animate-pulse" />
-                    <span className="text-[8px] font-black text-muted-foreground uppercase tracking-widest">
-                      Cloud Synced
-                    </span>
-                  </div>
-                </div>
-              </div>
-              
-              <div className="flex gap-2">
-                 <ThemeToggle />
-                 <motion.div whileTap={{ scale: 0.95 }} className="flex-1">
-                   <Button
-                     variant="ghost"
-                     onClick={handleLogout}
-                     className="w-full h-10 rounded-xl bg-red-500/5 hover:bg-red-500 hover:text-white dark:hover:text-black text-red-500 text-xs font-black uppercase tracking-widest transition-all border border-red-500/10"
-                   >
-                     <LogOut size={16} className="mr-2" /> Keluar
-                   </Button>
-                 </motion.div>
-              </div>
-            </div>
-         ) : (
-            <div className="space-y-4">
-               <ThemeToggle />
-               <motion.div whileTap={{ scale: 0.95 }}>
-                 <Button
-                   asChild
-                   className="w-full h-12 bg-primary text-primary-foreground font-black text-xs uppercase tracking-widest rounded-2xl shadow-lg border-none hover:opacity-90"
-                 >
-                   <Link href="/login">Masuk / Daftar</Link>
-                 </Button>
-               </motion.div>
-            </div>
-         )}
-
+         <UserStatusSection 
+            hasMounted={hasMounted}
+            isAuthenticated={isAuthenticated}
+            userFullName={userFullName}
+            handleLogout={handleLogout}
+         />
       </div>
 
       {/* MINI FOOTER - LEGAL & INFO */}
