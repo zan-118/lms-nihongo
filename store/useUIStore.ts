@@ -17,6 +17,7 @@ interface UIState {
   markNotificationAsRead: (id: string) => void;
   clearNotifications: () => void;
   toggleNotifications: (enabled: boolean) => void;
+  toggleFurigana: (enabled: boolean) => void;
   exportData: () => void;
   importData: (jsonData: string) => boolean;
   resetUI: () => void;
@@ -39,6 +40,7 @@ export const useUIStore = create<UIState>()(
         dailyReviewGoal: 50,
         dailyLessonGoal: 10,
         notificationsEnabled: false,
+        showFurigana: true,
       },
 
       setLoading: (loading) => set({ loading }),
@@ -67,6 +69,10 @@ export const useUIStore = create<UIState>()(
 
       toggleNotifications: (enabled) => set((state) => ({
         settings: { ...state.settings, notificationsEnabled: enabled }
+      })),
+
+      toggleFurigana: (enabled) => set((state) => ({
+        settings: { ...state.settings, showFurigana: enabled }
       })),
 
       exportData: () => {

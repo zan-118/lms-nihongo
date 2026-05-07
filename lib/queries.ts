@@ -47,3 +47,20 @@ export const lessonQuery = `*[_type == "lesson" && slug.current == $slug][0] {
     explanation
   }
 }`;
+
+export const readingMaterialQuery = `*[_type == "readingMaterial" && slug.current == $slug][0] {
+  title,
+  difficulty,
+  "audioUrl": audioFile.asset->url,
+  isTTSDisabled,
+  body,
+  hiragana,
+  translation
+}`;
+
+export const readingListQuery = `*[_type == "readingMaterial"] | order(_createdAt desc) {
+  title,
+  difficulty,
+  "slug": slug.current,
+  "category": category->title
+}`;

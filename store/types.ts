@@ -19,6 +19,7 @@ export interface Inventory {
 
 export interface Settings {
   notificationsEnabled: boolean;
+  showFurigana: boolean;
 }
 
 export interface LessonProgress {

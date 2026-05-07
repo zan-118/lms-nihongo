@@ -3,8 +3,9 @@ import { PortableTextComponents } from "@portabletext/react";
 import { AlertTriangle, Lightbulb, FileText } from "lucide-react";
 import TTSReader from "@/components/features/tools/tts/TTSReader";
 import SanityImage from "@/components/ui/SanityImage";
-import * as wanakana from "wanakana";
-import { splitFurigana } from "@/lib/furigana";
+import VocabTrigger from "@/components/features/library/reading/VocabTrigger";
+import FuriganaDisplay from "@/components/ui/FuriganaDisplay";
+import { useReading } from "@/components/features/library/reading/ReadingContext";
 
 interface VocabularyValue {
   jp: string;
@@ -28,7 +29,43 @@ interface SanityImageValue {
   alt?: string;
 }
 
+const FuriganaWrapper = ({ children, reading }: { children: React.ReactNode; reading: string }) => {
+  const { mode } = useReading();
+  return (
+    <FuriganaDisplay 
+      text={String(children)} 
+      furigana={reading} 
+      size="medium" 
+      mode={mode}
+      className="inline-flex !gap-x-0 !gap-y-0"
+    />
+  );
+};
+
 export const sharedPtComponents: PortableTextComponents = {
+  marks: {
+    vocabRef: ({ children, value }: { children: React.ReactNode; value?: { reference: { _ref: string } } }) => {
+      return (
+        <VocabTrigger text={String(children)} vocabId={value?.reference?._ref}>
+          {children}
+        </VocabTrigger>
+      );
+    },
+    furigana: ({ children, value }: { children: React.ReactNode; value?: { reading: string } }) => {
+      return <FuriganaWrapper reading={value?.reading || ""}>{children}</FuriganaWrapper>;
+    },
+    strong: ({ children }: { children?: React.ReactNode }) => (
+      <strong className="font-black text-foreground border-b-2 border-primary/20">{children}</strong>
+    ),
+    em: ({ children }: { children?: React.ReactNode }) => (
+      <em className="italic text-primary/80">{children}</em>
+    ),
+    code: ({ children }: { children?: React.ReactNode }) => (
+      <code className="bg-primary/10 text-primary px-2 py-0.5 rounded-md font-mono text-sm border border-primary/20">
+        {children}
+      </code>
+    ),
+  },
   block: {
     h2: ({ children }: { children?: React.ReactNode }) => (
       <h2 className="text-3xl md:text-5xl font-black text-foreground mt-16 md:mt-24 mb-8 md:mb-10 uppercase tracking-tighter flex items-center gap-4 group">
@@ -47,6 +84,11 @@ export const sharedPtComponents: PortableTextComponents = {
         {children}
       </p>
     ),
+    blockquote: ({ children }: { children?: React.ReactNode }) => (
+      <blockquote className="border-l-4 border-primary/30 pl-6 italic text-muted-foreground/80 my-8">
+        {children}
+      </blockquote>
+    ),
   },
   list: {
     bullet: ({ children }: { children?: React.ReactNode }) => (
@@ -63,16 +105,6 @@ export const sharedPtComponents: PortableTextComponents = {
           {children}
         </div>
       </li>
-    ),
-  },
-  marks: {
-    strong: ({ children }: { children?: React.ReactNode }) => (
-      <strong className="font-black text-foreground border-b-2 border-primary/20">{children}</strong>
-    ),
-    code: ({ children }: { children?: React.ReactNode }) => (
-      <code className="bg-primary/10 text-primary px-2 py-0.5 rounded-md font-mono text-sm border border-primary/20">
-        {children}
-      </code>
     ),
   },
   types: {
@@ -104,8 +136,6 @@ export const sharedPtComponents: PortableTextComponents = {
       );
     },
     vocabulary: ({ value }: { value: VocabularyValue }) => {
-      const parts = splitFurigana(value.jp, value.furigana);
-      
       return (
         <div className="my-10 md:my-16 group">
           <div className="p-8 md:p-12 rounded-[3rem] bg-card/80 backdrop-blur-3xl border border-white/5 shadow-2xl relative overflow-hidden transition-all duration-500 hover:border-primary/40 hover:bg-card/90">
@@ -113,25 +143,12 @@ export const sharedPtComponents: PortableTextComponents = {
             <div className="absolute top-0 right-0 w-48 h-48 bg-primary/5 blur-[80px] rounded-full -mr-24 -mt-24 group-hover:bg-primary/10 transition-all" />
             
             <div className="flex flex-col md:flex-row md:items-center justify-between gap-10 relative z-10">
-               <div>
+                <div>
                   <span className="text-[10px] font-black uppercase tracking-[0.4em] text-primary mb-6 block opacity-70">
                     Target Kosakata
                   </span>
-                  <div className="flex flex-wrap items-end gap-x-2 gap-y-6">
-                    {parts.map((part, i) => (
-                      <div key={i} className="flex flex-col items-center min-w-fit">
-                        {part.furi && (
-                          <span className="text-xs md:text-base font-black text-primary/60 mb-1 tracking-widest animate-in fade-in slide-in-from-bottom-1">
-                            {part.furi}
-                          </span>
-                        )}
-                        <span className={`text-4xl md:text-7xl font-black tracking-tighter ${wanakana.isKanji(part.text) ? 'text-foreground drop-shadow-[0_0_15px_rgba(255,255,255,0.1)]' : 'text-foreground/80'}`}>
-                          {part.text}
-                        </span>
-                      </div>
-                    ))}
-                  </div>
-               </div>
+                  <FuriganaDisplay text={value.jp} furigana={value.furigana} size="large" />
+                </div>
 
                <div className="flex flex-col items-end gap-4">
                   <div className="bg-white/[0.03] p-4 rounded-[2rem] border border-white/5 group-hover:border-primary/30 group-hover:bg-primary/5 transition-all shadow-xl">
@@ -144,8 +161,6 @@ export const sharedPtComponents: PortableTextComponents = {
       );
     },
     exampleSentence: ({ value }: { value: { jp: string; furigana: string; id: string } }) => {
-      const parts = splitFurigana(value.jp, value.furigana);
-      
       return (
         <div className="my-10 md:my-14 p-8 md:p-10 rounded-[2.5rem] bg-card/80 backdrop-blur-xl border border-white/5 relative overflow-hidden group shadow-2xl transition-all duration-500 hover:scale-[1.01]">
           {/* Subtle Accent Glow */}
@@ -156,20 +171,7 @@ export const sharedPtComponents: PortableTextComponents = {
               <span className="text-[10px] font-black uppercase tracking-[0.4em] text-primary mb-4 block opacity-60">
                 Contoh Kalimat
               </span>
-              <div className="flex flex-wrap items-end gap-x-1.5 gap-y-4">
-                {parts.map((part, i) => (
-                  <div key={i} className="flex flex-col items-center">
-                    {part.furi && (
-                      <span className="text-[10px] md:text-sm font-black text-primary/60 mb-1 tracking-wider">
-                        {part.furi}
-                      </span>
-                    )}
-                    <span className="text-xl md:text-3xl font-black text-foreground/90 group-hover:text-foreground transition-colors">
-                      {part.text}
-                    </span>
-                  </div>
-                ))}
-              </div>
+              <FuriganaDisplay text={value.jp} furigana={value.furigana} size="medium" />
             </div>
 
             <div className="flex items-start gap-4 py-4 px-6 rounded-2xl bg-white/[0.03] border-l-4 border-primary/40">

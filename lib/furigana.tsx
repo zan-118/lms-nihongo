@@ -14,39 +14,66 @@ import React from "react";
 export function splitFurigana(word: string, reading: string) {
   if (!reading || word === reading) return [{ text: word }];
 
+  // Clean the reading string from spaces for better anchor matching
+  const cleanReading = reading.replace(/\s+/g, "");
+
+  const isKanji = (char: string) => {
+    const code = char.charCodeAt(0);
+    return (code >= 0x4e00 && code <= 0x9faf) || char === "々";
+  };
+
   const chunks: { text: string; furi?: string }[] = [];
-  let wIdx = word.length - 1;
-  let rIdx = reading.length - 1;
+  let wIdx = 0;
+  let rIdx = 0;
 
-  while (wIdx >= 0) {
-    const wChar = word[wIdx];
-    const rChar = reading[rIdx];
-
-    if (wChar === rChar) {
-      // Hiragana yang sama, tidak perlu furigana
-      chunks.unshift({ text: wChar });
-      wIdx--;
-      rIdx--;
+  while (wIdx < word.length) {
+    if (!isKanji(word[wIdx])) {
+      // Non-kanji segment (Hiragana/Katakana/Punctuation/Spaces)
+      const start = wIdx;
+      while (wIdx < word.length && !isKanji(word[wIdx])) {
+        wIdx++;
+      }
+      const segment = word.substring(start, wIdx);
+      chunks.push({ text: segment });
+      
+      // Sync rIdx: skip identical characters and whitespace in reading
+      const cleanSegment = segment.replace(/\s+/g, "");
+      if (cleanSegment) {
+        const rStart = cleanReading.indexOf(cleanSegment, rIdx);
+        if (rStart !== -1) {
+          rIdx = rStart + cleanSegment.length;
+        }
+      }
     } else {
-      // Kanji ditemukan! Cari batas Hiragana berikutnya untuk tahu jangkauan furigana-nya
-      let wStart = wIdx;
-      while (wStart >= 0 && word[wStart] !== reading[rIdx]) {
-        wStart--;
+      // Kanji segment
+      const start = wIdx;
+      while (wIdx < word.length && isKanji(word[wIdx])) {
+        wIdx++;
       }
+      const kanjiSegment = word.substring(start, wIdx);
       
-      // Ambil bagian kanji dan bagian bacaannya
-      const kanjiPart = word.substring(wStart + 1, wIdx + 1);
-      const readingPart = reading.substring(rIdx - (wIdx - wStart - 1), rIdx + 1);
-      
-      // Jika wStart < 0, berarti sisa kata di depan adalah kanji
-      if (wStart < 0) {
-        chunks.unshift({ text: word.substring(0, wIdx + 1), furi: reading.substring(0, rIdx + 1) });
-        break;
+      // Find next anchor in word to bound the reading
+      let nextAnchor = "";
+      let tempW = wIdx;
+      while (tempW < word.length && nextAnchor === "") {
+        const anchorStart = tempW;
+        while (tempW < word.length && !isKanji(word[tempW])) {
+          tempW++;
+        }
+        nextAnchor = word.substring(anchorStart, tempW).replace(/\s+/g, "");
+      }
+
+      let rEnd;
+      if (nextAnchor) {
+        rEnd = cleanReading.indexOf(nextAnchor, rIdx);
+        if (rEnd === -1) rEnd = cleanReading.length;
       } else {
-        chunks.unshift({ text: kanjiPart, furi: readingPart });
-        wIdx = wStart;
-        rIdx = rIdx - readingPart.length;
+        rEnd = cleanReading.length;
       }
+
+      const readingSegment = cleanReading.substring(rIdx, rEnd);
+      chunks.push({ text: kanjiSegment, furi: readingSegment });
+      rIdx = rEnd;
     }
   }
 

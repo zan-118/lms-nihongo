@@ -43,12 +43,20 @@ export default function LibraryPage() {
       delay: 0.5
     },
     {
+      href: "/library/reading",
+      title: "Graded Reading",
+      desc: "Latih kemampuan membaca Anda dengan teks interaktif yang disesuaikan dengan level JLPT Anda.",
+      icon: <BookOpen size={28} />,
+      label: "Bacaan Berjenjang",
+      delay: 0.6
+    },
+    {
       href: "/exams",
       title: "Ujian & Sertifikasi",
       desc: "Siap buat ujian beneran? Uji nyalimu di simulasi JLPT dan lihat seberapa jago skor kesiapanmu!",
       icon: <Award size={28} />,
       label: "Latihan Ujian",
-      delay: 0.6
+      delay: 0.7
     }
   ];
 
