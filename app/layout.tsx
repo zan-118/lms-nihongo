@@ -9,7 +9,7 @@
 // IMPORTS
 // ======================
 import type { Metadata, Viewport } from "next";
-import { Inter, Noto_Sans_JP } from "next/font/google";
+import { Inter, Noto_Sans_JP, Noto_Serif_JP } from "next/font/google";
 import "./globals.css";
 import { Toaster } from "sonner";
 import FeedbackWidget from "@/components/features/feedback/FeedbackWidget";
@@ -26,6 +26,11 @@ const notoJsonJP = Noto_Sans_JP({
   subsets: ["latin"],
   weight: ["400", "500", "700", "900"],
   variable: "--font-noto-jp",
+});
+const notoSerifJP = Noto_Serif_JP({
+  subsets: ["latin"],
+  weight: ["400", "500", "700", "900"],
+  variable: "--font-noto-serif-jp",
 });
 
 /**
@@ -119,6 +124,7 @@ export default function RootLayout({
         className={cn(
           inter.variable,
           notoJsonJP.variable,
+          notoSerifJP.variable,
           "font-sans antialiased text-foreground selection:bg-red-500 selection:text-white transition-colors duration-300"
         )}
       >

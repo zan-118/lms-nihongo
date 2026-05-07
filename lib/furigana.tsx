@@ -65,8 +65,14 @@ export function splitFurigana(word: string, reading: string) {
 
       let rEnd;
       if (nextAnchor) {
+        // Find the anchor, but ensure it's not too far if the kanji is short
+        const searchEnd = Math.min(cleanReading.length, rIdx + kanjiSegment.length * 10 + 10);
         rEnd = cleanReading.indexOf(nextAnchor, rIdx);
-        if (rEnd === -1) rEnd = cleanReading.length;
+        
+        // If anchor not found or suspiciously far, try to bound it by kanji count
+        if (rEnd === -1 || rEnd > searchEnd) {
+           rEnd = Math.min(cleanReading.length, rIdx + kanjiSegment.length * 3);
+        }
       } else {
         rEnd = cleanReading.length;
       }

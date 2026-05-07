@@ -1,14 +1,15 @@
 "use client";
 
-import React from "react";
+import React, { useEffect } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import AudioController from "@/components/features/library/reading/AudioController";
 import FuriganaDisplay from "@/components/ui/FuriganaDisplay";
 import { Badge } from "@/components/ui/badge";
 import { ChevronLeft, Languages, BookOpen, Eye, EyeOff } from "lucide-react";
 import Link from "next/link";
-import { ReadingProvider, useReading, ReadingMode } from "@/components/features/library/reading/ReadingContext";
+import { ReadingProvider, ReadingMode } from "@/components/features/library/reading/ReadingContext";
 import { cn } from "@/lib/utils";
+import { useUIStore } from "@/store/useUIStore";
 
 interface ReadingPageClientProps {
   data: {
@@ -23,8 +24,19 @@ interface ReadingPageClientProps {
 }
 
 function ReadingPageContent({ data }: ReadingPageClientProps) {
-  const { mode, setMode, showTranslation, setShowTranslation } = useReading();
+  const { readingState, setReadingState } = useUIStore();
+  const { mode, showTranslation } = readingState;
   
+  // Local UI state
+  // Sync data to global store on mount for FAB access
+  useEffect(() => {
+    setReadingState({
+      audioUrl: data.audioUrl,
+      textToSpeak: data.body,
+      isTTSDisabled: data.isTTSDisabled,
+    });
+  }, [data, setReadingState]);
+
   // Split content into paragraphs
   const paragraphs = data.body.split(/\n+/).filter(p => p.trim());
   const hiraganaParagraphs = data.hiragana.split(/\n+/).filter(p => p.trim());
@@ -64,45 +76,57 @@ function ReadingPageContent({ data }: ReadingPageClientProps) {
                   Level {data.difficulty}
                 </Badge>
                 <div className="w-1.5 h-1.5 rounded-full bg-primary/30" />
-                <span className="text-[10px] font-black uppercase tracking-[0.3em] text-muted-foreground">
-                  Cyber-Glass Interactive Reader
+                <span className="text-[10px] font-bold uppercase tracking-widest text-muted-foreground/60">
+                  Interactive Reading
                 </span>
               </div>
-              <h1 className="text-4xl md:text-6xl font-bold text-foreground tracking-tighter leading-tight">
+              <h1 className="text-3xl md:text-5xl font-bold text-foreground tracking-tight leading-tight">
                 {data.title}
               </h1>
             </div>
 
             {/* Reading Mode Switcher - Desktop/Tablet */}
-            <div className="hidden md:flex items-center gap-1 p-1 rounded-2xl bg-white/[0.03] border border-white/5 backdrop-blur-xl shadow-2xl">
-              {modes.map((m) => (
+            <div className="flex flex-col md:flex-row items-center gap-4">
+              <div className="flex items-center gap-1 p-1 rounded-2xl bg-white/[0.03] border border-white/5 backdrop-blur-xl shadow-2xl">
+                {modes.map((m) => (
+                  <button
+                    key={m.id}
+                    onClick={() => setReadingState({ mode: m.id })}
+                    className={cn(
+                      "flex items-center gap-2 px-4 py-2 rounded-xl text-xs font-bold uppercase tracking-widest transition-all",
+                      mode === m.id 
+                        ? "bg-primary text-primary-foreground shadow-[0_0_15px_rgba(0,238,255,0.4)]" 
+                        : "text-muted-foreground hover:text-foreground hover:bg-white/5"
+                    )}
+                  >
+                    <m.icon size={14} />
+                    <span className="hidden lg:inline">{m.label}</span>
+                  </button>
+                ))}
+                <div className="w-px h-4 bg-white/10 mx-2" />
                 <button
-                  key={m.id}
-                  onClick={() => setMode(m.id)}
+                  onClick={() => setReadingState({ showTranslation: !showTranslation })}
                   className={cn(
                     "flex items-center gap-2 px-4 py-2 rounded-xl text-xs font-bold uppercase tracking-widest transition-all",
-                    mode === m.id 
-                      ? "bg-primary text-primary-foreground shadow-[0_0_15px_rgba(0,238,255,0.4)]" 
+                    showTranslation 
+                      ? "bg-emerald-500 text-white shadow-[0_0_15px_rgba(16,185,129,0.4)]" 
                       : "text-muted-foreground hover:text-foreground hover:bg-white/5"
                   )}
                 >
-                  <m.icon size={14} />
-                  {m.label}
+                  <Languages size={14} />
+                  ID
                 </button>
-              ))}
-              <div className="w-px h-4 bg-white/10 mx-2" />
-              <button
-                onClick={() => setShowTranslation(!showTranslation)}
-                className={cn(
-                  "flex items-center gap-2 px-4 py-2 rounded-xl text-xs font-bold uppercase tracking-widest transition-all",
-                  showTranslation 
-                    ? "bg-emerald-500 text-white shadow-[0_0_15px_rgba(16,185,129,0.4)]" 
-                    : "text-muted-foreground hover:text-foreground hover:bg-white/5"
-                )}
-              >
-                <Languages size={14} />
-                ID
-              </button>
+              </div>
+
+              {/* Audio Control in Header */}
+              <div className="px-2 py-1 rounded-2xl bg-white/[0.03] border border-white/5 backdrop-blur-xl shadow-xl flex items-center gap-2">
+                <AudioController 
+                  audioUrl={data.audioUrl} 
+                  textToSpeak={data.body} 
+                  isTTSDisabled={data.isTTSDisabled}
+                  compact={true}
+                />
+              </div>
             </div>
           </div>
         </div>
@@ -115,31 +139,20 @@ function ReadingPageContent({ data }: ReadingPageClientProps) {
             transition={{ duration: 0.8, ease: "easeOut" }}
             className="w-full"
           >
-            {/* Japanese Text Glass Container */}
-            <div className="p-8 md:p-20 rounded-[3rem] bg-card/30 backdrop-blur-[40px] border border-white/10 shadow-[0_20px_50px_rgba(0,0,0,0.3)] relative overflow-hidden group">
-              <div className="absolute inset-0 bg-neural-pattern opacity-[0.03] pointer-events-none" />
+            {/* Japanese Text Reading Container */}
+            <div className="p-6 md:p-12 lg:p-16 rounded-[2.5rem] bg-card/20 backdrop-blur-3xl border border-white/5 shadow-xl relative overflow-hidden group">
+              <div className="absolute inset-0 bg-neural-pattern opacity-[0.005] pointer-events-none" />
               
-              <div className="space-y-12 relative z-10">
+              <div className="space-y-10 relative z-10">
                 {paragraphs.map((para, idx) => (
-                  <div key={idx} className="space-y-6">
+                  <div key={idx} className="space-y-4">
                     <FuriganaDisplay 
                       text={para} 
                       furigana={hiraganaParagraphs[idx] || ""} 
                       mode={mode}
                       size="medium"
-                      className="!leading-[2.2] text-xl md:text-2xl"
+                      className="text-foreground/90"
                     />
-                    
-                    {/* Inline translation if enabled - Optional, but keeping separate block as default */}
-                    {showTranslation && translationParagraphs[idx] && (
-                       <motion.p 
-                         initial={{ opacity: 0, x: -10 }}
-                         animate={{ opacity: 1, x: 0 }}
-                         className="text-emerald-500/60 italic text-sm md:text-lg font-medium border-l-2 border-emerald-500/20 pl-4"
-                       >
-                         {translationParagraphs[idx]}
-                       </motion.p>
-                    )}
                   </div>
                 ))}
               </div>
@@ -147,11 +160,11 @@ function ReadingPageContent({ data }: ReadingPageClientProps) {
               {/* Explicit Translation Toggle inside Card */}
               <div className="mt-16 pt-8 border-t border-white/5 flex justify-center">
                 <button
-                  onClick={() => setShowTranslation(!showTranslation)}
+                  onClick={() => setReadingState({ showTranslation: !showTranslation })}
                   className={cn(
-                    "group flex items-center gap-3 px-8 py-3 rounded-full text-sm font-bold uppercase tracking-[0.2em] transition-all duration-500",
+                    "group flex items-center gap-3 px-8 py-3 rounded-full text-sm font-semibold uppercase tracking-widest transition-all duration-300",
                     showTranslation
-                      ? "bg-emerald-500 text-white shadow-[0_0_20px_rgba(16,185,129,0.4)]"
+                      ? "bg-emerald-500 text-white shadow-lg"
                       : "bg-white/5 text-muted-foreground hover:bg-white/10 hover:text-foreground border border-white/5"
                   )}
                 >
@@ -191,46 +204,8 @@ function ReadingPageContent({ data }: ReadingPageClientProps) {
         </div>
       </div>
 
-      {/* Mobile Floating Controls */}
-      <div className="fixed bottom-28 left-1/2 -translate-x-1/2 z-50 md:hidden w-[92%] max-w-sm">
-        <div className="p-1.5 rounded-full bg-background/40 backdrop-blur-[50px] border border-white/10 shadow-[0_10px_40px_rgba(0,0,0,0.5)] flex items-center justify-between gap-1 overflow-hidden">
-          {modes.map((m) => (
-            <button
-              key={m.id}
-              onClick={() => setMode(m.id)}
-              className={cn(
-                "flex-1 flex flex-col items-center justify-center gap-1.5 py-3 rounded-full transition-all duration-300",
-                mode === m.id 
-                  ? "bg-primary text-primary-foreground shadow-[0_0_20px_rgba(0,238,255,0.3)] scale-[1.02]" 
-                  : "text-muted-foreground hover:bg-white/5"
-              )}
-            >
-              <m.icon size={16} />
-              <span className="text-[7px] font-bold uppercase tracking-widest">{m.label}</span>
-            </button>
-          ))}
-          <div className="w-px h-6 bg-white/10" />
-          <button
-            onClick={() => setShowTranslation(!showTranslation)}
-            className={cn(
-              "flex-1 flex flex-col items-center justify-center gap-1.5 py-3 rounded-full transition-all duration-300",
-              showTranslation 
-                ? "bg-emerald-500 text-white shadow-[0_0_20px_rgba(16,185,129,0.3)] scale-[1.02]" 
-                : "text-muted-foreground hover:bg-white/5"
-            )}
-          >
-            <Languages size={16} />
-            <span className="text-[7px] font-bold uppercase tracking-widest">Trans</span>
-          </button>
-        </div>
-      </div>
-
-      {/* Persistent Audio Bar */}
-      <AudioController 
-        audioUrl={data.audioUrl} 
-        textToSpeak={data.body}
-        isTTSDisabled={data.isTTSDisabled}
-      />
+      {/* Bottom Padding for scroll space */}
+      <div className="h-40" />
     </div>
   );
 }

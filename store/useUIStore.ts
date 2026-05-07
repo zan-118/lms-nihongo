@@ -3,12 +3,23 @@ import { persist, createJSONStorage, StateStorage } from "zustand/middleware";
 import { get, set as idbSet, del } from "idb-keyval";
 import { Notification, Settings } from "./types";
 
+export type ReadingMode = "kanji" | "furigana" | "hiragana";
+
 interface UIState {
   loading: boolean;
   isSyncing: boolean;
   syncError: boolean;
   notifications: Notification[];
   settings: Settings;
+  
+  // Reading Session State (Synced for FAB access)
+  readingState: {
+    mode: ReadingMode;
+    showTranslation: boolean;
+    audioUrl?: string;
+    textToSpeak?: string;
+    isTTSDisabled?: boolean;
+  };
   
   setLoading: (loading: boolean) => void;
   setSyncing: (isSyncing: boolean) => void;
@@ -20,6 +31,7 @@ interface UIState {
   toggleFurigana: (enabled: boolean) => void;
   exportData: () => void;
   importData: (jsonData: string) => boolean;
+  setReadingState: (state: Partial<UIState['readingState']>) => void;
   resetUI: () => void;
 }
 
@@ -41,6 +53,11 @@ export const useUIStore = create<UIState>()(
         dailyLessonGoal: 10,
         notificationsEnabled: false,
         showFurigana: true,
+      },
+
+      readingState: {
+        mode: "kanji",
+        showTranslation: false,
       },
 
       setLoading: (loading) => set({ loading }),
@@ -149,11 +166,16 @@ export const useUIStore = create<UIState>()(
         }
       },
 
+      setReadingState: (newState) => set((state) => ({
+        readingState: { ...state.readingState, ...newState }
+      })),
+
       resetUI: () => set({
         loading: false,
         isSyncing: false,
         notifications: [],
-        settings: { notificationsEnabled: false }
+        settings: { notificationsEnabled: false },
+        readingState: { mode: "kanji", showTranslation: false }
       }),
     }),
     {

@@ -5,7 +5,13 @@ import { motion, AnimatePresence } from "framer-motion";
 import { Plus, MessageSquarePlus, Coffee, X } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import Link from "next/link";
+import { usePathname } from "next/navigation";
 import FeedbackWidget from "../feedback/FeedbackWidget";
+import { ReadingMode, useUIStore } from "@/store/useUIStore";
+import AudioController from "../library/reading/AudioController";
+import { Eye, Languages, BookOpen as BookIcon, EyeOff } from "lucide-react";
+import React from "react";
+import { cn } from "@/lib/utils";
 
 /**
  * @file FloatingActions.tsx
@@ -14,21 +20,31 @@ import FeedbackWidget from "../feedback/FeedbackWidget";
  */
 
 export default function FloatingActions() {
+  const pathname = usePathname();
   const [isOpen, setIsOpen] = useState(false);
   const [showFeedbackDialog, setShowFeedbackDialog] = useState(false);
+  const { readingState, setReadingState } = useUIStore();
+
+  const isReadingPage = pathname?.includes("/library/reading/");
+
+  const modes: { id: ReadingMode; label: string; icon: React.ElementType }[] = [
+    { id: "kanji", label: "Kanji", icon: BookIcon },
+    { id: "furigana", label: "Furigana", icon: Eye },
+    { id: "hiragana", label: "Hiragana", icon: EyeOff },
+  ];
 
   return (
     <>
       <div className="fixed bottom-28 right-6 md:bottom-10 md:right-10 z-[100] flex flex-col items-end gap-4">
-        <AnimatePresence>
-          {isOpen && (
+        <AnimatePresence mode="wait">
+          {/* Global Actions (Non-Reading) - Uses unmounting for AnimatePresence */}
+          {!isReadingPage && isOpen && (
             <motion.div
               initial={{ opacity: 0, y: 20, scale: 0.8 }}
               animate={{ opacity: 1, y: 0, scale: 1 }}
               exit={{ opacity: 0, y: 20, scale: 0.8 }}
               className="flex flex-col gap-3 mb-2"
             >
-              {/* Feedback Button */}
               <motion.div whileHover={{ x: -5 }}>
                 <Button
                   onClick={() => {
@@ -42,7 +58,6 @@ export default function FloatingActions() {
                 </Button>
               </motion.div>
 
-              {/* Support Button */}
               <motion.div whileHover={{ x: -5 }}>
                 <Link href="/support">
                   <Button
@@ -57,6 +72,62 @@ export default function FloatingActions() {
           )}
         </AnimatePresence>
 
+        {/* Reading Page Actions - Persistent mounting to keep audio alive */}
+        {isReadingPage && (
+          <div 
+            className={cn(
+              "flex flex-col gap-3 mb-2 transition-all duration-300 transform origin-bottom",
+              isOpen 
+                ? "opacity-100 scale-100 translate-y-0" 
+                : "opacity-0 scale-90 translate-y-10 pointer-events-none"
+            )}
+          >
+            {/* Reading: Audio */}
+            <motion.div whileHover={{ x: -5 }}>
+              <div className="bg-card/90 backdrop-blur-3xl hover:bg-primary/20 text-foreground border border-border shadow-2xl rounded-2xl px-4 py-3 flex items-center gap-3 transition-all h-auto group">
+                 <AudioController 
+                  audioUrl={readingState.audioUrl} 
+                  textToSpeak={readingState.textToSpeak}
+                  isTTSDisabled={readingState.isTTSDisabled}
+                  compact={true}
+                />
+                <span className="text-[10px] font-black uppercase tracking-widest hidden md:block text-muted-foreground">Audio</span>
+              </div>
+            </motion.div>
+
+            {/* Reading: Mode Cycle */}
+            <motion.div whileHover={{ x: -5 }}>
+              <button
+                onClick={() => {
+                  const currentIndex = modes.findIndex(m => m.id === readingState.mode);
+                  const nextIndex = (currentIndex + 1) % modes.length;
+                  setReadingState({ mode: modes[nextIndex].id });
+                }}
+                className="bg-card/90 backdrop-blur-3xl hover:bg-primary hover:text-primary-foreground text-foreground border border-border shadow-2xl rounded-2xl px-4 py-4 flex items-center gap-3 transition-all h-auto group w-full justify-between"
+              >
+                <span className="text-[10px] font-black uppercase tracking-widest hidden md:block">
+                  {modes.find(m => m.id === readingState.mode)?.label || "Mode"}
+                </span>
+                {React.createElement(modes.find(m => m.id === readingState.mode)?.icon || Eye, { size: 20, className: "text-primary group-hover:text-current" })}
+              </button>
+            </motion.div>
+
+            {/* Reading: Translation Toggle */}
+            <motion.div whileHover={{ x: -5 }}>
+              <button
+                onClick={() => setReadingState({ showTranslation: !readingState.showTranslation })}
+                className={`bg-card/90 backdrop-blur-3xl border border-border shadow-2xl rounded-2xl px-4 py-4 flex items-center gap-3 transition-all h-auto group w-full justify-between ${
+                  readingState.showTranslation ? "hover:bg-emerald-600 hover:text-white" : "hover:bg-emerald-500/20"
+                }`}
+              >
+                <span className="text-[10px] font-black uppercase tracking-widest hidden md:block">
+                  {readingState.showTranslation ? "Terjemahan ON" : "Terjemahan OFF"}
+                </span>
+                <Languages size={20} className={readingState.showTranslation ? "text-emerald-500 group-hover:text-current" : "text-emerald-500"} />
+              </button>
+            </motion.div>
+          </div>
+        )}
         {/* Main Toggle Button */}
         <Button
           onClick={() => setIsOpen(!isOpen)}
@@ -66,7 +137,9 @@ export default function FloatingActions() {
               : "bg-primary text-primary-foreground hover:scale-110 shadow-primary/20"
           }`}
         >
-          {isOpen ? <X size={28} /> : <Plus size={28} className={isOpen ? "" : "animate-pulse"} />}
+          {isOpen ? <X size={28} /> : (
+            isReadingPage ? <BookIcon size={28} className={isOpen ? "" : "animate-pulse"} /> : <Plus size={28} className={isOpen ? "" : "animate-pulse"} />
+          )}
         </Button>
       </div>
 

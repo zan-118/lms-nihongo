@@ -8,9 +8,15 @@ interface AudioControllerProps {
   audioUrl?: string;
   textToSpeak?: string;
   isTTSDisabled?: boolean;
+  compact?: boolean;
 }
 
-export default function AudioController({ audioUrl, textToSpeak, isTTSDisabled }: AudioControllerProps) {
+export default function AudioController({ 
+  audioUrl, 
+  textToSpeak, 
+  isTTSDisabled,
+  compact = false
+}: AudioControllerProps) {
   const [isPlaying, setIsPlaying] = useState(false);
   const [isTTS, setIsTTS] = useState(false);
   const [error, setError] = useState<string | null>(null);
@@ -25,12 +31,22 @@ export default function AudioController({ audioUrl, textToSpeak, isTTSDisabled }
     };
   }, []);
 
+  // Helper to clean text for TTS (removing furigana markup)
+  const cleanTextForTTS = (text: string) => {
+    if (!text) return "";
+    return text
+      .replace(/\[.*?\]/g, "") // Remove everything inside [ ]
+      .replace(/[\[\]]/g, "")  // Remove stray brackets
+      .replace(/\s+/g, " ")    // Normalize whitespace
+      .trim();
+  };
+
   const stopAll = () => {
     if (audioRef.current) {
       audioRef.current.pause();
       audioRef.current.currentTime = 0;
     }
-    if (window.speechSynthesis) {
+    if (typeof window !== "undefined" && window.speechSynthesis) {
       window.speechSynthesis.cancel();
     }
     setIsPlaying(false);
@@ -40,20 +56,32 @@ export default function AudioController({ audioUrl, textToSpeak, isTTSDisabled }
   const toggleNativeAudio = () => {
     if (!audioRef.current) return;
 
-    if (isPlaying) {
+    if (isPlaying && !isTTS) {
       audioRef.current.pause();
       setIsPlaying(false);
     } else {
-      audioRef.current.play().catch(err => {
+      // If we were playing TTS, stop it before starting native audio
+      if (isTTS) {
+        stopAll();
+      }
+      
+      audioRef.current.play().then(() => {
+        setIsPlaying(true);
+        setIsTTS(false);
+      }).catch(err => {
         console.error("Audio playback error:", err);
         setError("Gagal memutar audio native.");
+        setIsPlaying(false);
       });
-      setIsPlaying(true);
     }
   };
 
   const toggleTTS = () => {
-    if (!textToSpeak) return;
+    const textToPlay = cleanTextForTTS(textToSpeak || "");
+    if (!textToPlay) {
+      setError("Tidak ada teks untuk dibaca.");
+      return;
+    }
 
     if (isPlaying && isTTS) {
       window.speechSynthesis.pause();
@@ -63,10 +91,16 @@ export default function AudioController({ audioUrl, textToSpeak, isTTSDisabled }
       setIsPlaying(true);
     } else {
       stopAll();
-      const utterance = new SpeechSynthesisUtterance(textToSpeak);
+      const utterance = new SpeechSynthesisUtterance(textToPlay);
       utterance.lang = "ja-JP";
-      utterance.rate = 0.9; // Slightly slower for learning
+      utterance.rate = 0.85; // Slightly slower for better clarity
       
+      utterance.onstart = () => {
+        setIsPlaying(true);
+        setIsTTS(true);
+        setError(null);
+      };
+
       utterance.onend = () => {
         setIsPlaying(false);
         setIsTTS(false);
@@ -74,28 +108,35 @@ export default function AudioController({ audioUrl, textToSpeak, isTTSDisabled }
 
       utterance.onerror = (e) => {
         console.error("TTS Error:", e);
-        setError("Gagal menjalankan AI Voice.");
+        if (e.error !== "interrupted") {
+          setError("Gagal menjalankan AI Voice.");
+        }
         setIsPlaying(false);
         setIsTTS(false);
       };
 
       ttsRef.current = utterance;
       window.speechSynthesis.speak(utterance);
-      setIsPlaying(true);
-      setIsTTS(true);
     }
   };
 
   const handlePlayPause = () => {
-    if (audioUrl) {
+    // Check if we have a valid native audio URL
+    const hasNative = audioUrl && audioUrl.trim().length > 0;
+    
+    if (hasNative) {
       toggleNativeAudio();
     } else if (!isTTSDisabled) {
       toggleTTS();
+    } else {
+      setError("Audio dan AI Voice dinonaktifkan untuk konten ini.");
     }
   };
 
   return (
-    <div className="fixed bottom-8 left-1/2 -translate-x-1/2 z-50 flex flex-col items-center gap-4">
+    <div className={
+      `${compact ? "relative flex-row" : "fixed bottom-8 left-1/2 -translate-x-1/2 z-50 flex-col"} flex items-center gap-4`
+    }>
       {error && (
         <div className="flex items-center gap-2 px-4 py-2 rounded-full bg-destructive/10 border border-destructive/20 text-destructive text-xs animate-in fade-in slide-in-from-bottom-2">
           <AlertCircle size={14} />
@@ -103,24 +144,36 @@ export default function AudioController({ audioUrl, textToSpeak, isTTSDisabled }
         </div>
       )}
 
-      <div className="flex items-center gap-3 p-2 rounded-full bg-card/40 backdrop-blur-3xl border border-white/5 shadow-2xl ring-1 ring-white/10">
+      <div className={
+        `flex items-center gap-2 rounded-full transition-all duration-300 ${
+          compact 
+            ? "bg-transparent border-none p-0 ring-0 shadow-none" 
+            : "p-2 bg-card/40 backdrop-blur-3xl border border-white/5 shadow-2xl ring-1 ring-white/10"
+        }`
+      }>
         <Button
           variant="ghost"
           size="icon"
-          className="w-12 h-12 rounded-full bg-primary/10 hover:bg-primary/20 text-primary transition-all duration-300 active:scale-95"
+          className={
+            `rounded-full bg-primary/10 hover:bg-primary/20 text-primary transition-all duration-300 active:scale-95 ${
+              compact ? "w-10 h-10" : "w-12 h-12"
+            }`
+          }
           onClick={handlePlayPause}
         >
-          {isPlaying ? <Pause size={24} /> : <Play size={24} className="ml-1" />}
+          {isPlaying ? <Pause size={compact ? 20 : 24} /> : <Play size={compact ? 20 : 24} className={compact ? "ml-0.5" : "ml-1"} />}
         </Button>
 
-        <div className="flex flex-col pr-6 pl-2">
-          <span className="text-[10px] font-black uppercase tracking-widest text-primary/70 mb-0.5">
-            {audioUrl ? "Native Voice" : "AI Smart Voice"}
-          </span>
-          <span className="text-xs font-bold text-foreground">
-            {isPlaying ? (isTTS ? "Membaca teks..." : "Memutar audio...") : "Siap mendengarkan?"}
-          </span>
-        </div>
+        {!compact && (
+          <div className="flex flex-col pr-6 pl-2">
+            <span className="text-[10px] font-black uppercase tracking-widest text-primary/70 mb-0.5">
+              {audioUrl ? "Native Voice" : "AI Smart Voice"}
+            </span>
+            <span className="text-xs font-bold text-foreground">
+              {isPlaying ? (isTTS ? "Membaca teks..." : "Memutar audio...") : "Siap mendengarkan?"}
+            </span>
+          </div>
+        )}
 
         {audioUrl && (
           <audio

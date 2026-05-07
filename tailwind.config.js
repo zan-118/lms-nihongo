@@ -63,7 +63,8 @@ module.exports = {
   		},
   		fontFamily: {
   			sans: ['var(--font-inter)', 'var(--font-noto-jp)', 'sans-serif'],
-  			noto: ['var(--font-noto-jp)', 'sans-serif']
+  			noto: ['var(--font-noto-jp)', 'sans-serif'],
+  			'noto-serif': ['var(--font-noto-serif-jp)', 'serif']
   		}
   	}
   },

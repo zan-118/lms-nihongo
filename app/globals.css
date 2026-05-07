@@ -28,7 +28,7 @@
 
   .dark {
     --background: 220 23% 5%;
-    --foreground: 213 27% 84%;
+    --foreground: 213 27% 98%;
     --card: 216 18% 7%;
     --card-foreground: 213 27% 84%;
     --popover: 216 18% 7%;
@@ -38,7 +38,7 @@
     --secondary: 217 33% 17%;
     --secondary-foreground: 210 40% 98%;
     --muted: 217 33% 17%;
-    --muted-foreground: 215 20% 65%;
+    --muted-foreground: 215 10% 85%;
     --accent: 217 33% 17%;
     --accent-foreground: 210 40% 98%;
     --destructive: 0 62.8% 30.6%;
@@ -65,7 +65,7 @@
   }
 
   p {
-    @apply leading-relaxed text-muted-foreground transition-colors duration-300;
+    @apply leading-relaxed text-foreground transition-colors duration-300;
   }
 }
 
