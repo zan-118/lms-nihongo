@@ -68,7 +68,7 @@ function ReadingPageContent({ data }: ReadingPageClientProps) {
                   Cyber-Glass Interactive Reader
                 </span>
               </div>
-              <h1 className="text-4xl md:text-7xl font-black text-foreground tracking-tighter leading-none">
+              <h1 className="text-4xl md:text-6xl font-bold text-foreground tracking-tighter leading-tight">
                 {data.title}
               </h1>
             </div>
@@ -80,7 +80,7 @@ function ReadingPageContent({ data }: ReadingPageClientProps) {
                   key={m.id}
                   onClick={() => setMode(m.id)}
                   className={cn(
-                    "flex items-center gap-2 px-4 py-2 rounded-xl text-xs font-black uppercase tracking-widest transition-all",
+                    "flex items-center gap-2 px-4 py-2 rounded-xl text-xs font-bold uppercase tracking-widest transition-all",
                     mode === m.id 
                       ? "bg-primary text-primary-foreground shadow-[0_0_15px_rgba(0,238,255,0.4)]" 
                       : "text-muted-foreground hover:text-foreground hover:bg-white/5"
@@ -94,7 +94,7 @@ function ReadingPageContent({ data }: ReadingPageClientProps) {
               <button
                 onClick={() => setShowTranslation(!showTranslation)}
                 className={cn(
-                  "flex items-center gap-2 px-4 py-2 rounded-xl text-xs font-black uppercase tracking-widest transition-all",
+                  "flex items-center gap-2 px-4 py-2 rounded-xl text-xs font-bold uppercase tracking-widest transition-all",
                   showTranslation 
                     ? "bg-emerald-500 text-white shadow-[0_0_15px_rgba(16,185,129,0.4)]" 
                     : "text-muted-foreground hover:text-foreground hover:bg-white/5"
@@ -127,7 +127,7 @@ function ReadingPageContent({ data }: ReadingPageClientProps) {
                       furigana={hiraganaParagraphs[idx] || ""} 
                       mode={mode}
                       size="medium"
-                      className="!leading-[2.4] text-xl md:text-2xl"
+                      className="!leading-[2.2] text-xl md:text-2xl"
                     />
                     
                     {/* Inline translation if enabled - Optional, but keeping separate block as default */}
@@ -149,7 +149,7 @@ function ReadingPageContent({ data }: ReadingPageClientProps) {
                 <button
                   onClick={() => setShowTranslation(!showTranslation)}
                   className={cn(
-                    "group flex items-center gap-3 px-8 py-3 rounded-full text-sm font-black uppercase tracking-[0.2em] transition-all duration-500",
+                    "group flex items-center gap-3 px-8 py-3 rounded-full text-sm font-bold uppercase tracking-[0.2em] transition-all duration-500",
                     showTranslation
                       ? "bg-emerald-500 text-white shadow-[0_0_20px_rgba(16,185,129,0.4)]"
                       : "bg-white/5 text-muted-foreground hover:bg-white/10 hover:text-foreground border border-white/5"
@@ -175,7 +175,7 @@ function ReadingPageContent({ data }: ReadingPageClientProps) {
                 <div className="p-8 md:p-16 rounded-[3rem] bg-emerald-500/[0.03] backdrop-blur-[20px] border border-emerald-500/10 shadow-xl relative group">
                    <div className="flex items-center gap-3 mb-8 opacity-60">
                      <Languages size={18} className="text-emerald-500" />
-                     <span className="text-[10px] font-black uppercase tracking-[0.4em] text-emerald-500">Terjemahan Lengkap Indonesia</span>
+                     <span className="text-[10px] font-bold uppercase tracking-[0.4em] text-emerald-500">Terjemahan Lengkap Indonesia</span>
                    </div>
                    <div className="space-y-8">
                       {translationParagraphs.map((t, i) => (
@@ -206,7 +206,7 @@ function ReadingPageContent({ data }: ReadingPageClientProps) {
               )}
             >
               <m.icon size={16} />
-              <span className="text-[7px] font-black uppercase tracking-widest">{m.label}</span>
+              <span className="text-[7px] font-bold uppercase tracking-widest">{m.label}</span>
             </button>
           ))}
           <div className="w-px h-6 bg-white/10" />
@@ -220,7 +220,7 @@ function ReadingPageContent({ data }: ReadingPageClientProps) {
             )}
           >
             <Languages size={16} />
-            <span className="text-[7px] font-black uppercase tracking-widest">Trans</span>
+            <span className="text-[7px] font-bold uppercase tracking-widest">Trans</span>
           </button>
         </div>
       </div>

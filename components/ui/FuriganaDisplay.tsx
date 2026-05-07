@@ -48,14 +48,14 @@ export default function FuriganaDisplay({
                   initial={{ opacity: 0, y: 1 }}
                   animate={{ opacity: 1, y: 0 }}
                   exit={{ opacity: 0, y: 1 }}
-                  className={`${furiSize} font-bold text-primary tracking-[-0.02em] whitespace-nowrap mb-[2px]`}
+                  className={`${furiSize} font-medium text-primary tracking-tight whitespace-nowrap mb-[2px]`}
                 >
                   {part.furi}
                 </motion.span>
               )}
             </AnimatePresence>
           </div>
-          <span className={`${kanjiSize} font-black tracking-normal ${wanakana.isKanji(part.text) ? 'text-foreground' : 'text-foreground/80'}`}>
+          <span className={`${kanjiSize} font-bold tracking-tight ${wanakana.isKanji(part.text) ? 'text-foreground' : 'text-foreground/90'}`}>
             {currentMode === "hiragana" && part.furi ? part.furi : part.text}
           </span>
         </div>
