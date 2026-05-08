@@ -125,3 +125,26 @@ Setiap interaksi user langsung memperbarui state lokal dan menandai ID sebagai `
 2. **Atomic Selectors:** Komponen WAJIB berlangganan ke irisan state yang granular (misal: `useUserStore(s => s.xp)`) untuk mencegah re-render massal.
 3. **Multi-Tab Safety:** Inkonsistensi data antar tab dicegah melalui invalidasi Query Cache yang dipicu oleh BroadcastChannel API.
 4. **Offline Resilience:** Semua store utama dipersistensi ke IndexedDB, memungkinkan user belajar di lingkungan tanpa sinyal dan melakukan sinkronisasi otomatis saat kembali online.
+
+---
+
+## 7. Technical Standards (Development Rules)
+
+### 🎨 Strict Styling & Design System
+- **BANNED**: Dilarang keras menggunakan utility warna statis Tailwind (misal: `bg-white`, `text-gray-900`, `bg-red-500`, `text-blue-400`, `dark:bg-slate-800`).
+- **ALLOWED**: Wajib 100% menggunakan **Semantic CSS Variables**: `bg-background`, `text-foreground`, `primary`, `secondary`, `success` (hijau), `warning` (kuning/oranye), `destructive` (merah), `muted`, dan `card`.
+- **Cyber-Glass Aesthetic**: Gunakan utility `.glass` untuk elemen overlay/card. Pastikan `border-border` selalu digunakan untuk membatasi elemen visual.
+
+### 📂 Directory Rules (Strict Placement)
+- **lib/**: **HARAM** berisi file `.jsx` atau `.tsx`. Folder ini murni untuk utilitas TypeScript, fetcher, dan konfigurasi.
+- **UI Components**: Harus masuk ke `components/ui/` (global/primitif) atau `components/features/` (domain-specific).
+- **Pages**: Page-level composition hanya boleh ada di direktori `app/`.
+
+### 📡 Data Fetching (On-Demand ISR)
+- **BANNED**: Dilarang menggunakan time-based revalidation (misal: `export const revalidate = 3600;`).
+- **ALLOWED**: Wajib menggunakan `sanityFetch` dari `@/lib/sanity.fetch` dan mengirimkan `tags` yang relevan (contoh: `tags: ['lesson', 'vocab']`) agar sinkron dengan Sanity Webhook.
+
+### ♿ Accessibility & Typography
+- **Furigana (<rt>)**: Wajib menggunakan skala relatif (`0.55em`) agar proporsional di semua browser. Gunakan komponen `SmartJapanese`.
+- **Aria Labels**: Semua tombol icon-only WAJIB memiliki `aria-label` yang deskriptif. Ikon dekoratif wajib memiliki `aria-hidden="true"`.
+

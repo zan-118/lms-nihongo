@@ -1,0 +1,25 @@
+# NihongoRoute AI Development Rules
+
+## 🎨 Styling & Design System
+- **BANNED**: Never use static Tailwind color utilities (e.g., `bg-white`, `text-gray-900`, `bg-red-500`, `dark:bg-slate-800`).
+- **MANDATORY**: Use 100% **Semantic CSS Variables**:
+  - `bg-background`, `text-foreground`
+  - `bg-primary`, `text-primary-foreground`
+  - `bg-secondary`, `text-secondary-foreground`
+  - `bg-success`, `bg-warning`, `bg-destructive`
+  - `bg-muted`, `bg-card`, `border-border`
+- **Aesthetic**: Use `.glass` utility for cards/overlays.
+
+## 📂 Directory Structure
+- **lib/**: Pure TypeScript only. **NO JSX/TSX**.
+- **components/ui/**: Global primitive components.
+- **components/features/**: Domain-specific logic and UI.
+- **app/**: Routing and page composition.
+
+## 📡 Data Fetching
+- **BANNED**: No time-based revalidation (`export const revalidate = ...`).
+- **MANDATORY**: Use `sanityFetch` from `@/lib/sanity.fetch` with appropriate cache tags (e.g., `tags: ['lesson']`).
+
+## ♿ Accessibility & Typography
+- **Furigana**: Use `0.55em` relative scale for `<rt>`. Prefer `SmartJapanese` component.
+- **Buttons**: Icon-only buttons MUST have an `aria-label`. Decorative icons MUST have `aria-hidden="true"`.
