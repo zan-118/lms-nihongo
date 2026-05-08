@@ -113,10 +113,29 @@ export default defineType({
       validation: (Rule) => Rule.required(),
     }),
     defineField({
+      name: "strokeOrderSvg",
+      title: "Stroke Order SVG Paths",
+      type: "text",
+      description: "Masukkan data path SVG (d attribute) atau XML lengkap untuk animasi goresan.",
+    }),
+    defineField({
+      name: "radicals",
+      title: "Radicals",
+      type: "array",
+      of: [{ type: "string" }],
+    }),
+    defineField({
       name: "mnemonic",
-      title: "Mnemonic (Cerita Pengingat)",
+      title: "Mnemonic (Legacy Text)",
       type: "text",
       description: "Tuliskan cerita atau cara mudah untuk mengingat karakter ini.",
+    }),
+    defineField({
+      name: "mnemonics",
+      title: "Mnemonic (Rich Content)",
+      type: "array",
+      of: [{ type: "block" }],
+      description: "Gunakan Portable Text untuk mnemonic yang lebih kaya (gambar/bold).",
     }),
   ],
   preview: {
