@@ -4,7 +4,7 @@ import { Copy } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { toast } from "sonner";
 import * as wanakana from "wanakana";
-import { splitFurigana } from "@/lib/furigana";
+import { splitFurigana } from "@/components/ui/SmartJapanese";
 
 interface SheetItem {
   label: string;

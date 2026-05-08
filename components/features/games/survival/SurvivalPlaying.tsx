@@ -6,7 +6,7 @@ import { Progress } from "@/components/ui/progress";
 import { Timer, Zap, ShieldAlert, AlertTriangle, Target, BatteryMedium } from "lucide-react";
 import { CardData } from "./types";
 import * as wanakana from "wanakana";
-import { splitFurigana } from "@/lib/furigana";
+import { splitFurigana } from "@/components/ui/SmartJapanese";
 
 interface SurvivalPlayingProps {
   hp: number;

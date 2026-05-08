@@ -5,7 +5,7 @@ import { motion, AnimatePresence } from "framer-motion";
 import { Card } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
 import TTSReader from "@/components/features/tools/tts/TTSReader";
-import { splitFurigana } from "@/lib/furigana";
+import { splitFurigana } from "@/components/ui/SmartJapanese";
 import * as wanakana from "wanakana";
 import { VerbData } from "./types";
 import { getBadgeColor } from "./utils";

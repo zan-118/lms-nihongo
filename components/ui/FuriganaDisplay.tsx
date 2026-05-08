@@ -1,7 +1,7 @@
 "use client";
 
 import React from "react";
-import { splitFurigana } from "@/lib/furigana";
+import { splitFurigana } from "@/components/ui/SmartJapanese";
 import { useUIStore } from "@/store/useUIStore";
 import * as wanakana from "wanakana";
 

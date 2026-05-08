@@ -6,7 +6,7 @@ import TTSReader from "@/components/features/tools/tts/TTSReader";
 import { FlashcardThemeContext } from "./types";
 import Link from "next/link";
 import * as wanakana from "wanakana";
-import { splitFurigana } from "@/lib/furigana";
+import { splitFurigana } from "@/components/ui/SmartJapanese";
 
 interface FlashcardBackProps {
   id: string;

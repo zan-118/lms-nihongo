@@ -24,10 +24,10 @@ import TTSReader from "@/components/features/tools/tts/TTSReader";
 import AddToSRSButton from "@/components/features/srs/actions/AddToSRSButton";
 import DownloadPdfButton from "@/components/features/pdf/actions/DownloadPdfButton";
 import AppBreadcrumbs from "@/components/layout/AppBreadcrumbs";
-import { renderSmartText } from "@/lib/smartLinks";
+import { renderSmartText } from "@/components/features/global/SmartText";
 import { sharedPtComponents } from "@/components/ui/portable-text/SharedPortableText";
 import * as wanakana from "wanakana";
-import { splitFurigana } from "@/lib/furigana";
+import { splitFurigana } from "@/components/ui/SmartJapanese";
 
 // ======================
 // CONFIG / CONSTANTS

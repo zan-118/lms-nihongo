@@ -11,7 +11,7 @@ import {
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import TTSReader from "@/components/features/tools/tts/TTSReader";
-import { splitFurigana } from "@/lib/furigana";
+import { splitFurigana } from "@/components/ui/SmartJapanese";
 import * as wanakana from "wanakana";
 import { VerbData } from "./types";
 import { getBadgeColor, getGroupAccent, getConjugationSections } from "./utils";
