@@ -100,9 +100,11 @@ export function SmartJapanese({ word, furigana, className = "" }: { word: string
     <span className={className}>
       {chunks.map((chunk, i) => (
         chunk.furi ? (
-          <ruby key={i}>
+          <ruby key={i} className="font-japanese">
             {chunk.text}
-            <rt className="font-bold">{chunk.furi}</rt>
+            <rt className="text-[0.55em] font-bold leading-none mb-1 select-none opacity-90 tracking-normal">
+              {chunk.furi}
+            </rt>
           </ruby>
         ) : (
           <span key={i}>{chunk.text}</span>

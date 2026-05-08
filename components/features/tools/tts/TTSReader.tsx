@@ -32,6 +32,7 @@ export default function TTSReader({ text, minimal = false }: Props) {
           : "bg-black/40 border-white/5 text-slate-500 hover:text-red-500 hover:border-red-500/30 neo-inset shadow-none"
       }`}
       title="Vocal_Synthesis_Execution"
+      aria-label={isPlaying ? "Berhenti mendengarkan" : "Dengarkan pengucapan"}
     >
       {isPlaying ? (
         <AudioLines size={minimal ? 24 : 16} className="animate-pulse" />

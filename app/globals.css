@@ -23,6 +23,7 @@
     --destructive: 0 84.2% 60.2%;
     --destructive-foreground: 210 40% 98%;
     --border: 214.3 31.8% 90%;
+    --border-opacity: 0.3;
     --input: 214.3 31.8% 91.4%;
     --ring: 199 89% 48%;
     --radius: 1rem;
@@ -48,12 +49,17 @@
     --destructive: 0 62.8% 30.6%;
     --destructive-foreground: 210 40% 98%;
     --border: 217 33% 17%;
+    --border-opacity: 0.15;
     --input: 217 33% 17%;
     --ring: 189 84% 54%;
   }
 
   * {
-    border-color: hsl(var(--border) / 0.15);
+    border-color: hsl(var(--border) / var(--border-opacity));
+  }
+
+  *:focus-visible {
+    @apply outline-none ring-2 ring-primary ring-offset-2 ring-offset-background;
   }
   
   body {
@@ -100,10 +106,21 @@
 
   .font-japanese {
     font-family: var(--font-noto-jp), sans-serif;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+    text-rendering: optimizeLegibility;
+  }
+
+  .glass {
+    @apply backdrop-blur-xl bg-background/60 border border-border/50 shadow-2xl;
+  }
+
+  .dark .glass {
+    @apply bg-background/40 border-white/10 shadow-[0_8px_32px_0_rgba(0,0,0,0.8)];
   }
 
   .neural-grid {
-    @apply absolute inset-0 pointer-events-none opacity-50 z-0;
+    @apply absolute inset-0 pointer-events-none opacity-30 z-0;
     background-image: 
       linear-gradient(rgba(0,0,0,0.05) 1px, transparent 1px),
       linear-gradient(90deg, rgba(0,0,0,0.05) 1px, transparent 1px);
@@ -111,6 +128,7 @@
   }
 
   .dark .neural-grid {
+    @apply opacity-50;
     background-image: 
       linear-gradient(rgba(255,255,255,0.01) 1px, transparent 1px),
       linear-gradient(90deg, rgba(255,255,255,0.01) 1px, transparent 1px);

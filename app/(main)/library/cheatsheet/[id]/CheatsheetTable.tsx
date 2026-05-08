@@ -44,7 +44,8 @@ export function CheatsheetTable({ items }: CheatsheetTableProps) {
 
   return (
     <div className="w-full rounded-[2rem] md:rounded-[3rem] border border-border/50 bg-card/50 backdrop-blur-sm shadow-2xl overflow-hidden">
-      <table className="w-full text-left border-collapse table-auto">
+      <div className="overflow-x-auto scrollbar-hide">
+        <table className="w-full text-left border-collapse table-auto min-w-[600px]">
         <thead>
           <tr className="bg-muted/50 border-b border-border/50">
             <th className="px-4 md:px-8 py-4 md:py-6 text-[9px] md:text-[10px] font-black uppercase tracking-widest text-primary/60 w-12 md:w-20 text-center">No</th>
@@ -102,18 +103,20 @@ export function CheatsheetTable({ items }: CheatsheetTableProps) {
                   variant="ghost" 
                   size="icon"
                   className="w-8 h-8 md:w-10 md:h-10 rounded-lg md:rounded-xl hover:bg-primary/10 hover:text-primary text-muted-foreground transition-all"
+                  aria-label="Salin kosakata"
                   onClick={() => {
                     navigator.clipboard.writeText(item.jp);
                     toast.success("Disalin ke papan klip!");
                   }}
                 >
-                  <Copy size={14} className="md:w-[18px] md:h-[18px]" />
+                  <Copy size={14} className="md:w-[18px] md:h-[18px]" aria-hidden="true" />
                 </Button>
               </td>
             </tr>
           ))}
         </tbody>
       </table>
+      </div>
     </div>
   );
 }

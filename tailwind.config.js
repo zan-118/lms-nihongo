@@ -6,11 +6,6 @@ module.exports = {
   theme: {
   	extend: {
   		colors: {
-  			cyber: {
-  				bg: '#15171a',
-  				surface: '#1e2024',
-  				neon: '#0ef'
-  			},
   			background: 'hsl(var(--background))',
   			foreground: 'hsl(var(--foreground))',
   			card: {

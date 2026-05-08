@@ -5,7 +5,7 @@ import { motion, AnimatePresence } from "framer-motion";
 import { Card } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
 import TTSReader from "@/components/features/tools/tts/TTSReader";
-import { splitFurigana } from "@/components/ui/SmartJapanese";
+import { SmartJapanese } from "@/components/ui/SmartJapanese";
 import { VocabItem } from "./types";
 
 interface VocabCardProps {
@@ -43,18 +43,7 @@ export function VocabCard({ item, idx, showRomaji }: VocabCardProps) {
 
         <div className="space-y-1.5 flex-1">
           <div className="text-2xl md:text-3xl font-black text-foreground font-japanese leading-tight tracking-tight group-hover:text-primary transition-colors">
-            {splitFurigana(item.word, item.furigana || "").map((chunk, i) => (
-              chunk.furi ? (
-                <ruby key={i}>
-                  {chunk.text}
-                  <rt className="text-xs md:text-xs text-primary/80 font-bold tracking-widest not-italic">
-                    {chunk.furi}
-                  </rt>
-                </ruby>
-              ) : (
-                <span key={i}>{chunk.text}</span>
-              )
-            ))}
+            <SmartJapanese word={item.word} furigana={item.furigana} />
           </div>
           
           <AnimatePresence>
