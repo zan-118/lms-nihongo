@@ -9,7 +9,7 @@
 // IMPORTS
 // ======================
 import { Metadata } from "next";
-import { client } from "@/sanity/lib/client";
+import { sanityFetch } from "@/lib/sanity.fetch";
 import { PortableText } from "@portabletext/react";
 import Link from "next/link";
 import { notFound } from "next/navigation";
@@ -49,7 +49,11 @@ export async function generateMetadata({
   params: Promise<{ slug: string }>;
 }): Promise<Metadata> {
   const { slug } = await params;
-  const article = await client.fetch(articleQuery, { slug });
+  const article = await sanityFetch({
+    query: articleQuery,
+    params: { slug },
+    tags: ["grammar_article"],
+  });
 
   if (!article) {
     return {
@@ -85,7 +89,11 @@ export default async function GrammarDetailPage({
   // ======================
   // DATABASE OPERATIONS
   // ======================
-  const article = await client.fetch(articleQuery, { slug });
+  const article = await sanityFetch({
+    query: articleQuery,
+    params: { slug },
+    tags: ["grammar_article"],
+  });
   if (!article) notFound();
 
   // ======================

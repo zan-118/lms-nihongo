@@ -1,6 +1,8 @@
 # 🌀 NihongoRoute Architecture Overview
 
-This document provides a comprehensive structural audit of the NihongoRoute project, detailing the technology stack, the relationships between different application layers, and the data flow architecture.
+This document provides a comprehensive structural audit of the NihongoRoute project, detailing the technology stack, the relationships between different application layers, and the data flow architecture. It serves as the primary technical reference for developers.
+
+---
 
 ## 1. Primary Tech Stack
 
@@ -10,61 +12,116 @@ NihongoRoute is built using a modern, scalable Frontend-heavy architecture, with
 - **Language:** TypeScript (Strict typing for robustness)
 - **Styling:** Tailwind CSS & Radix UI (Cyber-Glass Aesthetic: `backdrop-blur`, `glassmorphism`, and neon accents)
 - **State Management:** Zustand (Segmented stores with IndexedDB persistence via `idb-keyval`)
+- **Server State:** React Query (@tanstack/react-query) for intelligent caching and cloud sync orchestration.
 - **Backend & Auth:** Supabase (PostgreSQL, Edge Functions/RPCs, Authentication)
-- **Content Management:** Sanity CMS (Headless CMS for grammar, vocabulary, and lessons)
+- **Content Management:** Sanity CMS (Source of truth for static lessons, grammar, and vocabulary)
 - **Animations:** Framer Motion (Spring-based, "buttery smooth" transitions)
-- **Testing:** Vitest (Unit) and Playwright (E2E)
+- **Cross-Tab Sync:** BroadcastChannel API (Ensures state consistency across multiple browser tabs)
 
-## 2. Layer Relationships (`app/`, `hooks/`, and `store/`)
+---
 
-The application architecture strictly separates routing, business logic, and global state to maintain modularity and scalability.
+## 2. Peta Routing & Layout (`app/`)
 
-### `app/` (Routing & Layouts)
-The Next.js App Router dictates the navigation and page-level layouts. Pages inside `app/` are generally kept thin. Their primary role is to compose feature components from `components/features/` and provide the necessary layout boundaries (e.g., `layout.tsx`, `loading.tsx`, `error.tsx`). 
+Sistem routing menggunakan Next.js 15 App Router dengan pemisahan antara area aplikasi utama dan area terisolasi.
 
-**Routing Strategy (Centralized Hubs):** To uphold the DRY principle, redundant dynamic routes are strictly avoided. Instead, modular feature hubs (like `/tools/flashcards`) serve as centralized engines that dynamically adapt content based on URL query parameters (`?mode=quick`), streamlining maintenance and unifying the user experience.
+### Tree Struktur Rute
+```text
+app/
+├── (main)/                 # Route Group: Memerlukan Sidebar & Topbar
+│   ├── courses/            # Katalog materi & detail lesson
+│   ├── dashboard/          # Statistik user & progress overview
+│   ├── exams/              # Simulasi ujian JLPT
+│   ├── library/            # Referensi grammar & kamus mandiskri
+│   ├── review/             # Engine utama SRS (Spaced Repetition)
+│   ├── settings/           # Pengaturan profil & preferensi UI
+│   ├── share/              # Halaman publik untuk sharing progress
+│   ├── social/             # Fitur pertemanan & leaderboard
+│   ├── support/            # Help center & FAQ
+│   └── tools/              # Alat bantu belajar tambahan
+│       ├── flashcards/     # Flashcard engine dinamis
+│       ├── kana/           # Latihan Hiragana & Katakana
+│       └── writing/        # Engine latihan menulis Kanji
+├── auth/                   # Flow login, signup, & callback
+├── onboarding/             # Intro multi-step (Terisolasi dari Main Layout)
+├── studio/                 # Integrasi Sanity Studio (CMS)
+├── globals.css             # Root styles (Tailwind + Cyber-Glass tokens)
+├── layout.tsx              # Root Provider (Auth, Query, Theme)
+└── page.tsx                # Landing Page (Marketing)
+```
 
-**Immersive Layouts:** Dedicated experiences (such as `/onboarding`) live outside the `(main)` route group to intentionally bypass standard navigation shells, creating focused, distraction-free environments.
+### Tujuan Layout Khusus
+- **`app/layout.tsx`**: Membungkus seluruh aplikasi dengan `ThemeProvider`, `QueryClientProvider`, dan `AuthProvider`.
+- **`app/(main)/layout.tsx`**: Menyediakan shell navigasi (`Sidebar`, `Topbar`) yang konsisten untuk pengalaman belajar.
+- **`app/onboarding/`**: Menggunakan layout kosong (full-screen) untuk meminimalkan distraksi saat user pertama kali setup.
 
-### `components/` (Component Library)
-- **`features/`**: Grouped by domain logic (e.g., `srs/`, `exams/`, `gamification/`). These contain complex UI logic and state interactions.
-- **`layout/`**: Global shells like `Sidebar.tsx` and `Topbar.tsx`.
-- **`ui/`**: Atomic primitive components (shadcn-based).
-- **`providers/`**: Context-level logic (Theme, Auth, QueryClient).
+---
 
-### `hooks/` (Business Logic & Side Effects)
-Custom hooks (like `useSyncProgress`) act as the glue between the UI layer and the global state/backend. They encapsulate complex logic such as debounced cloud synchronization, data fetching orchestration, and component lifecycle management.
+## 3. Anatomi Komponen & Fitur Domain (`components/`)
 
-### `store/` (Global State)
-State management is handled by Zustand and split into modular domains:
-- `useAuthStore`: Manages user authentication status and sessions.
-- `useUserStore`: Manages gamification state (XP, Level, Streak, Inventory).
-- `useSRSStore`: Manages the spaced repetition algorithm's local state (intervals, ease factors) with IndexedDB persistence.
-- `useUIStore`: Manages ephemeral UI states like loading screens and notifications.
+Folder `components/features/` diatur berdasarkan domain fungsional untuk menghindari ketergantungan yang berantakan.
 
-**Architectural Strictness:**
-1. **Guest-First Design:** By default, the application treats all users as active "Guests". Default states are explicitly seeded so that local offline play works flawlessly without a database connection.
-2. **Atomic Selectors:** Components **must** subscribe to granular state slices (e.g., `useUserStore(state => state.xp)`) to prevent unnecessary re-renders and hydration mismatches.
-3. **Navigation Integrity:** All auxiliary routes (Privacy, Terms) are anchored in the `Sidebar` mini-footer, and contextual entry points (like "Re-run Onboarding" in Support) ensure no user feels "trapped" or "lost".
+| Folder Fitur | Tanggung Jawab (Responsibility) |
+| :--- | :--- |
+| `course` | Menangani render halaman materi pelajaran dan navigasi antar bab. |
+| `dashboard` | Widget statistik, XP chart, dan progress ring untuk ringkasan belajar. |
+| `exams` | Logika timer ujian, navigasi soal, dan grading otomatis untuk JLPT. |
+| `gamification` | Komponen visual untuk XP bar, badge level-up, dan animasi streak. |
+| `grammar` | Display struktur tata bahasa dengan contoh kalimat dan penjelasan. |
+| `kanji` | Visualisasi urutan coretan (Stroke Order), radikal, dan mnemonik. |
+| `listening` | Player audio yang sinkron dengan transkrip interaktif. |
+| `reading` | Mode membaca side-by-side (Jepang-Indo) dengan integrasi TTS. |
+| `review` | Summary session setelah selesai melakukan sesi SRS. |
+| `srs` | Tombol evaluasi (Hard/Easy) dan kalkulasi interval waktu. |
 
-## 3. Data Flow: Supabase & Sanity into the SRS System
+### Global Shell Components (`components/layout/`)
+- **`Sidebar.tsx`**: Navigasi utama (Desktop) dengan integrasi link legal di bagian bawah.
+- **`Topbar.tsx`**: Pusat kontrol user (XP, Level, Streak) dan profil menu.
+- **`MobileNav.tsx`**: Navigasi bawah (Tab bar) untuk perangkat seluler.
 
-The Spaced Repetition System (SRS) requires a hybrid data approach, merging static educational content with dynamic, user-specific progress data.
+---
 
-### Step 1: Content Retrieval (Sanity)
-Sanity acts as the source of truth for educational content. Using GROQ queries in `lib/queries.ts`, the application fetches the static properties of vocabulary items. This data is typically fetched on-demand or pre-rendered via ISR.
+## 4. Bedah State Management (`store/`)
 
-### Step 2: Progress Retrieval (Supabase -> Zustand)
-Supabase holds the user's progress. When the app initializes:
-1. `useSyncProgress.ts` fires a query to fetch `profiles` and `user_srs`.
-2. The fetched data is merged into the local IndexedDB-backed Zustand store via `mergeProgress`, resolving conflicts using an offline-first strategy.
+NihongoRoute menggunakan Zustand dengan persistensi IndexedDB untuk memastikan performa tinggi dan dukungan offline.
 
-### Step 3: SRS Review Execution
-1. The UI components read the unified state from `useSRSStore` to determine which cards are due.
-2. The UI uses card IDs to render the content fetched from Sanity.
-3. User interactions trigger updates in `useSRSStore`, marking cards as `dirtySrs`.
+### Store Utama & Logic
+1. **`useAuthStore`**: Mengelola status `isAuthenticated` dan session user.
+2. **`useUserStore`**: Mengelola data gamification (XP, Streak), level, `inventory`, serta daftar `completedLessons` dan `dirtyLessons` (penanda belum sinkron).
+3. **`useSRSStore`**: Mengelola database kartu SRS (`srs`) dan set `dirtySrs` untuk pelacakan perubahan lokal.
+4. **`useUIStore`**: Mengelola state ephemeral seperti `loading`, `isSyncing`, `notifications`, serta setting (Furigana, Goal).
 
-### Step 4: Background Synchronization (Zustand -> Supabase)
-1. `useSyncProgress.ts` observes the `dirtySrs` state.
-2. It triggers a debounced background mutation to a Supabase RPC (`sync_user_progress`).
-3. This ensures data integrity and high performance without blocking user interaction.
+### Persistensi IndexedDB (`idb-keyval`)
+Aplikasi menyimpan state ke browser secara asinkron menggunakan key berikut:
+- `nihongoroute_user_data`: Data profil dan histori belajar.
+- `nihongoroute_srs_data`: Seluruh database SRS lokal.
+- `nihongoroute_ui_data`: Pengaturan tema, furigana, dan state UI sesi.
+
+---
+
+## 5. Aliran Data & Sinkronisasi Cloud
+
+Sistem menggunakan pendekatan hibrida untuk menggabungkan konten statis (Sanity) dengan progres dinamis (Supabase).
+
+### Step 1: Content Retrieval (Sanity CMS)
+Data edukasi statis diambil menggunakan GROQ queries (`lib/queries.ts`) untuk tipe dokumen: `vocab`, `lesson`, `readingMaterial`, `kanji`, dan `listeningTask`.
+
+### Step 2: Cloud-to-Local Sync (Supabase → Zustand)
+1. On mount, `useCloudData` mengambil snapshot dari Supabase (`profiles`, `user_srs`, `user_lessons`).
+2. Data digabung ke Zustand menggunakan strategi **Offline-First**. Conflict resolution berbasis timestamp terbaru dilakukan di level kartu/lesson.
+
+### Step 3: Local Interaction & Dirty Marking
+Setiap interaksi user langsung memperbarui state lokal dan menandai ID sebagai `dirty`. Ini menjamin UI responsif (Zero Latency) tanpa menunggu koneksi internet.
+
+### Step 4: Background Commit (Zustand → Supabase)
+1. `useSyncProgress` mengamati perubahan store dengan debounce 2000ms.
+2. `useCloudMutation` memicu RPC `sync_user_progress` yang secara atomik mengupdate XP, SRS, dan Lesson di cloud.
+3. Setelah sukses, marker `dirty` dihapus dan pesan `"SYNC_COMPLETE"` dikirim via **BroadcastChannel** untuk memberi tahu tab lain agar melakukan refetch data.
+
+---
+
+## 6. Architectural Guardrails
+
+1. **Guest-First Design:** Aplikasi menginisialisasi profile "Guest" secara default agar seluruh fitur lokal tetap berfungsi tanpa login.
+2. **Atomic Selectors:** Komponen WAJIB berlangganan ke irisan state yang granular (misal: `useUserStore(s => s.xp)`) untuk mencegah re-render massal.
+3. **Multi-Tab Safety:** Inkonsistensi data antar tab dicegah melalui invalidasi Query Cache yang dipicu oleh BroadcastChannel API.
+4. **Offline Resilience:** Semua store utama dipersistensi ke IndexedDB, memungkinkan user belajar di lingkungan tanpa sinyal dan melakukan sinkronisasi otomatis saat kembali online.

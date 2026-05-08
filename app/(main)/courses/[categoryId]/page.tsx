@@ -9,13 +9,12 @@
 // ======================
 import { notFound } from "next/navigation";
 import type { Metadata } from "next";
-import { client } from "@/sanity/lib/client";
+import { sanityFetch } from "@/lib/sanity.fetch";
 import CourseCategoryClient from "./CourseCategoryClient";
 
 // ======================
 // CONFIG / CONSTANTS
 // ======================
-export const revalidate = 3600;
 
 interface PageProps {
   params: Promise<{ categoryId: string }>;
@@ -43,7 +42,11 @@ async function getCourseData(slug: string) {
       _id, title, timeLimit, passingScore
     }
   }`;
-  return await client.fetch(query, { slug });
+  return await sanityFetch({
+    query,
+    params: { slug },
+    tags: ["course_category", "lesson", "mockExam"],
+  });
 }
 
 // ======================

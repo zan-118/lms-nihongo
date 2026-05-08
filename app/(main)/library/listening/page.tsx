@@ -1,4 +1,4 @@
-import { client } from "@/sanity/lib/client";
+import { sanityFetch } from "@/lib/sanity.fetch";
 import { listeningListQuery } from "@/lib/queries";
 import ListeningListClient from "@/app/(main)/library/listening/ListeningListClient";
 import type { Metadata } from "next";
@@ -9,7 +9,10 @@ export const metadata: Metadata = {
 };
 
 export default async function ListeningListPage() {
-  const tasks = await client.fetch(listeningListQuery);
+  const tasks = await sanityFetch({
+    query: listeningListQuery,
+    tags: ["listeningTask"],
+  });
 
   return (
     <div className="w-full min-h-screen bg-background relative overflow-hidden pt-12 pb-24 px-4 md:px-8">

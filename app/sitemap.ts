@@ -9,7 +9,7 @@
 // IMPORTS
 // ======================
 import { MetadataRoute } from "next";
-import { client } from "@/sanity/lib/client";
+import { sanityFetch } from "@/lib/sanity.fetch";
 
 // ======================
 // MAIN EXECUTION
@@ -34,7 +34,10 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
 
   // Ambil Data Level dari Sanity
   const levelsQuery = `*[_type == "level"] { code }`;
-  const levels = await client.fetch(levelsQuery);
+  const levels = await sanityFetch({
+    query: levelsQuery,
+    tags: ["level"],
+  });
 
   if (levels) {
     for (const level of levels) {
@@ -51,7 +54,10 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
     "level_code": level->code,
     _updatedAt
   }`;
-  const lessons = await client.fetch(lessonsQuery);
+  const lessons = await sanityFetch({
+    query: lessonsQuery,
+    tags: ["lesson", "level"],
+  });
 
   if (lessons) {
     for (const lesson of lessons) {

@@ -1,4 +1,4 @@
-import { client } from "@/sanity/lib/client";
+import { sanityFetch } from "@/lib/sanity.fetch";
 import { kanjiQuery } from "@/lib/queries";
 import { notFound } from "next/navigation";
 import KanjiStrokePlayer from "@/components/features/kanji/components/KanjiStrokePlayer";
@@ -6,7 +6,11 @@ import KanjiInfoCard from "@/components/features/kanji/components/KanjiInfoCard"
 
 export default async function KanjiPage({ params }: { params: Promise<{ slug: string }> }) {
   const { slug } = await params;
-  const data = await client.fetch(kanjiQuery, { slug });
+  const data = await sanityFetch({
+    query: kanjiQuery,
+    params: { slug },
+    tags: ["kanji"],
+  });
 
   if (!data) {
     notFound();

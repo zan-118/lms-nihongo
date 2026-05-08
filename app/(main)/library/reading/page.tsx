@@ -1,4 +1,4 @@
-import { client } from "@/sanity/lib/client";
+import { sanityFetch } from "@/lib/sanity.fetch";
 import { readingListQuery } from "@/lib/queries";
 import ReadingListClient from "./ReadingListClient";
 import type { Metadata } from "next";
@@ -9,7 +9,10 @@ export const metadata: Metadata = {
 };
 
 export default async function ReadingListPage() {
-  const materials = await client.fetch(readingListQuery);
+  const materials = await sanityFetch({
+    query: readingListQuery,
+    tags: ["readingMaterial"],
+  });
 
   return (
     <div className="w-full min-h-screen bg-background relative overflow-hidden pt-12 pb-24 px-4 md:px-8">

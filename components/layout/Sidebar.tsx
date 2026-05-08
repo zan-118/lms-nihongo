@@ -1,7 +1,5 @@
 "use client";
 
-import { useState, useEffect } from "react";
-import { loadDailyMission, DailyMission } from "@/lib/daily";
 import { motion } from "framer-motion";
 import Link from "next/link";
 import Image from "next/image";
@@ -10,20 +8,11 @@ import { useHasMounted } from "@/hooks/useHasMounted";
 
 // Domain Components
 import { SidebarItem } from "./sidebar/SidebarItem";
-import { DailyMissionCard } from "./sidebar/DailyMissionCard";
 import { UserStatusSection } from "./sidebar/UserStatusSection";
 
 export default function Sidebar({ isOpen, onClose }: { isOpen: boolean; onClose: () => void }) {
   const hasMounted = useHasMounted();
   const { pathname, isAuthenticated, userFullName, handleLogout, links } = useNavbar();
-
-  const [mission, setMission] = useState<DailyMission | null>(null);
-
-  useEffect(() => {
-    if (hasMounted) {
-      setMission(loadDailyMission());
-    }
-  }, [hasMounted]);
 
   return (
     <>
@@ -99,10 +88,6 @@ export default function Sidebar({ isOpen, onClose }: { isOpen: boolean; onClose:
           ))}
         </div>
 
-        {/* Quick Progress - UX Improvement */}
-        <div className="pt-4 px-2 pb-2">
-          <DailyMissionCard hasMounted={hasMounted} mission={mission} />
-        </div>
       </nav>
 
       {/* FOOTER ACTIONS */}

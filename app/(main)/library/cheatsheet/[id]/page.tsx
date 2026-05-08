@@ -1,4 +1,4 @@
-import { client } from "@/sanity/lib/client";
+import { sanityFetch } from "@/lib/sanity.fetch";
 import { notFound } from "next/navigation";
 import Link from "next/link";
 import { 
@@ -11,8 +11,6 @@ import { Badge } from "@/components/ui/badge";
 import { CheatsheetTable } from "./CheatsheetTable";
 import PdfGenerator from "@/components/features/pdf/PdfGenerator";
 
-export const dynamic = "force-dynamic";
-export const revalidate = 0;
 
 interface SheetItem {
   label: string;
@@ -35,13 +33,14 @@ export default async function CheatsheetDetailPage({
 }) {
   const { id } = await params;
   
-  const sheet: Cheatsheet = await client.fetch(
-    `*[_type == "cheatsheet" && (_id == $id || _id == "drafts." + $id || slug.current == $id)][0] {
+  const sheet: Cheatsheet = await sanityFetch({
+    query: `*[_type == "cheatsheet" && (_id == $id || _id == "drafts." + $id || slug.current == $id)][0] {
       _id, title, category, items,
       linkedVocab[]->{ "jp": word, "label": meaning, "romaji": coalesce(romaji, furigana) }
     }`,
-    { id }
-  );
+    params: { id },
+    tags: ["cheatsheet"],
+  });
 
   if (!sheet) notFound();
 

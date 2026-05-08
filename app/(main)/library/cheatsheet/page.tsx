@@ -8,14 +8,12 @@
 // ======================
 // IMPORTS
 // ======================
-import { client } from "@/sanity/lib/client";
+import { sanityFetch } from "@/lib/sanity.fetch";
 import CheatsheetClient from "./CheatsheetClient";
 
 // ======================
 // CONFIG / CONSTANTS
 // ======================
-export const dynamic = "force-dynamic";
-export const revalidate = 0;
 
 // ======================
 // MAIN EXECUTION
@@ -30,12 +28,13 @@ export default async function CheatsheetPage() {
   // ======================
   // DATABASE OPERATIONS
   // ======================
-  const sheets = await client.fetch(
-    `*[_type == "cheatsheet"] | order(category asc, title asc) {
+  const sheets = await sanityFetch({
+    query: `*[_type == "cheatsheet"] | order(category asc, title asc) {
       _id, title, category, items,
       linkedVocab[]->{ "jp": word, "label": meaning, romaji }
     }`,
-  );
+    tags: ["cheatsheet"],
+  });
 
   // ======================
   // RENDER

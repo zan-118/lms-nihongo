@@ -1,4 +1,4 @@
-import { client } from "@/sanity/lib/client";
+import { sanityFetch } from "@/lib/sanity.fetch";
 import DashboardClient from "./DashboardClient";
 import type { Metadata } from "next";
 
@@ -18,7 +18,10 @@ async function getCourseMetadata() {
       "slug": slug.current
     }
   }`;
-  return await client.fetch(query);
+  return await sanityFetch({
+    query,
+    tags: ["course_category", "lesson"],
+  });
 }
 
 export default async function DashboardPage() {

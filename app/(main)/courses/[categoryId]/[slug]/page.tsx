@@ -13,7 +13,7 @@ import Link from "next/link";
 import { notFound } from "next/navigation";
 import type { Metadata } from "next";
 import { PortableText } from "@portabletext/react";
-import { client } from "@/sanity/lib/client";
+import { sanityFetch } from "@/lib/sanity.fetch";
 import {
   ChevronLeft,
   ChevronRight,
@@ -32,7 +32,6 @@ import { splitFurigana } from "@/lib/furigana";
 // ======================
 // CONFIG / CONSTANTS
 // ======================
-export const revalidate = 3600;
 
 interface Props {
   params: Promise<{ categoryId: string; slug: string }>;
@@ -96,7 +95,11 @@ async function getLessonData(categoryId: string, slug: string) {
       "slug": slug.current, title
     }
   }`;
-  return await client.fetch(query, { categoryId, slug });
+  return await sanityFetch({
+    query,
+    params: { categoryId, slug },
+    tags: ["lesson", "course_category", "vocab", "verb_dictionary", "kanji"],
+  });
 }
 
 // ======================

@@ -8,13 +8,12 @@
 // ======================
 // IMPORTS
 // ======================
-import { client } from "@/sanity/lib/client";
+import { sanityFetch } from "@/lib/sanity.fetch";
 import VerbListClient from "./VerbListClient";
 
 // ======================
 // CONFIG / CONSTANTS
 // ======================
-export const revalidate = 3600;
 
 // ======================
 // MAIN EXECUTION
@@ -28,7 +27,10 @@ export default async function VerbDictionaryPage() {
     _id, group, jisho, meaning, masu, furigana, te, nai, ta, teiru, tai, nakereba, kanou, shieki, ukemi, katei, ikou, teshimau, meirei
   }`;
 
-  const verbs = await client.fetch(query);
+  const verbs = await sanityFetch({
+    query,
+    tags: ["verb_dictionary"],
+  });
 
   // ======================
   // RENDER

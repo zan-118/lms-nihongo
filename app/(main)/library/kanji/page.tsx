@@ -1,4 +1,4 @@
-import { client } from "@/sanity/lib/client";
+import { sanityFetch } from "@/lib/sanity.fetch";
 import { kanjiListQuery } from "@/lib/queries";
 import KanjiListClient from "@/app/(main)/library/kanji/KanjiListClient";
 import type { Metadata } from "next";
@@ -9,7 +9,10 @@ export const metadata: Metadata = {
 };
 
 export default async function KanjiListPage() {
-  const kanjis = await client.fetch(kanjiListQuery);
+  const kanjis = await sanityFetch({
+    query: kanjiListQuery,
+    tags: ["kanji"],
+  });
 
   return (
     <div className="w-full min-h-screen bg-background relative overflow-hidden pt-12 pb-24 px-4 md:px-8">

@@ -8,7 +8,7 @@
 // ======================
 // IMPORTS
 // ======================
-import { client } from "@/sanity/lib/client";
+import { sanityFetch } from "@/lib/sanity.fetch";
 import MockExamEngine from "@/components/features/exams/mock-engine/MockExamEngine";
 import Link from "next/link";
 import { Card } from "@/components/ui/card";
@@ -24,7 +24,6 @@ interface PageProps {
 // ======================
 // CONFIG / CONSTANTS
 // ======================
-export const revalidate = 0;
 
 // ======================
 // MAIN EXECUTION
@@ -53,7 +52,11 @@ export default async function StandaloneExamSessionPage({ params }: PageProps) {
     }
   }`;
 
-  const examData = await client.fetch(query, { id });
+  const examData = await sanityFetch({
+    query,
+    params: { id },
+    tags: ["mockExam"],
+  });
   const backLink = examData?.categorySlug
     ? `/courses/${examData.categorySlug}`
     : "/courses";

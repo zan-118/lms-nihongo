@@ -6,7 +6,7 @@
  */
 
 import React from "react";
-import { client } from "@/sanity/lib/client";
+import { sanityFetch } from "@/lib/sanity.fetch";
 import CoursesClient from "./CoursesClient";
 import type { Metadata } from "next";
 
@@ -15,7 +15,6 @@ export const metadata: Metadata = {
   description: "Pilih jalur belajar bahasa Jepangmu, mulai dari dasar Kana hingga persiapan JLPT N2.",
 };
 
-export const revalidate = 3600; // Revalidate every hour
 
 /**
  * Mengambil daftar kategori kursus dari Sanity CMS.
@@ -31,7 +30,10 @@ async function getCategories() {
       _id, title, "slug": slug.current
     }
   }`;
-  return await client.fetch(query);
+  return await sanityFetch({
+    query,
+    tags: ["course_category", "lesson"],
+  });
 }
 
 export default async function CoursesLandingPage() {

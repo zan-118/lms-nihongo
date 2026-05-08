@@ -4,7 +4,7 @@
  * @module Client Component
  */
 
-import { client } from "@/sanity/lib/client";
+import { sanityFetch } from "@/lib/sanity.fetch";
 import GrammarClient from "./GrammarClient";
 
 export const metadata = {
@@ -13,7 +13,6 @@ export const metadata = {
 };
 
 // Aktifkan ISR setiap 1 jam
-export const revalidate = 3600;
 
 export default async function GrammarArticlesPage() {
   // Pre-fetch artikel N5 di sisi server
@@ -26,7 +25,11 @@ export default async function GrammarArticlesPage() {
     "slug": slug.current 
   }`;
 
-  const initialArticles = await client.fetch(initialQuery, { baseLevel, jlptLevel });
+  const initialArticles = await sanityFetch({
+    query: initialQuery,
+    params: { baseLevel, jlptLevel },
+    tags: ["grammar_article"],
+  });
 
   return (
     <main className="w-full relative overflow-hidden flex flex-1 flex-col pb-24 px-4 md:px-8 lg:px-12 bg-background text-foreground transition-colors duration-300">

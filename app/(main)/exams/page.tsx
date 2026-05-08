@@ -9,13 +9,12 @@
 // IMPORTS
 // ======================
 import type { Metadata } from "next";
-import { client } from "@/sanity/lib/client";
+import { sanityFetch } from "@/lib/sanity.fetch";
 import ExamsClient from "./ExamsClient";
 
 // ======================
 // CONFIG / CONSTANTS
 // ======================
-export const revalidate = 60; 
 
 export const metadata: Metadata = {
   title: "Pusat Ujian Simulasi JLPT | NihongoRoute",
@@ -42,7 +41,10 @@ async function getExamsData() {
     passingScore
   }`;
 
-  return await client.fetch(query);
+  return await sanityFetch({
+    query,
+    tags: ["mockExam"],
+  });
 }
 
 // ======================

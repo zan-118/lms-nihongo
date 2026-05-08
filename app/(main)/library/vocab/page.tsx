@@ -8,7 +8,7 @@
 // ======================
 // IMPORTS
 // ======================
-import { client } from "@/sanity/lib/client";
+import { sanityFetch } from "@/lib/sanity.fetch";
 import VocabClient from "./VocabClient";
 
 // ======================
@@ -18,9 +18,6 @@ export const metadata = {
   title: "Kamus Kosakata | NihongoRoute",
   description: "Ribuan kosakata bahasa Jepang N5-N2, dilengkapi dengan furigana, fitur pengucapan audio, dan opsi penambahan ke jadwal SRS.",
 };
-
-// Mengaktifkan Incremental Static Regeneration (ISR) setiap 1 jam
-export const revalidate = 3600;
 
 // ======================
 // MAIN EXECUTION
@@ -42,7 +39,10 @@ export default async function VocabLibraryPage() {
     "hinshi": coalesce(hinshi, "verb") 
   }`;
   
-  const initialData = await client.fetch(initialQuery);
+  const initialData = await sanityFetch({
+    query: initialQuery,
+    tags: ["vocab", "verb_dictionary", "course_category"],
+  });
 
   return (
     <main className="w-full bg-background px-6 md:px-12 relative overflow-hidden flex flex-col justify-start min-h-screen pt-24 pb-20 transition-colors duration-300">
