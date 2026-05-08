@@ -64,3 +64,53 @@ export const readingListQuery = `*[_type == "readingMaterial"] | order(_createdA
   "slug": slug.current,
   "category": category->title
 }`;
+
+export const kanjiListQuery = `*[_type == "kanji"] | order(course_category->slug.current asc, character asc) {
+  _id,
+  character,
+  meaning,
+  onyomi,
+  kunyomi,
+  "jlpt": course_category->slug.current,
+  "slug": slug.current
+}`;
+
+export const listeningListQuery = `*[_type == "listeningTask"] | order(_createdAt desc) {
+  _id,
+  title,
+  "slug": slug.current
+}`;
+
+export const kanjiQuery = `*[_type == "kanji" && slug.current == $slug][0] {
+  character,
+  meaning,
+  onyomi,
+  kunyomi,
+  "jlpt": course_category->slug.current,
+  examples,
+  strokeOrderSvg,
+  radicals,
+  mnemonics,
+  "slug": slug.current
+}`;
+
+export const listeningTaskQuery = `*[_type == "listeningTask" && slug.current == $slug][0] {
+  title,
+  "audioUrl": audioFile.asset->url,
+  transcript[] {
+    speaker,
+    text,
+    translation,
+    startTime,
+    endTime
+  },
+  "quiz": quiz[]-> {
+    _id,
+    question,
+    options[] {
+      text,
+      isCorrect
+    },
+    explanation
+  }
+}`;

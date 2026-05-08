@@ -23,3 +23,18 @@ export interface KanjiPlaybackControl {
   currentStrokeIndex: number;
   showNumbers: boolean;
 }
+
+export interface KanjiDetail {
+  _id: string;
+  character: string;
+  meaning: string;
+  onyomi?: string;
+  kunyomi?: string;
+  jlpt?: string;
+  slug: string;
+  examples?: string[];
+  strokeOrderSvg?: string;
+  radicals?: string[];
+  mnemonics?: unknown; // Portable Text
+
+}

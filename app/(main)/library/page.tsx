@@ -1,7 +1,7 @@
 "use client";
 
 import { motion } from "framer-motion";
-import { RefreshCw, BookOpen, BarChart2, Library, Database, Activity, Award } from "lucide-react";
+import { RefreshCw, BookOpen, BarChart2, Library, Database, Activity, Award, Headphones, Type } from "lucide-react";
 import { Card } from "@/components/ui/card";
 
 // Domain Components
@@ -57,6 +57,22 @@ export default function LibraryPage() {
       icon: <Award size={28} />,
       label: "Latihan Ujian",
       delay: 0.7
+    },
+    {
+      href: "/library/kanji",
+      title: "Pustaka Kanji",
+      desc: "Kuasai ribuan kanji dengan visualisasi stroke order yang interaktif dan mudah diingat.",
+      icon: <Type size={28} />,
+      label: "Koleksi Kanji",
+      delay: 0.8
+    },
+    {
+      href: "/library/listening",
+      title: "Latihan Menyimak",
+      desc: "Pertajam pendengaranmu dengan latihan audio interaktif dan transkrip real-time.",
+      icon: <Headphones size={28} />,
+      label: "Listening Lab",
+      delay: 0.9
     }
   ];
 

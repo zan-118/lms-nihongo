@@ -22,6 +22,7 @@ import courseCategory from "./courseCategory";
 import mockExam from "./mockExam";
 import kanji from "./kanji";
 import readingMaterial from "./readingMaterial";
+import listeningTask from "./listeningTask";
 
 // ======================
 // MAIN EXECUTION
@@ -44,5 +45,6 @@ export const schema: { types: SchemaTypeDefinition[] } = {
     courseCategory,
     kanji,
     readingMaterial,
+    listeningTask,
   ],
 };

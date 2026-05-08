@@ -19,7 +19,7 @@ export default function KanjiInfoCard({
       {meaning && (
         <div className="flex flex-col gap-2">
           <span className="text-[10px] font-black uppercase tracking-[0.2em] text-primary/60">Definition</span>
-          <h2 className="text-2xl font-black text-white tracking-tight uppercase">
+          <h2 className="text-2xl font-black text-foreground tracking-tight uppercase">
             {meaning}
           </h2>
         </div>
@@ -30,13 +30,13 @@ export default function KanjiInfoCard({
         <div className="flex flex-col gap-3">
           <div className="flex items-center gap-2">
              <BookOpen size={14} className="text-primary/50" />
-             <span className="text-[10px] font-black uppercase tracking-widest text-muted-foreground">Radicals</span>
+             <span className="text-[10px] font-black uppercase tracking-widest text-primary/70">Radicals</span>
           </div>
           <div className="flex flex-wrap gap-2">
             {radicals.map((radical, idx) => (
               <div 
                 key={idx}
-                className="px-3 py-1.5 rounded-xl bg-white/[0.03] border border-white/[0.08] text-sm font-japanese font-bold text-white/80"
+                className="px-3 py-1.5 rounded-xl bg-muted border border-border text-sm font-japanese font-bold text-foreground shadow-sm"
               >
                 {radical}
               </div>
@@ -50,9 +50,9 @@ export default function KanjiInfoCard({
         <div className="flex flex-col gap-3">
            <div className="flex items-center gap-2">
              <Sparkles size={14} className="text-primary/50" />
-             <span className="text-[10px] font-black uppercase tracking-widest text-muted-foreground">Mnemonic Study</span>
+             <span className="text-[10px] font-black uppercase tracking-widest text-primary/70">Mnemonic Study</span>
           </div>
-          <div className="bg-white/[0.02] border border-white/[0.06] rounded-2xl p-4 text-sm text-muted-foreground leading-relaxed">
+          <div className="bg-muted/50 border border-border rounded-2xl p-5 text-[13px] text-foreground/70 leading-relaxed font-medium italic shadow-inner">
             <SharedPortableText value={mnemonics} />
           </div>
         </div>

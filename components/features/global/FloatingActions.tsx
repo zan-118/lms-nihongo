@@ -10,9 +10,11 @@ import FeedbackWidget from "../feedback/FeedbackWidget";
 import { useUIStore } from "@/store/useUIStore";
 import { ReadingMode } from "@/components/features/reading/types";
 import AudioController from "@/components/features/reading/components/AudioController";
-import { Eye, Languages, BookOpen as BookIcon, EyeOff } from "lucide-react";
+import { Eye, Languages, BookOpen as BookIcon, EyeOff, GraduationCap, FileText, Headphones } from "lucide-react";
+
 import React from "react";
 import { cn } from "@/lib/utils";
+
 
 /**
  * @file FloatingActions.tsx
@@ -28,6 +30,10 @@ export default function FloatingActions() {
   const setReadingState = useUIStore((state) => state.setReadingState);
 
   const isReadingPage = pathname?.includes("/library/reading/");
+  const isListeningPage = pathname?.includes("/library/listening/");
+  const listeningState = useUIStore((state) => state.listeningState);
+  const setListeningState = useUIStore((state) => state.setListeningState);
+
 
   const modes: { id: ReadingMode; label: string; icon: React.ElementType }[] = [
     { id: "kanji", label: "Kanji", icon: BookIcon },
@@ -130,6 +136,49 @@ export default function FloatingActions() {
             </motion.div>
           </div>
         )}
+
+        {/* Listening Page Actions - Persistent mounting for audio */}
+        {isListeningPage && (
+          <div 
+            className={cn(
+              "flex flex-col gap-3 mb-2 transition-all duration-300 transform origin-bottom",
+              isOpen 
+                ? "opacity-100 scale-100 translate-y-0" 
+                : "opacity-0 scale-90 translate-y-10 pointer-events-none"
+            )}
+          >
+            {/* Listening: Audio Control */}
+            <motion.div whileHover={{ x: -5 }}>
+              <div className="bg-card/90 backdrop-blur-3xl hover:bg-primary/20 text-foreground border border-border shadow-2xl rounded-2xl px-4 py-3 flex items-center gap-3 transition-all h-auto group">
+                 <AudioController 
+                  audioUrl={listeningState.audioUrl} 
+                  textToSpeak={listeningState.textToSpeak}
+                  compact={true}
+                />
+                <span className="text-[10px] font-black uppercase tracking-widest hidden md:block text-muted-foreground">Voice</span>
+              </div>
+            </motion.div>
+
+            {/* Listening: Tab Toggle (Transcript/Quiz) */}
+            <motion.div whileHover={{ x: -5 }}>
+              <button
+                onClick={() => setListeningState({ 
+                  activeTab: listeningState.activeTab === "transcript" ? "quiz" : "transcript" 
+                })}
+                className="bg-card/90 backdrop-blur-3xl hover:bg-primary hover:text-primary-foreground text-foreground border border-border shadow-2xl rounded-2xl px-4 py-4 flex items-center gap-3 transition-all h-auto group w-full justify-between"
+              >
+                <span className="text-[10px] font-black uppercase tracking-widest hidden md:block">
+                  {listeningState.activeTab === "transcript" ? "Latihan Kuis" : "Lihat Transkrip"}
+                </span>
+                {listeningState.activeTab === "transcript" 
+                  ? <GraduationCap size={20} className="text-primary group-hover:text-current" />
+                  : <FileText size={20} className="text-primary group-hover:text-current" />
+                }
+              </button>
+            </motion.div>
+          </div>
+        )}
+
         {/* Main Toggle Button */}
         <Button
           onClick={() => setIsOpen(!isOpen)}
@@ -140,8 +189,11 @@ export default function FloatingActions() {
           }`}
         >
           {isOpen ? <X size={28} /> : (
-            isReadingPage ? <BookIcon size={28} className={isOpen ? "" : "animate-pulse"} /> : <Plus size={28} className={isOpen ? "" : "animate-pulse"} />
+            isReadingPage ? <BookIcon size={28} className={isOpen ? "" : "animate-pulse"} /> : 
+            isListeningPage ? <Headphones size={28} className={isOpen ? "" : "animate-pulse"} /> :
+            <Plus size={28} className={isOpen ? "" : "animate-pulse"} />
           )}
+
         </Button>
       </div>
 

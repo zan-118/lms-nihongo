@@ -4,6 +4,8 @@ import { get, set as idbSet, del } from "idb-keyval";
 import { Notification, Settings } from "./types";
 
 import { ReadingState } from "@/components/features/reading/types";
+import { ListeningState } from "@/components/features/listening/types";
+
 
 interface UIState {
   loading: boolean;
@@ -14,6 +16,8 @@ interface UIState {
   
   // Reading Session State (Synced for FAB access)
   readingState: ReadingState;
+  listeningState: ListeningState & { audioUrl?: string; textToSpeak?: string };
+
   
   setLoading: (loading: boolean) => void;
   setSyncing: (isSyncing: boolean) => void;
@@ -26,6 +30,8 @@ interface UIState {
   exportData: () => void;
   importData: (jsonData: string) => boolean;
   setReadingState: (state: Partial<UIState['readingState']>) => void;
+  setListeningState: (state: Partial<UIState['listeningState']>) => void;
+
   resetUI: () => void;
 }
 
@@ -53,6 +59,15 @@ export const useUIStore = create<UIState>()(
         mode: "kanji",
         showTranslation: false,
       },
+
+      listeningState: {
+        currentTime: 0,
+        activeIndex: -1,
+        isScrolling: false,
+        activeTab: "transcript",
+      },
+
+
 
       setLoading: (loading) => set({ loading }),
       setSyncing: (isSyncing) => set({ isSyncing }),
@@ -163,6 +178,11 @@ export const useUIStore = create<UIState>()(
       setReadingState: (newState) => set((state) => ({
         readingState: { ...state.readingState, ...newState }
       })),
+
+      setListeningState: (newState) => set((state) => ({
+        listeningState: { ...state.listeningState, ...newState }
+      })),
+
 
       resetUI: () => set({
         loading: false,

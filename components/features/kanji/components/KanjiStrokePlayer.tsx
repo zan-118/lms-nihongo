@@ -35,6 +35,10 @@ export default function KanjiStrokePlayer({
   const [speed, setSpeed] = useState(1);
   const [currentStroke, setCurrentStroke] = useState(-1); // -1 means show nothing/static
   const [showNumbers, setShowNumbers] = useState(true);
+  const [resetKey, setResetKey] = useState(0);
+  const [strokeTrigger, setStrokeTrigger] = useState(0);
+
+
 
   // Constants
   const BASE_STROKE_DURATION = 0.8;
@@ -46,19 +50,24 @@ export default function KanjiStrokePlayer({
         setStatus("finished");
         return prev;
       }
+      setStrokeTrigger((s) => s + 1);
       return prev + 1;
     });
+
   }, [data]);
 
   const handlePrev = () => {
     setCurrentStroke((prev) => (prev <= 0 ? 0 : prev - 1));
-    setStatus("paused");
+    setStrokeTrigger((s) => s + 1);
   };
 
+
   const handleReset = () => {
+    setResetKey((prev) => prev + 1);
     setCurrentStroke(0);
     setStatus("playing");
   };
+
 
   const togglePlay = () => {
     if (status === "playing") {
@@ -94,7 +103,8 @@ export default function KanjiStrokePlayer({
     <div className="flex flex-col items-center gap-6">
       {/* CYBER-GLASS PLAYER CONTAINER */}
       <div 
-        className="relative bg-black/40 backdrop-blur-2xl rounded-[2.5rem] border border-white/5 shadow-2xl overflow-hidden group p-8"
+        className="relative bg-card/40 backdrop-blur-2xl rounded-[2.5rem] border border-border shadow-2xl overflow-hidden group p-8"
+
         style={{ width: size + 64, height: size + 64 }}
       >
         {/* Neon Glow Border */}
@@ -104,9 +114,11 @@ export default function KanjiStrokePlayer({
         <div className="absolute inset-0 bg-[radial-gradient(#ffffff05_1px,transparent_1px)] [background-size:20px_20px] opacity-50" />
 
         <svg
+          key={resetKey}
           viewBox={data.viewBox}
           className="relative w-full h-full z-10"
         >
+
           {/* Static Background Strokes (Light Gray) */}
           {data.strokes.map((stroke) => (
             <path
@@ -117,7 +129,9 @@ export default function KanjiStrokePlayer({
               strokeWidth="3"
               strokeLinecap="round"
               strokeLinejoin="round"
-              className="text-white/5"
+              className="text-foreground/10"
+
+
             />
           ))}
 
@@ -128,18 +142,29 @@ export default function KanjiStrokePlayer({
 
             return (
               <motion.path
-                key={`anim-${stroke.index}`}
+                key={`anim-${stroke.index}-${stroke.index === currentStroke && status === "playing" ? `active-${strokeTrigger}` : 'static'}`}
                 d={stroke.path}
+
+
                 fill="none"
                 stroke={strokeColor}
-                strokeWidth="4"
+                strokeWidth="5"
+
                 strokeLinecap="round"
                 strokeLinejoin="round"
-                initial={{ pathLength: 0 }}
+                initial={
+                  stroke.index === currentStroke && status === "playing"
+                    ? { pathLength: 0, opacity: 0 }
+                    : stroke.index <= currentStroke 
+                      ? { pathLength: 1, opacity: 1 } 
+                      : { pathLength: 0, opacity: 0 }
+                }
                 animate={{ 
                   pathLength: isVisible ? 1 : 0,
                   opacity: isVisible ? 1 : 0
                 }}
+
+
                 transition={{
                   duration: BASE_STROKE_DURATION / speed,
                   ease: "easeInOut",
@@ -167,10 +192,12 @@ export default function KanjiStrokePlayer({
                   exit={{ opacity: 0 }}
                   x={num.x}
                   y={num.y}
-                  fill="white"
                   fontSize="4"
                   fontWeight="bold"
-                  className="pointer-events-none select-none font-mono"
+                  className="pointer-events-none select-none font-mono opacity-80 fill-primary"
+
+
+
                 >
                   {num.value}
                 </motion.text>
