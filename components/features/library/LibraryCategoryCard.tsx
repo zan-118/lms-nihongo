@@ -40,7 +40,7 @@ export function LibraryCategoryCard({
       >
         <Card className="h-full p-5 md:p-6 rounded-2xl border border-border bg-card hover:border-primary/40 hover:bg-primary/[0.03] hover:shadow-xl transition-all duration-300 flex flex-col group shadow-sm">
           <div className="flex justify-between items-center mb-5">
-            <div className="w-10 h-10 md:w-11 md:h-11 bg-muted rounded-xl flex items-center justify-center border border-border group-hover:bg-primary group-hover:text-white dark:group-hover:text-black group-hover:border-none transition-all duration-300 text-primary">
+            <div className="w-10 h-10 md:w-11 md:h-11 bg-muted rounded-xl flex items-center justify-center border border-border group-hover:bg-primary group-hover:text-white dark:group-hover:text-foreground group-hover:border-none transition-all duration-300 text-primary">
               {icon}
             </div>
             <span className="text-xs font-bold text-muted-foreground uppercase tracking-wider">0{index + 1}</span>
@@ -60,7 +60,7 @@ export function LibraryCategoryCard({
 
           <div className="mt-5 pt-3 border-t border-border flex items-center justify-between">
             <span className="text-xs md:text-xs font-bold text-muted-foreground uppercase tracking-wider group-hover:text-primary transition-colors">Akses Modul</span>
-            <div className="w-7 h-7 md:w-8 md:h-8 rounded-lg bg-muted border border-border flex items-center justify-center group-hover:bg-primary group-hover:text-white dark:group-hover:text-black group-hover:border-none transition-all duration-300">
+            <div className="w-7 h-7 md:w-8 md:h-8 rounded-lg bg-muted border border-border flex items-center justify-center group-hover:bg-primary group-hover:text-white dark:group-hover:text-foreground group-hover:border-none transition-all duration-300">
                <ArrowRight size={14} />
             </div>
           </div>

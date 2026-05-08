@@ -13,9 +13,9 @@ interface SurvivalGameOverProps {
 
 export function SurvivalGameOver({ gameState, score, startGame }: SurvivalGameOverProps) {
   const isVictory = gameState === "victory";
-  const accentColor = isVictory ? "text-amber-600 dark:text-amber-400" : "text-primary";
-  const bgGlowColor = isVictory ? "bg-amber-500/10" : "bg-primary/10";
-  const borderColor = isVictory ? "border-amber-500/40" : "border-primary/40";
+  const accentColor = isVictory ? "text-warning text-warning" : "text-primary";
+  const bgGlowColor = isVictory ? "bg-warning/10" : "bg-primary/10";
+  const borderColor = isVictory ? "border-warning/40" : "border-primary/40";
 
   return (
     <motion.div
@@ -24,7 +24,7 @@ export function SurvivalGameOver({ gameState, score, startGame }: SurvivalGameOv
       className="w-full px-4 transition-colors duration-300"
     >
       <Card
-        className={`p-10 md:p-16 lg:p-24 rounded-[3rem] md:rounded-[4rem] text-center max-w-2xl mx-auto my-8 md:my-10 relative overflow-hidden border neo-card shadow-2xl bg-card dark:bg-slate-900 ${borderColor}`}
+        className={`p-10 md:p-16 lg:p-24 rounded-[3rem] md:rounded-[4rem] text-center max-w-2xl mx-auto my-8 md:my-10 relative overflow-hidden border neo-card shadow-2xl bg-card bg-background ${borderColor}`}
       >
         <div className={`absolute inset-0 ${bgGlowColor} pointer-events-none opacity-50`} />
 
@@ -32,7 +32,7 @@ export function SurvivalGameOver({ gameState, score, startGame }: SurvivalGameOv
           {isVictory ? (
             <Trophy
               size={48}
-              className="text-amber-600 dark:text-amber-400 drop-shadow-sm dark:drop-shadow-[0_0_20px_rgba(251,191,36,0.7)] md:w-16 md:h-16"
+              className="text-warning text-warning drop-shadow-sm dark:drop-shadow-[0_0_20px_rgba(251,191,36,0.7)] md:w-16 md:h-16"
             />
           ) : (
             <ShieldAlert

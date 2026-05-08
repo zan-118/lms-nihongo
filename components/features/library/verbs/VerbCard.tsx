@@ -50,8 +50,8 @@ export function VerbCard({ verb, idx, showRomaji, onClick }: VerbCardProps) {
                   variant="outline"
                   className={`px-2.5 py-1 text-[10px] font-bold uppercase tracking-wider rounded-lg border h-auto ${
                     verb.transitivity === "transitive" 
-                      ? "text-orange-600 dark:text-orange-400 bg-orange-500/10 border-orange-500/20" 
-                      : "text-blue-600 dark:text-blue-400 bg-blue-500/10 border-blue-500/20"
+                      ? "text-warning text-warning bg-warning/10 border-warning/20" 
+                      : "text-primary text-primary bg-primary/10 border-primary/20"
                   }`}
                 >
                   {verb.transitivity === "transitive" ? "Tr" : "Intr"}

@@ -235,7 +235,7 @@ export default function AudioController({
             <Button
               variant="ghost"
               size="icon"
-              className="w-10 h-10 rounded-full hover:bg-white/5 text-muted-foreground/60 transition-all hover:text-primary"
+              className="w-10 h-10 rounded-full hover:bg-background/5 text-muted-foreground/60 transition-all hover:text-primary"
               onClick={() => {
                 if (audioRef.current) {
                    audioRef.current.currentTime = 0;
@@ -248,7 +248,7 @@ export default function AudioController({
             <Button
               variant="ghost"
               size="icon"
-              className="w-10 h-10 rounded-full hover:bg-white/5 text-muted-foreground/60 transition-all hover:text-destructive"
+              className="w-10 h-10 rounded-full hover:bg-background/5 text-muted-foreground/60 transition-all hover:text-destructive"
               onClick={stopAll}
               disabled={!isPlaying && currentTime === 0}
             >

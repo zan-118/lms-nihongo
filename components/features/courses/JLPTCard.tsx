@@ -25,8 +25,8 @@ const colorMap: Record<string, string> = {
 };
 
 const textGlowMap: Record<string, string> = {
-  "N5": "text-cyan-500 drop-shadow-[0_0_15px_rgba(6,182,212,0.5)]",
-  "N4": "text-emerald-500 drop-shadow-[0_0_15px_rgba(16,185,129,0.5)]",
+  "N5": "text-primary drop-shadow-[0_0_15px_rgba(6,182,212,0.5)]",
+  "N4": "text-success drop-shadow-[0_0_15px_rgba(16,185,129,0.5)]",
   "N3": "text-indigo-500 drop-shadow-[0_0_15px_rgba(99,102,241,0.5)]",
   "N2": "text-purple-500 drop-shadow-[0_0_15px_rgba(168,85,247,0.5)]",
   "N1": "text-rose-500 drop-shadow-[0_0_15px_rgba(244,63,94,0.5)]",
@@ -66,7 +66,7 @@ export function JLPTCard({ cat, variants }: JLPTCardProps) {
               <span className="text-[10px] font-black uppercase tracking-[0.2em] text-muted-foreground group-hover:text-foreground transition-colors">
                 Mulai Jalur
               </span>
-              <div className="w-10 h-10 rounded-xl bg-muted border border-border flex items-center justify-center group-hover:bg-foreground group-hover:text-background dark:group-hover:bg-white dark:group-hover:text-black group-hover:border-none transition-all duration-500 shadow-lg">
+              <div className="w-10 h-10 rounded-xl bg-muted border border-border flex items-center justify-center group-hover:bg-foreground group-hover:text-background dark:group-hover:bg-background dark:group-hover:text-foreground group-hover:border-none transition-all duration-500 shadow-lg">
                 <ArrowRight size={18} />
               </div>
             </div>

@@ -46,7 +46,7 @@ export default function ListeningKaraoke({
           onClick={() => setShowTranslation(!showTranslation)}
           className={cn(
             "rounded-full gap-2 transition-all",
-            showTranslation ? "bg-primary/10 text-primary border-primary/20" : "text-muted-foreground hover:bg-white/5"
+            showTranslation ? "bg-primary/10 text-primary border-primary/20" : "text-muted-foreground hover:bg-background/5"
           )}
         >
           <Languages size={14} />
@@ -61,7 +61,7 @@ export default function ListeningKaraoke({
 
         {/* Decorative Background Glows */}
         <div className="absolute -top-24 -left-24 w-64 h-64 bg-primary/5 blur-[100px] rounded-full pointer-events-none" />
-        <div className="absolute -bottom-24 -right-24 w-64 h-64 bg-blue-500/5 blur-[100px] rounded-full pointer-events-none" />
+        <div className="absolute -bottom-24 -right-24 w-64 h-64 bg-primary/5 blur-[100px] rounded-full pointer-events-none" />
         
         <div 
           ref={scrollContainerRef}
@@ -94,7 +94,7 @@ export default function ListeningKaraoke({
                   <div className="flex items-center gap-2 mb-3">
                     <div className={cn(
                       "w-1 h-3 rounded-full transition-colors",
-                      isActive ? "bg-primary shadow-[0_0_10px_rgba(var(--primary-rgb),0.8)]" : "bg-white/10"
+                      isActive ? "bg-primary shadow-[0_0_10px_rgba(var(--primary-rgb),0.8)]" : "bg-background/10"
                     )} />
                     <span className={cn(
                       "text-[10px] font-black uppercase tracking-[0.3em] transition-colors",

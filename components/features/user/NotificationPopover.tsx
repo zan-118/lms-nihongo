@@ -17,10 +17,10 @@ export default function NotificationPopover({ isOpen, onClose }: { isOpen: boole
 
   const getIcon = (type: string) => {
     switch (type) {
-      case "achievement": return <Trophy size={16} className="text-amber-500" />;
+      case "achievement": return <Trophy size={16} className="text-warning" />;
       case "success": return <Zap size={16} className="text-primary" />;
-      case "warning": return <AlertTriangle size={16} className="text-red-500" />;
-      default: return <Info size={16} className="text-blue-500" />;
+      case "warning": return <AlertTriangle size={16} className="text-destructive" />;
+      default: return <Info size={16} className="text-primary" />;
     }
   };
 
@@ -54,7 +54,7 @@ export default function NotificationPopover({ isOpen, onClose }: { isOpen: boole
                 <div className="flex gap-1">
                   <button 
                     onClick={clearAll}
-                    className="w-8 h-8 flex items-center justify-center rounded-lg hover:bg-red-500/10 text-muted-foreground hover:text-red-500 transition-all"
+                    className="w-8 h-8 flex items-center justify-center rounded-lg hover:bg-destructive/10 text-muted-foreground hover:text-destructive transition-all"
                     title="Hapus Semua"
                   >
                     <Trash2 size={14} />
@@ -79,9 +79,9 @@ export default function NotificationPopover({ isOpen, onClose }: { isOpen: boole
                       >
                         <div className="flex gap-4">
                           <div className={`mt-1 w-9 h-9 rounded-xl flex items-center justify-center shrink-0 shadow-sm ${
-                            n.type === 'achievement' ? 'bg-amber-500/10 border border-amber-500/20' : 
+                            n.type === 'achievement' ? 'bg-warning/10 border border-warning/20' : 
                             n.type === 'success' ? 'bg-primary/10 border border-primary/20' : 
-                            'bg-blue-500/10 border border-blue-500/20'
+                            'bg-primary/10 border border-primary/20'
                           }`}>
                             {getIcon(n.type)}
                           </div>
@@ -121,7 +121,7 @@ export default function NotificationPopover({ isOpen, onClose }: { isOpen: boole
                 <div className="p-4 border-t border-border/50 bg-muted/20">
                   <Button 
                     variant="ghost" 
-                    className="w-full h-10 rounded-xl text-[10px] font-black uppercase tracking-[0.2em] text-primary hover:bg-primary hover:text-white dark:hover:text-black transition-all shadow-none border border-primary/20"
+                    className="w-full h-10 rounded-xl text-[10px] font-black uppercase tracking-[0.2em] text-primary hover:bg-primary hover:text-white dark:hover:text-foreground transition-all shadow-none border border-primary/20"
                     onClick={() => notifications.forEach(n => markAsRead(n.id))}
                   >
                     Tandai Semua Selesai

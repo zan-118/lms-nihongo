@@ -48,7 +48,7 @@ export default function ListeningQuiz({ questions, onComplete }: ListeningQuizPr
       <motion.div 
         initial={{ opacity: 0, scale: 0.95 }}
         animate={{ opacity: 1, scale: 1 }}
-        className="p-8 rounded-3xl bg-white/[0.03] border border-white/10 text-center flex flex-col items-center gap-4"
+        className="p-8 rounded-3xl bg-background/[0.03] border border-white/10 text-center flex flex-col items-center gap-4"
       >
         <div className="w-16 h-16 rounded-full bg-primary/20 flex items-center justify-center text-primary mb-2">
           <CheckCircle2 size={32} />
@@ -85,7 +85,7 @@ export default function ListeningQuiz({ questions, onComplete }: ListeningQuizPr
               key={idx}
               className={cn(
                 "h-1 w-6 rounded-full transition-all duration-500",
-                idx === currentIndex ? "bg-primary" : idx < currentIndex ? "bg-primary/30" : "bg-white/10"
+                idx === currentIndex ? "bg-primary" : idx < currentIndex ? "bg-primary/30" : "bg-background/10"
               )}
             />
           ))}
@@ -98,7 +98,7 @@ export default function ListeningQuiz({ questions, onComplete }: ListeningQuizPr
         initial={{ opacity: 0, x: 20 }}
         animate={{ opacity: 1, x: 0 }}
         exit={{ opacity: 0, x: -20 }}
-        className="p-8 rounded-3xl bg-white/[0.02] border border-white/5 backdrop-blur-xl relative overflow-hidden"
+        className="p-8 rounded-3xl bg-background/[0.02] border border-white/5 backdrop-blur-xl relative overflow-hidden"
       >
         {/* Glow Effect */}
         <div className="absolute -top-24 -right-24 w-48 h-48 bg-primary/5 blur-[80px] rounded-full" />
@@ -120,8 +120,8 @@ export default function ListeningQuiz({ questions, onComplete }: ListeningQuizPr
                 onClick={() => handleOptionClick(idx, isCorrect)}
                 className={cn(
                   "group relative w-full p-5 rounded-2xl text-left transition-all duration-300 border",
-                  !showResult && "bg-white/[0.03] border-white/5 hover:bg-white/[0.06] hover:border-white/10",
-                  showResult && isCorrect && "bg-emerald-500/10 border-emerald-500/40 shadow-[0_0_20px_-10px_rgba(16,185,129,0.5)]",
+                  !showResult && "bg-background/[0.03] border-white/5 hover:bg-background/[0.06] hover:border-white/10",
+                  showResult && isCorrect && "bg-success/10 border-success/40 shadow-[0_0_20px_-10px_rgba(16,185,129,0.5)]",
                   showResult && isSelected && !isCorrect && "bg-destructive/10 border-destructive/40 shadow-[0_0_20px_-10px_rgba(239,68,68,0.5)]",
                   showResult && !isSelected && !isCorrect && "opacity-40 grayscale"
                 )}
@@ -129,12 +129,12 @@ export default function ListeningQuiz({ questions, onComplete }: ListeningQuizPr
                 <div className="flex items-center justify-between">
                   <span className={cn(
                     "font-medium transition-colors",
-                    showResult && isCorrect ? "text-emerald-400" : showResult && isSelected && !isCorrect ? "text-destructive" : "text-white/80"
+                    showResult && isCorrect ? "text-success" : showResult && isSelected && !isCorrect ? "text-destructive" : "text-white/80"
                   )}>
                     {option.text}
                   </span>
                   
-                  {showResult && isCorrect && <CheckCircle2 size={20} className="text-emerald-400" />}
+                  {showResult && isCorrect && <CheckCircle2 size={20} className="text-success" />}
                   {showResult && isSelected && !isCorrect && <XCircle size={20} className="text-destructive" />}
                 </div>
               </button>

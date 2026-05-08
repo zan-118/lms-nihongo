@@ -69,9 +69,9 @@ export default async function StandaloneExamSessionPage({ params }: PageProps) {
   if (!examData) {
     return (
       <div className="w-full flex-1 flex flex-col items-center justify-center px-6 text-center relative overflow-hidden py-12">
-        <div className="absolute top-0 right-1/4 w-[400px] h-[400px] bg-red-500/5 blur-[120px] rounded-full pointer-events-none" />
-        <Card className="p-10 md:p-14 border-red-500/20 max-w-lg w-full relative z-10 my-auto neo-card rounded-[2rem] bg-cyber-surface">
-          <div className="w-20 h-20 mx-auto neo-inset text-red-500 flex items-center justify-center rounded-full mb-8 shadow-inner bg-black/20">
+        <div className="absolute top-0 right-1/4 w-[400px] h-[400px] bg-destructive/5 blur-[120px] rounded-full pointer-events-none" />
+        <Card className="p-10 md:p-14 border-destructive/20 max-w-lg w-full relative z-10 my-auto neo-card rounded-[2rem] bg-cyber-surface">
+          <div className="w-20 h-20 mx-auto neo-inset text-destructive flex items-center justify-center rounded-full mb-8 shadow-inner bg-black/20">
             <span className="text-4xl block">🚫</span>
           </div>
           <h1 className="text-2xl md:text-3xl font-black text-white uppercase tracking-tight mb-4">
@@ -83,7 +83,7 @@ export default async function StandaloneExamSessionPage({ params }: PageProps) {
           <Button
             asChild
             variant="ghost"
-            className="bg-[#0a0c10] neo-inset border border-white/5 hover:border-white/20 text-slate-200 hover:text-white font-black uppercase tracking-widest h-auto py-4 px-8 rounded-xl text-[10px] transition-all"
+            className="bg-card neo-inset border border-white/5 hover:border-white/20 text-slate-200 hover:text-white font-black uppercase tracking-widest h-auto py-4 px-8 rounded-xl text-[10px] transition-all"
           >
             <Link href={backLink}>
               ← Kembali ke Menu
@@ -98,9 +98,9 @@ export default async function StandaloneExamSessionPage({ params }: PageProps) {
   if (!examData.questions || examData.questions.length === 0) {
     return (
       <div className="w-full flex-1 flex flex-col items-center justify-center px-6 text-center relative overflow-hidden py-12">
-        <div className="absolute top-0 left-1/4 w-[400px] h-[400px] bg-amber-500/5 blur-[120px] rounded-full pointer-events-none" />
-        <Card className="p-10 md:p-14 border-amber-500/20 max-w-lg w-full relative z-10 my-auto neo-card rounded-[2rem] bg-cyber-surface">
-          <div className="w-20 h-20 mx-auto neo-inset text-amber-500 flex items-center justify-center rounded-full mb-8 shadow-inner bg-black/20">
+        <div className="absolute top-0 left-1/4 w-[400px] h-[400px] bg-warning/5 blur-[120px] rounded-full pointer-events-none" />
+        <Card className="p-10 md:p-14 border-warning/20 max-w-lg w-full relative z-10 my-auto neo-card rounded-[2rem] bg-cyber-surface">
+          <div className="w-20 h-20 mx-auto neo-inset text-warning flex items-center justify-center rounded-full mb-8 shadow-inner bg-black/20">
             <span className="text-4xl block">🚧</span>
           </div>
           <h1 className="text-2xl md:text-3xl font-black text-white uppercase tracking-tight mb-4">
@@ -108,13 +108,13 @@ export default async function StandaloneExamSessionPage({ params }: PageProps) {
           </h1>
           <p className="text-slate-300 mb-10 text-sm leading-relaxed">
             Paket ujian{" "}
-            <strong className="text-amber-400">{examData.title}</strong> belum
+            <strong className="text-warning">{examData.title}</strong> belum
             memiliki butir soal di database.
           </p>
           <Button
             asChild
             variant="ghost"
-            className="bg-[#0a0c10] neo-inset border border-amber-500/20 hover:border-amber-500/50 text-amber-500 hover:text-amber-400 font-black uppercase tracking-widest h-auto py-4 px-8 rounded-xl text-[10px] transition-all"
+            className="bg-card neo-inset border border-warning/20 hover:border-warning/50 text-warning hover:text-warning font-black uppercase tracking-widest h-auto py-4 px-8 rounded-xl text-[10px] transition-all"
           >
             <Link href={backLink}>
               ← Kembali ke Menu
@@ -128,8 +128,8 @@ export default async function StandaloneExamSessionPage({ params }: PageProps) {
   // 3. MAIN RENDER
   return (
     <div className="w-full flex-1 px-4 md:px-8 relative overflow-hidden flex flex-col mt-4 md:mt-8">
-      <div className="absolute top-[-10%] right-[-5%] w-[600px] h-[600px] bg-red-500/5 blur-[150px] rounded-full pointer-events-none" />
-      <div className="absolute bottom-[10%] left-[-5%] w-[500px] h-[500px] bg-amber-500/5 blur-[120px] rounded-full pointer-events-none" />
+      <div className="absolute top-[-10%] right-[-5%] w-[600px] h-[600px] bg-destructive/5 blur-[150px] rounded-full pointer-events-none" />
+      <div className="absolute bottom-[10%] left-[-5%] w-[500px] h-[500px] bg-warning/5 blur-[120px] rounded-full pointer-events-none" />
       <div className="w-full max-w-5xl mx-auto relative z-10 flex-1 flex flex-col">
         <MockExamEngine exam={examData} />
       </div>

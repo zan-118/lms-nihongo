@@ -27,24 +27,24 @@ export function QuizPlaying({
 }: QuizPlayingProps) {
   return (
     <Card className="bg-card p-5 md:p-12 rounded-[2rem] md:rounded-[4rem] border-border shadow-none relative overflow-hidden neo-card">
-      <div className="absolute top-0 right-0 w-96 h-96 bg-red-500/5 blur-[100px] pointer-events-none" />
-      <div className="absolute -bottom-10 -left-10 w-64 h-64 bg-red-500/5 blur-[80px] pointer-events-none" />
+      <div className="absolute top-0 right-0 w-96 h-96 bg-destructive/5 blur-[100px] pointer-events-none" />
+      <div className="absolute -bottom-10 -left-10 w-64 h-64 bg-destructive/5 blur-[80px] pointer-events-none" />
 
       <div className="relative z-10">
         <header className="flex justify-between items-center mb-4 md:mb-6">
           <div className="flex items-center gap-2 md:gap-4">
              <Card className="w-9 h-9 md:w-12 md:h-12 rounded-xl md:rounded-2xl bg-muted border border-border flex items-center justify-center neo-inset shadow-none">
-                <Brain size={18} className="text-red-500 md:w-6 md:h-6" />
+                <Brain size={18} className="text-destructive md:w-6 md:h-6" />
              </Card>
               <div className="text-left">
-                <Badge variant="outline" className="text-red-600 dark:text-red-500 font-bold text-[10px] md:text-xs tracking-widest uppercase bg-red-500/5 px-2 py-0.5 md:px-3 md:py-1 rounded-lg border-red-500/20 neo-inset h-auto">
+                <Badge variant="outline" className="text-destructive text-destructive font-bold text-[10px] md:text-xs tracking-widest uppercase bg-destructive/5 px-2 py-0.5 md:px-3 md:py-1 rounded-lg border-destructive/20 neo-inset h-auto">
                    TAHAP {currentIndex + 1}
                 </Badge>
                 <span className="hidden sm:block text-muted-foreground text-[10px] font-bold uppercase tracking-widest mt-1">Tes Pemahaman</span>
               </div>
           </div>
           <div className="flex items-center gap-2 md:gap-3 font-black text-sm italic">
-            <span className="text-red-600 dark:text-red-500 text-xl md:text-2xl drop-shadow-[0_0_8px_rgba(239,68,68,0.5)]">{currentIndex + 1}</span>
+            <span className="text-destructive text-destructive text-xl md:text-2xl drop-shadow-[0_0_8px_rgba(239,68,68,0.5)]">{currentIndex + 1}</span>
             <span className="text-muted-foreground/10 text-lg md:text-xl">/</span>
             <span className="text-muted-foreground/40">{totalQuestions}</span>
           </div>
@@ -53,7 +53,7 @@ export function QuizPlaying({
         <QuizProgress
           current={currentIndex + 1}
           total={totalQuestions}
-          color="bg-red-500"
+          color="bg-destructive"
           indicatorClassName="shadow-[0_0_15px_rgba(239,68,68,0.8)]"
         />
         <div className="mb-8 md:mb-12" />
@@ -83,10 +83,10 @@ export function QuizPlaying({
 
               if (isAnswered) {
                 if (isCorrect) {
-                  buttonStyle = "bg-emerald-500/10 border-emerald-500/50 text-emerald-600 dark:text-emerald-400 shadow-[0_0_30px_rgba(16,185,129,0.2)] neo-card scale-105 z-10";
+                  buttonStyle = "bg-success/10 border-success/50 text-success text-success shadow-[0_0_30px_rgba(16,185,129,0.2)] neo-card scale-105 z-10";
                   statusIcon = "✓";
                 } else if (isSelected && !isCorrect) {
-                  buttonStyle = "bg-red-500/10 border-red-500/50 text-red-600 dark:text-red-500 shadow-[0_0_30px_rgba(239,68,68,0.2)] neo-card z-10";
+                  buttonStyle = "bg-destructive/10 border-destructive/50 text-destructive text-destructive shadow-[0_0_30px_rgba(239,68,68,0.2)] neo-card z-10";
                   statusIcon = "✗";
                 } else {
                   buttonStyle = "bg-muted/20 border-transparent text-muted-foreground/20 scale-95 opacity-40 neo-card grayscale";
@@ -133,10 +133,10 @@ export function QuizPlaying({
               className="mt-6 md:mt-10 flex flex-col gap-6"
             >
               {currentQ.explanation && (
-                <Card className="bg-red-500/5 border-l-4 border-l-red-500 p-5 md:p-8 rounded-[1.5rem] md:rounded-[2rem] border border-border neo-inset shadow-none">
+                <Card className="bg-destructive/5 border-l-4 border-l-red-500 p-5 md:p-8 rounded-[1.5rem] md:rounded-[2rem] border border-border neo-inset shadow-none">
                   <div className="flex items-center gap-2 md:gap-3 mb-2 md:mb-4">
-                     <AlertCircle size={16} className="text-red-500 md:w-5 md:h-5" />
-                     <span className="text-[10px] md:text-xs text-red-600 dark:text-red-500 font-bold uppercase tracking-widest">Penjelasan Materi</span>
+                     <AlertCircle size={16} className="text-destructive md:w-5 md:h-5" />
+                     <span className="text-[10px] md:text-xs text-destructive text-destructive font-bold uppercase tracking-widest">Penjelasan Materi</span>
                   </div>
                   <p className="text-muted-foreground text-sm md:text-lg leading-relaxed font-medium">
                    {currentQ.explanation}
@@ -146,7 +146,7 @@ export function QuizPlaying({
               
               <Button 
                 onClick={nextQuestion}
-                className="w-full py-6 md:py-8 rounded-[1.5rem] md:rounded-[2rem] bg-red-600 hover:bg-red-700 text-white font-black text-sm md:text-lg uppercase tracking-widest shadow-xl transition-all hover:scale-[1.02] active:scale-[0.98]"
+                className="w-full py-6 md:py-8 rounded-[1.5rem] md:rounded-[2rem] bg-destructive hover:bg-destructive text-white font-black text-sm md:text-lg uppercase tracking-widest shadow-xl transition-all hover:scale-[1.02] active:scale-[0.98]"
               >
                 Lanjutkan <ArrowRight size={20} className="ml-3" />
               </Button>

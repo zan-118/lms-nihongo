@@ -98,8 +98,8 @@ export default function Topbar({ onMenuClick }: { onMenuClick: () => void }) {
                 exit={{ opacity: 0, x: -10 }}
                 className="flex items-center gap-2"
               >
-                <CloudOff size={12} className="text-red-500 drop-shadow-[0_0_8px_rgba(239,68,68,0.4)]" aria-hidden="true" />
-                <span className="text-red-500/90">Gagal</span>
+                <CloudOff size={12} className="text-destructive drop-shadow-[0_0_8px_rgba(239,68,68,0.4)]" aria-hidden="true" />
+                <span className="text-destructive/90">Gagal</span>
               </motion.div>
             ) : hasPendingSync ? (
               <motion.div 
@@ -166,7 +166,7 @@ export default function Topbar({ onMenuClick }: { onMenuClick: () => void }) {
              >
                 <Bell size={18} />
                 {unreadNotifications > 0 && (
-                  <span className="absolute top-3 right-3 w-1.5 h-1.5 bg-red-500 rounded-full shadow-[0_0_8px_rgba(239,68,68,1)] animate-pulse" />
+                  <span className="absolute top-3 right-3 w-1.5 h-1.5 bg-destructive rounded-full shadow-[0_0_8px_rgba(239,68,68,1)] animate-pulse" />
                 )}
              </motion.button>
 

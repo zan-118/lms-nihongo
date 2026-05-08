@@ -14,7 +14,7 @@ export default function RootLoading() {
         {/* Futuristic Spinner */}
         <div className="relative w-16 h-16">
           <div className="absolute inset-0 border-t-2 border-primary rounded-full animate-spin" />
-          <div className="absolute inset-2 border-t-2 border-red-500 rounded-full animate-spin [animation-duration:1s]" />
+          <div className="absolute inset-2 border-t-2 border-destructive rounded-full animate-spin [animation-duration:1s]" />
           <div className="absolute inset-4 border-t-2 border-border rounded-full animate-spin [animation-duration:2s]" />
         </div>
         

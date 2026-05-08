@@ -17,7 +17,7 @@ export default function FreeWritingPage() {
   return (
     <div className="w-full flex-1 relative overflow-hidden flex flex-col bg-background transition-colors duration-300 pt-12 pb-24 px-4 md:px-8">
       {/* Background Decor */}
-      <div className="absolute top-0 left-1/2 -translate-x-1/2 w-full max-w-[800px] h-[400px] bg-emerald-500/5 blur-[120px] rounded-full pointer-events-none" />
+      <div className="absolute top-0 left-1/2 -translate-x-1/2 w-full max-w-[800px] h-[400px] bg-success/5 blur-[120px] rounded-full pointer-events-none" />
 
       <div className="max-w-4xl mx-auto w-full relative z-10 flex flex-col h-full">
         <header className="mb-12">
@@ -36,7 +36,7 @@ export default function FreeWritingPage() {
           <div className="flex flex-col md:flex-row justify-between items-start md:items-end gap-6">
             <div>
               <h1 className="text-4xl md:text-5xl font-black text-foreground uppercase tracking-tight italic">
-                Kanvas <span className="text-emerald-500">Bebas</span>
+                Kanvas <span className="text-success">Bebas</span>
               </h1>
               <p className="text-muted-foreground text-sm mt-2 max-w-md font-medium leading-relaxed">
                 Ruang kosong untuk melatih guratan kanji, kana, atau sekadar coretan belajar. 
@@ -45,7 +45,7 @@ export default function FreeWritingPage() {
             </div>
             
             <div className="flex gap-2">
-               <Badge variant="outline" className="bg-emerald-500/10 text-emerald-500 border-emerald-500/20 px-4 py-2 rounded-xl text-[10px] font-black uppercase tracking-widest">
+               <Badge variant="outline" className="bg-success/10 text-success border-success/20 px-4 py-2 rounded-xl text-[10px] font-black uppercase tracking-widest">
                  Mode Bebas Aktif
                </Badge>
             </div>
@@ -75,7 +75,7 @@ export default function FreeWritingPage() {
                   "Tarik garis dengan tegas untuk hasil guratan yang rapi."
                 ].map((tip, i) => (
                   <li key={i} className="flex gap-3 text-xs font-medium text-muted-foreground leading-relaxed">
-                    <div className="w-5 h-5 shrink-0 rounded-full bg-emerald-500/10 flex items-center justify-center text-emerald-500 font-bold">
+                    <div className="w-5 h-5 shrink-0 rounded-full bg-success/10 flex items-center justify-center text-success font-bold">
                       {i + 1}
                     </div>
                     {tip}

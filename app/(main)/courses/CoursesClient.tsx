@@ -42,7 +42,7 @@ export default function CoursesClient({ categories }: CoursesClientProps) {
   return (
     <div className="w-full px-6 relative overflow-hidden bg-background text-foreground transition-colors duration-300 min-h-screen pt-12 pb-24">
       {/* Background Decor */}
-      <div className="absolute top-0 left-1/4 w-[500px] h-[500px] bg-cyan-500/5 dark:bg-cyan-500/10 rounded-full blur-[120px] pointer-events-none" />
+      <div className="absolute top-0 left-1/4 w-[500px] h-[500px] bg-primary/5 bg-primary/10 rounded-full blur-[120px] pointer-events-none" />
 
       <motion.div
         className="max-w-7xl mx-auto relative z-10"
@@ -87,7 +87,7 @@ export default function CoursesClient({ categories }: CoursesClientProps) {
         {generalCategories.length > 0 && (
           <motion.section variants={itemVariants}>
             <div className="flex items-center gap-6 mb-10">
-              <h3 className="text-xs md:text-xs font-bold uppercase tracking-widest text-amber-600 dark:text-amber-500/50">
+              <h3 className="text-xs md:text-xs font-bold uppercase tracking-widest text-warning text-warning/50">
                 Topik Umum & Praktis
               </h3>
               <div className="h-[1px] flex-1 bg-border" />

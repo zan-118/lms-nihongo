@@ -8,9 +8,9 @@ export function QuestCompleted() {
       animate={{ opacity: 1, scale: 1 }}
       className="flex-1 flex flex-col items-center justify-center text-center p-8 relative transition-colors duration-300"
     >
-      <div className="absolute inset-0 bg-emerald-500/5 blur-3xl rounded-full pointer-events-none" />
-      <div className="w-16 h-16 bg-emerald-500/10 rounded-2xl flex items-center justify-center mb-6 border border-emerald-500/20 relative z-10">
-        <Sparkles size={32} className="text-emerald-600 dark:text-emerald-400 drop-shadow-sm dark:drop-shadow-[0_0_15px_rgba(52,211,153,0.3)]" />
+      <div className="absolute inset-0 bg-success/5 blur-3xl rounded-full pointer-events-none" />
+      <div className="w-16 h-16 bg-success/10 rounded-2xl flex items-center justify-center mb-6 border border-success/20 relative z-10">
+        <Sparkles size={32} className="text-success text-success drop-shadow-sm dark:drop-shadow-[0_0_15px_rgba(52,211,153,0.3)]" />
       </div>
       <h4 className="text-lg md:text-xl font-black text-foreground uppercase tracking-tight mb-2 relative z-10">
         Target Tercapai!

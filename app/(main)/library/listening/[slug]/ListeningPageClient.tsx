@@ -111,7 +111,7 @@ export default function ListeningPageClient({ data }: ListeningPageClientProps) 
                 compact={true}
               />
 
-              <div className="flex p-1 bg-white/[0.03] dark:bg-white/[0.03] bg-black/[0.03] border border-border rounded-2xl backdrop-blur-md">
+              <div className="flex p-1 bg-background/[0.03] dark:bg-background/[0.03] bg-black/[0.03] border border-border rounded-2xl backdrop-blur-md">
                 <button
                   onClick={() => setListeningState({ activeTab: "transcript" })}
                   className={cn(
@@ -197,7 +197,7 @@ export default function ListeningPageClient({ data }: ListeningPageClientProps) 
           {/* Right Column: Sidebar */}
           <aside className="lg:col-span-4 flex flex-col gap-6">
             {/* Mission Info */}
-            <div className="p-6 rounded-3xl bg-white/[0.02] border border-white/5 flex flex-col gap-6">
+            <div className="p-6 rounded-3xl bg-background/[0.02] border border-white/5 flex flex-col gap-6">
               <div className="flex items-center gap-3">
                 <Info size={18} className="text-primary/50" />
                 <h4 className="text-[10px] font-black uppercase tracking-[0.2em] text-white">Study Notes</h4>

@@ -115,11 +115,11 @@ export default function GrammarClient({ initialArticles = [] }: GrammarClientPro
             [...Array(6)].map((_, i) => (
               <Card key={i} className="h-48 md:h-56 bg-card/40 backdrop-blur-xl border-white/5 rounded-[2rem] overflow-hidden p-6 relative">
                 <div className="flex justify-between items-start mb-6">
-                  <Skeleton className="w-10 h-10 rounded-2xl bg-white/5" />
-                  <Skeleton className="w-16 h-6 rounded-xl bg-white/5" />
+                  <Skeleton className="w-10 h-10 rounded-2xl bg-background/5" />
+                  <Skeleton className="w-16 h-6 rounded-xl bg-background/5" />
                 </div>
-                <Skeleton className="w-3/4 h-8 rounded-xl bg-white/5 mb-4" />
-                <Skeleton className="w-1/2 h-4 rounded-lg bg-white/5 mt-auto" />
+                <Skeleton className="w-3/4 h-8 rounded-xl bg-background/5 mb-4" />
+                <Skeleton className="w-1/2 h-4 rounded-lg bg-background/5 mt-auto" />
                 <div className="absolute inset-0 bg-gradient-to-r from-transparent via-white/[0.03] to-transparent -translate-x-full animate-[shimmer_2s_infinite] pointer-events-none" />
               </Card>
             ))

@@ -117,7 +117,7 @@ export default function NotificationManager() {
         <div className="flex items-center gap-4 pt-2">
           <div className="flex-1 p-3 rounded-xl bg-muted/50 border border-border flex flex-col gap-1">
             <span className="text-[8px] font-bold text-muted-foreground uppercase tracking-widest">Status Izin</span>
-            <span className={`text-xs font-black uppercase ${permission === 'granted' ? 'text-emerald-500' : 'text-amber-500'}`}>
+            <span className={`text-xs font-black uppercase ${permission === 'granted' ? 'text-success' : 'text-warning'}`}>
               {permission === 'granted' ? 'Diberikan' : permission === 'denied' ? 'Ditolak' : 'Belum Diatur'}
             </span>
           </div>

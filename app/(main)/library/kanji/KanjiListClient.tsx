@@ -71,7 +71,7 @@ export default function KanjiListClient({ kanjis }: KanjiListClientProps) {
                 className={`h-14 px-6 rounded-2xl font-bold transition-all duration-300 ${
                   levelFilter === lvl 
                     ? "bg-primary text-primary-foreground shadow-[0_0_20px_rgba(0,238,255,0.3)]" 
-                    : "bg-card/40 border-white/5 hover:bg-white/5"
+                    : "bg-card/40 border-white/5 hover:bg-background/5"
                 }`}
                 onClick={() => setLevelFilter(levelFilter === lvl ? null : lvl)}
               >

@@ -69,8 +69,8 @@ export default function CourseCategoryClient({
   categoryId: string;
 }) {
   const isSideQuest = data.category.type === "general";
-  const themeColor = isSideQuest ? "text-amber-600 dark:text-amber-500" : "text-cyan-600 dark:text-cyan-400";
-  const themeBorder = isSideQuest ? "border-amber-500" : "border-cyan-400";
+  const themeColor = isSideQuest ? "text-warning text-warning" : "text-primary text-primary";
+  const themeBorder = isSideQuest ? "border-warning" : "border-primary";
   const completedLessons = useUserStore((s) => s.completedLessons);
 
   // ======================
@@ -80,7 +80,7 @@ export default function CourseCategoryClient({
     <div className="w-full px-4 md:px-6 relative overflow-hidden bg-background text-foreground transition-colors duration-300 min-h-screen pt-12 pb-24">
       {/* Background Decor Ambient */}
       <div
-        className={`absolute top-0 left-[-10%] w-[500px] h-[500px] rounded-full blur-[150px] pointer-events-none ${isSideQuest ? "bg-amber-500/5" : "bg-cyan-500/5"}`}
+        className={`absolute top-0 left-[-10%] w-[500px] h-[500px] rounded-full blur-[150px] pointer-events-none ${isSideQuest ? "bg-warning/5" : "bg-primary/5"}`}
       />
       <div className="absolute bottom-[20%] right-[-5%] w-[400px] h-[400px] bg-indigo-500/5 rounded-full blur-[120px] pointer-events-none" />
 
@@ -114,7 +114,7 @@ export default function CourseCategoryClient({
           >
             <div className="h-[1px] flex-1 bg-border" />
             <span
-              className={`text-[9px] font-bold uppercase tracking-widest px-3 py-1 rounded border hidden sm:block ${isSideQuest ? "bg-amber-500/10 text-amber-600 dark:text-amber-500 border-amber-500/20" : "bg-cyan-400/10 text-cyan-600 dark:text-cyan-400 border-cyan-400/20"}`}
+              className={`text-[9px] font-bold uppercase tracking-widest px-3 py-1 rounded border hidden sm:block ${isSideQuest ? "bg-warning/10 text-warning text-warning border-warning/20" : "bg-primary/10 text-primary text-primary border-primary/20"}`}
             >
               {isSideQuest ? "Bahan Belajar Seru" : "Jalur Utama"}
             </span>
@@ -122,7 +122,7 @@ export default function CourseCategoryClient({
 
           <motion.h1
             variants={itemVariants}
-            className={`text-5xl md:text-6xl lg:text-7xl font-black uppercase tracking-tighter leading-none mb-8 drop-shadow-lg ${isSideQuest ? "text-amber-500" : "text-foreground"}`}
+            className={`text-5xl md:text-6xl lg:text-7xl font-black uppercase tracking-tighter leading-none mb-8 drop-shadow-lg ${isSideQuest ? "text-warning" : "text-foreground"}`}
           >
             {data.category.title}
           </motion.h1>
@@ -153,12 +153,12 @@ export default function CourseCategoryClient({
 
             <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-6 md:gap-8">
               <Link href={`/tools/flashcards?category=${categoryId}`} className="group flex flex-col h-full">
-                <Card className="p-6 md:p-8 bg-card border border-border rounded-2xl hover:border-cyan-400/40 hover:bg-cyan-400/[0.02] transition-all duration-300 flex flex-col items-center text-center gap-5 h-full cursor-pointer relative overflow-hidden group hover:shadow-xl">
-                  <div className="w-12 h-12 md:w-14 md:h-14 bg-muted border border-border rounded-xl text-cyan-500 dark:text-cyan-400 flex items-center justify-center group-hover:bg-cyan-500 dark:group-hover:bg-cyan-400 group-hover:text-white dark:group-hover:text-black transition-all duration-300 shadow-inner relative z-10">
+                <Card className="p-6 md:p-8 bg-card border border-border rounded-2xl hover:border-primary/40 hover:bg-primary/[0.02] transition-all duration-300 flex flex-col items-center text-center gap-5 h-full cursor-pointer relative overflow-hidden group hover:shadow-xl">
+                  <div className="w-12 h-12 md:w-14 md:h-14 bg-muted border border-border rounded-xl text-primary text-primary flex items-center justify-center group-hover:bg-primary dark:group-hover:bg-primary group-hover:text-white dark:group-hover:text-foreground transition-all duration-300 shadow-inner relative z-10">
                     <Layers size={24} />
                   </div>
                   <div className="mt-auto relative z-10">
-                    <p className="text-lg md:text-xl font-black text-foreground group-hover:text-cyan-500 dark:group-hover:text-cyan-400 transition-colors uppercase tracking-tight mb-1">
+                    <p className="text-lg md:text-xl font-black text-foreground group-hover:text-primary dark:group-hover:text-primary transition-colors uppercase tracking-tight mb-1">
                       Kosakata
                     </p>
                     <p className="text-muted-foreground text-[9px] font-bold uppercase tracking-widest">
@@ -185,12 +185,12 @@ export default function CourseCategoryClient({
               </Link>
 
               <Link href={`/tools/flashcards?category=${categoryId}`} className="group flex flex-col h-full">
-                <Card className="p-6 md:p-8 bg-card border border-border rounded-2xl hover:border-red-500/40 hover:bg-red-500/[0.02] transition-all duration-300 flex flex-col items-center text-center gap-5 h-full cursor-pointer relative overflow-hidden group hover:shadow-xl">
-                  <div className="w-12 h-12 md:w-14 md:h-14 bg-muted border border-border rounded-xl text-red-500 flex items-center justify-center group-hover:bg-red-500 group-hover:text-white transition-all duration-300 shadow-inner relative z-10">
+                <Card className="p-6 md:p-8 bg-card border border-border rounded-2xl hover:border-destructive/40 hover:bg-destructive/[0.02] transition-all duration-300 flex flex-col items-center text-center gap-5 h-full cursor-pointer relative overflow-hidden group hover:shadow-xl">
+                  <div className="w-12 h-12 md:w-14 md:h-14 bg-muted border border-border rounded-xl text-destructive flex items-center justify-center group-hover:bg-destructive group-hover:text-white transition-all duration-300 shadow-inner relative z-10">
                     <Flame size={24} />
                   </div>
                   <div className="mt-auto relative z-10">
-                    <p className="text-lg md:text-xl font-black text-foreground group-hover:text-red-500 dark:group-hover:text-red-400 transition-colors uppercase tracking-tight mb-1">
+                    <p className="text-lg md:text-xl font-black text-foreground group-hover:text-destructive dark:group-hover:text-destructive transition-colors uppercase tracking-tight mb-1">
                       Survival
                     </p>
                     <p className="text-muted-foreground text-[9px] font-bold uppercase tracking-widest">
@@ -229,8 +229,8 @@ export default function CourseCategoryClient({
             </div>
           ) : (
             <div className="flex flex-col items-center justify-center py-20 md:py-32 bg-muted/20 border border-dashed border-border rounded-2xl text-center px-8 relative overflow-hidden group">
-              <div className="w-20 h-20 bg-muted border border-border rounded-2xl flex items-center justify-center mb-8 group-hover:border-cyan-400/30 transition-all duration-500">
-                <Sparkles size={32} className="text-muted-foreground group-hover:text-cyan-400 transition-colors" />
+              <div className="w-20 h-20 bg-muted border border-border rounded-2xl flex items-center justify-center mb-8 group-hover:border-primary/30 transition-all duration-500">
+                <Sparkles size={32} className="text-muted-foreground group-hover:text-primary transition-colors" />
               </div>
               
               <h4 className="text-2xl md:text-3xl font-black text-foreground uppercase tracking-tight mb-3">

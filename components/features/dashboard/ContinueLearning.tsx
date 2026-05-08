@@ -99,7 +99,7 @@ export default function ContinueLearning({ courseMetadata }: ContinueLearningPro
         </div>
       </div>
 
-      <Card className="group relative overflow-hidden border-white/10 bg-white/[0.03] backdrop-blur-xl p-0 rounded-[2rem] transition-all duration-500 hover:border-primary/40">
+      <Card className="group relative overflow-hidden border-white/10 bg-background/[0.03] backdrop-blur-xl p-0 rounded-[2rem] transition-all duration-500 hover:border-primary/40">
         {/* Progress Background Glow */}
         <div 
           className="absolute left-0 top-0 bottom-0 bg-primary/5 transition-all duration-1000 ease-out" 
@@ -111,7 +111,7 @@ export default function ContinueLearning({ courseMetadata }: ContinueLearningPro
           <div className="shrink-0 relative">
             <div className="w-20 h-20 md:w-24 md:h-24 rounded-3xl bg-gradient-to-br from-primary/20 to-blue-500/20 border border-white/10 flex items-center justify-center shadow-2xl overflow-hidden">
                {activeData.progress === 100 ? (
-                 <CheckCircle2 size={40} className="text-emerald-400" />
+                 <CheckCircle2 size={40} className="text-success" />
                ) : (
                  <BookOpen size={40} className="text-primary group-hover:scale-110 transition-transform duration-500" />
                )}
@@ -143,7 +143,7 @@ export default function ContinueLearning({ courseMetadata }: ContinueLearningPro
               <div className="flex items-center gap-2">
                 <div className="flex -space-x-1">
                   {[...Array(3)].map((_, i) => (
-                    <div key={i} className={`w-1.5 h-3 rounded-full border border-background ${i < Math.floor(activeData.progress / 33) ? 'bg-primary shadow-[0_0_8px_rgba(0,238,255,0.6)]' : 'bg-white/10'}`} />
+                    <div key={i} className={`w-1.5 h-3 rounded-full border border-background ${i < Math.floor(activeData.progress / 33) ? 'bg-primary shadow-[0_0_8px_rgba(0,238,255,0.6)]' : 'bg-background/10'}`} />
                   ))}
                 </div>
                 <span className="text-xs text-muted-foreground font-medium">
@@ -167,7 +167,7 @@ export default function ContinueLearning({ courseMetadata }: ContinueLearningPro
         </div>
 
         {/* Bottom Progress Bar (Slim) */}
-        <div className="absolute bottom-0 left-0 w-full h-1 bg-white/5">
+        <div className="absolute bottom-0 left-0 w-full h-1 bg-background/5">
           <motion.div 
             initial={{ width: 0 }}
             animate={{ width: `${activeData.progress}%` }}

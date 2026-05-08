@@ -9,7 +9,7 @@ export default function MobileNav() {
 
   return (
     <div className="md:hidden fixed bottom-5 left-1/2 -translate-x-1/2 w-[92%] max-w-md z-50">
-      <nav className="bg-card/30 dark:bg-slate-950/30 backdrop-blur-3xl border border-border/40 rounded-[2rem] p-1.5 shadow-2xl transition-all duration-500 overflow-hidden relative">
+      <nav className="bg-card/30 bg-background/30 backdrop-blur-3xl border border-border/40 rounded-[2rem] p-1.5 shadow-2xl transition-all duration-500 overflow-hidden relative">
         {/* Ambient Glow */}
         <div className="absolute inset-0 bg-gradient-to-t from-primary/5 to-transparent pointer-events-none" />
         

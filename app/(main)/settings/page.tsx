@@ -188,7 +188,7 @@ export default function SettingsPage() {
       {/* Ambient Background Glow */}
       <div className="fixed inset-0 pointer-events-none overflow-hidden z-0">
         <div className="absolute top-[10%] -left-[10%] w-[40%] h-[40%] bg-primary/5 blur-[120px] rounded-full animate-pulse" />
-        <div className="absolute bottom-[10%] -right-[10%] w-[40%] h-[40%] bg-blue-500/5 blur-[120px] rounded-full animate-pulse" style={{ animationDelay: '1s' }} />
+        <div className="absolute bottom-[10%] -right-[10%] w-[40%] h-[40%] bg-primary/5 blur-[120px] rounded-full animate-pulse" style={{ animationDelay: '1s' }} />
       </div>
 
       <ConfirmModal
@@ -209,7 +209,7 @@ export default function SettingsPage() {
       >
         <header className="mb-12 px-1">
           <motion.div variants={itemVariants}>
-            <Badge variant="outline" className="bg-white/5 text-primary border-primary/20 px-4 py-1.5 rounded-full text-[10px] font-black uppercase tracking-[0.2em] mb-6 flex items-center gap-2 w-fit shadow-xl backdrop-blur-md">
+            <Badge variant="outline" className="bg-background/5 text-primary border-primary/20 px-4 py-1.5 rounded-full text-[10px] font-black uppercase tracking-[0.2em] mb-6 flex items-center gap-2 w-fit shadow-xl backdrop-blur-md">
               <SettingsIcon size={14} className="animate-spin-slow" /> Protokol Sistem
             </Badge>
           </motion.div>
@@ -249,12 +249,12 @@ export default function SettingsPage() {
 
           {/* DANGER ZONE INFO */}
           <motion.div variants={itemVariants}>
-            <Card className="bg-red-500/[0.02] border border-red-500/10 rounded-[2rem] p-6 md:p-8 shadow-2xl flex flex-col md:flex-row items-center md:items-start gap-6 group hover:bg-red-500/[0.04] transition-all duration-500">
-              <div className="w-14 h-14 shrink-0 rounded-2xl bg-red-500/10 flex items-center justify-center border border-red-500/20 shadow-lg group-hover:scale-110 transition-transform">
-                <ShieldAlert size={28} className="text-red-500" />
+            <Card className="bg-destructive/[0.02] border border-destructive/10 rounded-[2rem] p-6 md:p-8 shadow-2xl flex flex-col md:flex-row items-center md:items-start gap-6 group hover:bg-destructive/[0.04] transition-all duration-500">
+              <div className="w-14 h-14 shrink-0 rounded-2xl bg-destructive/10 flex items-center justify-center border border-destructive/20 shadow-lg group-hover:scale-110 transition-transform">
+                <ShieldAlert size={28} className="text-destructive" />
               </div>
               <div className="flex-1 text-center md:text-left">
-                <h4 className="text-red-500 font-black uppercase italic tracking-tighter text-lg mb-2">Peringatan Keamanan</h4>
+                <h4 className="text-destructive font-black uppercase italic tracking-tighter text-lg mb-2">Peringatan Keamanan</h4>
                 <p className="text-muted-foreground text-sm leading-relaxed opacity-60 font-medium">
                   Penghapusan database bersifat destruktif dan tidak dapat dipulihkan. Seluruh riwayat XP, streak, dan memori SRS akan dimusnahkan dari server dan penyimpanan lokal.
                 </p>
@@ -264,9 +264,9 @@ export default function SettingsPage() {
 
           {/* MOBILE EXTRA NAV */}
           <motion.div variants={itemVariants} className="md:hidden">
-            <Card className="bg-white/[0.02] backdrop-blur-xl border border-white/5 rounded-[2rem] p-6 shadow-2xl">
+            <Card className="bg-background/[0.02] backdrop-blur-xl border border-white/5 rounded-[2rem] p-6 shadow-2xl">
               <h3 className="text-primary font-black uppercase tracking-[0.2em] text-[10px] mb-4">Navigasi Lanjutan</h3>
-              <Button asChild variant="ghost" className="w-full h-14 bg-white/[0.03] border border-white/5 justify-start hover:bg-primary/10 hover:text-primary rounded-2xl font-black uppercase tracking-widest text-[10px] transition-all">
+              <Button asChild variant="ghost" className="w-full h-14 bg-background/[0.03] border border-white/5 justify-start hover:bg-primary/10 hover:text-primary rounded-2xl font-black uppercase tracking-widest text-[10px] transition-all">
                 <Link href="/library">
                   <Layers size={18} className="mr-3 text-primary" /> Buka Pustaka Data
                 </Link>

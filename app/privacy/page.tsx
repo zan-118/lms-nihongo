@@ -17,13 +17,13 @@ export default function PrivacyPage() {
           <h1 className="text-4xl md:text-5xl font-black text-foreground font-japanese tracking-tight mb-3">
             プライバシーポリシー
           </h1>
-          <p className="text-sm md:text-base font-bold text-cyan-500 dark:text-cyan-400 uppercase tracking-widest">
+          <p className="text-sm md:text-base font-bold text-primary text-primary uppercase tracking-widest">
             Privacy Policy (Kebijakan Privasi)
           </p>
         </header>
 
         {/* Konten Tipografi Minimalis */}
-        <article className="prose prose-slate dark:prose-invert prose-headings:font-black prose-headings:tracking-tight prose-a:text-cyan-500 max-w-none mb-20">
+        <article className="prose prose-slate dark:prose-invert prose-headings:font-black prose-headings:tracking-tight prose-a:text-primary max-w-none mb-20">
           <p className="lead font-medium text-muted-foreground">
             Terakhir diperbarui: {new Date().toLocaleDateString("id-ID", { month: "long", year: "numeric" })}
           </p>

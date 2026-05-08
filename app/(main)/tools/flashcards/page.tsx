@@ -264,13 +264,13 @@ function FlashcardsContent() {
           <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
             <Card 
               onClick={() => fetchCardsAndStart('vocab')}
-              className="group p-8 rounded-3xl border border-cyan-500/20 bg-card hover:border-cyan-400/60 hover:bg-cyan-500/[0.02] transition-all duration-300 cursor-pointer flex flex-col items-center text-center gap-5 relative overflow-hidden shadow-sm hover:shadow-xl"
+              className="group p-8 rounded-3xl border border-primary/20 bg-card hover:border-primary/60 hover:bg-primary/[0.02] transition-all duration-300 cursor-pointer flex flex-col items-center text-center gap-5 relative overflow-hidden shadow-sm hover:shadow-xl"
             >
-              <div className="w-16 h-16 rounded-2xl bg-muted border border-border text-cyan-500 flex items-center justify-center group-hover:bg-cyan-500 group-hover:text-white group-hover:scale-110 transition-all duration-500 shadow-inner">
+              <div className="w-16 h-16 rounded-2xl bg-muted border border-border text-primary flex items-center justify-center group-hover:bg-primary group-hover:text-white group-hover:scale-110 transition-all duration-500 shadow-inner">
                 <Layers size={28} />
               </div>
               <div>
-                <h3 className="text-xl font-black uppercase tracking-tight text-foreground group-hover:text-cyan-500 transition-colors">Kosakata</h3>
+                <h3 className="text-xl font-black uppercase tracking-tight text-foreground group-hover:text-primary transition-colors">Kosakata</h3>
                 <p className="text-xs text-muted-foreground font-medium mt-2 leading-relaxed">
                   Latihan flashcard memori standar. Ingat arti dan bacaan kartu dengan santai.
                 </p>
@@ -294,13 +294,13 @@ function FlashcardsContent() {
 
             <Card 
               onClick={() => fetchCardsAndStart('survival')}
-              className="group p-8 rounded-3xl border border-red-500/20 bg-card hover:border-red-400/60 hover:bg-red-500/[0.02] transition-all duration-300 cursor-pointer flex flex-col items-center text-center gap-5 relative overflow-hidden shadow-sm hover:shadow-xl"
+              className="group p-8 rounded-3xl border border-destructive/20 bg-card hover:border-destructive/60 hover:bg-destructive/[0.02] transition-all duration-300 cursor-pointer flex flex-col items-center text-center gap-5 relative overflow-hidden shadow-sm hover:shadow-xl"
             >
-              <div className="w-16 h-16 rounded-2xl bg-muted border border-border text-red-500 flex items-center justify-center group-hover:bg-red-500 group-hover:text-white group-hover:scale-110 transition-all duration-500 shadow-inner">
+              <div className="w-16 h-16 rounded-2xl bg-muted border border-border text-destructive flex items-center justify-center group-hover:bg-destructive group-hover:text-white group-hover:scale-110 transition-all duration-500 shadow-inner">
                 <Flame size={28} />
               </div>
               <div>
-                <h3 className="text-xl font-black uppercase tracking-tight text-foreground group-hover:text-red-500 transition-colors">Survival</h3>
+                <h3 className="text-xl font-black uppercase tracking-tight text-foreground group-hover:text-destructive transition-colors">Survival</h3>
                 <p className="text-xs text-muted-foreground font-medium mt-2 leading-relaxed">
                   Uji nyali! Modus tantangan ketat dengan Hit Points (HP) dan batas waktu.
                 </p>
@@ -335,8 +335,8 @@ function FlashcardsContent() {
                   selectedMode === "kanji" 
                     ? "bg-purple-500/10 border-purple-500/30 text-purple-500" 
                     : selectedMode === "survival"
-                    ? "bg-red-500/10 border-red-500/30 text-red-500"
-                    : "bg-cyan-500/10 border-cyan-500/30 text-cyan-500"
+                    ? "bg-destructive/10 border-destructive/30 text-destructive"
+                    : "bg-primary/10 border-primary/30 text-primary"
                 }`}
               >
                 {selectedMode === "survival" ? <Flame size={16} /> : selectedMode === "kanji" ? <PenTool size={16} /> : <Zap size={16} />}

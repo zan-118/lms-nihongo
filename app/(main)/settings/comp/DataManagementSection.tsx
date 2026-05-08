@@ -24,12 +24,12 @@ export default function DataManagementSection({
 }: DataManagementSectionProps) {
   return (
     <motion.div variants={itemVariants}>
-      <Card className="bg-white/[0.01] backdrop-blur-3xl border border-white/5 rounded-[2.5rem] p-8 md:p-10 shadow-2xl relative overflow-hidden group">
+      <Card className="bg-background/[0.01] backdrop-blur-3xl border border-white/5 rounded-[2.5rem] p-8 md:p-10 shadow-2xl relative overflow-hidden group">
         {/* Background Accent */}
         <div className="absolute top-0 right-0 w-32 h-32 bg-primary/5 blur-3xl rounded-full -mr-16 -mt-16 pointer-events-none" />
         
         <div className="flex items-center gap-4 mb-10 relative z-10">
-          <div className="w-12 h-12 rounded-2xl bg-white/[0.03] flex items-center justify-center border border-white/10 shadow-xl">
+          <div className="w-12 h-12 rounded-2xl bg-background/[0.03] flex items-center justify-center border border-white/10 shadow-xl">
             <Database size={22} className="text-primary drop-shadow-[0_0_8px_rgba(0,238,255,0.4)]" />
           </div>
           <div>
@@ -42,21 +42,21 @@ export default function DataManagementSection({
           <Button
             variant="ghost"
             onClick={handleExportData}
-            className="h-16 bg-white/[0.03] border border-white/5 hover:bg-primary/10 hover:border-primary/30 hover:text-primary text-muted-foreground rounded-2xl uppercase tracking-[0.2em] font-black text-[10px] transition-all group/btn shadow-lg"
+            className="h-16 bg-background/[0.03] border border-white/5 hover:bg-primary/10 hover:border-primary/30 hover:text-primary text-muted-foreground rounded-2xl uppercase tracking-[0.2em] font-black text-[10px] transition-all group/btn shadow-lg"
           >
             <Save size={18} className="mr-3 group-hover/btn:scale-110 transition-transform" /> Ekspor Backup
           </Button>
           <Button
             variant="ghost"
             onClick={handleImportData}
-            className="h-16 bg-white/[0.03] border border-white/5 hover:bg-purple-500/10 hover:border-purple-500/30 hover:text-purple-400 text-muted-foreground rounded-2xl uppercase tracking-[0.2em] font-black text-[10px] transition-all group/btn shadow-lg"
+            className="h-16 bg-background/[0.03] border border-white/5 hover:bg-purple-500/10 hover:border-purple-500/30 hover:text-purple-400 text-muted-foreground rounded-2xl uppercase tracking-[0.2em] font-black text-[10px] transition-all group/btn shadow-lg"
           >
             <Upload size={18} className="mr-3 group-hover/btn:scale-110 transition-transform" /> Impor Backup
           </Button>
           <Button
             variant="ghost"
             onClick={handleResetData}
-            className="h-16 bg-red-500/[0.03] border border-red-500/10 hover:bg-red-500/10 hover:border-red-500 text-red-500 rounded-2xl uppercase tracking-[0.2em] font-black text-[10px] transition-all group/btn shadow-lg"
+            className="h-16 bg-destructive/[0.03] border border-destructive/10 hover:bg-destructive/10 hover:border-destructive text-destructive rounded-2xl uppercase tracking-[0.2em] font-black text-[10px] transition-all group/btn shadow-lg"
           >
             <Trash2 size={18} className="mr-3 group-hover/btn:scale-110 transition-transform" /> Purge Database
           </Button>
@@ -64,7 +64,7 @@ export default function DataManagementSection({
             <Button
               variant="ghost"
               onClick={handleLogout}
-              className="h-16 bg-white/[0.03] border border-white/5 hover:bg-white/10 hover:border-white/20 text-muted-foreground rounded-2xl uppercase tracking-[0.2em] font-black text-[10px] transition-all group/btn shadow-lg"
+              className="h-16 bg-background/[0.03] border border-white/5 hover:bg-background/10 hover:border-white/20 text-muted-foreground rounded-2xl uppercase tracking-[0.2em] font-black text-[10px] transition-all group/btn shadow-lg"
             >
               <LogOut size={18} className="mr-3 group-hover:translate-x-1 transition-transform" /> Terminasi Sesi
             </Button>

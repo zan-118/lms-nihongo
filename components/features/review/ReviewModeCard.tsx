@@ -37,19 +37,19 @@ export function ReviewModeCard({
 
   const activeStyles = isPrimary
     ? "border-primary/20 bg-card/50 hover:border-primary/50 hover:shadow-2xl hover:shadow-primary/5"
-    : "border-amber-500/20 bg-card/50 hover:border-amber-500/50 hover:shadow-2xl hover:shadow-amber-500/5";
+    : "border-warning/20 bg-card/50 hover:border-warning/50 hover:shadow-2xl hover:shadow-amber-500/5";
 
   const iconContainerStyles = isEnabled
     ? isPrimary
       ? "bg-primary/10 border border-primary/20"
-      : "bg-amber-500/10 border border-amber-500/20"
+      : "bg-warning/10 border border-warning/20"
     : "bg-muted border border-border";
 
   const iconColorStyles = isEnabled
-    ? isPrimary ? "text-primary" : "text-amber-500"
+    ? isPrimary ? "text-primary" : "text-warning"
     : "text-muted-foreground";
 
-  const textColorStyles = isPrimary ? "text-primary" : "text-amber-500";
+  const textColorStyles = isPrimary ? "text-primary" : "text-warning";
 
   return (
     <Card

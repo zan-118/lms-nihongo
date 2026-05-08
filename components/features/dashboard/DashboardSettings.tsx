@@ -57,7 +57,7 @@ export default function DashboardSettings({
               <Button
                 variant="outline"
                 onClick={handleResetData}
-                className="h-14 bg-red-500/5 border-red-500/20 hover:bg-red-500/20 hover:border-red-500 text-red-500 rounded-2xl uppercase tracking-widest font-bold text-xs transition-all"
+                className="h-14 bg-destructive/5 border-destructive/20 hover:bg-destructive/20 hover:border-destructive text-destructive rounded-2xl uppercase tracking-widest font-bold text-xs transition-all"
               >
                 <Trash2 size={16} className="mr-2" /> Reset Data
               </Button>
@@ -65,7 +65,7 @@ export default function DashboardSettings({
                 <Button
                   variant="outline"
                   onClick={handleLogout}
-                  className="h-14 bg-red-500/10 border-red-500/30 hover:bg-red-500/30 hover:border-red-500 text-red-500 rounded-2xl uppercase tracking-widest font-bold text-xs transition-all"
+                  className="h-14 bg-destructive/10 border-destructive/30 hover:bg-destructive/30 hover:border-destructive text-destructive rounded-2xl uppercase tracking-widest font-bold text-xs transition-all"
                 >
                   <LogOut size={16} className="mr-2" /> Keluar
                 </Button>

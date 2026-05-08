@@ -91,9 +91,9 @@ export default function LeaderboardClient() {
             </div>
           </div>
           <div className="bg-gradient-to-b from-slate-400/20 to-transparent p-4 sm:p-6 rounded-t-3xl w-full text-center border-x border-t border-slate-400/30 h-28 sm:h-36">
-            <p className="text-xs font-black uppercase text-slate-500 mb-1">Rank #2</p>
+            <p className="text-xs font-black uppercase text-muted-foreground mb-1">Rank #2</p>
             <p className="text-xs sm:text-sm font-bold text-foreground truncate mb-2">{topThree[1]?.full_name || "Misterius"}</p>
-            <Badge variant="outline" className="font-mono text-xs border-slate-400/30 text-slate-600 dark:text-slate-300">
+            <Badge variant="outline" className="font-mono text-xs border-slate-400/30 text-muted-foreground dark:text-slate-300">
               {topThree[1]?.xp || 0} XP
             </Badge>
           </div>
@@ -106,17 +106,17 @@ export default function LeaderboardClient() {
           className="order-2 flex flex-col items-center relative z-10 scale-110 sm:scale-125"
         >
           <div className="relative mb-8">
-            <div className="w-20 h-20 sm:w-32 sm:h-32 rounded-full neo-inset flex items-center justify-center text-3xl font-black bg-amber-500/10 border-4 border-amber-500 text-amber-600 dark:text-amber-400 shadow-xl">
+            <div className="w-20 h-20 sm:w-32 sm:h-32 rounded-full neo-inset flex items-center justify-center text-3xl font-black bg-warning/10 border-4 border-warning text-warning text-warning shadow-xl">
               {topThree[0]?.full_name?.charAt(0).toUpperCase() || "?"}
             </div>
-            <div className="absolute -top-10 left-1/2 -translate-x-1/2 text-amber-500 animate-bounce">
+            <div className="absolute -top-10 left-1/2 -translate-x-1/2 text-warning animate-bounce">
               <Trophy size={40} className="drop-shadow-lg" />
             </div>
           </div>
-          <div className="bg-gradient-to-b from-amber-500/20 to-transparent p-4 sm:p-8 rounded-t-3xl w-full text-center border-x border-t border-amber-500/40 h-36 sm:h-48">
-            <p className="text-xs font-black uppercase text-amber-600 dark:text-amber-400 mb-1 animate-pulse">Champion</p>
+          <div className="bg-gradient-to-b from-amber-500/20 to-transparent p-4 sm:p-8 rounded-t-3xl w-full text-center border-x border-t border-warning/40 h-36 sm:h-48">
+            <p className="text-xs font-black uppercase text-warning text-warning mb-1 animate-pulse">Champion</p>
             <p className="text-sm sm:text-base font-black text-foreground truncate mb-3">{topThree[0]?.full_name || "Sang Juara"}</p>
-            <Badge variant="outline" className="font-mono text-xs sm:text-xs border-amber-500/50 text-amber-700 dark:text-amber-300 bg-amber-500/10">
+            <Badge variant="outline" className="font-mono text-xs sm:text-xs border-warning/50 text-warning text-warning bg-warning/10">
               {topThree[0]?.xp || 0} XP
             </Badge>
           </div>
@@ -130,17 +130,17 @@ export default function LeaderboardClient() {
           className="order-3 flex flex-col items-center"
         >
           <div className="relative mb-6">
-            <div className="w-16 h-16 sm:w-24 sm:h-24 rounded-full neo-inset flex items-center justify-center text-2xl font-black bg-orange-500/10 border-2 border-orange-600 text-orange-600">
+            <div className="w-16 h-16 sm:w-24 sm:h-24 rounded-full neo-inset flex items-center justify-center text-2xl font-black bg-warning/10 border-2 border-warning text-warning">
               {topThree[2]?.full_name?.charAt(0).toUpperCase() || "?"}
             </div>
-            <div className="absolute -bottom-2 -right-2 w-8 h-8 rounded-full bg-orange-600 flex items-center justify-center text-white border-2 border-background">
+            <div className="absolute -bottom-2 -right-2 w-8 h-8 rounded-full bg-warning flex items-center justify-center text-white border-2 border-background">
               <Medal size={16} />
             </div>
           </div>
-          <div className="bg-gradient-to-b from-orange-600/20 to-transparent p-4 sm:p-6 rounded-t-3xl w-full text-center border-x border-t border-orange-600/30 h-24 sm:h-32">
-            <p className="text-xs font-black uppercase text-orange-600 mb-1">Rank #3</p>
+          <div className="bg-gradient-to-b from-orange-600/20 to-transparent p-4 sm:p-6 rounded-t-3xl w-full text-center border-x border-t border-warning/30 h-24 sm:h-32">
+            <p className="text-xs font-black uppercase text-warning mb-1">Rank #3</p>
             <p className="text-xs sm:text-sm font-bold text-foreground truncate mb-2">{topThree[2]?.full_name || "Pesaing"}</p>
-            <Badge variant="outline" className="font-mono text-xs border-orange-600/30 text-orange-600 dark:text-orange-400">
+            <Badge variant="outline" className="font-mono text-xs border-warning/30 text-warning text-warning">
               {topThree[2]?.xp || 0} XP
             </Badge>
           </div>
@@ -185,7 +185,7 @@ export default function LeaderboardClient() {
                     Level {user.level}
                   </Badge>
                   <div className="w-1 h-1 rounded-full bg-muted" />
-                  <div className="flex items-center gap-1.5 text-xs sm:text-xs font-bold text-orange-600 dark:text-orange-500">
+                  <div className="flex items-center gap-1.5 text-xs sm:text-xs font-bold text-warning text-warning">
                     <Flame size={12} className="drop-shadow-sm" /> 
                     {user.streak} <span className="hidden sm:inline">Hari Berturut</span>
                   </div>

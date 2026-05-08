@@ -48,8 +48,8 @@ export default function VocabTrigger({ text, vocabId, children }: VocabTriggerPr
               </Badge>
               {srsInfo && (
                 <div className="flex items-center gap-1.5">
-                   <div className="w-2 h-2 rounded-full bg-emerald-500 shadow-[0_0_8px_rgba(16,185,129,0.5)]" />
-                   <span className="text-[10px] font-black uppercase tracking-tighter text-emerald-500/80">In SRS</span>
+                   <div className="w-2 h-2 rounded-full bg-success shadow-[0_0_8px_rgba(16,185,129,0.5)]" />
+                   <span className="text-[10px] font-black uppercase tracking-tighter text-success/80">In SRS</span>
                 </div>
               )}
             </div>
@@ -61,7 +61,7 @@ export default function VocabTrigger({ text, vocabId, children }: VocabTriggerPr
           </DialogHeader>
 
           <div className="mt-6 space-y-6 relative z-10">
-            <div className="p-4 rounded-2xl bg-white/5 border border-white/5 space-y-2">
+            <div className="p-4 rounded-2xl bg-background/5 border border-white/5 space-y-2">
               <span className="text-[10px] font-black uppercase tracking-[0.2em] text-primary/60">Makna</span>
               <p className="text-lg font-medium text-foreground/90">
                 {/* Fallback mock text if not in SRS */}
@@ -70,13 +70,13 @@ export default function VocabTrigger({ text, vocabId, children }: VocabTriggerPr
             </div>
 
             <div className="grid grid-cols-2 gap-4">
-               <div className="p-4 rounded-2xl bg-white/5 border border-white/5">
+               <div className="p-4 rounded-2xl bg-background/5 border border-white/5">
                   <span className="text-[10px] font-black uppercase tracking-[0.2em] text-primary/60 block mb-1">Status</span>
                   <span className="text-xs font-bold text-muted-foreground uppercase tracking-widest">
                     {srsInfo ? `Level ${srsInfo.repetition > 5 ? 'Master' : 'Learning'}` : "Not Tracked"}
                   </span>
                </div>
-               <div className="p-4 rounded-2xl bg-white/5 border border-white/5">
+               <div className="p-4 rounded-2xl bg-background/5 border border-white/5">
                   <span className="text-[10px] font-black uppercase tracking-[0.2em] text-primary/60 block mb-1">JLPT</span>
                   <span className="text-xs font-bold text-foreground">N5 - N4</span>
                </div>

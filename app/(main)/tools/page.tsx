@@ -27,9 +27,9 @@ const tools = [
     description: "Tabel interaktif Hiragana & Katakana lengkap dengan latihan menulis.",
     icon: LayoutGrid,
     href: "/tools/kana",
-    color: "text-cyan-500",
-    bgColor: "bg-cyan-500/10",
-    border: "border-cyan-500/20"
+    color: "text-primary",
+    bgColor: "bg-primary/10",
+    border: "border-primary/20"
   },
   {
     title: "Flashcards",
@@ -56,18 +56,18 @@ const tools = [
         document.dispatchEvent(event);
       }
     },
-    color: "text-amber-500",
-    bgColor: "bg-amber-500/10",
-    border: "border-amber-500/20"
+    color: "text-warning",
+    bgColor: "bg-warning/10",
+    border: "border-warning/20"
   },
   {
     title: "Latihan Menulis",
     description: "Kanvas digital kosong untuk melatih guratan kanji, kana, atau coretan belajar.",
     icon: PenTool,
     href: "/tools/writing",
-    color: "text-emerald-500",
-    bgColor: "bg-emerald-500/10",
-    border: "border-emerald-500/20"
+    color: "text-success",
+    bgColor: "bg-success/10",
+    border: "border-success/20"
   }
 ];
 

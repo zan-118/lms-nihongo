@@ -24,10 +24,10 @@ export function Hero() {
         >
           <Badge
             variant="outline"
-            className="bg-cyan-400/10 border-cyan-400/20 px-4 py-2 rounded-xl flex items-center gap-2 shadow-none backdrop-blur-md"
+            className="bg-primary/10 border-primary/20 px-4 py-2 rounded-xl flex items-center gap-2 shadow-none backdrop-blur-md"
           >
-            <Sparkles size={14} className="text-cyan-600 dark:text-cyan-400 animate-pulse" />
-            <span className="text-xs font-black uppercase tracking-widest text-cyan-600 dark:text-cyan-400">
+            <Sparkles size={14} className="text-primary text-primary animate-pulse" />
+            <span className="text-xs font-black uppercase tracking-widest text-primary text-primary">
               Next-Gen Learning Platform
             </span>
           </Badge>

@@ -41,7 +41,7 @@ export function ThemeToggle() {
       title="Ganti Tema"
     >
       {theme === "dark" ? (
-        <Moon size={18} className="text-cyan-500 dark:text-cyan-400" />
+        <Moon size={18} className="text-primary text-primary" />
       ) : theme === "light" ? (
         <Sun size={18} className="text-amber-500" />
       ) : (

@@ -33,7 +33,7 @@ function ReadingPageContent({ data }: ReadingPageClientProps) {
       {/* Dynamic Background */}
       <div className="fixed inset-0 pointer-events-none overflow-hidden">
         <div className="absolute top-[-10%] left-[-10%] w-[40%] h-[40%] bg-primary/5 blur-[100px] rounded-full animate-pulse" />
-        <div className="absolute bottom-[-10%] right-[-10%] w-[40%] h-[40%] bg-blue-500/5 blur-[100px] rounded-full animate-pulse" />
+        <div className="absolute bottom-[-10%] right-[-10%] w-[40%] h-[40%] bg-primary/5 blur-[100px] rounded-full animate-pulse" />
       </div>
 
       <div className="max-w-4xl mx-auto px-6 pt-12 relative z-10">
@@ -43,7 +43,7 @@ function ReadingPageContent({ data }: ReadingPageClientProps) {
             href="/library" 
             className="group flex items-center gap-2 text-muted-foreground hover:text-primary transition-colors w-fit"
           >
-            <div className="p-2 rounded-full bg-white/5 group-hover:bg-primary/10 border border-white/5 group-hover:border-primary/20 transition-all">
+            <div className="p-2 rounded-full bg-background/5 group-hover:bg-primary/10 border border-white/5 group-hover:border-primary/20 transition-all">
               <ChevronLeft size={18} />
             </div>
             <span className="text-sm font-bold uppercase tracking-widest">Back to Library</span>
@@ -67,7 +67,7 @@ function ReadingPageContent({ data }: ReadingPageClientProps) {
 
             {/* Reading Mode Switcher - Desktop/Tablet */}
             <div className="flex flex-col md:flex-row items-center gap-4">
-              <div className="flex items-center gap-1 p-1 rounded-2xl bg-white/[0.03] border border-white/5 backdrop-blur-xl shadow-2xl">
+              <div className="flex items-center gap-1 p-1 rounded-2xl bg-background/[0.03] border border-white/5 backdrop-blur-xl shadow-2xl">
                 {modes.map((m) => (
                   <button
                     key={m.id}
@@ -76,21 +76,21 @@ function ReadingPageContent({ data }: ReadingPageClientProps) {
                       "flex items-center gap-2 px-4 py-2 rounded-xl text-xs font-bold uppercase tracking-widest transition-all",
                       mode === m.id 
                         ? "bg-primary text-primary-foreground shadow-[0_0_15px_rgba(0,238,255,0.4)]" 
-                        : "text-muted-foreground hover:text-foreground hover:bg-white/5"
+                        : "text-muted-foreground hover:text-foreground hover:bg-background/5"
                     )}
                   >
                     <m.icon size={14} />
                     <span className="hidden lg:inline">{m.label}</span>
                   </button>
                 ))}
-                <div className="w-px h-4 bg-white/10 mx-2" />
+                <div className="w-px h-4 bg-background/10 mx-2" />
                 <button
                   onClick={toggleTranslation}
                   className={cn(
                     "flex items-center gap-2 px-4 py-2 rounded-xl text-xs font-bold uppercase tracking-widest transition-all",
                     showTranslation 
-                      ? "bg-emerald-500 text-white shadow-[0_0_15px_rgba(16,185,129,0.4)]" 
-                      : "text-muted-foreground hover:text-foreground hover:bg-white/5"
+                      ? "bg-success text-white shadow-[0_0_15px_rgba(16,185,129,0.4)]" 
+                      : "text-muted-foreground hover:text-foreground hover:bg-background/5"
                   )}
                 >
                   <Languages size={14} />
@@ -99,7 +99,7 @@ function ReadingPageContent({ data }: ReadingPageClientProps) {
               </div>
 
               {/* Audio Control in Header */}
-              <div className="px-2 py-1 rounded-2xl bg-white/[0.03] border border-white/5 backdrop-blur-xl shadow-xl flex items-center gap-2">
+              <div className="px-2 py-1 rounded-2xl bg-background/[0.03] border border-white/5 backdrop-blur-xl shadow-xl flex items-center gap-2">
                 <AudioController 
                   audioUrl={data.audioUrl} 
                   textToSpeak={data.body} 
@@ -144,8 +144,8 @@ function ReadingPageContent({ data }: ReadingPageClientProps) {
                   className={cn(
                     "group flex items-center gap-3 px-8 py-3 rounded-full text-sm font-semibold uppercase tracking-widest transition-all duration-300",
                     showTranslation
-                      ? "bg-emerald-500 text-white shadow-lg"
-                      : "bg-white/5 text-muted-foreground hover:bg-white/10 hover:text-foreground border border-white/5"
+                      ? "bg-success text-white shadow-lg"
+                      : "bg-background/5 text-muted-foreground hover:bg-background/10 hover:text-foreground border border-white/5"
                   )}
                 >
                   <Languages size={18} className={cn("transition-transform duration-500", showTranslation && "rotate-180")} />
@@ -165,10 +165,10 @@ function ReadingPageContent({ data }: ReadingPageClientProps) {
                 transition={{ duration: 0.5, ease: "circOut" }}
                 className="w-full overflow-hidden"
               >
-                <div className="p-8 md:p-16 rounded-[3rem] bg-emerald-500/[0.03] backdrop-blur-[20px] border border-emerald-500/10 shadow-xl relative group">
+                <div className="p-8 md:p-16 rounded-[3rem] bg-success/[0.03] backdrop-blur-[20px] border border-success/10 shadow-xl relative group">
                    <div className="flex items-center gap-3 mb-8 opacity-60">
-                     <Languages size={18} className="text-emerald-500" />
-                     <span className="text-[10px] font-bold uppercase tracking-[0.4em] text-emerald-500">Terjemahan Lengkap Indonesia</span>
+                     <Languages size={18} className="text-success" />
+                     <span className="text-[10px] font-bold uppercase tracking-[0.4em] text-success">Terjemahan Lengkap Indonesia</span>
                    </div>
                    <div className="space-y-8">
                       {translationParagraphs.map((t, i) => (

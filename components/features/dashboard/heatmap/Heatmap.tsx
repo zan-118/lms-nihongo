@@ -14,7 +14,7 @@ export default function Heatmap({ studyDays }: Props) {
   const { days } = useHeatmap();
 
   return (
-    <Card className="bg-card dark:bg-[#0a0c10] p-6 md:p-8 lg:p-10 rounded-[2.5rem] md:rounded-[3rem] border border-border dark:border-white/5 relative overflow-hidden neo-card shadow-lg transition-colors duration-300">
+    <Card className="bg-card bg-card p-6 md:p-8 lg:p-10 rounded-[2.5rem] md:rounded-[3rem] border border-border dark:border-white/5 relative overflow-hidden neo-card shadow-lg transition-colors duration-300">
       <div className="absolute inset-0 bg-[linear-gradient(rgba(0,238,255,0.01)_1px,transparent_1px)] bg-[size:100%_4px] opacity-20 dark:opacity-50 pointer-events-none" />
 
       <header className="flex items-center justify-between mb-8 md:mb-10 relative z-10">

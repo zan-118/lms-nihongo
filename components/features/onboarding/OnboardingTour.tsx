@@ -21,17 +21,17 @@ const steps: Step[] = [
   {
     title: "Fokus Harian",
     description: "Tab Beranda adalah pusat aktivitasmu. Di sini kamu bisa melihat sesi review yang jatuh tempo.",
-    icon: <CheckCircle2 className="text-emerald-500" size={32} />,
+    icon: <CheckCircle2 className="text-success" size={32} />,
   },
   {
     title: "Pantau Progres",
     description: "Gunakan tab Progres untuk melihat statistik detail dan penguasaan kanji kamu secara visual.",
-    icon: <div className="text-blue-500 text-2xl font-bold">📈</div>,
+    icon: <div className="text-primary text-2xl font-bold">📈</div>,
   },
   {
     title: "Koleksi Trophy",
     description: "Selesaikan quest dan raih prestasi untuk mengoleksi badge keren di tab Koleksi.",
-    icon: <div className="text-amber-500 text-2xl font-bold">🏆</div>,
+    icon: <div className="text-warning text-2xl font-bold">🏆</div>,
   },
 ];
 

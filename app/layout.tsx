@@ -125,7 +125,7 @@ export default function RootLayout({
           inter.variable,
           notoJsonJP.variable,
           notoSerifJP.variable,
-          "font-sans antialiased text-foreground selection:bg-red-500 selection:text-white transition-colors duration-300"
+          "font-sans antialiased text-foreground selection:bg-destructive selection:text-white transition-colors duration-300"
         )}
       >
         <ThemeProvider
@@ -152,7 +152,7 @@ export default function RootLayout({
               },
               classNames: {
                 success: "border-cyber-neon/50 shadow-[0_0_20px_rgba(0,238,255,0.2)]",
-                error: "border-red-500/50 shadow-[0_0_20px_rgba(239,68,68,0.2)]",
+                error: "border-destructive/50 shadow-[0_0_20px_rgba(239,68,68,0.2)]",
               },
               duration: 4000,
             }}

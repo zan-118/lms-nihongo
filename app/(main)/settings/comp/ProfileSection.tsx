@@ -66,10 +66,10 @@ export default function ProfileSection({
 
   return (
     <motion.div variants={itemVariants}>
-      <Card className="bg-white/[0.01] backdrop-blur-3xl border border-white/5 rounded-[2.5rem] p-8 md:p-10 shadow-2xl overflow-hidden relative group">
+      <Card className="bg-background/[0.01] backdrop-blur-3xl border border-white/5 rounded-[2.5rem] p-8 md:p-10 shadow-2xl overflow-hidden relative group">
         {/* Pilot ID Card Decorative Elements */}
         <div className="absolute top-0 right-0 w-64 h-64 bg-primary/5 blur-[100px] rounded-full -mr-32 -mt-32 animate-pulse" />
-        <div className="absolute bottom-0 left-0 w-32 h-32 bg-blue-500/5 blur-[60px] rounded-full -ml-16 -mb-16" />
+        <div className="absolute bottom-0 left-0 w-32 h-32 bg-primary/5 blur-[60px] rounded-full -ml-16 -mb-16" />
         
         {/* ID Card Header Pattern */}
         <div className="absolute top-0 left-0 right-0 h-1.5 bg-gradient-to-r from-primary via-blue-500 to-emerald-500 opacity-60" />
@@ -86,7 +86,7 @@ export default function ProfileSection({
                    </span>
                 </div>
                 <div className="absolute -bottom-2 -right-2 w-10 h-10 bg-card border border-white/10 rounded-2xl flex items-center justify-center z-20 shadow-xl group-hover:scale-110 transition-transform">
-                   <ShieldCheck size={20} className="text-emerald-500" />
+                   <ShieldCheck size={20} className="text-success" />
                 </div>
              </div>
              <div className="flex flex-col items-center">
@@ -100,7 +100,7 @@ export default function ProfileSection({
               <h2 className="text-2xl md:text-3xl font-black uppercase italic tracking-tighter text-foreground mb-2 flex flex-col lg:flex-row lg:items-center gap-3">
                  Identitas Belajar
                  {isAuthenticated && (
-                   <span className="text-[10px] not-italic font-black bg-emerald-500/10 text-emerald-500 border border-emerald-500/20 px-3 py-1 rounded-full uppercase tracking-widest w-fit mx-auto lg:mx-0">
+                   <span className="text-[10px] not-italic font-black bg-success/10 text-success border border-success/20 px-3 py-1 rounded-full uppercase tracking-widest w-fit mx-auto lg:mx-0">
                       Verified Pilot
                    </span>
                  )}
@@ -110,7 +110,7 @@ export default function ProfileSection({
 
             {/* STATS COUNTERS */}
             <div className="grid grid-cols-2 gap-4">
-               <div className="bg-white/[0.03] border border-white/5 rounded-2xl p-5 flex items-center gap-4 group/stat hover:bg-white/[0.05] transition-all">
+               <div className="bg-background/[0.03] border border-white/5 rounded-2xl p-5 flex items-center gap-4 group/stat hover:bg-background/[0.05] transition-all">
                   <div className="w-12 h-12 rounded-xl bg-primary/10 flex items-center justify-center text-primary shadow-inner">
                      <Zap size={22} className="fill-current animate-pulse" />
                   </div>
@@ -121,8 +121,8 @@ export default function ProfileSection({
                      <p className="text-[10px] font-black uppercase tracking-widest text-muted-foreground/60">Total XP</p>
                   </div>
                </div>
-               <div className="bg-white/[0.03] border border-white/5 rounded-2xl p-5 flex items-center gap-4 group/stat hover:bg-white/[0.05] transition-all">
-                  <div className="w-12 h-12 rounded-xl bg-amber-500/10 flex items-center justify-center text-amber-500 shadow-inner">
+               <div className="bg-background/[0.03] border border-white/5 rounded-2xl p-5 flex items-center gap-4 group/stat hover:bg-background/[0.05] transition-all">
+                  <div className="w-12 h-12 rounded-xl bg-warning/10 flex items-center justify-center text-warning shadow-inner">
                      <Flame size={22} className="fill-current" />
                   </div>
                   <div>
@@ -144,7 +144,7 @@ export default function ProfileSection({
                   value={newName}
                   onChange={(e) => setNewName(e.target.value)}
                   placeholder="Masukkan nama pilot..."
-                  className="w-full h-14 bg-white/[0.02] border border-white/10 rounded-2xl pl-12 pr-4 text-sm font-black text-foreground uppercase tracking-tight focus:ring-2 focus:ring-primary/20 focus:border-primary outline-none transition-all placeholder:text-muted-foreground/20"
+                  className="w-full h-14 bg-background/[0.02] border border-white/10 rounded-2xl pl-12 pr-4 text-sm font-black text-foreground uppercase tracking-tight focus:ring-2 focus:ring-primary/20 focus:border-primary outline-none transition-all placeholder:text-muted-foreground/20"
                 />
               </div>
               <Button 

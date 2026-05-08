@@ -13,7 +13,7 @@ export default function MainLoading() {
     <div className="fixed inset-0 z-[100] flex flex-col items-center justify-center bg-background overflow-hidden transition-colors duration-300">
       {/* Background Decor */}
       <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[600px] h-[600px] bg-primary/10 blur-[150px] rounded-full animate-pulse" />
-      <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[400px] h-[400px] bg-red-500/5 blur-[120px] rounded-full animate-pulse delay-700" />
+      <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[400px] h-[400px] bg-destructive/5 blur-[120px] rounded-full animate-pulse delay-700" />
 
       <div className="relative flex flex-col items-center">
         {/* Animated Logo / Icon Shell */}

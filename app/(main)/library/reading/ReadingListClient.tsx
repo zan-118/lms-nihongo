@@ -51,7 +51,7 @@ export default function ReadingListClient({ materials }: ReadingListClientProps)
                     <Badge variant="outline" className="border-primary/30 text-primary bg-primary/5 uppercase font-black tracking-widest px-3 py-1">
                       {material.difficulty}
                     </Badge>
-                    <div className="p-2 rounded-xl bg-white/5 group-hover:bg-primary/10 border border-white/5 group-hover:border-primary/20 transition-all">
+                    <div className="p-2 rounded-xl bg-background/5 group-hover:bg-primary/10 border border-white/5 group-hover:border-primary/20 transition-all">
                       <GraduationCap size={16} className="text-muted-foreground group-hover:text-primary transition-colors" />
                     </div>
                   </div>
@@ -70,7 +70,7 @@ export default function ReadingListClient({ materials }: ReadingListClientProps)
                   <span className="text-xs font-bold text-muted-foreground group-hover:text-foreground transition-colors">
                     Mulai Membaca
                   </span>
-                  <div className="w-10 h-10 rounded-full flex items-center justify-center bg-white/5 group-hover:bg-primary group-hover:text-primary-foreground transition-all">
+                  <div className="w-10 h-10 rounded-full flex items-center justify-center bg-background/5 group-hover:bg-primary group-hover:text-primary-foreground transition-all">
                     <ChevronRight size={20} />
                   </div>
                 </div>
@@ -81,7 +81,7 @@ export default function ReadingListClient({ materials }: ReadingListClientProps)
 
         {materials.length === 0 && (
           <div className="col-span-full py-20 text-center space-y-4">
-             <div className="w-20 h-20 rounded-full bg-white/5 border border-dashed border-white/10 flex items-center justify-center mx-auto">
+             <div className="w-20 h-20 rounded-full bg-background/5 border border-dashed border-white/10 flex items-center justify-center mx-auto">
                 <BookOpen size={32} className="text-muted-foreground opacity-30" />
              </div>
              <p className="text-muted-foreground font-medium">Belum ada materi bacaan yang tersedia.</p>

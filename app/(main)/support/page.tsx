@@ -36,7 +36,7 @@ export default function SupportPage() {
     <div className="w-full flex-1 flex flex-col overflow-x-hidden bg-background text-foreground transition-colors duration-300">
       <div className="fixed inset-0 pointer-events-none overflow-hidden z-0">
         <div className="absolute top-[-10%] right-[-5%] w-[300px] sm:w-[500px] h-[300px] sm:h-[500px] bg-primary/5 rounded-full blur-[80px] sm:blur-[120px]" />
-        <div className="absolute bottom-[-10%] left-[-5%] w-[250px] sm:w-[400px] h-[250px] sm:h-[400px] bg-blue-600/5 rounded-full blur-[60px] sm:blur-[100px]" />
+        <div className="absolute bottom-[-10%] left-[-5%] w-[250px] sm:w-[400px] h-[250px] sm:h-[400px] bg-primary/5 rounded-full blur-[60px] sm:blur-[100px]" />
         <div className="neural-grid" />
       </div>
 
@@ -78,10 +78,10 @@ export default function SupportPage() {
             className="w-16 h-16 sm:w-20 sm:h-20 bg-card border border-border rounded-[1.5rem] sm:rounded-[2rem] flex items-center justify-center mx-auto mb-6 sm:mb-8 shadow-xl relative"
           >
             <Heart
-              className="text-red-500 fill-red-500 animate-pulse"
+              className="text-destructive fill-red-500 animate-pulse"
               size={28}
             />
-            <div className="absolute inset-0 bg-red-500 blur-xl opacity-20" />
+            <div className="absolute inset-0 bg-destructive blur-xl opacity-20" />
           </motion.div>
 
           <motion.h1
@@ -114,7 +114,7 @@ export default function SupportPage() {
             title="Trakteer"
             desc="Dukungan via E-Wallet (Gopay/OVO/ShopeePay)"
             icon="☕"
-            accent="hover:border-red-500/40"
+            accent="hover:border-destructive/40"
             label="Traktir Kami Kopi"
             shadowColor="hover:shadow-xl"
           />
@@ -123,7 +123,7 @@ export default function SupportPage() {
             title="Saweria"
             desc="Dukungan via QRIS / Dana / LinkAja"
             icon="💸"
-            accent="hover:border-yellow-500/40"
+            accent="hover:border-warning/40"
             label="Kirim Dukungan"
             shadowColor="hover:shadow-xl"
           />
@@ -145,16 +145,16 @@ export default function SupportPage() {
 
           <div className="grid grid-cols-1 sm:grid-cols-3 gap-8 sm:gap-10 relative z-10">
             <StatItem
-              icon={<Zap className="text-yellow-600 dark:text-yellow-400" size={20} />}
+              icon={<Zap className="text-warning text-warning" size={20} />}
               title="Infrastruktur"
               desc="Biaya server database (Sanity), hosting (Vercel), dan domain agar aplikasi tetap ngebut dan stabil."
-              color="bg-yellow-500/10 border-yellow-500/30 neo-inset"
+              color="bg-warning/10 border-warning/30 neo-inset"
             />
             <StatItem
-              icon={<Globe className="text-blue-600 dark:text-blue-400" size={20} />}
+              icon={<Globe className="text-primary text-primary" size={20} />}
               title="Konten Baru"
               desc="Pengembangan silabus, rekaman audio, dan ekspansi materi JLPT dari level N4 hingga N1 secara bertahap."
-              color="bg-blue-500/10 border-blue-500/30 neo-inset"
+              color="bg-primary/10 border-primary/30 neo-inset"
             />
             <StatItem
               icon={<Coffee className="text-primary" size={20} />}

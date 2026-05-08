@@ -103,7 +103,7 @@ export default async function GrammarDetailPage({
     <main className="w-full bg-background px-4 md:px-8 lg:px-12 relative overflow-hidden flex flex-col justify-start min-h-screen pb-32 transition-colors duration-300">
       {/* Ambient Background Glows */}
       <div className="absolute top-[10%] -left-[10%] w-[40%] h-[40%] bg-primary/10 blur-[120px] rounded-full pointer-events-none z-0 animate-pulse" />
-      <div className="absolute bottom-[10%] -right-[10%] w-[30%] h-[30%] bg-emerald-500/5 blur-[120px] rounded-full pointer-events-none z-0" />
+      <div className="absolute bottom-[10%] -right-[10%] w-[30%] h-[30%] bg-success/5 blur-[120px] rounded-full pointer-events-none z-0" />
       
       {/* Background Neural Overlays */}
       <div className="absolute inset-0 bg-[linear-gradient(rgba(0,0,0,0.01)_1px,transparent_1px),linear-gradient(90deg,rgba(0,0,0,0.01)_1px,transparent_1px)] dark:bg-[linear-gradient(rgba(255,255,255,0.01)_1px,transparent_1px),linear-gradient(90deg,rgba(255,255,255,0.01)_1px,transparent_1px)] bg-[size:60px_60px] pointer-events-none z-0" />
@@ -156,7 +156,7 @@ export default async function GrammarDetailPage({
               </Card>
             )}
             {article.notes && (
-              <Card className="p-8 md:p-10 bg-white/[0.02] backdrop-blur-xl border-white/5 rounded-[2.5rem] relative overflow-hidden group hover:border-white/20 transition-all duration-500">
+              <Card className="p-8 md:p-10 bg-background/[0.02] backdrop-blur-xl border-white/5 rounded-[2.5rem] relative overflow-hidden group hover:border-white/20 transition-all duration-500">
                  <div className="absolute top-0 right-0 p-6 opacity-[0.03] group-hover:opacity-[0.08] group-hover:scale-125 transition-all duration-700 pointer-events-none">
                   <Lightbulb size={120} />
                 </div>
@@ -186,7 +186,7 @@ export default async function GrammarDetailPage({
 
         <footer className="pt-16 border-t border-white/5 flex flex-col md:flex-row items-center justify-between gap-8">
           <Link href="/library/grammar" className="w-full md:w-auto">
-            <Button variant="ghost" className="w-full px-10 py-8 h-auto text-[11px] md:text-xs font-black uppercase tracking-[0.2em] rounded-2xl bg-white/[0.03] border border-white/5 hover:bg-white/10 hover:border-white/20 transition-all gap-4 group shadow-xl">
+            <Button variant="ghost" className="w-full px-10 py-8 h-auto text-[11px] md:text-xs font-black uppercase tracking-[0.2em] rounded-2xl bg-background/[0.03] border border-white/5 hover:bg-background/10 hover:border-white/20 transition-all gap-4 group shadow-xl">
               <ChevronLeft size={20} className="group-hover:-translate-x-2 transition-transform" /> Kembali ke Galeri
             </Button>
           </Link>

@@ -100,7 +100,7 @@ export default function ProfileEditor() {
               variant="ghost"
               onClick={handleSave}
               disabled={isLoading}
-              className="w-10 h-10 rounded-xl bg-emerald-500/10 text-emerald-600 dark:text-emerald-400 hover:bg-emerald-500 hover:text-white dark:hover:text-black transition-all"
+              className="w-10 h-10 rounded-xl bg-success/10 text-success text-success hover:bg-success hover:text-white dark:hover:text-foreground transition-all"
               aria-label="Simpan Nama"
             >
               {isLoading ? <Loader2 size={16} className="animate-spin" /> : <Check size={18} />}
@@ -123,7 +123,7 @@ export default function ProfileEditor() {
              <div className="w-16 h-16 rounded-2xl bg-gradient-to-br from-primary/10 to-blue-500/10 border border-border flex items-center justify-center text-primary shadow-sm group-hover:shadow-md transition-all">
                 <UserCircle size={32} />
              </div>
-             <div className="absolute -bottom-1 -right-1 w-5 h-5 bg-emerald-500 rounded-full border-2 border-background" />
+             <div className="absolute -bottom-1 -right-1 w-5 h-5 bg-success rounded-full border-2 border-background" />
           </div>
           
           <div className="flex-1">
@@ -140,7 +140,7 @@ export default function ProfileEditor() {
               </button>
             </h2>
             <p className="text-muted-foreground text-xs md:text-sm font-bold uppercase tracking-[0.2em] mt-2 flex items-center gap-2">
-              <span className="w-1.5 h-1.5 rounded-full bg-emerald-500 animate-pulse" />
+              <span className="w-1.5 h-1.5 rounded-full bg-success animate-pulse" />
               Siswa Aktif NihongoRoute
             </p>
           </div>

@@ -132,7 +132,7 @@ export function ReviewClient() {
           </Button>
           <Badge
             variant="outline"
-            className={`${mode === 'srs' ? 'bg-primary/10 border-primary/30 text-primary' : 'bg-amber-500/10 border-amber-500/30 text-amber-500'} px-4 py-2 rounded-xl text-xs font-bold uppercase tracking-widest flex items-center gap-2 h-auto`}
+            className={`${mode === 'srs' ? 'bg-primary/10 border-primary/30 text-primary' : 'bg-warning/10 border-warning/30 text-warning'} px-4 py-2 rounded-xl text-xs font-bold uppercase tracking-widest flex items-center gap-2 h-auto`}
           >
             {mode === 'srs' ? <BrainCircuit size={16} /> : <Zap size={16} />}
             <span>{mode === 'srs' ? 'SRS Review' : 'Quick Practice'}</span>

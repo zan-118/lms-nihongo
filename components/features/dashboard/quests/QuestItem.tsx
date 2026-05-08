@@ -30,8 +30,8 @@ export function QuestItem({
         isClaimed
           ? "bg-muted/30 border-border opacity-50 grayscale"
           : isCompleted
-            ? "bg-emerald-500/10 dark:bg-emerald-500/[0.03] border-emerald-500/30"
-            : "bg-muted/50 dark:bg-white/[0.03] border-border dark:border-white/[0.08] hover:border-primary/30 dark:hover:border-cyber-neon/30"
+            ? "bg-success/10 bg-success/[0.03] border-success/30"
+            : "bg-muted/50 dark:bg-background/[0.03] border-border dark:border-white/[0.08] hover:border-primary/30 dark:hover:border-cyber-neon/30"
       }`}
     >
       <AnimatePresence mode="wait">
@@ -40,9 +40,9 @@ export function QuestItem({
             initial={{ opacity: 0, scale: 0.95 }}
             animate={{ opacity: 1, scale: 1 }}
             exit={{ opacity: 0, scale: 1.05 }}
-            className="absolute inset-0 flex items-center justify-center bg-emerald-500/10 backdrop-blur-md rounded-2xl z-20"
+            className="absolute inset-0 flex items-center justify-center bg-success/10 backdrop-blur-md rounded-2xl z-20"
           >
-            <span className="text-emerald-600 dark:text-emerald-400 font-black tracking-widest uppercase text-xs">
+            <span className="text-success text-success font-black tracking-widest uppercase text-xs">
               BERHASIL! +{quest.rewardXP} XP
             </span>
           </motion.div>
@@ -51,20 +51,20 @@ export function QuestItem({
 
       <div className="flex justify-between items-center mb-4">
         <div className="flex items-center gap-3">
-          <Card className={`w-10 h-10 md:w-11 md:h-11 rounded-xl flex items-center justify-center shadow-none transition-all shrink-0 ${isCompleted && !isClaimed ? 'bg-emerald-500/10 border-emerald-500/20' : 'bg-background dark:bg-white/[0.04] border border-border dark:border-white/[0.08]'}`}>
-            {isClaimed ? <CheckCircle2 size={18} className="text-emerald-600 dark:text-emerald-500/60" /> : quest.icon}
+          <Card className={`w-10 h-10 md:w-11 md:h-11 rounded-xl flex items-center justify-center shadow-none transition-all shrink-0 ${isCompleted && !isClaimed ? 'bg-success/10 border-success/20' : 'bg-background dark:bg-background/[0.04] border border-border dark:border-white/[0.08]'}`}>
+            {isClaimed ? <CheckCircle2 size={18} className="text-success text-success/60" /> : quest.icon}
           </Card>
           <div className="text-left">
             <h4
               className={`text-xs md:text-[13px] font-black uppercase tracking-tight transition-colors ${
                 isCompleted && !isClaimed
-                  ? "text-emerald-600 dark:text-emerald-400"
+                  ? "text-success text-success"
                   : "text-foreground"
               }`}
             >
               {quest.title}
             </h4>
-            <p className={`text-xs font-bold uppercase tracking-widest mt-1 ${isCompleted ? 'text-emerald-600/70 dark:text-emerald-400/70' : 'text-primary/60'}`}>
+            <p className={`text-xs font-bold uppercase tracking-widest mt-1 ${isCompleted ? 'text-success/70 text-success/70' : 'text-primary/60'}`}>
               +{quest.rewardXP} XP
             </p>
           </div>
@@ -77,12 +77,12 @@ export function QuestItem({
         ) : isCompleted ? (
           <Button
             onClick={() => onClaim(quest)}
-            className="h-auto text-xs font-black text-white dark:text-black bg-emerald-500 dark:bg-emerald-400 hover:bg-foreground hover:text-background dark:hover:bg-white uppercase tracking-widest px-4 py-2 rounded-xl transition-all border-none shrink-0"
+            className="h-auto text-xs font-black text-white dark:text-foreground bg-success bg-success hover:bg-foreground hover:text-background dark:hover:bg-background uppercase tracking-widest px-4 py-2 rounded-xl transition-all border-none shrink-0"
           >
             Ambil
           </Button>
         ) : (
-          <Badge variant="ghost" className="text-xs font-bold text-muted-foreground font-mono bg-background dark:bg-white/[0.03] px-2.5 py-1 rounded-lg border border-border dark:border-white/[0.08] shadow-none h-auto shrink-0">
+          <Badge variant="ghost" className="text-xs font-bold text-muted-foreground font-mono bg-background dark:bg-background/[0.03] px-2.5 py-1 rounded-lg border border-border dark:border-white/[0.08] shadow-none h-auto shrink-0">
             {current} / {quest.target}
           </Badge>
         )}
@@ -93,9 +93,9 @@ export function QuestItem({
         className="h-1 bg-muted dark:bg-black/40 border-none overflow-hidden rounded-full"
         indicatorClassName={
           isClaimed 
-            ? "bg-slate-400 dark:bg-slate-800" 
+            ? "bg-slate-400 bg-muted" 
             : isCompleted
-              ? "bg-emerald-500 dark:bg-emerald-400"
+              ? "bg-success bg-success"
               : "bg-primary"
         }
       />

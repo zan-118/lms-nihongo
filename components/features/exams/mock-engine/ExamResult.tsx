@@ -57,7 +57,7 @@ export function ExamResult({
     >
       <Card className="p-8 md:p-16 text-center relative overflow-hidden neo-card rounded-[3rem] border border-border bg-card shadow-2xl transition-all duration-500">
         <div
-          className={`absolute top-0 left-1/2 -translate-x-1/2 w-[600px] h-[600px] blur-[150px] rounded-full pointer-events-none opacity-20 ${isPassed ? "bg-emerald-500" : "bg-red-500"}`}
+          className={`absolute top-0 left-1/2 -translate-x-1/2 w-[600px] h-[600px] blur-[150px] rounded-full pointer-events-none opacity-20 ${isPassed ? "bg-success" : "bg-destructive"}`}
         />
 
         <div className="relative z-10">
@@ -65,7 +65,7 @@ export function ExamResult({
             initial={{ scale: 0, rotate: -20 }}
             animate={{ scale: 1, rotate: 0 }}
             transition={{ type: "spring", damping: 15 }}
-            className={`w-32 h-32 mx-auto neo-inset flex items-center justify-center rounded-[2.5rem] mb-10 bg-muted/50 border border-border ${isPassed ? "text-emerald-500" : "text-red-500"}`}
+            className={`w-32 h-32 mx-auto neo-inset flex items-center justify-center rounded-[2.5rem] mb-10 bg-muted/50 border border-border ${isPassed ? "text-success" : "text-destructive"}`}
           >
             {isPassed ? (
               <Trophy size={64} className="drop-shadow-[0_0_15px_rgba(16,185,129,0.5)]" />
@@ -74,7 +74,7 @@ export function ExamResult({
             )}
           </motion.div>
 
-          <h1 className={`text-4xl md:text-6xl font-black uppercase tracking-tighter mb-4 leading-tight ${isPassed ? "text-emerald-500" : "text-red-500"}`}>
+          <h1 className={`text-4xl md:text-6xl font-black uppercase tracking-tighter mb-4 leading-tight ${isPassed ? "text-success" : "text-destructive"}`}>
             {isPassed ? "OMEDETOU! Keren Banget!" : "WADUH! Belum Lulus..."}
           </h1>
           <p className="text-muted-foreground font-black uppercase tracking-[0.3em] text-xs md:text-xs mb-12">
@@ -85,7 +85,7 @@ export function ExamResult({
             <Card className="neo-inset p-8 flex flex-col items-center justify-center border border-border bg-muted/10">
               <span className="text-xs font-black text-muted-foreground uppercase tracking-widest mb-4">Skor Akhir</span>
               <div className="flex items-baseline gap-2">
-                <span className={`text-5xl md:text-7xl font-black font-mono ${isPassed ? 'text-emerald-500' : 'text-red-500'}`}>{finalScore}</span>
+                <span className={`text-5xl md:text-7xl font-black font-mono ${isPassed ? 'text-success' : 'text-destructive'}`}>{finalScore}</span>
                 <span className="text-xl font-bold text-muted-foreground/40">/180</span>
               </div>
             </Card>
@@ -117,7 +117,7 @@ export function ExamResult({
                   {Object.entries(sectionBreakdown).map(([sectionKey, data]) => {
                     if (data.total === 0) return null;
                     const percentage = Math.round((data.correct / data.total) * 100);
-                    const color = percentage >= 70 ? "bg-emerald-500" : percentage >= 40 ? "bg-amber-500" : "bg-red-500";
+                    const color = percentage >= 70 ? "bg-success" : percentage >= 40 ? "bg-warning" : "bg-destructive";
                     
                     return (
                       <div key={sectionKey} className="space-y-3">
@@ -145,15 +145,15 @@ export function ExamResult({
              {/* Certificate/Action Section */}
              <div className="space-y-6 text-left">
                 <h3 className="text-xs font-black uppercase tracking-[0.2em] text-foreground mb-6 flex items-center gap-3">
-                   <div className="w-1.5 h-6 bg-amber-500 rounded-full shadow-[0_0_10px_rgba(245,158,11,1)]" />
+                   <div className="w-1.5 h-6 bg-warning rounded-full shadow-[0_0_10px_rgba(245,158,11,1)]" />
                    Aksi & Sertifikasi
                 </h3>
                 
                 {isPassed ? (
-                  <div className="bg-amber-500/10 border border-amber-500/30 rounded-[2.5rem] p-8 relative group overflow-hidden">
-                    <div className="absolute -top-10 -right-10 w-40 h-40 bg-amber-500/10 blur-[60px] rounded-full group-hover:scale-150 transition-transform duration-700" />
-                    <Trophy className="text-amber-500 mb-6 group-hover:scale-110 transition-transform" size={40} />
-                    <h4 className="text-lg font-black uppercase tracking-tight text-amber-600 dark:text-amber-500 mb-2">Klaim Sertifikat Anda</h4>
+                  <div className="bg-warning/10 border border-warning/30 rounded-[2.5rem] p-8 relative group overflow-hidden">
+                    <div className="absolute -top-10 -right-10 w-40 h-40 bg-warning/10 blur-[60px] rounded-full group-hover:scale-150 transition-transform duration-700" />
+                    <Trophy className="text-warning mb-6 group-hover:scale-110 transition-transform" size={40} />
+                    <h4 className="text-lg font-black uppercase tracking-tight text-warning text-warning mb-2">Klaim Sertifikat Anda</h4>
                     <p className="text-xs font-medium text-muted-foreground mb-8 leading-relaxed">
                       Selamat! Anda telah menguasai materi ini dengan baik. Unduh sertifikat digital Anda sekarang.
                     </p>
@@ -168,7 +168,7 @@ export function ExamResult({
                            handleShareResult();
                          }}
                          variant="ghost"
-                         className="w-full h-12 bg-white/5 border border-border text-xs font-black uppercase tracking-widest rounded-xl hover:bg-white/10 transition-all flex items-center justify-center gap-2"
+                         className="w-full h-12 bg-background/5 border border-border text-xs font-black uppercase tracking-widest rounded-xl hover:bg-background/10 transition-all flex items-center justify-center gap-2"
                        >
                          <Share2 size={16} /> Bagikan Pencapaian
                        </Button>

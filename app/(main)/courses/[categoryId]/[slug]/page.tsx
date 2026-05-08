@@ -155,7 +155,7 @@ export default async function LessonPage({ params }: Props) {
   return (
     <div className="w-full text-foreground px-4 md:px-8 relative overflow-hidden flex flex-col flex-1 transition-colors duration-300">
       {/* Background Ambient Decor */}
-      <div className="absolute top-0 right-0 w-[500px] h-[500px] bg-cyan-500/5 blur-[150px] rounded-full pointer-events-none" />
+      <div className="absolute top-0 right-0 w-[500px] h-[500px] bg-primary/5 blur-[150px] rounded-full pointer-events-none" />
       <div className="absolute bottom-0 left-0 w-[400px] h-[400px] bg-indigo-500/5 blur-[120px] rounded-full pointer-events-none" />
 
       <article className="max-w-4xl mx-auto w-full relative z-10 flex-1">
@@ -169,13 +169,13 @@ export default async function LessonPage({ params }: Props) {
 
         <header className="mb-20">
           <h1
-            className={`text-5xl md:text-7xl lg:text-8xl font-black uppercase tracking-tighter leading-none mb-8 ${isSideQuest ? "text-amber-500" : "text-foreground"}`}
+            className={`text-5xl md:text-7xl lg:text-8xl font-black uppercase tracking-tighter leading-none mb-8 ${isSideQuest ? "text-warning" : "text-foreground"}`}
           >
             {lesson.title}
           </h1>
           {lesson.summary && (
             <div
-              className={`p-8 rounded-[2rem] neo-inset border-l-8 mb-8 ${isSideQuest ? "border-amber-500" : "border-cyan-400"}`}
+              className={`p-8 rounded-[2rem] neo-inset border-l-8 mb-8 ${isSideQuest ? "border-warning" : "border-primary"}`}
             >
                <p className="text-base md:text-lg font-medium leading-relaxed text-muted-foreground">
                  {renderSmartText(lesson.summary)}
@@ -203,11 +203,11 @@ export default async function LessonPage({ params }: Props) {
                   return (
                     <div
                       key={v._id || Math.random()}
-                      className="neo-card p-6 flex flex-col sm:flex-row justify-between items-start sm:items-center gap-6 group hover:border-cyan-400/30 transition-colors duration-300"
+                      className="neo-card p-6 flex flex-col sm:flex-row justify-between items-start sm:items-center gap-6 group hover:border-primary/30 transition-colors duration-300"
                     >
                       <div className="flex-1 w-full">
                         <div className="flex items-center gap-2 mb-3">
-                          <span className="text-[10px] font-bold text-cyan-600 dark:text-cyan-400 uppercase tracking-widest bg-cyan-400/10 px-2 py-0.5 rounded">
+                          <span className="text-[10px] font-bold text-primary text-primary uppercase tracking-widest bg-primary/10 px-2 py-0.5 rounded">
                             {v.romaji || (v.furigana ? wanakana.toRomaji(v.furigana) : "-")}
                           </span>
                           {v.hinshi && (
@@ -225,14 +225,14 @@ export default async function LessonPage({ params }: Props) {
                           {v.transitivity && (
                             <span className={`text-[9px] font-mono font-black uppercase tracking-widest px-2 py-0.5 rounded border ${
                               v.transitivity === "transitive" 
-                                ? "text-orange-600 dark:text-orange-400 bg-orange-500/10 border-orange-500/20" 
-                                : "text-blue-600 dark:text-blue-400 bg-blue-500/10 border-blue-500/20"
+                                ? "text-warning text-warning bg-warning/10 border-warning/20" 
+                                : "text-primary text-primary bg-primary/10 border-primary/20"
                             }`}>
                               {v.transitivity === "transitive" ? "Transitif" : "Intransitif"}
                             </span>
                           )}
                         </div>
-                        <h4 className="group-hover:text-cyan-500 dark:group-hover:text-cyan-400 transition-colors tracking-tight mb-2">
+                        <h4 className="group-hover:text-primary dark:group-hover:text-primary transition-colors tracking-tight mb-2">
                            <div className="text-3xl font-black text-foreground">
                               {splitFurigana(v.word || "", v.furigana || "").map((chunk, i) => (
                                 chunk.furi ? (
@@ -257,7 +257,7 @@ export default async function LessonPage({ params }: Props) {
                               </span>
                             )}
                             {v.kunyomi && (
-                              <span className="text-[10px] font-bold text-emerald-500 dark:text-emerald-400 border border-emerald-500/20 px-2 py-0.5 rounded-lg bg-emerald-500/5">
+                              <span className="text-[10px] font-bold text-success text-success border border-success/20 px-2 py-0.5 rounded-lg bg-success/5">
                                 KUN: {v.kunyomi}
                               </span>
                             )}
@@ -324,9 +324,9 @@ export default async function LessonPage({ params }: Props) {
           {prevLesson ? (
             <Link
               href={`/courses/${lesson.levelCode || categoryId}/${prevLesson.slug}`}
-              className="neo-card h-full p-8 group flex flex-col justify-center items-start hover:bg-cyan-400/5 hover:border-cyan-400/30 transition-all duration-300"
+              className="neo-card h-full p-8 group flex flex-col justify-center items-start hover:bg-primary/5 hover:border-primary/30 transition-all duration-300"
             >
-              <span className="text-[9px] font-bold uppercase tracking-widest text-muted-foreground group-hover:text-cyan-500 dark:group-hover:text-cyan-400 mb-3 flex items-center gap-2 transition-colors">
+              <span className="text-[9px] font-bold uppercase tracking-widest text-muted-foreground group-hover:text-primary dark:group-hover:text-primary mb-3 flex items-center gap-2 transition-colors">
                 <ChevronLeft size={14} /> Materi Sebelumnya
               </span>
               <h4 className="text-xl font-black uppercase text-foreground tracking-tight leading-tight">
@@ -339,9 +339,9 @@ export default async function LessonPage({ params }: Props) {
           {nextLesson ? (
             <Link
               href={`/courses/${lesson.levelCode || categoryId}/${nextLesson.slug}`}
-              className="neo-card h-full p-8 group flex flex-col justify-center items-end text-right hover:bg-cyan-400/5 hover:border-cyan-400/30 transition-all duration-300"
+              className="neo-card h-full p-8 group flex flex-col justify-center items-end text-right hover:bg-primary/5 hover:border-primary/30 transition-all duration-300"
             >
-              <span className="text-[10px] font-black uppercase tracking-widest text-muted-foreground group-hover:text-cyan-500 dark:group-hover:text-cyan-400 mb-3 flex items-center gap-2 transition-colors">
+              <span className="text-[10px] font-black uppercase tracking-widest text-muted-foreground group-hover:text-primary dark:group-hover:text-primary mb-3 flex items-center gap-2 transition-colors">
                 Materi Selanjutnya <ChevronRight size={14} />
               </span>
               <h4 className="text-xl font-black italic uppercase text-foreground tracking-tight leading-tight">
@@ -351,12 +351,12 @@ export default async function LessonPage({ params }: Props) {
           ) : (
             <Link
               href={`/courses/${lesson.levelCode || categoryId}`}
-              className="neo-card h-full p-8 flex flex-col items-center justify-center text-center bg-cyan-400/5 border-cyan-400/20 group hover:border-cyan-400 hover:bg-cyan-400/10 transition-all duration-300"
+              className="neo-card h-full p-8 flex flex-col items-center justify-center text-center bg-primary/5 border-primary/20 group hover:border-primary hover:bg-primary/10 transition-all duration-300"
             >
               <span className="text-4xl mb-3 group-hover:scale-110 transition-transform">
                 脂
               </span>
-              <p className="text-xs font-black uppercase tracking-widest text-cyan-500 dark:text-cyan-400">
+              <p className="text-xs font-black uppercase tracking-widest text-primary text-primary">
                 Yeay! Materi Selesai
               </p>
             </Link>

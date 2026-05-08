@@ -198,7 +198,7 @@ export default function SearchModal({ isOpen, onClose }: { isOpen: boolean; onCl
                         }`}
                       >
                         <div className={`w-12 h-12 rounded-2xl flex items-center justify-center transition-all duration-500 ${
-                          index === activeIndex ? 'bg-primary text-white dark:text-black shadow-lg scale-110' : 'bg-muted text-muted-foreground'
+                          index === activeIndex ? 'bg-primary text-white dark:text-foreground shadow-lg scale-110' : 'bg-muted text-muted-foreground'
                         }`}>
                           <item.icon size={24} />
                         </div>

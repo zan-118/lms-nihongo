@@ -28,8 +28,8 @@ export default function TTSReader({ text, minimal = false }: Props) {
           : "px-6 py-2.5 rounded-xl w-max text-xs"
       } ${
         isPlaying
-          ? "bg-red-500/10 border-red-500/40 text-red-500 shadow-[0_0_20px_rgba(239,68,68,0.2)] neo-card shadow-none"
-          : "bg-black/40 border-white/5 text-slate-500 hover:text-red-500 hover:border-red-500/30 neo-inset shadow-none"
+          ? "bg-destructive/10 border-destructive/40 text-destructive shadow-[0_0_20px_rgba(239,68,68,0.2)] neo-card shadow-none"
+          : "bg-black/40 border-white/5 text-muted-foreground hover:text-destructive hover:border-destructive/30 neo-inset shadow-none"
       }`}
       title="Vocal_Synthesis_Execution"
       aria-label={isPlaying ? "Berhenti mendengarkan" : "Dengarkan pengucapan"}

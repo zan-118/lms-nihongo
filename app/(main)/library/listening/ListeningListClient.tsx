@@ -77,11 +77,11 @@ export default function ListeningListClient({ tasks }: ListeningListClientProps)
                       </span>
                     </div>
                     <div className="flex items-center gap-4 text-xs font-medium text-muted-foreground">
-                      <span className="flex items-center gap-1.5 bg-white/5 px-2 py-1 rounded-md">
+                      <span className="flex items-center gap-1.5 bg-background/5 px-2 py-1 rounded-md">
                         <Clock size={12} />
                         Auto-Duration
                       </span>
-                      <span className="flex items-center gap-1.5 bg-white/5 px-2 py-1 rounded-md">
+                      <span className="flex items-center gap-1.5 bg-background/5 px-2 py-1 rounded-md">
                         <Headphones size={12} />
                         Native/TTS Supported
                       </span>

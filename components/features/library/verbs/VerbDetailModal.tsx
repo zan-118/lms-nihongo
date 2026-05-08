@@ -49,8 +49,8 @@ export function VerbDetailModal({ selectedVerb, onClose }: VerbDetailModalProps)
                     variant="outline"
                     className={`px-3 py-1.5 text-xs md:text-xs font-black uppercase tracking-[0.2em] rounded-xl border h-auto ${
                       selectedVerb.transitivity === "transitive" 
-                        ? "text-orange-600 dark:text-orange-400 bg-orange-500/10 border-orange-500/20" 
-                        : "text-blue-600 dark:text-blue-400 bg-blue-500/10 border-blue-500/20"
+                        ? "text-warning text-warning bg-warning/10 border-warning/20" 
+                        : "text-primary text-primary bg-primary/10 border-primary/20"
                     }`}
                   >
                     {selectedVerb.transitivity === "transitive" ? "Transitif" : "Intransitif"}
@@ -141,7 +141,7 @@ export function VerbDetailModal({ selectedVerb, onClose }: VerbDetailModalProps)
           <Button
             variant="ghost"
             onClick={onClose}
-            className="h-auto px-5 py-2.5 md:px-6 md:py-3 text-xs md:text-xs font-bold uppercase tracking-widest rounded-xl bg-muted border border-border text-muted-foreground hover:bg-primary hover:text-white dark:hover:text-black hover:border-none transition-all"
+            className="h-auto px-5 py-2.5 md:px-6 md:py-3 text-xs md:text-xs font-bold uppercase tracking-widest rounded-xl bg-muted border border-border text-muted-foreground hover:bg-primary hover:text-white dark:hover:text-foreground hover:border-none transition-all"
           >
             Tutup
           </Button>

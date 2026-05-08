@@ -8,7 +8,7 @@ interface SurvivalIntroProps {
 
 export function SurvivalIntro({ startGame }: SurvivalIntroProps) {
   return (
-    <Card className="p-8 md:p-16 lg:p-20 rounded-[3rem] md:rounded-[4rem] border border-border dark:border-white/5 bg-card dark:bg-slate-900 text-center relative overflow-hidden group max-w-2xl mx-auto my-8 md:my-10 neo-card shadow-2xl transition-colors duration-300">
+    <Card className="p-8 md:p-16 lg:p-20 rounded-[3rem] md:rounded-[4rem] border border-border dark:border-white/5 bg-card bg-background text-center relative overflow-hidden group max-w-2xl mx-auto my-8 md:my-10 neo-card shadow-2xl transition-colors duration-300">
       <div className="absolute inset-0 bg-primary/5 opacity-0 group-hover:opacity-100 transition-all duration-1000 pointer-events-none" />
       <Card className="w-20 h-20 md:w-28 md:h-28 mx-auto bg-muted/50 dark:bg-black/40 border border-border dark:border-primary/20 rounded-[2rem] md:rounded-[2.5rem] flex items-center justify-center mb-8 md:mb-12 neo-inset shadow-none group-hover:border-primary/40 transition-all duration-500">
         <Activity

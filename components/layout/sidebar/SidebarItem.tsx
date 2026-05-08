@@ -28,7 +28,7 @@ export function SidebarItem({ item, pathname, onClick }: SidebarItemProps) {
         className={`flex items-center gap-4 px-4 py-3 rounded-2xl transition-all duration-500 relative group overflow-hidden ${
           isActive 
             ? "bg-primary/10 text-primary border border-primary/30 shadow-[0_0_25px_rgba(0,238,255,0.1)]" 
-            : "text-muted-foreground hover:bg-white/5 hover:text-foreground border border-transparent"
+            : "text-muted-foreground hover:bg-background/5 hover:text-foreground border border-transparent"
         }`}
       >
         {/* Active Side Glow */}

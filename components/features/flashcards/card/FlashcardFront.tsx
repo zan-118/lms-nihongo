@@ -53,11 +53,11 @@ export function FlashcardFront({
 
   return (
     <Card
-      className={`absolute inset-0 w-full h-full border rounded-2xl flex flex-col items-center justify-center p-6 md:p-8 transition-all duration-500 shadow-none overflow-hidden bg-card dark:bg-[#0a0c10] ${
+      className={`absolute inset-0 w-full h-full border rounded-2xl flex flex-col items-center justify-center p-6 md:p-8 transition-all duration-500 shadow-none overflow-hidden bg-card bg-card ${
         inputResult === "correct" 
-          ? "border-emerald-500/50 shadow-[0_0_40px_rgba(16,185,129,0.2)] bg-emerald-500/[0.02]" 
+          ? "border-success/50 shadow-[0_0_40px_rgba(16,185,129,0.2)] bg-success/[0.02]" 
           : inputResult === "wrong"
-          ? "border-red-500/50 shadow-[0_0_40px_rgba(239,68,68,0.2)] bg-red-500/[0.02]"
+          ? "border-destructive/50 shadow-[0_0_40px_rgba(239,68,68,0.2)] bg-destructive/[0.02]"
           : `${themeBorder} ${themeShadow}`
       }`}
       style={{
@@ -68,7 +68,7 @@ export function FlashcardFront({
       {/* Dynamic Glow Layer */}
       <div 
         className={`absolute inset-0 transition-opacity duration-1000 pointer-events-none opacity-20 ${
-          inputResult === "correct" ? "bg-emerald-500 blur-[120px]" : inputResult === "wrong" ? "bg-red-500 blur-[120px]" : "opacity-0"
+          inputResult === "correct" ? "bg-success blur-[120px]" : inputResult === "wrong" ? "bg-destructive blur-[120px]" : "opacity-0"
         }`} 
       />
 
@@ -103,16 +103,16 @@ export function FlashcardFront({
                 placeholder="Ketik bacaan..."
                 className={`h-14 bg-muted/50 border-2 text-center text-lg font-bold rounded-xl transition-all ${
                   inputResult === "correct" 
-                    ? "border-emerald-500 bg-emerald-500/10 text-emerald-600" 
+                    ? "border-success bg-success/10 text-success" 
                     : inputResult === "wrong"
-                    ? "border-red-500 bg-red-500/10 text-red-600"
+                    ? "border-destructive bg-destructive/10 text-destructive"
                     : "border-border focus:border-primary focus:ring-primary/20"
                 }`}
                 autoFocus
               />
               <div className="absolute right-3 top-1/2 -translate-y-1/2">
-                {inputResult === "correct" && <CheckCircle2 className="text-emerald-500 w-6 h-6" />}
-                {inputResult === "wrong" && <XCircle className="text-red-500 w-6 h-6" />}
+                {inputResult === "correct" && <CheckCircle2 className="text-success w-6 h-6" />}
+                {inputResult === "wrong" && <XCircle className="text-destructive w-6 h-6" />}
               </div>
             </div>
             

@@ -77,7 +77,7 @@ export function FlashcardActions({
                   e.stopPropagation();
                   handleAnswer(1);
                 }}
-                className="flex flex-col h-auto py-3 border-amber-500/20 bg-amber-500/5 text-amber-500 hover:bg-amber-500 hover:text-white rounded-xl transition-all"
+                className="flex flex-col h-auto py-3 border-warning/20 bg-warning/5 text-warning hover:bg-warning hover:text-white rounded-xl transition-all"
               >
                 <Info size={16} className="mb-1" />
                 <span className="text-[10px] font-bold uppercase tracking-tight">Sulit</span>
@@ -89,7 +89,7 @@ export function FlashcardActions({
                   e.stopPropagation();
                   handleAnswer(2);
                 }}
-                className="flex flex-col h-auto py-3 border-emerald-500/20 bg-emerald-500/5 text-emerald-400 hover:bg-emerald-500 hover:text-white rounded-xl transition-all"
+                className="flex flex-col h-auto py-3 border-success/20 bg-success/5 text-success hover:bg-success hover:text-white rounded-xl transition-all"
               >
                 <Check size={16} className="mb-1" />
                 <span className="text-[10px] font-bold uppercase tracking-tight">Bisa</span>
@@ -130,7 +130,7 @@ export function FlashcardActions({
               initial={{ opacity: 0 }}
               animate={{ opacity: 1 }}
               exit={{ opacity: 0 }}
-              className="flex items-center justify-center gap-2 text-slate-500 py-4 md:py-6"
+              className="flex items-center justify-center gap-2 text-muted-foreground py-4 md:py-6"
             >
               <Info size={14} className="opacity-50" />
               <span className="text-xs md:text-xs font-bold uppercase tracking-widest opacity-60">

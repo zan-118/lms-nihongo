@@ -69,7 +69,7 @@ export default function KanjiProgressGrid() {
           <Badge variant="outline" className="bg-primary/10 border-primary/20 text-primary text-[8px] font-bold uppercase tracking-widest px-3">
             {learningCount} Belajar
           </Badge>
-          <Badge variant="outline" className="bg-emerald-500/10 border-emerald-500/20 text-emerald-500 text-[8px] font-bold uppercase tracking-widest px-3">
+          <Badge variant="outline" className="bg-success/10 border-success/20 text-success text-[8px] font-bold uppercase tracking-widest px-3">
             {masteredCount} Mahir
           </Badge>
         </div>
@@ -91,7 +91,7 @@ export default function KanjiProgressGrid() {
                 className={`
                   aspect-square rounded-lg flex items-center justify-center text-lg font-japanese font-bold transition-all duration-300 border cursor-default
                   ${isMastered 
-                    ? 'bg-emerald-500 border-emerald-400 text-white shadow-[0_0_15px_rgba(16,185,129,0.3)]' 
+                    ? 'bg-success border-success text-white shadow-[0_0_15px_rgba(16,185,129,0.3)]' 
                     : isLearning 
                     ? 'bg-primary/20 border-primary/40 text-primary shadow-[0_0_10px_rgba(0,238,255,0.1)]' 
                     : 'bg-muted/50 border-border/50 text-muted-foreground/30 hover:border-muted-foreground/50'}

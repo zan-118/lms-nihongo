@@ -52,18 +52,18 @@ export function FlashcardBack({
   const hiraReading = isRomaji ? wanakana.toHiragana(furigana || "") : (furigana || "");
 
   const getMemoryLevel = (interval: number) => {
-    if (interval <= 1) return { label: "Baru", color: "text-blue-500 bg-blue-500/10" };
-    if (interval <= 3) return { label: "Belajar", color: "text-cyan-500 bg-cyan-500/10" };
-    if (interval <= 10) return { label: "Akrab", color: "text-emerald-500 bg-emerald-500/10" };
-    if (interval <= 30) return { label: "Kuat", color: "text-amber-500 bg-amber-500/10" };
+    if (interval <= 1) return { label: "Baru", color: "text-primary bg-primary/10" };
+    if (interval <= 3) return { label: "Belajar", color: "text-primary bg-primary/10" };
+    if (interval <= 10) return { label: "Akrab", color: "text-success bg-success/10" };
+    if (interval <= 30) return { label: "Kuat", color: "text-warning bg-warning/10" };
     return { label: "Master", color: "text-rose-500 bg-rose-500/10" };
   };
 
-  const memory = srsState ? getMemoryLevel(srsState.interval) : { label: "Baru", color: "text-blue-500 bg-blue-500/10" };
+  const memory = srsState ? getMemoryLevel(srsState.interval) : { label: "Baru", color: "text-primary bg-primary/10" };
 
   return (
     <Card
-      className={`absolute inset-0 w-full h-full border ${themeBorder} rounded-2xl ${themeShadow} flex flex-col p-4 md:p-8 transition-all duration-500 shadow-none overflow-hidden bg-card dark:bg-[#0a0c10]`}
+      className={`absolute inset-0 w-full h-full border ${themeBorder} rounded-2xl ${themeShadow} flex flex-col p-4 md:p-8 transition-all duration-500 shadow-none overflow-hidden bg-card bg-card`}
       style={{
         transform: "rotateY(180deg)",
         backfaceVisibility: "hidden",
@@ -117,7 +117,7 @@ export function FlashcardBack({
           {isKanji && kanjiDetails && (
             <div className="grid grid-cols-2 gap-2 w-full max-w-sm px-2">
               {kanjiDetails.onyomi && (
-                <div className="bg-muted/30 dark:bg-white/[0.03] p-2 md:p-3 rounded-2xl border border-border/50 dark:border-white/[0.05] flex flex-col items-center shadow-none">
+                <div className="bg-muted/30 dark:bg-background/[0.03] p-2 md:p-3 rounded-2xl border border-border/50 dark:border-white/[0.05] flex flex-col items-center shadow-none">
                   <span className="text-[8px] text-muted-foreground uppercase tracking-[0.2em] font-black mb-1 opacity-60">
                     Onyomi
                   </span>
@@ -127,7 +127,7 @@ export function FlashcardBack({
                 </div>
               )}
               {kanjiDetails.kunyomi && (
-                <div className="bg-muted/30 dark:bg-white/[0.03] p-2 md:p-3 rounded-2xl border border-border/50 dark:border-white/[0.05] flex flex-col items-center shadow-none">
+                <div className="bg-muted/30 dark:bg-background/[0.03] p-2 md:p-3 rounded-2xl border border-border/50 dark:border-white/[0.05] flex flex-col items-center shadow-none">
                   <span className="text-[8px] text-muted-foreground uppercase tracking-[0.2em] font-black mb-1 opacity-60">
                     Kunyomi
                   </span>
@@ -142,7 +142,7 @@ export function FlashcardBack({
           {/* MEANING CARD */}
           <div className="w-full px-2">
             <Card
-              className={`${isKanji ? 'p-3 md:p-4 min-h-[60px]' : 'p-5 md:p-6 min-h-[80px]'} bg-muted/50 dark:bg-white/[0.03] rounded-2xl border ${themeBorder} w-full flex items-center justify-center shadow-none relative group/meaning overflow-hidden`}
+              className={`${isKanji ? 'p-3 md:p-4 min-h-[60px]' : 'p-5 md:p-6 min-h-[80px]'} bg-muted/50 dark:bg-background/[0.03] rounded-2xl border ${themeBorder} w-full flex items-center justify-center shadow-none relative group/meaning overflow-hidden`}
             >
               <h3
                 className={`${themeColor} ${isKanji ? 'text-base md:text-xl' : 'text-lg md:text-xl lg:text-2xl'} font-black uppercase tracking-tight leading-snug`}
@@ -167,7 +167,7 @@ export function FlashcardBack({
           {isKanji && (
             <Button
               onClick={onDrawClick}
-              className="mt-1 flex items-center justify-center gap-2 w-full max-w-[200px] mx-auto bg-purple-600 dark:bg-purple-500 hover:bg-foreground hover:text-background dark:hover:bg-white text-white dark:text-black font-black uppercase tracking-widest h-auto py-2 px-4 rounded-xl transition-all shadow-lg border-none text-[9px] md:text-xs shrink-0"
+              className="mt-1 flex items-center justify-center gap-2 w-full max-w-[200px] mx-auto bg-purple-600 dark:bg-purple-500 hover:bg-foreground hover:text-background dark:hover:bg-background text-white dark:text-foreground font-black uppercase tracking-widest h-auto py-2 px-4 rounded-xl transition-all shadow-lg border-none text-[9px] md:text-xs shrink-0"
             >
               <PenTool size={14} />
               <span>Latih Menulis</span>
@@ -177,11 +177,11 @@ export function FlashcardBack({
           {/* MNEMONIC SECTION */}
           {mnemonic && (
             <div className="w-full px-2 mt-4">
-              <div className="p-4 bg-amber-500/5 border border-amber-500/20 rounded-2xl text-left relative overflow-hidden group/mnemonic">
+              <div className="p-4 bg-warning/5 border border-warning/20 rounded-2xl text-left relative overflow-hidden group/mnemonic">
                 <div className="absolute top-0 right-0 p-2 opacity-20 group-hover/mnemonic:opacity-40 transition-opacity">
-                  <Sparkles size={14} className="text-amber-500" />
+                  <Sparkles size={14} className="text-warning" />
                 </div>
-                <span className="text-[8px] font-black uppercase tracking-widest text-amber-500/80 block mb-1">Mnemonic</span>
+                <span className="text-[8px] font-black uppercase tracking-widest text-warning/80 block mb-1">Mnemonic</span>
                 <p className="text-[11px] md:text-xs font-medium text-muted-foreground leading-relaxed italic">
                   &quot;{mnemonic}&quot;
                 </p>
@@ -202,7 +202,7 @@ export function FlashcardBack({
                         <span className="text-[7px] font-bold text-primary/70 uppercase leading-none">{k.onyomi}</span>
                       )}
                       {k.kunyomi && (
-                        <span className="text-[7px] font-bold text-emerald-600/70 leading-none">{k.kunyomi}</span>
+                        <span className="text-[7px] font-bold text-success/70 leading-none">{k.kunyomi}</span>
                       )}
                     </div>
                     <span className="text-[8px] font-black text-muted-foreground uppercase tracking-tighter truncate max-w-[60px] text-center mt-2 opacity-50 group-hover/kitem:opacity-100 transition-opacity">

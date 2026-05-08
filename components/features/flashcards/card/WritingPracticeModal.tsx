@@ -40,7 +40,7 @@ export function WritingPracticeModal({
               <Button
                 variant="ghost"
                 onClick={onClose}
-                className="w-9 h-9 p-0 rounded-lg bg-white/[0.04] hover:bg-white hover:text-black transition-all border border-white/[0.08]"
+                className="w-9 h-9 p-0 rounded-lg bg-background/[0.04] hover:bg-background hover:text-foreground transition-all border border-white/[0.08]"
               >
                 <X size={18} />
               </Button>
@@ -55,7 +55,7 @@ export function WritingPracticeModal({
                   &quot;{word}&quot;
                 </p>
               </div>
-              <div className="px-3 py-1.5 rounded-lg bg-white/[0.04] border border-white/[0.08] text-[8px] font-bold uppercase tracking-widest text-purple-500">
+              <div className="px-3 py-1.5 rounded-lg bg-background/[0.04] border border-white/[0.08] text-[8px] font-bold uppercase tracking-widest text-purple-500">
                 KANJI_MODE
               </div>
             </div>
@@ -68,7 +68,7 @@ export function WritingPracticeModal({
               />
             </div>
 
-            <p className="text-center text-xs text-slate-500 font-bold uppercase tracking-widest mt-4">
+            <p className="text-center text-xs text-muted-foreground font-bold uppercase tracking-widest mt-4">
               <Sparkles size={10} className="inline mr-1 text-purple-400/50" />{" "}
               Tulis goresan kanji di atas secara berurutan!
             </p>

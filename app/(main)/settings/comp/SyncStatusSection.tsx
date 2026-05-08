@@ -20,13 +20,13 @@ export default function SyncStatusSection({
 }: SyncStatusSectionProps) {
   return (
     <motion.div variants={itemVariants}>
-      <Card className="bg-white/[0.01] backdrop-blur-3xl border border-white/5 rounded-[2.5rem] p-8 shadow-2xl relative overflow-hidden group">
+      <Card className="bg-background/[0.01] backdrop-blur-3xl border border-white/5 rounded-[2.5rem] p-8 shadow-2xl relative overflow-hidden group">
         <div className="flex flex-col md:flex-row items-center justify-between gap-6">
           <div className="flex items-center gap-6">
             <div className={`w-16 h-16 rounded-2xl flex items-center justify-center border transition-all duration-500 shadow-xl ${
               dirtySrsCount > 0 
-                ? 'bg-amber-500/10 border-amber-500/20 text-amber-500 shadow-amber-500/10' 
-                : 'bg-emerald-500/10 border-emerald-500/20 text-emerald-500 shadow-emerald-500/10'
+                ? 'bg-warning/10 border-warning/20 text-warning shadow-amber-500/10' 
+                : 'bg-success/10 border-success/20 text-success shadow-emerald-500/10'
             }`}>
               {dirtySrsCount > 0 ? (
                 <Cloud size={32} className="animate-pulse" />
@@ -49,7 +49,7 @@ export default function SyncStatusSection({
             className={`h-14 px-8 rounded-2xl text-[10px] font-black uppercase tracking-[0.2em] transition-all duration-300 shadow-xl ${
               dirtySrsCount > 0
                 ? 'bg-primary text-primary-foreground hover:scale-[1.02] shadow-primary/20'
-                : 'bg-white/5 text-muted-foreground border border-white/10 opacity-50 cursor-not-allowed'
+                : 'bg-background/5 text-muted-foreground border border-white/10 opacity-50 cursor-not-allowed'
             }`}
           >
             <RefreshCw size={18} className={`mr-3 ${isSyncing ? 'animate-spin' : ''}`} />

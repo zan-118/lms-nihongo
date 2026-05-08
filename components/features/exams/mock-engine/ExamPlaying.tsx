@@ -57,20 +57,20 @@ const OptionButton = memo(({
       onClick={() => onSelect(idx)}
       className={`p-4 rounded-xl text-left transition-all font-medium flex items-center gap-4 border ${
         isSelected
-          ? "bg-red-50 text-red-600 border-red-200 dark:bg-red-500/10 dark:border-red-500/30 dark:text-red-400"
-          : "bg-white dark:bg-white/5 border-border dark:border-white/10 text-muted-foreground hover:border-red-500/30"
+          ? "bg-destructive text-destructive border-destructive bg-destructive/10 border-destructive/30 text-destructive"
+          : "bg-background dark:bg-background/5 border-border dark:border-white/10 text-muted-foreground hover:border-destructive/30"
       }`}
     >
       <div 
         className={`font-mono text-xs font-bold h-8 w-8 rounded-lg flex items-center justify-center shrink-0 ${
-          isSelected ? "bg-red-600 text-white" : "bg-muted dark:bg-white/10 text-muted-foreground"
+          isSelected ? "bg-destructive text-white" : "bg-muted dark:bg-background/10 text-muted-foreground"
         }`}
       >
         {idx + 1}
       </div>
       <span className="leading-tight font-japanese text-base md:text-lg flex-1">{text}</span>
       {isSelected && (
-        <CheckCircle size={16} className="text-red-600 dark:text-red-400" />
+        <CheckCircle size={16} className="text-destructive text-destructive" />
       )}
     </button>
   );
@@ -103,10 +103,10 @@ export function ExamPlaying({
   if (!activeQuestion) return null;
 
   return (
-    <div className="fixed inset-0 z-[100] bg-[#F8FAFC] dark:bg-[#0B0E14] text-foreground overflow-y-auto pb-32 font-sans selection:bg-red-500/30">
+    <div className="fixed inset-0 z-[100] bg-[#F8FAFC] bg-card text-foreground overflow-y-auto pb-32 font-sans selection:bg-destructive/30">
       <audio ref={audioRef} className="hidden" />
       <div className="max-w-4xl mx-auto px-4 md:px-6">
-        <header className="sticky top-0 z-50 pt-6 pb-4 bg-[#F8FAFC]/80 dark:bg-[#0B0E14]/80 backdrop-blur-md">
+        <header className="sticky top-0 z-50 pt-6 pb-4 bg-[#F8FAFC]/80 bg-card/80 backdrop-blur-md">
           <div className="flex flex-col gap-4">
             <div className="flex items-center justify-between gap-4">
               <div className="flex items-center gap-2 overflow-x-auto pb-1 no-scrollbar flex-1">
@@ -120,10 +120,10 @@ export function ExamPlaying({
                       onClick={() => !isLocked && goToQuestion(sections[section][0])}
                       className={`whitespace-nowrap px-3 py-1.5 rounded-full text-[10px] font-bold uppercase tracking-wider transition-all border ${
                         isActive
-                          ? "bg-red-600 text-white border-transparent shadow-sm"
+                          ? "bg-destructive text-white border-transparent shadow-sm"
                           : isLocked
                           ? "bg-transparent text-muted-foreground/30 border-border/50 cursor-not-allowed"
-                          : "bg-white dark:bg-white/5 text-muted-foreground border-border dark:border-white/10 hover:border-red-500/30"
+                          : "bg-background dark:bg-background/5 text-muted-foreground border-border dark:border-white/10 hover:border-destructive/30"
                       }`}
                     >
                       {isLocked && <LockIcon size={10} className="inline mr-1" />}
@@ -136,8 +136,8 @@ export function ExamPlaying({
               <div className="flex items-center gap-3 shrink-0">
                 <div className={`flex items-center gap-2 px-3 py-1.5 rounded-full border transition-colors ${
                   isTimeCritical 
-                    ? "bg-red-500/10 border-red-500/30 text-red-600 animate-pulse" 
-                    : "bg-white dark:bg-white/5 border-border dark:border-white/10 text-muted-foreground"
+                    ? "bg-destructive/10 border-destructive/30 text-destructive animate-pulse" 
+                    : "bg-background dark:bg-background/5 border-border dark:border-white/10 text-muted-foreground"
                 }`}>
                   <Clock size={14} />
                   <span className="font-mono font-bold text-xs">{formatTime(timeLeft)}</span>
@@ -158,7 +158,7 @@ export function ExamPlaying({
             >
               <div className="space-y-6">
                 {isCurrentlyListening && (
-                  <div className="bg-white dark:bg-white/5 border border-border dark:border-white/10 rounded-2xl p-4 flex items-center gap-4 shadow-sm">
+                  <div className="bg-background dark:bg-background/5 border border-border dark:border-white/10 rounded-2xl p-4 flex items-center gap-4 shadow-sm">
                     <Button
                       onClick={handlePlayAudio}
                       disabled={
@@ -170,7 +170,7 @@ export function ExamPlaying({
                       className={`w-10 h-10 rounded-full shrink-0 ${
                         (!exam.choukaiAudioUrl && (!audioStatus[activeQuestion._key] || audioStatus[activeQuestion._key] === "idle")) ||
                         (exam.choukaiAudioUrl && (!audioStatus.global || audioStatus.global === "idle"))
-                          ? "bg-red-600 text-white"
+                          ? "bg-destructive text-white"
                           : "bg-muted text-muted-foreground cursor-not-allowed"
                       }`}
                     >
@@ -187,9 +187,9 @@ export function ExamPlaying({
                   </div>
                 )}
 
-                <div className="bg-white dark:bg-white/5 border border-border dark:border-white/10 rounded-3xl p-6 md:p-8 shadow-sm">
+                <div className="bg-background dark:bg-background/5 border border-border dark:border-white/10 rounded-3xl p-6 md:p-8 shadow-sm">
                   <div className="flex items-start justify-between gap-4 mb-6">
-                    <div className="px-3 py-1 bg-muted dark:bg-white/10 rounded-lg text-[10px] font-mono font-bold text-muted-foreground">
+                    <div className="px-3 py-1 bg-muted dark:bg-background/10 rounded-lg text-[10px] font-mono font-bold text-muted-foreground">
                       SOAL {currentQuestionIndex + 1}
                     </div>
                   </div>
@@ -226,7 +226,7 @@ export function ExamPlaying({
                   </div>
                 </div>
 
-                <div className="bg-white/50 dark:bg-white/5 border border-border dark:border-white/10 rounded-2xl p-4">
+                <div className="bg-background/50 dark:bg-background/5 border border-border dark:border-white/10 rounded-2xl p-4">
                   <p className="text-[9px] font-bold uppercase tracking-[0.2em] text-muted-foreground mb-4 flex items-center gap-2">
                     NAVIGASI {SECTION_LABELS[currentSection].split(" ")[0]}
                   </p>
@@ -243,12 +243,12 @@ export function ExamPlaying({
                           onClick={() => !isLocked && goToQuestion(qIdx)}
                           className={`w-8 h-8 rounded-lg flex items-center justify-center text-[10px] font-mono font-bold transition-all border ${
                             isActive
-                              ? "bg-red-600 text-white border-transparent shadow-md scale-105"
+                              ? "bg-destructive text-white border-transparent shadow-md scale-105"
                               : isAnswered
-                              ? "bg-green-500/10 text-green-600 border-green-500/20"
+                              ? "bg-success/10 text-success border-success/20"
                               : isLocked
                               ? "bg-transparent text-muted-foreground/30 border-border/50 cursor-not-allowed"
-                              : "bg-white dark:bg-white/5 text-muted-foreground border-border dark:border-white/10"
+                              : "bg-background dark:bg-background/5 text-muted-foreground border-border dark:border-white/10"
                           }`}
                         >
                           {isLocked ? <LockIcon size={10} /> : qIdx + 1}
@@ -263,7 +263,7 @@ export function ExamPlaying({
         </main>
       </div>
 
-      <footer className="fixed bottom-0 left-0 right-0 z-[110] bg-white/80 dark:bg-[#0B0E14]/80 backdrop-blur-md border-t border-border dark:border-white/10 p-4 pb-safe">
+      <footer className="fixed bottom-0 left-0 right-0 z-[110] bg-background/80 bg-card/80 backdrop-blur-md border-t border-border dark:border-white/10 p-4 pb-safe">
         <div className="max-w-4xl mx-auto flex items-center justify-between gap-4">
           <Button
             onClick={prevQuestion}
@@ -279,14 +279,14 @@ export function ExamPlaying({
               onClick={() => {
                 if (confirm("Kirim jawaban sekarang? Waktu masih tersisa.")) finishExam();
               }}
-              className="flex-1 sm:flex-none bg-amber-600 hover:bg-amber-700 text-white px-8 py-6 rounded-xl font-bold uppercase tracking-wider text-[10px] transition-all shadow-md"
+              className="flex-1 sm:flex-none bg-warning hover:bg-warning text-white px-8 py-6 rounded-xl font-bold uppercase tracking-wider text-[10px] transition-all shadow-md"
             >
               <CheckCircle size={16} className="mr-2" /> Selesai
             </Button>
           ) : (
             <Button
               onClick={nextQuestion}
-              className="flex-1 sm:flex-none bg-red-600 hover:bg-red-700 text-white px-8 py-6 rounded-xl font-bold uppercase tracking-wider text-[10px] transition-all shadow-md"
+              className="flex-1 sm:flex-none bg-destructive hover:bg-destructive text-white px-8 py-6 rounded-xl font-bold uppercase tracking-wider text-[10px] transition-all shadow-md"
             >
               {sections[currentSection][sections[currentSection].length - 1] === currentQuestionIndex ? (
                 <>Lanjut: {SECTION_LABELS[availableSections[availableSections.indexOf(currentSection) + 1]]?.split(" ")[0] || "Next"} <ArrowRight size={16} className="ml-2" /></>

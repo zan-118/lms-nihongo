@@ -89,7 +89,7 @@ export default function UserNav() {
         <div className="p-1">
           <DropdownMenuItem 
             onClick={handleLogout}
-            className="rounded-xl cursor-pointer bg-red-500/5 hover:bg-red-500 hover:text-white dark:hover:text-black transition-all py-2.5 text-red-500"
+            className="rounded-xl cursor-pointer bg-destructive/5 hover:bg-destructive hover:text-white dark:hover:text-foreground transition-all py-2.5 text-destructive"
           >
             <LogOut size={16} className="mr-3" />
             <span className="text-xs font-black uppercase tracking-widest">Keluar Akun</span>

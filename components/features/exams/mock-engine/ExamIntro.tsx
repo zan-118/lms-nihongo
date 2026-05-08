@@ -14,12 +14,12 @@ interface ExamIntroProps {
 export function ExamIntro({ exam, setGameState, backLink }: ExamIntroProps) {
   return (
     <Card className="w-full max-w-2xl mx-auto p-8 md:p-12 text-center mt-6 md:mt-12 relative overflow-hidden neo-card rounded-[3rem] border border-border bg-card shadow-2xl transition-colors duration-300">
-      <div className="absolute top-0 right-0 w-[300px] h-[300px] bg-red-500/5 blur-[100px] rounded-full pointer-events-none" />
+      <div className="absolute top-0 right-0 w-[300px] h-[300px] bg-destructive/5 blur-[100px] rounded-full pointer-events-none" />
 
       <Card className="w-24 h-24 mx-auto neo-inset flex items-center justify-center rounded-[2rem] mb-8 bg-muted/50 border border-border shadow-none">
         <AlertCircle
           size={40}
-          className="text-amber-500 drop-shadow-sm dark:drop-shadow-[0_0_15px_rgba(245,158,11,0.5)]"
+          className="text-warning drop-shadow-sm dark:drop-shadow-[0_0_15px_rgba(245,158,11,0.5)]"
         />
       </Card>
 
@@ -40,7 +40,7 @@ export function ExamIntro({ exam, setGameState, backLink }: ExamIntroProps) {
           <span className="text-xs md:text-xs font-bold uppercase tracking-widest text-muted-foreground">
             Batas Waktu
           </span>
-          <Badge variant="ghost" className="font-mono font-bold text-red-600 dark:text-red-400 text-sm md:text-base">
+          <Badge variant="ghost" className="font-mono font-bold text-destructive text-destructive text-sm md:text-base">
             {exam.timeLimit} Menit
           </Badge>
         </div>
@@ -48,7 +48,7 @@ export function ExamIntro({ exam, setGameState, backLink }: ExamIntroProps) {
           <span className="text-xs md:text-xs font-bold uppercase tracking-widest text-muted-foreground">
             Target Pass
           </span>
-          <Badge variant="ghost" className="font-mono font-bold text-amber-600 dark:text-amber-400 text-sm md:text-base">
+          <Badge variant="ghost" className="font-mono font-bold text-warning text-warning text-sm md:text-base">
             {exam.passingScore} / 180
           </Badge>
         </div>
@@ -70,7 +70,7 @@ export function ExamIntro({ exam, setGameState, backLink }: ExamIntroProps) {
         </Button>
         <Button
           onClick={() => setGameState("playing")}
-          className="w-full bg-red-600 hover:bg-red-700 dark:bg-red-500 dark:hover:bg-white text-white dark:text-black font-black uppercase tracking-widest h-auto py-5 px-10 rounded-xl transition-all shadow-lg active:scale-95 text-xs sm:text-xs border-none"
+          className="w-full bg-destructive hover:bg-destructive bg-destructive dark:hover:bg-background text-white dark:text-foreground font-black uppercase tracking-widest h-auto py-5 px-10 rounded-xl transition-all shadow-lg active:scale-95 text-xs sm:text-xs border-none"
         >
           Mulai Sekarang
         </Button>

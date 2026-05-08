@@ -38,17 +38,17 @@ export function LessonCard({ lesson, index, categoryId, isSideQuest, progress = 
           
           <div className="flex justify-between items-start w-full relative z-10">
             <div
-              className={`w-12 h-12 shrink-0 rounded-2xl flex items-center justify-center font-black text-lg font-mono bg-white/[0.03] border border-white/5 transition-all duration-500 ${
+              className={`w-12 h-12 shrink-0 rounded-2xl flex items-center justify-center font-black text-lg font-mono bg-background/[0.03] border border-white/5 transition-all duration-500 ${
                 isSideQuest 
-                  ? "text-amber-500 group-hover:bg-amber-500 group-hover:text-white" 
-                  : "text-cyan-500 dark:text-cyan-400 group-hover:bg-cyan-500 dark:group-hover:bg-cyan-400 group-hover:text-white dark:group-hover:text-black"
+                  ? "text-warning group-hover:bg-warning group-hover:text-white" 
+                  : "text-primary text-primary group-hover:bg-primary dark:group-hover:bg-primary group-hover:text-white dark:group-hover:text-foreground"
               }`}
             >
               {(index + 1).toString().padStart(2, "0")}
             </div>
             
             {progress > 0 && (
-              <div className="px-3 py-1 rounded-full bg-white/[0.05] border border-white/5 text-[10px] font-black uppercase tracking-widest text-muted-foreground group-hover:text-foreground transition-colors">
+              <div className="px-3 py-1 rounded-full bg-background/[0.05] border border-white/5 text-[10px] font-black uppercase tracking-widest text-muted-foreground group-hover:text-foreground transition-colors">
                 {progress}% Selesai
               </div>
             )}
@@ -67,13 +67,13 @@ export function LessonCard({ lesson, index, categoryId, isSideQuest, progress = 
 
           <div className="mt-auto pt-6 w-full flex items-center justify-between border-t border-white/5 relative z-10">
             <span className={`text-[10px] font-black uppercase tracking-widest transition-colors ${
-              isSideQuest ? "text-amber-500/50 group-hover:text-amber-500" : "text-cyan-500/50 group-hover:text-primary"
+              isSideQuest ? "text-warning/50 group-hover:text-warning" : "text-primary/50 group-hover:text-primary"
             }`}>
               Baca Materi
             </span>
             <div
-              className={`w-10 h-10 rounded-xl border border-white/5 flex items-center justify-center transition-all duration-500 bg-white/[0.03] ${
-                isSideQuest ? "group-hover:bg-amber-500 group-hover:text-white" : "group-hover:bg-primary group-hover:text-white dark:group-hover:text-black"
+              className={`w-10 h-10 rounded-xl border border-white/5 flex items-center justify-center transition-all duration-500 bg-background/[0.03] ${
+                isSideQuest ? "group-hover:bg-warning group-hover:text-white" : "group-hover:bg-primary group-hover:text-white dark:group-hover:text-foreground"
               } group-hover:shadow-[0_0_15px_rgba(0,238,255,0.3)]`}
             >
               <ChevronRight size={18} />
@@ -81,7 +81,7 @@ export function LessonCard({ lesson, index, categoryId, isSideQuest, progress = 
           </div>
 
           {/* Bottom Progress Bar */}
-          <div className="absolute bottom-0 left-0 right-0 h-1.5 bg-white/[0.02]">
+          <div className="absolute bottom-0 left-0 right-0 h-1.5 bg-background/[0.02]">
             <motion.div 
               initial={{ width: 0 }}
               animate={{ width: `${progress}%` }}

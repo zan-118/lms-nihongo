@@ -45,7 +45,7 @@ export function FlashcardHeader({
               }}
               className={`flex-1 rounded-lg md:rounded-xl h-10 md:h-12 text-xs md:text-xs font-bold uppercase tracking-widest transition-all ${
                 studyMode === "latihan"
-                  ? "bg-background dark:bg-white/10 text-foreground dark:text-white shadow-sm"
+                  ? "bg-background dark:bg-background/10 text-foreground text-foreground shadow-sm"
                   : "text-muted-foreground hover:text-foreground"
               }`}
             >
@@ -59,7 +59,7 @@ export function FlashcardHeader({
               }}
               className={`flex-1 rounded-lg md:rounded-xl h-10 md:h-12 text-[10px] md:text-xs font-bold uppercase tracking-widest transition-all ${
                 studyMode === "ujian"
-                  ? `${themeBgColor} text-black ${themeShadow} hover:bg-white`
+                  ? `${themeBgColor} text-foreground ${themeShadow} hover:bg-background`
                   : "text-muted-foreground hover:text-foreground"
               }`}
             >
@@ -83,7 +83,7 @@ export function FlashcardHeader({
         )}
 
         {combo > 1 && (
-          <div className="flex items-center gap-1.5 bg-orange-500 text-white px-3 py-2 rounded-xl animate-in zoom-in duration-300 shadow-lg shadow-orange-500/20">
+          <div className="flex items-center gap-1.5 bg-warning text-white px-3 py-2 rounded-xl animate-in zoom-in duration-300 shadow-lg shadow-orange-500/20">
             <span className="text-sm font-black">🔥 {combo}</span>
           </div>
         )}
@@ -107,7 +107,7 @@ export function FlashcardHeader({
             >
               {studyMode === "latihan" ? "Mode Santai" : studyMode === "tantangan" ? "Mode Tantangan" : "Mode Ujian"}
             </Badge>
-            <span className="text-xs md:text-xs text-slate-500 font-bold uppercase tracking-widest hidden sm:inline opacity-80">
+            <span className="text-xs md:text-xs text-muted-foreground font-bold uppercase tracking-widest hidden sm:inline opacity-80">
               {studyMode === "latihan" ? "Belajar Santai" : studyMode === "tantangan" ? "Ingat & Ketik" : "Kumpulkan XP"}
             </span>
           </div>

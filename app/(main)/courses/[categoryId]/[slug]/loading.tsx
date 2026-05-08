@@ -5,7 +5,7 @@ export default function CourseDetailLoading() {
   return (
     <div className="w-full text-foreground px-4 md:px-8 relative overflow-hidden flex flex-col flex-1">
       {/* Background Ambient Decor Skeleton */}
-      <div className="absolute top-0 right-0 w-[500px] h-[500px] bg-cyan-500/5 blur-[150px] rounded-full pointer-events-none" />
+      <div className="absolute top-0 right-0 w-[500px] h-[500px] bg-primary/5 blur-[150px] rounded-full pointer-events-none" />
       
       <article className="max-w-4xl mx-auto w-full relative z-10 flex-1">
         {/* Breadcrumb Skeleton */}

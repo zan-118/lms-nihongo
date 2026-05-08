@@ -78,7 +78,7 @@ export default function ConfirmModal({
                     className={`flex-1 h-12 rounded-xl font-bold uppercase tracking-widest text-xs shadow-lg border-none ${
                       isDestructive
                         ? 'bg-destructive hover:opacity-90 text-white transition-all'
-                        : 'bg-primary hover:bg-foreground text-white dark:text-black transition-all'
+                        : 'bg-primary hover:bg-foreground text-white dark:text-foreground transition-all'
                     }`}
                   >
                     {confirmText}

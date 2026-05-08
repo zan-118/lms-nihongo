@@ -208,7 +208,7 @@ export default function KanjiStrokePlayer({
 
         {/* Speed Indicator Badge */}
         <div className="absolute top-6 right-8 z-20">
-          <div className="px-2 py-1 rounded-md bg-white/5 border border-white/10 text-[8px] font-bold uppercase tracking-widest text-primary flex items-center gap-1">
+          <div className="px-2 py-1 rounded-md bg-background/5 border border-white/10 text-[8px] font-bold uppercase tracking-widest text-primary flex items-center gap-1">
             <Zap size={8} /> {speed}x SPEED
           </div>
         </div>
@@ -216,12 +216,12 @@ export default function KanjiStrokePlayer({
 
       {/* PLAYBACK CONTROLS */}
       <div className="flex flex-col gap-4 w-full max-w-[320px]">
-        <div className="grid grid-cols-5 gap-2 bg-white/5 p-2 rounded-2xl border border-white/10">
+        <div className="grid grid-cols-5 gap-2 bg-background/5 p-2 rounded-2xl border border-white/10">
           <Button
             variant="ghost"
             size="icon"
             onClick={handlePrev}
-            className="rounded-xl hover:bg-white/10"
+            className="rounded-xl hover:bg-background/10"
           >
             <ChevronLeft size={18} />
           </Button>
@@ -239,7 +239,7 @@ export default function KanjiStrokePlayer({
             variant="ghost"
             size="icon"
             onClick={handleNext}
-            className="rounded-xl hover:bg-white/10"
+            className="rounded-xl hover:bg-background/10"
           >
             <ChevronRight size={18} />
           </Button>
@@ -248,7 +248,7 @@ export default function KanjiStrokePlayer({
             variant="ghost"
             size="icon"
             onClick={handleReset}
-            className="rounded-xl hover:bg-white/10"
+            className="rounded-xl hover:bg-background/10"
           >
             <RotateCcw size={18} />
           </Button>
@@ -271,7 +271,7 @@ export default function KanjiStrokePlayer({
                 key={s}
                 onClick={() => setSpeed(s)}
                 className={`text-[10px] font-bold px-2 py-1 rounded-md transition-all ${
-                  speed === s ? "bg-primary text-primary-foreground" : "text-muted-foreground hover:bg-white/5"
+                  speed === s ? "bg-primary text-primary-foreground" : "text-muted-foreground hover:bg-background/5"
                 }`}
               >
                 {s}x

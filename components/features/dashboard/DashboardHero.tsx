@@ -58,7 +58,7 @@ export default function DashboardHero({
               variant="outline" 
               className={`px-5 py-2 rounded-xl text-[10px] font-black uppercase tracking-[0.2em] flex items-center gap-2 w-fit border-white/10 backdrop-blur-md shadow-xl transition-all ${
                 isAuthenticated 
-                  ? 'bg-gradient-to-r from-emerald-500/20 to-teal-500/20 text-emerald-400 border-emerald-500/30' 
+                  ? 'bg-gradient-to-r from-emerald-500/20 to-teal-500/20 text-success border-success/30' 
                   : 'bg-gradient-to-r from-primary/20 to-blue-500/20 text-primary border-primary/30'
               }`}
             >
@@ -103,7 +103,7 @@ export default function DashboardHero({
               className={`w-24 h-24 rounded-3xl flex items-center justify-center mb-8 shadow-2xl border transition-all duration-500 ${
                 dueCount > 0 
                   ? 'bg-primary/20 border-primary/40 text-primary' 
-                  : 'bg-emerald-500/20 border-emerald-500/40 text-emerald-400'
+                  : 'bg-success/20 border-success/40 text-success'
               }`}
             >
               {dueCount > 0 ? (
@@ -113,7 +113,7 @@ export default function DashboardHero({
               )}
             </motion.div>
             
-            <h3 className={`text-2xl md:text-3xl font-black uppercase tracking-tight mb-3 ${dueCount > 0 ? 'text-foreground' : 'text-emerald-400'}`}>
+            <h3 className={`text-2xl md:text-3xl font-black uppercase tracking-tight mb-3 ${dueCount > 0 ? 'text-foreground' : 'text-success'}`}>
               {dueCount > 0 ? `Waktunya Sapa Ingatan, ${name}!` : `Ingatanmu Tajam, ${name}!`}
             </h3>
             <p className="text-muted-foreground text-sm md:text-base mb-10 font-medium max-w-md leading-relaxed">
@@ -125,7 +125,7 @@ export default function DashboardHero({
             {/* QUICK STATS INSIDE HERO */}
             <div className="grid grid-cols-3 gap-4 mb-10 w-full max-w-sm">
               <div className="flex flex-col items-center gap-1">
-                <div className="flex items-center gap-1.5 text-amber-500">
+                <div className="flex items-center gap-1.5 text-warning">
                   <Flame size={14} className="fill-current" />
                   <span className="text-sm font-black">
                     <AnimatedCounter value={streak} />
@@ -141,7 +141,7 @@ export default function DashboardHero({
                 <span className="text-[8px] font-black uppercase tracking-widest text-muted-foreground">Level</span>
               </div>
               <div className="flex flex-col items-center gap-1">
-                <div className="flex items-center gap-1.5 text-blue-400">
+                <div className="flex items-center gap-1.5 text-primary">
                   <Target size={14} />
                   <span className="text-sm font-black">{Math.floor(xpProgress)}%</span>
                 </div>
@@ -169,7 +169,7 @@ export default function DashboardHero({
             ) : (
               <div className="flex flex-col sm:flex-row gap-4 w-full">
                 <motion.div whileHover={{ scale: 1.02 }} whileTap={{ scale: 0.98 }} className="flex-1">
-                  <Button asChild className="w-full h-16 bg-foreground text-background hover:bg-emerald-500 hover:text-white font-black uppercase tracking-widest rounded-2xl text-xs transition-all shadow-xl border-none">
+                  <Button asChild className="w-full h-16 bg-foreground text-background hover:bg-success hover:text-white font-black uppercase tracking-widest rounded-2xl text-xs transition-all shadow-xl border-none">
                     <Link href="/courses">
                       Pelajari Materi Baru <BookMarked size={18} className="ml-2" />
                     </Link>
@@ -206,7 +206,7 @@ export default function DashboardHero({
             initial={{ opacity: 0, y: 10 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ delay: 1 }}
-            className="mt-8 p-6 rounded-[1.5rem] bg-white/[0.02] backdrop-blur-xl border border-white/5 flex gap-5 items-center group hover:bg-white/[0.04] transition-all duration-300"
+            className="mt-8 p-6 rounded-[1.5rem] bg-background/[0.02] backdrop-blur-xl border border-white/5 flex gap-5 items-center group hover:bg-background/[0.04] transition-all duration-300"
           >
             <div className="shrink-0 w-10 h-10 rounded-xl bg-primary/10 flex items-center justify-center text-primary group-hover:scale-110 transition-transform">
               <Sparkles size={18} />

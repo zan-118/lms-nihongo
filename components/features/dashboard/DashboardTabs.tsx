@@ -24,7 +24,7 @@ export function DashboardTabs({ tabs, activeTab, onTabChange }: DashboardTabsPro
       <div 
         role="tablist" 
         aria-label="Dashboard Navigation" 
-        className="bg-muted/50 dark:bg-white/[0.03] p-1.5 rounded-[2rem] border border-border/50 dark:border-white/5 flex gap-1 shadow-sm max-w-full overflow-x-auto no-scrollbar"
+        className="bg-muted/50 dark:bg-background/[0.03] p-1.5 rounded-[2rem] border border-border/50 dark:border-white/5 flex gap-1 shadow-sm max-w-full overflow-x-auto no-scrollbar"
       >
         {tabs.map((tab) => (
           <motion.button
@@ -37,7 +37,7 @@ export function DashboardTabs({ tabs, activeTab, onTabChange }: DashboardTabsPro
             className={`px-6 py-3 rounded-full text-xs font-black uppercase tracking-widest transition-all duration-300 flex items-center gap-2 ${
               activeTab === tab.id
                 ? "bg-primary text-primary-foreground shadow-lg shadow-primary/20 scale-105"
-                : "text-muted-foreground hover:text-foreground hover:bg-white/5"
+                : "text-muted-foreground hover:text-foreground hover:bg-background/5"
             }`}
           >
             <span className="text-base" aria-hidden="true">{tab.icon}</span>

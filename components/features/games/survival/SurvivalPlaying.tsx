@@ -86,7 +86,7 @@ export function SurvivalPlaying({
           className="flex-1 flex flex-col mb-4 md:mb-10"
         >
           <Card
-            className={`relative bg-card dark:bg-slate-900 rounded-[2rem] md:rounded-[4rem] p-6 md:p-20 border text-center shadow-2xl flex flex-col items-center justify-center flex-1 min-h-[220px] md:min-h-[400px] lg:min-h-[500px] neo-card transition-all duration-300 ${
+            className={`relative bg-card bg-background rounded-[2rem] md:rounded-[4rem] p-6 md:p-20 border text-center shadow-2xl flex flex-col items-center justify-center flex-1 min-h-[220px] md:min-h-[400px] lg:min-h-[500px] neo-card transition-all duration-300 ${
               isShaking
                 ? "border-primary shadow-xl"
                 : "border-border dark:border-white/5"
@@ -159,14 +159,14 @@ export function SurvivalPlaying({
               disabled={isCorrecting}
               className={`group flex h-full w-full p-0 overflow-hidden rounded-2xl md:rounded-[2.5rem] border transition-all duration-300 min-h-[64px] md:min-h-[100px] lg:min-h-[120px] shadow-none ${
                 isWrong 
-                  ? "bg-red-500/20 border-red-500 shadow-lg text-red-600 dark:text-red-400" 
+                  ? "bg-destructive/20 border-destructive shadow-lg text-destructive text-destructive" 
                   : isCorrect
-                  ? "bg-emerald-500/20 border-emerald-500 shadow-lg text-emerald-600 dark:text-emerald-400"
+                  ? "bg-success/20 border-success shadow-lg text-success text-success"
                   : "bg-muted/50 dark:bg-black/40 border-border dark:border-white/5 md:hover:border-primary/50 md:hover:bg-primary md:hover:text-primary-foreground neo-card active:scale-[0.98] transition-transform"
               }`}
             >
               <div className="flex items-center justify-center w-full h-full p-4 md:p-8 relative">
-                 <span className={`absolute top-2 left-3 md:top-4 md:left-6 text-[8px] md:text-xs font-bold uppercase tracking-widest transition-colors ${isWrong ? 'text-red-600/30' : 'text-muted-foreground/30 md:group-hover:text-foreground/30 dark:md:group-hover:text-black/30'}`}>
+                 <span className={`absolute top-2 left-3 md:top-4 md:left-6 text-[8px] md:text-xs font-bold uppercase tracking-widest transition-colors ${isWrong ? 'text-destructive/30' : 'text-muted-foreground/30 md:group-hover:text-foreground/30 dark:md:group-hover:text-foreground/30'}`}>
                    OPSI {idx+1}
                  </span>
                  <p className="font-bold text-sm md:text-xl lg:text-2xl text-center leading-tight w-full break-words text-foreground md:group-hover:text-primary-foreground">
@@ -174,7 +174,7 @@ export function SurvivalPlaying({
                  </p>
                  {isWrong && (
                    <div className="absolute right-4 top-1/2 -translate-y-1/2">
-                      <ShieldAlert className="text-red-600 dark:text-red-500 animate-pulse" size={20} />
+                      <ShieldAlert className="text-destructive text-destructive animate-pulse" size={20} />
                    </div>
                  )}
               </div>

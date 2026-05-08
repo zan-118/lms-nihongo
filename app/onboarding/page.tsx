@@ -74,7 +74,7 @@ export default function OnboardingPage() {
   return (
     <main className="min-h-screen bg-background flex flex-col items-center justify-center p-6 md:p-12 relative overflow-hidden">
       {/* Background Decor (Elegan Vibe) */}
-      <div className="absolute top-0 right-0 w-[500px] h-[500px] bg-cyan-500/5 blur-[150px] rounded-full pointer-events-none" />
+      <div className="absolute top-0 right-0 w-[500px] h-[500px] bg-primary/5 blur-[150px] rounded-full pointer-events-none" />
       <div className="absolute bottom-0 left-0 w-[400px] h-[400px] bg-indigo-500/5 blur-[120px] rounded-full pointer-events-none" />
 
       <div className="max-w-2xl w-full relative z-10 flex flex-col justify-center min-h-[400px]">
@@ -90,7 +90,7 @@ export default function OnboardingPage() {
               className="text-center space-y-10"
             >
               <div className="space-y-4">
-                <h1 className="text-6xl md:text-8xl font-black text-cyan-500 dark:text-cyan-400 font-japanese tracking-tight">
+                <h1 className="text-6xl md:text-8xl font-black text-primary text-primary font-japanese tracking-tight">
                   ようこそ!
                 </h1>
                 <p className="text-sm md:text-base font-bold text-muted-foreground uppercase tracking-[0.3em]">
@@ -110,7 +110,7 @@ export default function OnboardingPage() {
               <div className="pt-8">
                 <Button 
                   onClick={() => setStep(2)}
-                  className="rounded-2xl px-10 h-14 text-base font-black uppercase tracking-widest bg-cyan-500 hover:bg-cyan-600 text-white shadow-lg shadow-cyan-500/20"
+                  className="rounded-2xl px-10 h-14 text-base font-black uppercase tracking-widest bg-primary hover:bg-primary text-white shadow-lg shadow-cyan-500/20"
                 >
                   Mulai Perjalanan <ChevronRight className="ml-2" />
                 </Button>
@@ -144,11 +144,11 @@ export default function OnboardingPage() {
                     onClick={() => setTargetLevel(level.id)}
                     className={`cursor-pointer p-6 border-2 transition-all duration-300 rounded-[1.5rem] flex flex-col items-center justify-center text-center group shadow-none ${
                       targetLevel === level.id 
-                        ? "border-cyan-500 bg-cyan-500/5 shadow-md scale-[1.02]" 
-                        : "border-border/50 hover:border-cyan-500/30 hover:bg-muted/30"
+                        ? "border-primary bg-primary/5 shadow-md scale-[1.02]" 
+                        : "border-border/50 hover:border-primary/30 hover:bg-muted/30"
                     }`}
                   >
-                    <span className="text-3xl font-black tracking-tight mb-2 group-hover:text-cyan-500 transition-colors">
+                    <span className="text-3xl font-black tracking-tight mb-2 group-hover:text-primary transition-colors">
                       {level.id}
                     </span>
                     <span className="text-xs font-bold text-muted-foreground uppercase tracking-widest">
@@ -247,7 +247,7 @@ export default function OnboardingPage() {
             <div 
               key={i} 
               className={`h-1.5 rounded-full transition-all duration-500 ${
-                step === i ? "w-12 bg-cyan-500" : step > i ? "w-6 bg-cyan-500/30" : "w-6 bg-border"
+                step === i ? "w-12 bg-primary" : step > i ? "w-6 bg-primary/30" : "w-6 bg-border"
               }`}
             />
           ))}

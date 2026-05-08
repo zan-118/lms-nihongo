@@ -49,8 +49,8 @@ export default function DashboardStats({
         {loading ? (
           <Skeleton className="h-[250px] w-full rounded-2xl" />
         ) : (
-          <Card className="h-full bg-card/40 backdrop-blur-xl border border-white/10 rounded-[2rem] p-6 md:p-8 flex flex-col justify-center relative overflow-hidden group transition-all duration-300 hover:border-emerald-500/30 shadow-lg">
-            <div className="absolute top-0 right-0 w-64 h-64 bg-emerald-500/10 blur-[80px] rounded-full pointer-events-none" />
+          <Card className="h-full bg-card/40 backdrop-blur-xl border border-white/10 rounded-[2rem] p-6 md:p-8 flex flex-col justify-center relative overflow-hidden group transition-all duration-300 hover:border-success/30 shadow-lg">
+            <div className="absolute top-0 right-0 w-64 h-64 bg-success/10 blur-[80px] rounded-full pointer-events-none" />
             <div className="relative z-10 flex flex-col md:flex-row justify-between items-start md:items-end gap-6 mb-8">
               <div>
                 <h2 className="text-muted-foreground font-bold uppercase tracking-widest text-xs md:text-xs mb-2">
@@ -60,7 +60,7 @@ export default function DashboardStats({
                   <span className="text-5xl md:text-6xl font-black text-foreground tracking-tighter">
                     {progress.level}
                   </span>
-                  <Badge className="bg-emerald-500/10 text-emerald-400 border-emerald-500/20 px-3 py-1 font-bold uppercase tracking-widest text-[8px] md:text-xs shadow-none">
+                  <Badge className="bg-success/10 text-success border-success/20 px-3 py-1 font-bold uppercase tracking-widest text-[8px] md:text-xs shadow-none">
                     Status Belajar
                   </Badge>
                 </div>
@@ -99,17 +99,17 @@ export default function DashboardStats({
           </>
         ) : (
           <>
-            <Card className="h-[140px] bg-card/40 backdrop-blur-xl border border-white/10 rounded-[1.5rem] p-5 flex flex-col justify-between group overflow-hidden relative transition-all duration-300 hover:border-amber-500/30 shadow-lg">
-              <h3 className="text-amber-500/60 font-bold uppercase tracking-widest text-xs">
+            <Card className="h-[140px] bg-card/40 backdrop-blur-xl border border-white/10 rounded-[1.5rem] p-5 flex flex-col justify-between group overflow-hidden relative transition-all duration-300 hover:border-warning/30 shadow-lg">
+              <h3 className="text-warning/60 font-bold uppercase tracking-widest text-xs">
                 Semangat Belajar
               </h3>
               <div className="flex items-end gap-2 mt-2">
-                <span className="text-4xl font-black text-amber-500 tracking-tighter">
+                <span className="text-4xl font-black text-warning tracking-tighter">
                   {progress.streak}
                 </span>
-                <span className="text-amber-500/80 font-bold uppercase tracking-widest text-xs mb-1">Hari</span>
+                <span className="text-warning/80 font-bold uppercase tracking-widest text-xs mb-1">Hari</span>
               </div>
-              <div className="absolute -bottom-4 -right-4 text-amber-500/10 rotate-12 group-hover:scale-125 transition-transform duration-700">
+              <div className="absolute -bottom-4 -right-4 text-warning/10 rotate-12 group-hover:scale-125 transition-transform duration-700">
                 <Flame size={80} />
               </div>
             </Card>
@@ -139,7 +139,7 @@ export default function DashboardStats({
              const percentage = total > 0 ? (completed / total) * 100 : 0;
              
              return (
-               <Card key={cat._id} className="bg-white/[0.03] backdrop-blur-xl border-white/10 p-6 rounded-[2rem] group hover:border-primary/40 transition-all duration-500">
+               <Card key={cat._id} className="bg-background/[0.03] backdrop-blur-xl border-white/10 p-6 rounded-[2rem] group hover:border-primary/40 transition-all duration-500">
                   <div className="flex items-center gap-4 mb-5">
                     <div className="w-12 h-12 rounded-2xl bg-primary/10 flex items-center justify-center text-primary border border-primary/20">
                       {percentage === 100 ? <CheckCircle2 size={24} /> : <BookOpen size={24} />}
@@ -155,7 +155,7 @@ export default function DashboardStats({
                     </div>
                   </div>
                   
-                  <div className="relative h-2 w-full bg-white/5 rounded-full overflow-hidden border border-white/5">
+                  <div className="relative h-2 w-full bg-background/5 rounded-full overflow-hidden border border-white/5">
                     <motion.div 
                       initial={{ width: 0 }}
                       whileInView={{ width: `${percentage}%` }}
@@ -163,7 +163,7 @@ export default function DashboardStats({
                       viewport={{ once: true }}
                       className={`h-full rounded-full ${
                         percentage === 100 
-                          ? 'bg-emerald-500 shadow-[0_0_10px_rgba(16,185,129,0.5)]' 
+                          ? 'bg-success shadow-[0_0_10px_rgba(16,185,129,0.5)]' 
                           : 'bg-gradient-to-r from-primary to-blue-500 shadow-[0_0_10px_rgba(0,238,255,0.4)]'
                       }`}
                     />

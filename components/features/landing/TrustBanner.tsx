@@ -20,7 +20,7 @@ export function TrustBanner() {
     >
       <Card className="p-8 md:p-12 rounded-[2.5rem] flex flex-col lg:flex-row items-center justify-between gap-10 bg-card/50 backdrop-blur-2xl border border-white/10 shadow-2xl relative overflow-hidden group transition-all duration-500 hover:border-primary/40 hover:shadow-primary/10">
         <div className="absolute -top-24 -left-24 w-64 h-64 bg-primary/10 rounded-full blur-[80px] group-hover:bg-primary/20 transition-all duration-700" />
-        <div className="absolute -bottom-24 -right-24 w-64 h-64 bg-blue-500/10 rounded-full blur-[80px] group-hover:bg-blue-500/20 transition-all duration-700" />
+        <div className="absolute -bottom-24 -right-24 w-64 h-64 bg-primary/10 rounded-full blur-[80px] group-hover:bg-primary/20 transition-all duration-700" />
         
         <div className="flex flex-col md:flex-row items-center gap-6 relative z-10">
           <div className="w-16 h-16 md:w-20 md:h-20 bg-muted/50 backdrop-blur-xl border border-white/10 flex items-center justify-center rounded-2xl shrink-0 group-hover:border-primary/40 group-hover:scale-110 transition-all duration-500 shadow-xl">

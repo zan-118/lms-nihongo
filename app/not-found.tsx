@@ -4,11 +4,11 @@ import { MapPinOff, ArrowLeft, Home } from "lucide-react";
 
 export default function NotFound() {
   return (
-    <div className="min-h-screen w-full flex flex-col items-center justify-center bg-slate-50 dark:bg-slate-950 p-4 relative overflow-hidden">
+    <div className="min-h-screen w-full flex flex-col items-center justify-center bg-background bg-background p-4 relative overflow-hidden">
       
       {/* Background Aesthetic Number */}
       <div className="absolute inset-0 flex items-center justify-center pointer-events-none select-none opacity-[0.03] dark:opacity-[0.02]">
-        <span className="text-[30vw] font-black text-slate-900 dark:text-slate-100 tracking-tighter">
+        <span className="text-[30vw] font-black text-foreground dark:text-slate-100 tracking-tighter">
           404
         </span>
       </div>
@@ -17,14 +17,14 @@ export default function NotFound() {
         {/* Japanese Thematic Element */}
         <div className="space-y-2">
           <div className="flex justify-center mb-6">
-            <div className="p-4 bg-red-100 dark:bg-red-900/30 rounded-full text-red-600 dark:text-red-400">
+            <div className="p-4 bg-destructive bg-destructive/30 rounded-full text-destructive text-destructive">
               <MapPinOff size={48} strokeWidth={1.5} />
             </div>
           </div>
-          <h1 className="text-3xl font-bold tracking-tight text-slate-900 dark:text-slate-50">
+          <h1 className="text-3xl font-bold tracking-tight text-foreground dark:text-slate-50">
             道に迷いましたか？
           </h1>
-          <p className="text-lg font-medium text-slate-600 dark:text-slate-400">
+          <p className="text-lg font-medium text-muted-foreground text-muted-foreground">
             (Michi ni mayoimashita ka?)
           </p>
         </div>
@@ -33,7 +33,7 @@ export default function NotFound() {
           <h2 className="text-xl font-semibold text-slate-800 dark:text-slate-200">
             Halaman Tidak Ditemukan
           </h2>
-          <p className="text-slate-500 dark:text-slate-400 leading-relaxed">
+          <p className="text-muted-foreground text-muted-foreground leading-relaxed">
             Sepertinya Anda tersesat dari rute belajar. Halaman yang Anda cari mungkin sudah dipindahkan atau tidak pernah ada.
           </p>
         </div>

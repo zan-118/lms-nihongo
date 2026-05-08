@@ -34,10 +34,10 @@ export default function FeedbackWidget({ forceOpen, onOpenChange }: FeedbackWidg
   return (
     <>
       <Dialog open={openState} onOpenChange={setOpenState}>
-        <DialogContent className="sm:max-w-[425px] border-border dark:border-white/10 bg-card dark:bg-slate-950 text-foreground transition-colors duration-300 shadow-2xl rounded-3xl">
+        <DialogContent className="sm:max-w-[425px] border-border dark:border-white/10 bg-card bg-background text-foreground transition-colors duration-300 shadow-2xl rounded-3xl">
           <DialogHeader>
             <DialogTitle className="text-xl font-bold text-foreground flex items-center gap-2 font-black uppercase tracking-tight">
-              <MessageSquarePlus className="text-blue-500" />
+              <MessageSquarePlus className="text-primary" />
               Kirim Masukan
             </DialogTitle>
             <DialogDescription className="text-muted-foreground">
@@ -56,8 +56,8 @@ export default function FeedbackWidget({ forceOpen, onOpenChange }: FeedbackWidg
                     onClick={() => setType(t)}
                     className={`flex-1 py-2 px-3 rounded-lg text-sm font-medium border transition-all ${
                       type === t 
-                        ? 'bg-blue-500/20 border-blue-500 text-blue-600 dark:text-blue-400' 
-                        : 'bg-muted/50 dark:bg-black/20 border border-border dark:border-white/10 text-muted-foreground hover:bg-muted dark:hover:bg-white/5'
+                        ? 'bg-primary/20 border-primary text-primary text-primary' 
+                        : 'bg-muted/50 dark:bg-black/20 border border-border dark:border-white/10 text-muted-foreground hover:bg-muted dark:hover:bg-background/5'
                     }`}
                   >
                     {t === 'bug' ? '🐛 Bug' : t === 'suggestion' ? '💡 Saran' : '💖 Pujian'}
@@ -72,7 +72,7 @@ export default function FeedbackWidget({ forceOpen, onOpenChange }: FeedbackWidg
                value={message}
                onChange={(e) => setMessage(e.target.value)}
                placeholder="Ceritakan detailnya di sini..."
-               className="w-full min-h-[120px] p-3 rounded-lg bg-background border border-border text-foreground placeholder:text-muted-foreground/50 focus:outline-none focus:border-blue-500 focus:ring-1 focus:ring-blue-500 transition-all resize-none"
+               className="w-full min-h-[120px] p-3 rounded-lg bg-background border border-border text-foreground placeholder:text-muted-foreground/50 focus:outline-none focus:border-primary focus:ring-1 focus:ring-blue-500 transition-all resize-none"
                required
               />
             </div>
@@ -80,7 +80,7 @@ export default function FeedbackWidget({ forceOpen, onOpenChange }: FeedbackWidg
             <Button 
               type="submit" 
               disabled={isSubmitting || !message.trim()}
-              className="w-full bg-blue-600 hover:bg-blue-700 text-white dark:text-black dark:hover:bg-white transition-all border-none"
+              className="w-full bg-primary hover:bg-primary text-white dark:text-foreground dark:hover:bg-background transition-all border-none"
             >
               {isSubmitting ? (
                 <Loader2 className="w-5 h-5 animate-spin" />

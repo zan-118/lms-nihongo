@@ -29,7 +29,7 @@ interface SanityImageValue {
 export const ptTypes = {
   callout: ({ value }: { value: { type: "info" | "warning" | "tip"; text: string } }) => {
     const config = {
-      info: { icon: FileText, color: "text-blue-500", bg: "bg-blue-500/5", border: "border-blue-500/20" },
+      info: { icon: FileText, color: "text-primary", bg: "bg-primary/5", border: "border-primary/20" },
       warning: { icon: AlertTriangle, color: "text-amber-500", bg: "bg-amber-500/5", border: "border-amber-500/20" },
       tip: { icon: Lightbulb, color: "text-emerald-500", bg: "bg-emerald-500/5", border: "border-emerald-500/20" },
     };
@@ -69,7 +69,7 @@ export const ptTypes = {
               </div>
 
              <div className="flex flex-col items-end gap-4">
-                <div className="bg-white/[0.03] p-4 rounded-[2rem] border border-white/5 group-hover:border-primary/30 group-hover:bg-primary/5 transition-all shadow-xl">
+                <div className="bg-background/[0.03] p-4 rounded-[2rem] border border-white/5 group-hover:border-primary/30 group-hover:bg-primary/5 transition-all shadow-xl">
                   <TTSReader text={value.jp} minimal={true} />
                 </div>
              </div>
@@ -91,7 +91,7 @@ export const ptTypes = {
             <FuriganaDisplay text={value.jp} furigana={value.furigana} size="medium" />
           </div>
 
-          <div className="flex items-start gap-4 py-4 px-6 rounded-2xl bg-white/[0.03] border-l-4 border-primary/40">
+          <div className="flex items-start gap-4 py-4 px-6 rounded-2xl bg-background/[0.03] border-l-4 border-primary/40">
             <p className="text-sm md:text-lg font-medium text-muted-foreground/90 italic leading-relaxed">
               &quot;{value.id}&quot;
             </p>

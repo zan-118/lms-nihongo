@@ -235,10 +235,10 @@ export default function KanaPage() {
   const currentData = kanaData[category];
   const isHira = type === "hiragana";
 
-  const themeColor = isHira ? "text-cyan-600 dark:text-cyan-400" : "text-purple-600 dark:text-purple-400";
-  const themeBorder = isHira ? "border-cyan-500/30" : "border-purple-500/30";
-  const themeBgHover = isHira ? "hover:bg-cyan-500/10" : "hover:bg-purple-500/10";
-  const themeAccent = isHira ? "bg-cyan-500" : "bg-purple-500";
+  const themeColor = isHira ? "text-primary text-primary" : "text-purple-600 dark:text-purple-400";
+  const themeBorder = isHira ? "border-primary/30" : "border-purple-500/30";
+  const themeBgHover = isHira ? "hover:bg-primary/10" : "hover:bg-purple-500/10";
+  const themeAccent = isHira ? "bg-primary" : "bg-purple-500";
 
   return (
     <div className="w-full flex-1 relative overflow-hidden flex flex-col bg-background transition-colors duration-300 pt-12 pb-24 px-4 md:px-8">
@@ -281,14 +281,14 @@ export default function KanaPage() {
             <Button
               variant={isHira ? "default" : "ghost"}
               onClick={() => setType("hiragana")}
-              className={`relative z-10 flex-1 py-6 rounded-xl font-bold uppercase tracking-widest text-xs md:text-xs transition-all duration-500 h-10 ${isHira ? "bg-cyan-500 text-black hover:bg-cyan-600 shadow-lg" : "text-muted-foreground hover:text-foreground"}`}
+              className={`relative z-10 flex-1 py-6 rounded-xl font-bold uppercase tracking-widest text-xs md:text-xs transition-all duration-500 h-10 ${isHira ? "bg-primary text-foreground hover:bg-primary shadow-lg" : "text-muted-foreground hover:text-foreground"}`}
             >
               Hiragana
             </Button>
             <Button
               variant={!isHira ? "default" : "ghost"}
               onClick={() => setType("katakana")}
-              className={`relative z-10 flex-1 py-6 rounded-xl font-bold uppercase tracking-widest text-xs md:text-xs transition-all duration-500 h-10 ${!isHira ? "bg-purple-500 text-black hover:bg-purple-600 shadow-lg" : "text-muted-foreground hover:text-foreground"}`}
+              className={`relative z-10 flex-1 py-6 rounded-xl font-bold uppercase tracking-widest text-xs md:text-xs transition-all duration-500 h-10 ${!isHira ? "bg-purple-500 text-foreground hover:bg-purple-600 shadow-lg" : "text-muted-foreground hover:text-foreground"}`}
             >
               Katakana
             </Button>
@@ -318,7 +318,7 @@ export default function KanaPage() {
 
             <Button 
               onClick={startQuiz}
-              className={`px-6 py-3 h-auto rounded-xl text-xs md:text-xs font-bold uppercase tracking-widest transition-all duration-300 ${themeAccent} text-black shadow-lg hover:opacity-90 border-none`}
+              className={`px-6 py-3 h-auto rounded-xl text-xs md:text-xs font-bold uppercase tracking-widest transition-all duration-300 ${themeAccent} text-foreground shadow-lg hover:opacity-90 border-none`}
             >
               <Swords size={16} className="mr-2" /> Latihan
             </Button>
@@ -381,7 +381,7 @@ export default function KanaPage() {
                 <div className="relative z-10 flex flex-col h-full">
                   <header className="flex items-center gap-3 mb-5 sm:mb-6 pr-10 shrink-0">
                     <div
-                      className={`w-10 h-10 shrink-0 rounded-xl ${isHira ? "bg-cyan-500/10" : "bg-purple-500/10"} border ${themeBorder} flex items-center justify-center shadow-sm`}
+                      className={`w-10 h-10 shrink-0 rounded-xl ${isHira ? "bg-primary/10" : "bg-purple-500/10"} border ${themeBorder} flex items-center justify-center shadow-sm`}
                     >
                       <PenTool size={18} className={themeColor} />
                     </div>
@@ -455,11 +455,11 @@ export default function KanaPage() {
                 <div className="relative z-10 flex flex-col h-full">
                   <header className="flex justify-between items-center mb-6">
                     <div className="flex items-center gap-2">
-                      <div className={`flex items-center gap-1.5 px-3 py-1.5 rounded-lg bg-red-500/10 border border-red-500/20 text-red-600 dark:text-red-500 font-black text-sm`}>
+                      <div className={`flex items-center gap-1.5 px-3 py-1.5 rounded-lg bg-destructive/10 border border-destructive/20 text-destructive text-destructive font-black text-sm`}>
                         <Heart size={16} className={quizLives > 0 ? "fill-current" : ""} />
                         {quizLives}
                       </div>
-                      <div className={`flex items-center gap-1.5 px-3 py-1.5 rounded-lg bg-yellow-500/10 border border-yellow-500/20 text-yellow-600 dark:text-yellow-500 font-black text-sm`}>
+                      <div className={`flex items-center gap-1.5 px-3 py-1.5 rounded-lg bg-warning/10 border border-warning/20 text-warning text-warning font-black text-sm`}>
                         <Trophy size={16} className="fill-current" />
                         {quizScore}
                       </div>
@@ -471,7 +471,7 @@ export default function KanaPage() {
 
                   {!gameOver ? (
                     <div className="flex flex-col items-center">
-                      <div className={`w-full aspect-video bg-background rounded-2xl border ${quizFeedback === 'correct' ? 'border-emerald-500 shadow-lg' : quizFeedback === 'incorrect' ? 'border-destructive shadow-lg' : 'border-border shadow-inner'} flex items-center justify-center mb-8 transition-all duration-300`}>
+                      <div className={`w-full aspect-video bg-background rounded-2xl border ${quizFeedback === 'correct' ? 'border-success shadow-lg' : quizFeedback === 'incorrect' ? 'border-destructive shadow-lg' : 'border-border shadow-inner'} flex items-center justify-center mb-8 transition-all duration-300`}>
                         <AnimatePresence mode="wait">
                           <motion.span
                             key={quizChar?.char}
@@ -493,7 +493,7 @@ export default function KanaPage() {
                           
                           if (quizFeedback) {
                             if (isCorrect) {
-                              btnClass = "bg-emerald-500 border-emerald-500 text-white shadow-lg";
+                              btnClass = "bg-success border-success text-white shadow-lg";
                             } else if (isClicked && !isCorrect) {
                               btnClass = "bg-destructive border-destructive text-white shadow-lg";
                             } else {
@@ -525,12 +525,12 @@ export default function KanaPage() {
                       </div>
                       <h2 className="text-2xl font-black text-foreground uppercase tracking-tight mb-2">Game Over!</h2>
                       <p className="text-muted-foreground text-xs font-bold uppercase tracking-widest mb-6">Skor akhir kamu:</p>
-                      <div className="text-6xl font-black text-amber-500 mb-8 drop-shadow-md">
+                      <div className="text-6xl font-black text-warning mb-8 drop-shadow-md">
                         {quizScore}
                       </div>
                       <Button
                         onClick={() => startQuiz()}
-                        className={`w-full h-auto py-4 rounded-xl font-black uppercase tracking-widest ${themeAccent} text-black text-xs transition-all shadow-lg border-none`}
+                        className={`w-full h-auto py-4 rounded-xl font-black uppercase tracking-widest ${themeAccent} text-foreground text-xs transition-all shadow-lg border-none`}
                       >
                         Main Lagi
                       </Button>
