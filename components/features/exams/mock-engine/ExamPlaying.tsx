@@ -12,7 +12,7 @@ import {
 } from "lucide-react";
 import { ExamData, ExamQuestion, AudioState } from "./types";
 import { SECTION_LABELS } from "./constants";
-import { formatTime } from "@/lib/helpers";
+import { formatTime } from "@/lib/utils";
 
 interface ExamPlayingProps {
   exam: ExamData;

@@ -4,7 +4,6 @@ import { useState, useMemo, useEffect } from "react";
 import { client } from "@/sanity/lib/client";
 import { useSearchParams } from "next/navigation";
 import { toast } from "sonner";
-import { offlineCache } from "@/lib/offlineCache";
 import { MasterCardData } from "@/components/features/flashcards/master/types";
 import { useSRSStore } from "@/store/useSRSStore";
 
@@ -62,15 +61,9 @@ export function useReviewSession(loading: boolean) {
           kanjiDetails
         }`;
         data = await client.fetch<MasterCardData[]>(query, { ids: targetIds });
-        offlineCache.saveCards(data);
       } catch (cmsError) {
-        console.warn("CMS Offline, menggunakan cache lokal...");
-        data = offlineCache.getCards(targetIds);
-        if (data.length > 0) {
-          toast.info("Mode Offline Aktif");
-        } else {
-          throw cmsError;
-        }
+        console.error("Gagal memuat kartu dari CMS:", cmsError);
+        throw cmsError;
       }
       
       setCards(data.sort(() => Math.random() - 0.5));

@@ -1,7 +1,7 @@
 import { useState, useMemo } from "react";
 import { toast } from "sonner";
 import { Quest } from "./types";
-import { getTodayDateString } from "@/lib/helpers";
+import { getTodayDateString } from "@/lib/utils";
 import { useUserStore } from "@/store/useUserStore";
 
 export function useDailyQuests() {

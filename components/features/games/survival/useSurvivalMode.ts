@@ -1,6 +1,6 @@
 import { useState, useEffect, useCallback } from "react";
 import { CardData, SurvivalGameState } from "./types";
-import { shuffleArray } from "@/lib/helpers";
+import { shuffleArray } from "@/lib/utils";
 
 export function useSurvivalMode(cards: CardData[]) {
   const MAX_HP = 3;

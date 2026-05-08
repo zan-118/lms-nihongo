@@ -73,7 +73,7 @@ export default function VocabTrigger({ text, vocabId, children }: VocabTriggerPr
                <div className="p-4 rounded-2xl bg-white/5 border border-white/5">
                   <span className="text-[10px] font-black uppercase tracking-[0.2em] text-primary/60 block mb-1">Status</span>
                   <span className="text-xs font-bold text-muted-foreground uppercase tracking-widest">
-                    {srsInfo ? `Level ${srsInfo.stability > 10 ? 'Master' : 'Learning'}` : "Not Tracked"}
+                    {srsInfo ? `Level ${srsInfo.repetition > 5 ? 'Master' : 'Learning'}` : "Not Tracked"}
                   </span>
                </div>
                <div className="p-4 rounded-2xl bg-white/5 border border-white/5">

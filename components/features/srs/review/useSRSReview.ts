@@ -5,7 +5,7 @@ import { useSRSStore } from "@/store/useSRSStore";
 import { useUIStore } from "@/store/useUIStore";
 import { updateCardState, createNewCardState } from "@/lib/srs";
 import { FlashcardType } from "./types";
-import { shuffleArray } from "@/lib/helpers";
+import { shuffleArray } from "@/lib/utils";
 import { sounds } from "@/lib/audio";
 
 export function useSRSReview(cards: FlashcardType[]) {

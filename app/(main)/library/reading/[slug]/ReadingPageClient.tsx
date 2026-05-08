@@ -1,52 +1,32 @@
 "use client";
 
-import React, { useEffect } from "react";
+import React from "react";
 import { motion, AnimatePresence } from "framer-motion";
-import AudioController from "@/components/features/library/reading/AudioController";
+import AudioController from "@/components/features/reading/components/AudioController";
 import FuriganaDisplay from "@/components/ui/FuriganaDisplay";
 import { Badge } from "@/components/ui/badge";
-import { ChevronLeft, Languages, BookOpen, Eye, EyeOff } from "lucide-react";
+import { ChevronLeft, Languages } from "lucide-react";
 import Link from "next/link";
-import { ReadingProvider, ReadingMode } from "@/components/features/library/reading/ReadingContext";
+import { ReadingProvider } from "@/components/features/reading/components/ReadingContext";
 import { cn } from "@/lib/utils";
-import { useUIStore } from "@/store/useUIStore";
+import { useReadingLogic } from "@/components/features/reading/hooks/useReadingLogic";
+import { ReadingData } from "@/components/features/reading/types";
 
 interface ReadingPageClientProps {
-  data: {
-    title: string;
-    difficulty: string;
-    audioUrl?: string;
-    isTTSDisabled?: boolean;
-    body: string;
-    hiragana: string;
-    translation: string;
-  };
+  data: ReadingData;
 }
 
 function ReadingPageContent({ data }: ReadingPageClientProps) {
-  const { readingState, setReadingState } = useUIStore();
-  const { mode, showTranslation } = readingState;
-  
-  // Local UI state
-  // Sync data to global store on mount for FAB access
-  useEffect(() => {
-    setReadingState({
-      audioUrl: data.audioUrl,
-      textToSpeak: data.body,
-      isTTSDisabled: data.isTTSDisabled,
-    });
-  }, [data, setReadingState]);
-
-  // Split content into paragraphs
-  const paragraphs = data.body.split(/\n+/).filter(p => p.trim());
-  const hiraganaParagraphs = data.hiragana.split(/\n+/).filter(p => p.trim());
-  const translationParagraphs = data.translation.split(/\n+/).filter(p => p.trim());
-
-  const modes: { id: ReadingMode; label: string; icon: typeof Eye }[] = [
-    { id: "kanji", label: "Kanji", icon: BookOpen },
-    { id: "furigana", label: "Furigana", icon: Eye },
-    { id: "hiragana", label: "Hiragana", icon: EyeOff },
-  ];
+  const {
+    mode,
+    showTranslation,
+    paragraphs,
+    hiraganaParagraphs,
+    translationParagraphs,
+    modes,
+    toggleTranslation,
+    setMode,
+  } = useReadingLogic(data);
 
   return (
     <div className="min-h-screen bg-background relative pb-40">
@@ -91,7 +71,7 @@ function ReadingPageContent({ data }: ReadingPageClientProps) {
                 {modes.map((m) => (
                   <button
                     key={m.id}
-                    onClick={() => setReadingState({ mode: m.id })}
+                    onClick={() => setMode(m.id)}
                     className={cn(
                       "flex items-center gap-2 px-4 py-2 rounded-xl text-xs font-bold uppercase tracking-widest transition-all",
                       mode === m.id 
@@ -105,7 +85,7 @@ function ReadingPageContent({ data }: ReadingPageClientProps) {
                 ))}
                 <div className="w-px h-4 bg-white/10 mx-2" />
                 <button
-                  onClick={() => setReadingState({ showTranslation: !showTranslation })}
+                  onClick={toggleTranslation}
                   className={cn(
                     "flex items-center gap-2 px-4 py-2 rounded-xl text-xs font-bold uppercase tracking-widest transition-all",
                     showTranslation 
@@ -160,7 +140,7 @@ function ReadingPageContent({ data }: ReadingPageClientProps) {
               {/* Explicit Translation Toggle inside Card */}
               <div className="mt-16 pt-8 border-t border-white/5 flex justify-center">
                 <button
-                  onClick={() => setReadingState({ showTranslation: !showTranslation })}
+                  onClick={toggleTranslation}
                   className={cn(
                     "group flex items-center gap-3 px-8 py-3 rounded-full text-sm font-semibold uppercase tracking-widest transition-all duration-300",
                     showTranslation

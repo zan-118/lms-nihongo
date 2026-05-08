@@ -1,8 +1,7 @@
 "use client";
 
 import React, { createContext, useContext, useState } from "react";
-
-export type ReadingMode = "kanji" | "furigana" | "hiragana";
+import { ReadingMode } from "../types";
 
 interface ReadingContextType {
   mode: ReadingMode;

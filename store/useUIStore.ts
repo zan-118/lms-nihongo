@@ -3,7 +3,7 @@ import { persist, createJSONStorage, StateStorage } from "zustand/middleware";
 import { get, set as idbSet, del } from "idb-keyval";
 import { Notification, Settings } from "./types";
 
-export type ReadingMode = "kanji" | "furigana" | "hiragana";
+import { ReadingState } from "@/components/features/reading/types";
 
 interface UIState {
   loading: boolean;
@@ -13,13 +13,7 @@ interface UIState {
   settings: Settings;
   
   // Reading Session State (Synced for FAB access)
-  readingState: {
-    mode: ReadingMode;
-    showTranslation: boolean;
-    audioUrl?: string;
-    textToSpeak?: string;
-    isTTSDisabled?: boolean;
-  };
+  readingState: ReadingState;
   
   setLoading: (loading: boolean) => void;
   setSyncing: (isSyncing: boolean) => void;

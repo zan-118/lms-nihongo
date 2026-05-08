@@ -7,8 +7,9 @@ import { Button } from "@/components/ui/button";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import FeedbackWidget from "../feedback/FeedbackWidget";
-import { ReadingMode, useUIStore } from "@/store/useUIStore";
-import AudioController from "../library/reading/AudioController";
+import { useUIStore } from "@/store/useUIStore";
+import { ReadingMode } from "@/components/features/reading/types";
+import AudioController from "@/components/features/reading/components/AudioController";
 import { Eye, Languages, BookOpen as BookIcon, EyeOff } from "lucide-react";
 import React from "react";
 import { cn } from "@/lib/utils";
@@ -23,7 +24,8 @@ export default function FloatingActions() {
   const pathname = usePathname();
   const [isOpen, setIsOpen] = useState(false);
   const [showFeedbackDialog, setShowFeedbackDialog] = useState(false);
-  const { readingState, setReadingState } = useUIStore();
+  const readingState = useUIStore((state) => state.readingState);
+  const setReadingState = useUIStore((state) => state.setReadingState);
 
   const isReadingPage = pathname?.includes("/library/reading/");
 
