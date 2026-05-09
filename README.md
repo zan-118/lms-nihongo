@@ -1,106 +1,115 @@
-# 🌀 NihongoRoute (日本語ルート) v2.5
+# 🌀 NihongoRoute (日本語ルート)
 
-[![Next.js](https://img.shields.io/badge/Next.js-15-000000?style=for-the-badge&logo=nextdotjs)](https://nextjs.org/)
-[![TypeScript](https://img.shields.io/badge/TypeScript-007ACC?style=for-the-badge&logo=typescript&logoColor=white)](https://www.typescriptlang.org/)
-[![Supabase](https://img.shields.io/badge/Supabase-3ECF8E?style=for-the-badge&logo=supabase&logoColor=white)](https://supabase.com/)
-[![Sanity](https://img.shields.io/badge/Sanity-F1662A?style=for-the-badge&logo=sanity&logoColor=white)](https://www.sanity.io/)
-[![Tailwind](https://img.shields.io/badge/Tailwind_CSS-38B2AC?style=for-the-badge&logo=tailwind-css&logoColor=white)](https://tailwindcss.com/)
-[![Zustand](https://img.shields.io/badge/Zustand-443E38?style=for-the-badge&logo=zustand&logoColor=white)](https://zustand-demo.pmnd.rs/)
+<div align="center">
+  <img src="./public/logo-branding.svg" alt="NihongoRoute Logo" width="120" height="120" />
+  <h3>Professional Japanese Learning Ecosystem for Indonesia</h3>
+  <p align="center">
+    Next-generation, offline-first platform designed to bridge the gap between traditional pedagogy and modern interactive technology.
+  </p>
 
-## 📝 Deskripsi
-
-**NihongoRoute** adalah ekosistem pembelajaran bahasa Jepang profesional yang menggabungkan **Big Data Pedagogis** dengan antarmuka **Cyber-Glass Neumorphic**. Dirancang untuk pembelajar Indonesia (JLPT N5 - N2), platform ini menawarkan rute belajar yang cerdas, lokal, dan terstruktur secara masif dengan estetika visual premium yang mendukung fokus tinggi.
-
-Dengan basis data lebih dari **10.000+ kosakata** dan **1.500+ kata kerja**, NihongoRoute menghadirkan kedalaman informasi yang jarang ditemukan di aplikasi lain, termasuk status transitivitas kata kerja, rumus tata bahasa yang presisi, hingga catatan nuansa budaya yang dilokalisasi penuh.
-
----
-
-## ✨ Fitur Unggulan v2.5 (Enriched Edition)
-
-### 📚 Big Data Pedagogis & Library
-- **AI-Enriched Dictionary** — Akses ke 10.000+ kosakata dan 1.500+ kata kerja dengan metadata lengkap (transitivitas, mnemonik, dan contoh penggunaan).
-- **Comprehensive Grammar Guides** — Ratusan panduan tata bahasa yang dilengkapi dengan **Rumus (Formation)** dan **Catatan Nuansa (Notes)**.
-- **75-Chapter Structured Curriculum** — Kurikulum terbagi rata (25 Umum, 25 N5, 25 N4) untuk progres belajar yang linear.
-
-### 🧠 Smart Learning Engine
-- **Hybrid SRS (Spaced Repetition System)** — Algoritma cerdas (Local-First) yang menjamin hafalan terkunci di ingatan jangka panjang.
-- **Smart Furigana & Audio TTS** — Rendering Furigana granular dan integrasi TTS untuk melatih pendengaran secara akurat.
-- **Dynamic PDF Generator** — Ekspor bab belajar atau daftar kosakata ke format PDF profesional secara instan.
-
-### 📝 Tipografi & Visual Premium
-- **Cyber-Glass UI** — Antarmuka modern dengan efek `backdrop-blur`, `glassmorphism`, dan aksen neon yang dioptimalkan untuk pengalaman belajar imersif.
-- **Interactive Verb Matrix** — Visualisasi konjugasi kata kerja yang dinamis untuk memahami perubahan bentuk kata secara intuitif.
+  [![Next.js](https://img.shields.io/badge/Next.js-15-000000?style=for-the-badge&logo=nextdotjs)](https://nextjs.org/)
+  [![TypeScript](https://img.shields.io/badge/TypeScript-007ACC?style=for-the-badge&logo=typescript&logoColor=white)](https://www.typescriptlang.org/)
+  [![Supabase](https://img.shields.io/badge/Supabase-3ECF8E?style=for-the-badge&logo=supabase&logoColor=white)](https://supabase.com/)
+  [![Sanity](https://img.shields.io/badge/Sanity-F1662A?style=for-the-badge&logo=sanity&logoColor=white)](https://www.sanity.io/)
+  [![Tailwind](https://img.shields.io/badge/Tailwind_CSS-38B2AC?style=for-the-badge&logo=tailwind-css&logoColor=white)](https://tailwindcss.com/)
+</div>
 
 ---
 
-## 🛠️ Stack Teknologi
+## 📖 Project Overview
 
-| Kategori | Teknologi |
-|---|---|
-| **Core Framework** | [Next.js 15+](https://nextjs.org/) (App Router), React 19, TypeScript |
-| **Styling & UI** | [Tailwind CSS](https://tailwindcss.com/), Radix UI, Framer Motion |
-| **Backend & Auth** | [Supabase](https://supabase.com/) (Auth & Sync), [Sanity CMS](https://www.sanity.io/) (Content Hub) |
-| **State & Storage** | [Zustand](https://zustand-demo.pmnd.rs/), IndexedDB (Local-First) |
-| **Performance** | Incremental Static Regeneration (ISR) & PWA Support |
+**NihongoRoute** is an enterprise-grade Japanese language learning ecosystem tailored specifically for Indonesian learners. It integrates massive pedagogical data with a cutting-edge **Cyber-Glass Semantic Design System**. The platform focuses on high-performance, offline-first interactions while ensuring seamless cloud synchronization for continuous learning across devices.
 
 ---
 
-## 📂 Struktur Proyek
+## ✨ Key Features
 
-Pohon direktori NihongoRoute dirancang untuk modularitas dan pemisahan logika yang ketat:
+### 💎 Semantic Cyber-Glass UI/UX
+An immersive interface built entirely on **Semantic Design Tokens**. No more static colors—our system adapts dynamically between Light and Dark modes with a premium "Glassmorphism" aesthetic, providing a focus-oriented environment.
 
-```text
-├── app/                  # Routing & Layout (Next.js App Router)
-│   ├── (main)/           # Core Experience (Dashboard, Library, Review, etc.)
-│   ├── auth/             # Autentikasi (Login, Register, Password Recovery)
-│   ├── onboarding/       # Setup Awal & Tutorial Pengguna
-│   └── studio/           # Embedded Sanity CMS Studio
-├── components/           # UI Component Library
-│   ├── features/         # Domain-specific components (SRS, Kanji, Quiz, etc.)
-│   ├── layout/           # Global Shell (Sidebar, Topbar, Navbar)
-│   ├── ui/               # Reusable atomic primitives (shadcn-based)
-│   └── providers/        # Context Providers (Theme, Auth, QueryClient)
-├── hooks/                # Business Logic & Side Effects (useSyncProgress, etc.)
-├── lib/                  # Utilities, Helper Functions, & GROQ Queries
-├── store/                # Zustand Global State Management
-├── supabase/             # SQL Migrations, Types, & Functions
-├── sanity/               # Content Schema & Sanity Configurations
-├── public/               # Static Assets (Images, Icons, Fonts)
-└── __tests__/            # Unit & Integration Testing Suites
+### 🧠 Intelligent SRS & Learning Engines
+- **Advanced Spaced Repetition (SRS)**: Local-first algorithm that guarantees long-term retention.
+- **On-Demand ISR**: Real-time content updates via Sanity Webhooks, ensuring you always have the latest curriculum without sacrificing speed.
+- **Smart Reading Mode**: Side-by-side (JP-ID) text rendering with integrated TTS (Text-to-Speech) and dictionary lookup.
+
+### 🎮 Gamified Pedagogical Journey
+- **XP & Streak System**: Reward-based learning to maintain motivation.
+- **JLPT N5 - N2 Mastery**: Structured lessons, comprehensive grammar guides with formation formulas, and interactive mock exams.
+- **Dynamic PDF Generator**: Export study materials, vocab lists, and certificates in branded, print-ready layouts.
+
+### 🛡️ Offline-First Architecture
+Built with a **3-Tier Sync Protocol**:
+1. **Local Store (Zustand + IndexedDB)**: Zero-latency feedback.
+2. **Orchestrator (useSyncProgress)**: Background debouncing and change detection.
+3. **Cloud Mutation (Supabase RPC)**: Reliable persistence and multi-tab integrity via BroadcastChannel API.
+
+---
+
+## 🛠️ Technology Stack
+
+| Layer | Technology |
+| :--- | :--- |
+| **Frontend** | Next.js 15 (App Router), React 19, TypeScript |
+| **Styling** | Tailwind CSS (Semantic), Framer Motion, Radix UI |
+| **Database & Auth** | Supabase (PostgreSQL, Edge Functions, RPC) |
+| **Content CMS** | Sanity CMS (GROQ Queries, Portable Text) |
+| **State Management** | Zustand (Persistent via idb-keyval), TanStack Query v5 |
+| **Infrastructure** | Vercel (Analytics & Speed Insights), PWA Service Workers |
+
+---
+
+## 📂 System Architecture
+
+NihongoRoute follows a strict directory standard for modularity and scalability:
+
+- `app/`: Routing layer and page compositions.
+- `components/features/`: Domain-specific business logic (Quiz, SRS, Exams).
+- `components/ui/`: Atomic primitive components (Semantic-first).
+- `lib/`: Pure utility functions and configurations (**No TSX**).
+- `store/`: Segmented global state management with offline persistence.
+- `sanity/`: Declarative content schemas and CMS configurations.
+
+---
+
+## 🚀 Getting Started
+
+### 1. Prerequisites
+- Node.js 18.x or higher
+- NPM or PNPM
+
+### 2. Installation
+```bash
+# Clone the repository
+git clone https://github.com/zan-118/nihongoroute.git
+
+# Install dependencies
+npm install
+```
+
+### 3. Environment Configuration
+Create a `.env.local` file in the root directory and provide your keys:
+```env
+NEXT_PUBLIC_SANITY_PROJECT_ID=...
+NEXT_PUBLIC_SANITY_DATASET=...
+NEXT_PUBLIC_SUPABASE_URL=...
+NEXT_PUBLIC_SUPABASE_ANON_KEY=...
+SANITY_REVALIDATE_SECRET=...
+```
+
+### 4. Development
+```bash
+npm run dev
 ```
 
 ---
 
-## 🏗️ Arsitektur Data
-
-NihongoRoute menggunakan pola **Local-First Architecture**:
-- **Offline-First:** Semua interaksi utama (SRS, Gamification) dilakukan di Zustand store lokal (IndexedDB) sehingga aplikasi tetap berjalan tanpa internet.
-- **Background Sync:** Sinkronisasi ke Supabase dilakukan secara debounced di latar belakang menggunakan hook `useSyncProgress`.
-- **Hybrid Content:** Konten statis berasal dari Sanity CMS, sementara progres dinamis disimpan di Supabase.
-
----
-
-## 🚀 Instalasi & Pengembangan
-
-1. **Clone & Install:**
-   ```bash
-   git clone https://github.com/zan-118/nihongoroute.git
-   npm install
-   ```
-2. **Setup Environment:**
-   Siapkan `.env.local` dengan API Key Sanity & Supabase.
-3. **Run Dev:**
-   ```bash
-   npm run dev
-   ```
-
----
-
-## 👤 Maintainer
+## 🛡️ Maintainers & Support
 
 **Fauzan Abdul Basith**
 - GitHub: [@zan-118](https://github.com/zan-118)
 - Website: [www.fauzanabdulbasith.com](https://www.fauzanabdulbasith.com)
 
 ---
-Dibuat dengan semangat untuk mendemokratisasi akses belajar bahasa Jepang yang berkualitas di Indonesia. 🇯🇵💙
+<div align="center">
+  Built with passion to democratize high-quality Japanese education in Indonesia. 🇯🇵💙
+</div>
