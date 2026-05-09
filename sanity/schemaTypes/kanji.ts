@@ -93,10 +93,29 @@ export default defineType({
       title: "Romaji / Cara Baca Utama",
     }),
     defineField({
-      name: "examples",
-      title: "Contoh Kosakata / Penggunaan",
-      type: "array",
       of: [{ type: "string" }],
+    }),
+    defineField({
+      name: "jlptLevel",
+      title: "JLPT Level",
+      type: "string",
+      options: {
+        list: [
+          { title: "N5 (Beginner)", value: "N5" },
+          { title: "N4 (Elementary)", value: "N4" },
+          { title: "N3 (Intermediate)", value: "N3" },
+          { title: "N2 (Upper Intermediate)", value: "N2" },
+          { title: "N1 (Advanced)", value: "N1" },
+        ],
+        layout: "radio",
+      },
+      initialValue: "N5",
+    }),
+    defineField({
+      name: "gradeLevel",
+      title: "Grade Level",
+      type: "string",
+      description: "Contoh: Grade 1 (Kyouiku Kanji)",
     }),
     defineField({
       name: "showInFlashcard",

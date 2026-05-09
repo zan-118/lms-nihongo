@@ -87,8 +87,23 @@ export default defineType({
           { title: "Hyougen (Ungkapan / Frasa)", value: "expression" },
         ],
       },
-      initialValue: "noun",
       validation: (Rule) => Rule.required(),
+    }),
+    defineField({
+      name: "jlptLevel",
+      title: "JLPT Level",
+      type: "string",
+      options: {
+        list: [
+          { title: "N5 (Beginner)", value: "N5" },
+          { title: "N4 (Elementary)", value: "N4" },
+          { title: "N3 (Intermediate)", value: "N3" },
+          { title: "N2 (Upper Intermediate)", value: "N2" },
+          { title: "N1 (Advanced)", value: "N1" },
+        ],
+        layout: "radio",
+      },
+      initialValue: "N5",
     }),
     defineField({
       name: "showInFlashcard",
@@ -108,6 +123,12 @@ export default defineType({
       type: "string",
       title: "Romaji",
       validation: (Rule) => Rule.required(),
+    }),
+    defineField({
+      name: "pitchAccent",
+      title: "Pitch Accent",
+      type: "string",
+      description: "Contoh: LHL (Low-High-Low)",
     }),
     defineField({
       name: "meaning",
@@ -140,6 +161,18 @@ export default defineType({
       type: "array",
       of: [{ type: "reference", to: [{ type: "kanji" }] }],
       description: "Pilih karakter Kanji yang membentuk kosa kata ini.",
+    }),
+    defineField({
+      name: "synonyms",
+      title: "Sinonim",
+      type: "array",
+      of: [{ type: "reference", to: [{ type: "vocab" }] }],
+    }),
+    defineField({
+      name: "antonyms",
+      title: "Antonim",
+      type: "array",
+      of: [{ type: "reference", to: [{ type: "vocab" }] }],
     }),
   ],
   preview: {

@@ -12,6 +12,7 @@ import { type SchemaTypeDefinition } from "sanity";
 
 import quiz from "./quiz";
 import lesson from "./lesson";
+import achievement from "./achievement";
 import callout from "./callout";
 import exampleSentence from "./exampleSentence";
 import vocab from "./vocab";
@@ -23,6 +24,10 @@ import mockExam from "./mockExam";
 import kanji from "./kanji";
 import readingMaterial from "./readingMaterial";
 import listeningTask from "./listeningTask";
+import blockContent from "./blockContent";
+import furigana from "./furiganaAnnotation";
+import dialogueBlock from "./dialogueBlock";
+import youtubeEmbed from "./youtubeEmbed";
 
 // ======================
 // MAIN EXECUTION
@@ -35,6 +40,7 @@ export const schema: { types: SchemaTypeDefinition[] } = {
   types: [
     quiz,
     lesson,
+    achievement,
     callout,
     exampleSentence,
     vocab,
@@ -46,5 +52,9 @@ export const schema: { types: SchemaTypeDefinition[] } = {
     kanji,
     readingMaterial,
     listeningTask,
+    blockContent,
+    furigana,
+    dialogueBlock,
+    youtubeEmbed,
   ],
 };

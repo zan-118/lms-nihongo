@@ -39,6 +39,24 @@ export default defineType({
       validation: (Rule) => Rule.required(),
     }),
     defineField({
+      name: "mainImage",
+      title: "Thumbnail / Cover Image",
+      type: "image",
+      options: { hotspot: true },
+    }),
+    defineField({
+      name: "estimatedMinutes",
+      title: "Estimasi Waktu Baca (Menit)",
+      type: "number",
+      initialValue: 3,
+    }),
+    defineField({
+      name: "isPremium",
+      title: "Konten Premium? 💎",
+      type: "boolean",
+      initialValue: false,
+    }),
+    defineField({
       name: "category",
       title: "Kategori",
       type: "reference",
@@ -51,6 +69,7 @@ export default defineType({
       options: {
         accept: "audio/*",
       },
+      description: "Unggah file audio pengucapan asli. Batas ukuran maksimal: 2MB.",
     }),
     defineField({
       name: "isTTSDisabled",
@@ -62,8 +81,8 @@ export default defineType({
     defineField({
       name: "body",
       title: "Bacaan Asli (Kanji/Kana)",
-      description: "Teks asli dalam bahasa Jepang. Gunakan baris baru untuk paragraf.",
-      type: "text",
+      description: "Teks asli dalam bahasa Jepang. Gunakan Furigana Annotation untuk kata sulit.",
+      type: "blockContent",
       validation: (Rule) => Rule.required(),
     }),
     defineField({
@@ -77,7 +96,7 @@ export default defineType({
       name: "translation",
       title: "Terjemahan (Bahasa Indonesia)",
       description: "Terjemahan cerita untuk membantu pemahaman.",
-      type: "text",
+      type: "blockContent",
       validation: (Rule) => Rule.required(),
     }),
   ],
