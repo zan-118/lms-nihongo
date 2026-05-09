@@ -25,7 +25,12 @@ export default defineType({
     defineField({
       name: "furigana",
       type: "string",
-      title: "Cara Baca (Furigana / Romaji)",
+      title: "Cara Baca (Furigana)",
+    }),
+    defineField({
+      name: "romaji",
+      type: "string",
+      title: "Cara Baca (Romaji)",
     }),
     defineField({
       name: "id",

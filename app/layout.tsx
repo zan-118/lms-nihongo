@@ -17,6 +17,9 @@ import DictionaryPopup from "@/components/features/tools/dictionary/DictionaryPo
 import { ThemeProvider } from "@/components/providers/ThemeProvider";
 import QueryProvider from "@/components/providers/QueryProvider";
 import { cn } from "@/lib/utils";
+import { Analytics } from '@vercel/analytics/react';
+import { SpeedInsights } from '@vercel/speed-insights/next';
+
 
 // ======================
 // CONFIG / CONSTANTS
@@ -157,8 +160,11 @@ export default function RootLayout({
               duration: 4000,
             }}
           />
+          <Analytics />
+          <SpeedInsights />
         </ThemeProvider>
       </body>
+
     </html>
   );
 }
