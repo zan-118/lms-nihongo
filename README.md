@@ -1,10 +1,10 @@
 # 🌀 NihongoRoute (日本語ルート)
 
 <div align="center">
-  <img src="./public/logo-branding.svg" alt="NihongoRoute Logo" width="120" height="120" />
-  <h3>Professional Japanese Learning Ecosystem for Indonesia</h3>
+  <img src="./public/logo-branding.svg" alt="Logo NihongoRoute" width="120" height="120" />
+  <h3>Ekosistem Pembelajaran Bahasa Jepang Profesional untuk Indonesia</h3>
   <p align="center">
-    Next-generation, offline-first platform designed to bridge the gap between traditional pedagogy and modern interactive technology.
+    Platform pembelajaran generasi baru berbasis offline-first, dirancang untuk menjembatani pedagogi tradisional dengan teknologi interaktif modern.
   </p>
 
   [![Next.js](https://img.shields.io/badge/Next.js-15-000000?style=for-the-badge&logo=nextdotjs)](https://nextjs.org/)
@@ -16,78 +16,78 @@
 
 ---
 
-## 📖 Project Overview
+## 📖 Gambaran Proyek
 
-**NihongoRoute** is an enterprise-grade Japanese language learning ecosystem tailored specifically for Indonesian learners. It integrates massive pedagogical data with a cutting-edge **Cyber-Glass Semantic Design System**. The platform focuses on high-performance, offline-first interactions while ensuring seamless cloud synchronization for continuous learning across devices.
-
----
-
-## ✨ Key Features
-
-### 💎 Semantic Cyber-Glass UI/UX
-An immersive interface built entirely on **Semantic Design Tokens**. No more static colors—our system adapts dynamically between Light and Dark modes with a premium "Glassmorphism" aesthetic, providing a focus-oriented environment.
-
-### 🧠 Intelligent SRS & Learning Engines
-- **Advanced Spaced Repetition (SRS)**: Local-first algorithm that guarantees long-term retention.
-- **On-Demand ISR**: Real-time content updates via Sanity Webhooks, ensuring you always have the latest curriculum without sacrificing speed.
-- **Smart Reading Mode**: Side-by-side (JP-ID) text rendering with integrated TTS (Text-to-Speech) and dictionary lookup.
-
-### 🎮 Gamified Pedagogical Journey
-- **XP & Streak System**: Reward-based learning to maintain motivation.
-- **JLPT N5 - N2 Mastery**: Structured lessons, comprehensive grammar guides with formation formulas, and interactive mock exams.
-- **Dynamic PDF Generator**: Export study materials, vocab lists, and certificates in branded, print-ready layouts.
-
-### 🛡️ Offline-First Architecture
-Built with a **3-Tier Sync Protocol**:
-1. **Local Store (Zustand + IndexedDB)**: Zero-latency feedback.
-2. **Orchestrator (useSyncProgress)**: Background debouncing and change detection.
-3. **Cloud Mutation (Supabase RPC)**: Reliable persistence and multi-tab integrity via BroadcastChannel API.
+**NihongoRoute** adalah ekosistem pembelajaran bahasa Jepang kelas enterprise yang disesuaikan khusus untuk pembelajar di Indonesia. Platform ini mengintegrasikan data pedagogis masif dengan **Sistem Desain Semantik Cyber-Glass** yang mutakhir. Fokus utama platform ini adalah pada performa tinggi dan interaksi berbasis *offline-first*, sembari memastikan sinkronisasi *cloud* yang mulus untuk pengalaman belajar yang berkesinambungan di berbagai perangkat.
 
 ---
 
-## 🛠️ Technology Stack
+## ✨ Fitur Unggulan
 
-| Layer | Technology |
+### 💎 UI/UX Semantic Cyber-Glass
+Antarmuka imersif yang dibangun sepenuhnya di atas **Token Desain Semantik**. Tidak ada lagi warna statis—sistem kami beradaptasi secara dinamis antara mode Terang dan Gelap dengan estetika "Glassmorphism" premium, menyediakan lingkungan yang berorientasi pada fokus belajar.
+
+### 🧠 Mesin Pembelajaran Cerdas & SRS
+- **Spaced Repetition (SRS) Lanjutan**: Algoritma cerdas berbasis *local-first* yang menjamin retensi ingatan jangka panjang.
+- **On-Demand ISR**: Pembaruan konten secara real-time melalui Sanity Webhooks, memastikan Anda selalu mendapatkan kurikulum terbaru tanpa mengorbankan kecepatan.
+- **Mode Membaca Pintar**: Rendering teks berdampingan (Jepang-Indonesia) dengan integrasi TTS (Text-to-Speech) dan pencarian kamus instan.
+
+### 🎮 Perjalanan Pedagogis Tergamifikasi
+- **Sistem XP & Streak**: Pembelajaran berbasis imbalan untuk menjaga motivasi belajar setiap hari.
+- **Penguasaan JLPT N5 - N2**: Pelajaran terstruktur, panduan tata bahasa komprehensif dengan rumus pembentukan kalimat, serta simulasi ujian interaktif.
+- **Generator PDF Dinamis**: Ekspor materi belajar, daftar kosakata, dan sertifikat dalam tata letak bermerek yang siap cetak.
+
+### 🛡️ Arsitektur Offline-First
+Dibangun dengan **Protokol Sinkronisasi 3-Tier**:
+1. **Penyimpanan Lokal (Zustand + IndexedDB)**: Umpan balik instan tanpa latensi.
+2. **Orchestrator (useSyncProgress)**: Pendeteksian perubahan dan *debouncing* di latar belakang.
+3. **Mutasi Cloud (Supabase RPC)**: Persistensi data yang handal dan integritas multi-tab melalui BroadcastChannel API.
+
+---
+
+## 🛠️ Stack Teknologi
+
+| Layer | Teknologi |
 | :--- | :--- |
 | **Frontend** | Next.js 15 (App Router), React 19, TypeScript |
-| **Styling** | Tailwind CSS (Semantic), Framer Motion, Radix UI |
+| **Styling** | Tailwind CSS (Semantik), Framer Motion, Radix UI |
 | **Database & Auth** | Supabase (PostgreSQL, Edge Functions, RPC) |
-| **Content CMS** | Sanity CMS (GROQ Queries, Portable Text) |
-| **State Management** | Zustand (Persistent via idb-keyval), TanStack Query v5 |
-| **Infrastructure** | Vercel (Analytics & Speed Insights), PWA Service Workers |
+| **Konten CMS** | Sanity CMS (GROQ Queries, Portable Text) |
+| **State Management** | Zustand (Persisten via idb-keyval), TanStack Query v5 |
+| **Infrastruktur** | Vercel (Analytics & Speed Insights), PWA Service Workers |
 
 ---
 
-## 📂 System Architecture
+## 📂 Arsitektur Sistem
 
-NihongoRoute follows a strict directory standard for modularity and scalability:
+NihongoRoute mengikuti standar direktori yang ketat untuk modularitas dan skalabilitas:
 
-- `app/`: Routing layer and page compositions.
-- `components/features/`: Domain-specific business logic (Quiz, SRS, Exams).
-- `components/ui/`: Atomic primitive components (Semantic-first).
-- `lib/`: Pure utility functions and configurations (**No TSX**).
-- `store/`: Segmented global state management with offline persistence.
-- `sanity/`: Declarative content schemas and CMS configurations.
+- `app/`: Layer perutean (routing) dan komposisi halaman.
+- `components/features/`: Logika bisnis spesifik domain (Quiz, SRS, Exams).
+- `components/ui/`: Komponen primitif atomik (berbasis semantik).
+- `lib/`: Fungsi utilitas murni dan konfigurasi (**Tanpa TSX**).
+- `store/`: Manajemen state global terfragmentasi dengan persistensi offline.
+- `sanity/`: Skema konten deklaratif dan konfigurasi CMS.
 
 ---
 
-## 🚀 Getting Started
+## 🚀 Memulai (Getting Started)
 
-### 1. Prerequisites
-- Node.js 18.x or higher
-- NPM or PNPM
+### 1. Prasyarat
+- Node.js 18.x atau versi lebih tinggi
+- NPM atau PNPM
 
-### 2. Installation
+### 2. Instalasi
 ```bash
-# Clone the repository
+# Clone repositori
 git clone https://github.com/zan-118/nihongoroute.git
 
-# Install dependencies
+# Instal dependensi
 npm install
 ```
 
-### 3. Environment Configuration
-Create a `.env.local` file in the root directory and provide your keys:
+### 3. Konfigurasi Lingkungan (Environment)
+Buat file `.env.local` di direktori root dan masukkan kunci API Anda:
 ```env
 NEXT_PUBLIC_SANITY_PROJECT_ID=...
 NEXT_PUBLIC_SANITY_DATASET=...
@@ -96,14 +96,14 @@ NEXT_PUBLIC_SUPABASE_ANON_KEY=...
 SANITY_REVALIDATE_SECRET=...
 ```
 
-### 4. Development
+### 4. Pengembangan
 ```bash
 npm run dev
 ```
 
 ---
 
-## 🛡️ Maintainers & Support
+## 🛡️ Pemeliharaan & Dukungan
 
 **Fauzan Abdul Basith**
 - GitHub: [@zan-118](https://github.com/zan-118)
@@ -111,5 +111,5 @@ npm run dev
 
 ---
 <div align="center">
-  Built with passion to democratize high-quality Japanese education in Indonesia. 🇯🇵💙
+  Dibangun dengan semangat untuk mendemokratisasi akses pendidikan Bahasa Jepang berkualitas di Indonesia. 🇯🇵💙
 </div>
