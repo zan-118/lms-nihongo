@@ -75,7 +75,7 @@ export const kanjiListQuery = `*[_type == "kanji"] | order(course_category->slug
   onyomi,
   kunyomi,
   "jlpt": course_category->slug.current,
-  "slug": slug.current
+  "slug": character
 }`;
 
 export const listeningListQuery = `*[_type == "listeningTask"] | order(_createdAt desc) {
@@ -84,7 +84,7 @@ export const listeningListQuery = `*[_type == "listeningTask"] | order(_createdA
   "slug": slug.current
 }`;
 
-export const kanjiQuery = `*[_type == "kanji" && slug.current == $slug][0] {
+export const kanjiQuery = `*[_type == "kanji" && (character == $slug || _id == $slug)][0] {
   _id,
   character,
   meaning,
@@ -95,11 +95,12 @@ export const kanjiQuery = `*[_type == "kanji" && slug.current == $slug][0] {
   strokeOrderSvg,
   radicals,
   mnemonics,
-  "slug": slug.current,
+  "slug": character,
   "relatedVocab": *[_type == "vocab" && references(^._id)] {
     _id,
     word,
     furigana,
+    romaji,
     meaning
   }
 }`;
@@ -125,7 +126,7 @@ export const listeningTaskQuery = `*[_type == "listeningTask" && slug.current ==
   }
 }`;
 
-export const vocabDetailQuery = `*[_type == "vocab" && (_id == $id || vocabId == $id)][0] {
+export const vocabDetailQuery = `*[(_type == "vocab" || _type == "verb_dictionary") && (romaji == $id || _id == $id)][0] {
   _id,
   word,
   furigana,
@@ -143,10 +144,10 @@ export const vocabDetailQuery = `*[_type == "vocab" && (_id == $id || vocabId ==
     meaning, 
     onyomi, 
     kunyomi,
-    "slug": slug.current 
+    "slug": character 
   },
-  synonyms[]->{ _id, word, meaning, furigana },
-  antonyms[]->{ _id, word, meaning, furigana },
+  synonyms[]->{ _id, word, meaning, furigana, romaji },
+  antonyms[]->{ _id, word, meaning, furigana, romaji },
   examples[] { japanese, indonesian },
   negative,
   past,

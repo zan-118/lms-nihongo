@@ -7,13 +7,7 @@ export default defineType({
   type: "document",
   icon: Trophy,
   fields: [
-    defineField({
-      name: "achievementId",
-      title: "Achievement ID",
-      type: "string",
-      description: "Contoh: ACH-FIRST-VOCAB",
-      validation: (Rule) => Rule.required(),
-    }),
+
     defineField({
       name: "title",
       title: "Judul Achievement",

@@ -1,5 +1,6 @@
 import { defineField, defineType } from "sanity";
 import { Headphones } from "lucide-react";
+import { AutoSlugInput } from "../components/AutoSlugInput";
 
 export const listeningTask = defineType({
   name: "listeningTask",
@@ -20,6 +21,9 @@ export const listeningTask = defineType({
       options: {
         source: "title",
         maxLength: 96,
+      },
+      components: {
+        input: AutoSlugInput,
       },
       validation: (Rule) => Rule.required(),
     }),
@@ -87,7 +91,7 @@ export const listeningTask = defineType({
       name: "quiz",
       title: "Post-Listening Quiz",
       type: "array",
-      of: [{ type: "reference", to: [{ type: "quiz" }] }],
+      of: [{ type: "quiz" }],
     }),
   ],
 });

@@ -12,25 +12,6 @@ import { defineField, defineType, type ValidationContext } from "sanity";
 // ======================
 
 /**
- * Memastikan Kanji ID bersifat unik di seluruh dataset.
- */
-const isUniqueKanjiId = async (value: string | undefined, context: ValidationContext) => {
-  if (!value) return true;
-  const { document, getClient } = context;
-  if (!document) return true;
-  const client = getClient({ apiVersion: "2024-04-12" });
-  const id = document._id.replace(/^drafts\./, "");
-
-  const query = `*[_type == "kanji" && kanjiId == $value && _id != $draftId && _id != $publishedId][0]`;
-  const params = { value, draftId: `drafts.${id}`, publishedId: id };
-  const result = await client.fetch(query, params);
-
-  return result
-    ? `🚨 Kanji ID "${value}" sudah dipakai! Gunakan ID lain.`
-    : true;
-};
-
-/**
  * Memastikan karakter kanji tidak duplikat dalam database.
  */
 const isUniqueKanji = async (value: string | undefined, context: ValidationContext) => {
@@ -58,19 +39,14 @@ export default defineType({
   title: "Perpustakaan Kanji Global",
   type: "document",
   fields: [
-    defineField({
-      name: "kanjiId",
-      title: "Kanji ID",
-      type: "string",
-      description: "Contoh: KNJ-N5-001",
-      validation: (Rule) => Rule.custom(isUniqueKanjiId),
-    }),
+
     defineField({
       name: "character",
       type: "string",
       title: "Karakter Kanji",
       validation: (Rule) => Rule.required().custom(isUniqueKanji),
     }),
+
     defineField({
       name: "meaning",
       type: "string",
@@ -166,13 +142,10 @@ export default defineType({
       title: "character",
       subtitle: "meaning",
       showInFlashcard: "showInFlashcard",
-      customId: "kanjiId",
     },
-    prepare({ title, subtitle, showInFlashcard, customId }) {
+    prepare({ title, subtitle, showInFlashcard }) {
       const isHidden = showInFlashcard === false ? " 🚷 (Hidden)" : "";
-      const displayTitle = customId
-        ? `[${customId}] ${title || "Kosong"}`
-        : title || "Kosong";
+      const displayTitle = title || "Kosong";
 
       return {
         title: `${displayTitle}${isHidden}`,

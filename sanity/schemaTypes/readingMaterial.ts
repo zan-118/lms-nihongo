@@ -1,5 +1,6 @@
 import { defineType, defineField } from "sanity";
 import { BookOpen } from "lucide-react";
+import { AutoSlugInput } from "../components/AutoSlugInput";
 
 export default defineType({
   name: "readingMaterial",
@@ -20,6 +21,9 @@ export default defineType({
       options: {
         source: "title",
         maxLength: 96,
+      },
+      components: {
+        input: AutoSlugInput,
       },
       validation: (Rule) => Rule.required(),
     }),
@@ -61,6 +65,13 @@ export default defineType({
       title: "Kategori",
       type: "reference",
       to: [{ type: "course_category" }],
+    }),
+    defineField({
+      name: "keyVocabulary",
+      title: "Kosakata Kunci (Key Vocab)",
+      type: "array",
+      of: [{ type: "reference", to: [{ type: "vocab" }, { type: "verb_dictionary" }] }],
+      description: "Daftar kosakata penting yang muncul di bacaan ini agar user bisa mempelajarinya terlebih dahulu.",
     }),
     defineField({
       name: "audioFile",

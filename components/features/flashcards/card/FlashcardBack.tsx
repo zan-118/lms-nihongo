@@ -164,7 +164,7 @@ export function FlashcardBack({
                 variant="outline"
                 className="flex-1 h-7 bg-background border-border hover:bg-muted text-[8px] md:text-[10px] font-black uppercase tracking-widest rounded-lg px-2 shadow-none"
               >
-                <Link href={`/library/vocab/${id}`} aria-label="Lihat detail kata ini">
+                <Link href={`/library/${isKanji ? 'kanji' : 'vocab'}/${romaji || id}`} aria-label="Lihat detail kata ini">
                   <ExternalLink size={10} className="mr-1" aria-hidden="true" /> Detail
                 </Link>
               </Button>

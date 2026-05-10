@@ -38,6 +38,7 @@ export interface Cheatsheet {
   _id: string;
   title: string;
   category: string;
+  slug?: string;
   linkedVocab?: SheetItem[];
   items?: SheetItem[];
 }
@@ -126,7 +127,7 @@ export default function CheatsheetClient({
                   exit={{ opacity: 0, scale: 0.95 }}
                   transition={{ delay: idx * 0.05 }}
                 >
-                  <Link href={`/library/cheatsheet/${sheet._id}`}>
+                  <Link href={`/library/cheatsheet/${sheet.slug || sheet._id}`}>
                     <Card 
                       className="group relative h-full bg-card hover:bg-primary/[0.02] border border-border/50 hover:border-primary/40 rounded-[2.5rem] p-8 cursor-pointer transition-all duration-500 shadow-sm hover:shadow-[0_20px_50px_rgba(0,0,0,0.1)] dark:hover:shadow-[0_20px_50px_rgba(0,0,0,0.3)] flex flex-col gap-6 overflow-hidden"
                     >

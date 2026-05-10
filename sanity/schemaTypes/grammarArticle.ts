@@ -6,6 +6,7 @@
  */
 
 import { defineType, defineField } from "sanity";
+import { AutoSlugInput } from "../components/AutoSlugInput";
 
 // ======================
 // SCHEMA DEFINITION
@@ -16,18 +17,16 @@ export default defineType({
   title: "Grammar Article",
   type: "document",
   fields: [
-    defineField({
-      name: "grammarId",
-      title: "Grammar ID",
-      type: "string",
-      description: "Contoh: GRM-N5-01",
-    }),
+
     defineField({ name: "title", title: "Title", type: "string" }),
     defineField({
       name: "slug",
       title: "Slug",
       type: "slug",
       options: { source: "title" },
+      components: {
+        input: AutoSlugInput,
+      },
     }),
     defineField({
       name: "course_category",
@@ -83,6 +82,13 @@ export default defineType({
       description: "Penjelasan nuansa atau tips penggunaan tata bahasa ini.",
     }),
     defineField({
+      name: "examples",
+      title: "Contoh Kalimat (Terstruktur)",
+      type: "array",
+      of: [{ type: "exampleSentence" }],
+      description: "Contoh kalimat baku yang bisa diekstrak menjadi Flashcard otomatis.",
+    }),
+    defineField({
       name: "seoTitle",
       title: "SEO Title",
       type: "string",
@@ -108,14 +114,11 @@ export default defineType({
     select: {
       title: "title",
       subtitle: "meaning",
-      customId: "grammarId",
-      systemId: "_id",
     },
-    prepare({ title, subtitle, customId, systemId }) {
-      const displayTitle = customId ? `[${customId}] ${title}` : title;
+    prepare({ title, subtitle }) {
       return {
-        title: displayTitle,
-        subtitle: `SysID: ${systemId} | ${subtitle || ""}`,
+        title: title,
+        subtitle: subtitle || "",
       };
     },
   },

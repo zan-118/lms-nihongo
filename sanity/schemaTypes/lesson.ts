@@ -6,6 +6,7 @@
  */
 
 import { defineType, defineField } from "sanity";
+import { AutoSlugInput } from "../components/AutoSlugInput";
 
 // ======================
 // SCHEMA DEFINITION
@@ -16,18 +17,16 @@ export default defineType({
   title: "Lesson",
   type: "document",
   fields: [
-    defineField({
-      name: "lessonId",
-      title: "Lesson ID",
-      type: "string",
-      description: "Contoh: LSN-N5-01",
-    }),
+
     defineField({ name: "title", title: "Title", type: "string" }),
     defineField({
       name: "slug",
       title: "Slug",
       type: "slug",
       options: { source: "title" },
+      components: {
+        input: AutoSlugInput,
+      },
     }),
     defineField({ name: "orderNumber", title: "Order Number", type: "number" }),
     defineField({
@@ -116,14 +115,11 @@ export default defineType({
     select: {
       title: "title",
       subtitle: "summary",
-      customId: "lessonId",
-      systemId: "_id",
     },
-    prepare({ title, subtitle, customId, systemId }) {
-      const displayTitle = customId ? `[${customId}] ${title}` : title;
+    prepare({ title, subtitle }) {
       return {
-        title: displayTitle,
-        subtitle: `SysID: ${systemId} | ${subtitle || "No summary"}`,
+        title: title,
+        subtitle: subtitle || "No summary",
       };
     },
   },

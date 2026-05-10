@@ -64,13 +64,13 @@ export default function SearchModal({ isOpen, onClose }: { isOpen: boolean; onCl
         const sanityQuery = `*[
           (_type == "vocab" && (word match $search || meaning match $search || romaji match $search || word match $kana || furigana match $kana || word match $kata)) ||
           (_type == "grammar" && (title match $search || slug.current match $search)) ||
-          (_type == "kanji" && (kanji match $search || meaning match $search || kanji match $kana))
+          (_type == "kanji" && (character match $search || meaning match $search || character match $kana))
         ] | order(_type asc) [0...10] {
           _id,
           _type,
-          "title": coalesce(word, title, kanji),
+          "title": coalesce(word, title, character),
           "description": coalesce(meaning, "Materi bahasa Jepang"),
-          "slug": slug.current,
+          "slug": coalesce(slug.current, romaji, character),
           "category": _type
         }`;
 
@@ -85,10 +85,10 @@ export default function SearchModal({ isOpen, onClose }: { isOpen: boolean; onCl
           title: item.title,
           description: item.description,
           href: item._type === "vocab" 
-            ? `/library/vocab/${item._id}` 
+            ? `/library/vocab/${item.slug || item._id}` 
             : item._type === "grammar" 
-            ? `/library/grammar/${item.slug}` 
-            : `/library/kanji/${item._id}`,
+            ? `/library/grammar/${item.slug || item._id}` 
+            : `/library/kanji/${item.slug || item._id}`,
           icon: item._type === "vocab" ? FileText : item._type === "grammar" ? BookOpen : Hash,
           category: item._type === "vocab" ? "Kosakata" : item._type === "grammar" ? "Tata Bahasa" : "Kanji"
         }));

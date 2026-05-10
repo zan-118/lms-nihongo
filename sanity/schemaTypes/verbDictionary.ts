@@ -6,6 +6,8 @@
  */
 
 import { defineField, defineType } from "sanity";
+import { KanaInput } from "../components/KanaInput";
+import { AutoRomajiInput } from "../components/AutoRomajiInput";
 
 // ======================
 // SCHEMA DEFINITION
@@ -22,13 +24,7 @@ export default defineType({
   ],
   fields: [
     // --- IDENTITAS UTAMA ---
-    defineField({
-      name: "verbId",
-      title: "Verb ID",
-      type: "string",
-      description: "ID Unik. Contoh: VRB-G1-001",
-      fieldset: "identity",
-    }),
+
     defineField({
       name: "masu",
       title: "Bentuk Masu (Utama)",
@@ -37,11 +33,15 @@ export default defineType({
       fieldset: "identity",
       validation: (Rule) => Rule.required(),
     }),
+
     defineField({
       name: "furigana",
       title: "Furigana (Hiragana)",
       type: "string",
       description: "Cara baca dalam Hiragana murni.",
+      components: {
+        input: KanaInput,
+      },
       fieldset: "identity",
     }),
     defineField({
@@ -55,7 +55,10 @@ export default defineType({
       name: "romaji",
       title: "Romaji",
       type: "string",
-      description: "Gunakan sistem Hepburn.",
+      components: {
+        input: AutoRomajiInput,
+      },
+      description: "Terisi otomatis mengikuti Furigana. Bisa diedit manual jika perlu.",
       fieldset: "identity",
     }),
     defineField({
@@ -72,6 +75,21 @@ export default defineType({
       type: "string",
       fieldset: "identity",
       validation: (Rule) => Rule.required(),
+    }),
+    defineField({
+      name: "audioFile",
+      title: "Audio Pengucapan Asli",
+      type: "file",
+      options: { accept: "audio/*" },
+      fieldset: "identity",
+      description: "Rekaman suara native speaker.",
+    }),
+    defineField({
+      name: "usageNotes",
+      title: "Nuansa & Kolokasi (Opsional)",
+      type: "text",
+      fieldset: "identity",
+      description: "Contoh: Hanya dipakai untuk benda mati atau dalam konteks formal.",
     }),
     defineField({
       name: "group",
@@ -239,14 +257,11 @@ export default defineType({
       title: "masu",
       subtitle: "meaning",
       group: "group",
-      customId: "verbId",
-      systemId: "_id",
     },
-    prepare({ title, subtitle, group, customId, systemId }) {
-      const displayTitle = customId ? `[${customId}] ${title}` : title;
+    prepare({ title, subtitle, group }) {
       return {
-        title: displayTitle,
-        subtitle: `SysID: ${systemId} | ${subtitle} (Gol. ${group})`,
+        title: title,
+        subtitle: `${subtitle} (Gol. ${group})`,
       };
     },
   },

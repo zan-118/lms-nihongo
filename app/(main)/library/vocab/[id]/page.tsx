@@ -234,8 +234,8 @@ export default async function VocabDetailPage({
                 <div className="space-y-4">
                   <span className="text-[10px] font-black uppercase tracking-[0.2em] text-muted-foreground ml-2">Sinonim</span>
                   <div className="flex flex-wrap gap-2">
-                    {vocab.synonyms.map((s: { _id: string; word: string; meaning: string }) => (
-                      <Link key={s._id} href={`/library/vocab/${s._id}`}>
+                    {vocab.synonyms.map((s: { _id: string; word: string; meaning: string; romaji?: string }) => (
+                      <Link key={s._id} href={`/library/vocab/${s.romaji || s._id}`}>
                         <Badge variant="secondary" className="px-3 py-1.5 rounded-lg bg-muted border border-border hover:border-primary/40 transition-all cursor-pointer">
                           <span className="font-japanese mr-1.5">{s.word}</span>
                           <span className="text-[8px] opacity-60">({s.meaning})</span>
@@ -249,8 +249,8 @@ export default async function VocabDetailPage({
                 <div className="space-y-4">
                   <span className="text-[10px] font-black uppercase tracking-[0.2em] text-muted-foreground ml-2">Antonim</span>
                   <div className="flex flex-wrap gap-2">
-                    {vocab.antonyms.map((a: { _id: string; word: string; meaning: string }) => (
-                      <Link key={a._id} href={`/library/vocab/${a._id}`}>
+                    {vocab.antonyms.map((a: { _id: string; word: string; meaning: string; romaji?: string }) => (
+                      <Link key={a._id} href={`/library/vocab/${a.romaji || a._id}`}>
                         <Badge variant="secondary" className="px-3 py-1.5 rounded-lg bg-muted border border-border hover:border-destructive/40 transition-all cursor-pointer">
                           <span className="font-japanese mr-1.5">{a.word}</span>
                           <span className="text-[8px] opacity-60">({a.meaning})</span>

@@ -30,7 +30,7 @@ export default async function CheatsheetPage() {
   // ======================
   const sheets = await sanityFetch<any[]>({
     query: `*[_type == "cheatsheet"] | order(category asc, title asc) {
-      _id, title, category, items,
+      _id, "slug": slug.current, title, category, items,
       linkedVocab[]->{ "jp": word, "label": meaning, romaji }
     }`,
     tags: ["cheatsheet"],

@@ -6,29 +6,12 @@
  */
 
 import { defineField, defineType, type ValidationContext } from "sanity";
+import { KanaInput } from "../components/KanaInput";
+import { AutoRomajiInput } from "../components/AutoRomajiInput";
 
 // ======================
 // VALIDATION LOGIC
 // ======================
-
-/**
- * Memastikan Vocab ID bersifat unik di seluruh dataset.
- */
-const isUniqueVocabId = async (value: string | undefined, context: ValidationContext) => {
-  if (!value) return true;
-  const { document, getClient } = context;
-  if (!document) return true;
-  const client = getClient({ apiVersion: "2024-04-12" });
-  const id = document._id.replace(/^drafts\./, "");
-
-  const query = `*[_type == "vocab" && vocabId == $value && _id != $draftId && _id != $publishedId][0]`;
-  const params = { value, draftId: `drafts.${id}`, publishedId: id };
-  const result = await client.fetch(query, params);
-
-  return result
-    ? `🚨 Vocab ID "${value}" sudah dipakai! Gunakan ID lain.`
-    : true;
-};
 
 /**
  * Memastikan kata Jepang (word) tidak duplikat untuk menjaga integritas data.
@@ -61,19 +44,14 @@ export default defineType({
     { name: "adjectiveConjugation", title: "Konjugasi Kata Sifat (Khusus Keiyoushi)" },
   ],
   fields: [
-    defineField({
-      name: "vocabId",
-      title: "Vocab ID",
-      type: "string",
-      description: "Contoh: VOC-N5-001",
-      validation: (Rule) => Rule.custom(isUniqueVocabId),
-    }),
+
     defineField({
       name: "word",
       type: "string",
       title: "Kata (Kanji/Kana)",
       validation: (Rule) => Rule.required().custom(isUniqueWord),
     }),
+
     defineField({
       name: "hinshi",
       type: "string",
@@ -88,6 +66,14 @@ export default defineType({
           { title: "Setsuzokushi (Kata Sambung)", value: "conjunction" },
           { title: "Daimeishi (Kata Ganti)", value: "pronoun" },
           { title: "Hyougen (Ungkapan / Frasa)", value: "expression" },
+          { title: "Suushi (Angka/Numeric)", value: "numeric" },
+          { title: "Josuushi (Satuan Hitung/Counter)", value: "counter" },
+          { title: "Rentaishi (Pre-noun Adjectival)", value: "pre-noun-adjectival" },
+          { title: "Fukushi-teki Meishi (Adverbial Noun)", value: "adverbial-noun" },
+          { title: "Meishi-teki Fukushi (Temporal Noun)", value: "temporal-noun" },
+          { title: "Kandoushi (Interjection)", value: "interjection" },
+          { title: "Setsudougo (Prefix)", value: "prefix" },
+          { title: "Setsubigo (Suffix)", value: "suffix" },
         ],
       },
       validation: (Rule) => Rule.required(),
@@ -120,11 +106,19 @@ export default defineType({
       name: "furigana",
       type: "string",
       title: "Cara Baca (Furigana)",
+      components: {
+        input: KanaInput,
+      },
+      description: "Ketik romaji, akan otomatis diubah jadi Hiragana.",
     }),
     defineField({
       name: "romaji",
       type: "string",
       title: "Romaji",
+      components: {
+        input: AutoRomajiInput,
+      },
+      description: "Terisi otomatis mengikuti Furigana. Bisa diedit manual jika perlu.",
       validation: (Rule) => Rule.required(),
     }),
     defineField({
@@ -151,6 +145,12 @@ export default defineType({
       type: "file",
       title: "Audio Pengucapan (Opsional)",
       options: { accept: "audio/*" },
+    }),
+    defineField({
+      name: "usageNotes",
+      title: "Nuansa & Kolokasi (Opsional)",
+      type: "text",
+      description: "Contoh: Sering digunakan bersama partikel 'ni' atau hanya untuk konteks formal.",
     }),
     defineField({
       name: "mnemonic",
@@ -228,18 +228,14 @@ export default defineType({
       subtitle: "meaning",
       hinshi: "hinshi",
       showInFlashcard: "showInFlashcard",
-      customId: "vocabId",
-      systemId: "_id",
     },
-    prepare({ title, subtitle, hinshi, showInFlashcard, customId, systemId }) {
+    prepare({ title, subtitle, hinshi, showInFlashcard }) {
       const isHidden = showInFlashcard === false ? " 🚷 (Hidden)" : "";
-      const displayTitle = customId
-        ? `[${customId}] ${title || "Kosong"}`
-        : title || "Kosong";
+      const displayTitle = title || "Kosong";
 
       return {
         title: `${displayTitle}${isHidden}`,
-        subtitle: `SysID: ${systemId} | [${hinshi?.toUpperCase() || "UNKNOWN"}] ${subtitle || ""}`,
+        subtitle: `[${hinshi?.toUpperCase() || "UNKNOWN"}] ${subtitle || ""}`,
       };
     },
   },

@@ -23,9 +23,10 @@ export default defineType({
             }),
             defineField({
               name: "text",
-              type: "text",
+              type: "array",
               title: "Pesan/Teks",
-              rows: 3,
+              of: [{ type: "block" }],
+              description: "Mendukung Portable Text (termasuk Furigana Annotation).",
               validation: (Rule) => Rule.required(),
             }),
           ],

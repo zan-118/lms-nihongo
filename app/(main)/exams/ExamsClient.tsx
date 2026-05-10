@@ -46,6 +46,7 @@ export interface ExamData {
   title: string;
   description?: string;
   levelCode?: string;
+  slug?: string;
   timeLimit: number;
   passingScore: number;
 }
@@ -133,7 +134,7 @@ export default function ExamsClient({ exams }: { exams: ExamData[] }) {
                 className="h-full"
               >
                 <Link
-                  href={`/exams/${exam._id}`}
+                  href={`/exams/${exam.slug || exam._id}`}
                   className="block h-full"
                 >
                   <Card className="p-6 md:p-8 group hover:border-destructive/40 hover:bg-destructive/[0.02] transition-all duration-300 flex flex-col h-full relative overflow-hidden cursor-pointer bg-card rounded-2xl border-border hover:shadow-[0_0_40px_rgba(var(--destructive-rgb),0.06)]">

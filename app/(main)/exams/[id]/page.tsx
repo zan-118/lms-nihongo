@@ -40,7 +40,7 @@ export default async function StandaloneExamSessionPage({ params }: PageProps) {
   // ======================
   // DATABASE OPERATIONS
   // ======================
-  const query = `*[_type == "mockExam" && _id == $id][0] {
+  const query = `*[_type == "mockExam" && (_id == $id || slug.current == $id)][0] {
     _id, title, timeLimit, passingScore,
     "categorySlug": course_category->slug.current, 
     "levelCode": level,

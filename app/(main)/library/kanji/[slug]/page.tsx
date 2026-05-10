@@ -179,8 +179,8 @@ export default async function KanjiDetailPage({
               
               {kanji.relatedVocab && kanji.relatedVocab.length > 0 ? (
                 <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
-                  {kanji.relatedVocab.map((vocab: { _id: string; word: string; furigana: string; meaning: string }) => (
-                    <Link key={vocab._id} href={`/library/vocab/${vocab._id}`}>
+                  {kanji.relatedVocab.map((vocab: { _id: string; word: string; furigana: string; meaning: string; romaji?: string }) => (
+                    <Link key={vocab._id} href={`/library/vocab/${vocab.romaji || vocab._id}`}>
                       <Card className="p-6 bg-card/20 border-border rounded-2xl flex items-center gap-4 hover:bg-card/40 hover:border-primary/30 transition-all group cursor-pointer">
                         <div className="flex-1 min-w-0">
                           <div className="text-xl font-bold text-foreground font-japanese group-hover:text-primary transition-colors">

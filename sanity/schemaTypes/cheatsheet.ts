@@ -6,6 +6,7 @@
  */
 
 import { defineField, defineType } from "sanity";
+import { AutoSlugInput } from "../components/AutoSlugInput";
 
 // ======================
 // SCHEMA DEFINITION
@@ -16,17 +17,21 @@ export default defineType({
   title: "Cheatsheet (Referensi Cepat)",
   type: "document",
   fields: [
-    defineField({
-      name: "sheetId",
-      title: "ID / Kode Sheet (Opsional)",
-      type: "string",
-      description:
-        "Contoh: CS-N5-01 (Berguna untuk pengurutan atau pencarian spesifik).",
-    }),
+
     defineField({
       name: "title",
       title: "Judul Cheatsheet",
       type: "string",
+      validation: (Rule) => Rule.required(),
+    }),
+    defineField({
+      name: "slug",
+      title: "Slug",
+      type: "slug",
+      options: { source: "title" },
+      components: {
+        input: AutoSlugInput,
+      },
       validation: (Rule) => Rule.required(),
     }),
     defineField({
@@ -62,12 +67,7 @@ export default defineType({
         {
           type: "object",
           fields: [
-            {
-              name: "itemId",
-              title: "ID Item (Opsional)",
-              type: "string",
-              description: "Bisa diisi angka urut (1, 2, 3) atau kode",
-            },
+
             { name: "label", title: "Konteks / Arti", type: "string" },
             { name: "jp", title: "Bahasa Jepang / Rumus", type: "string" },
             { name: "romaji", title: "Romaji", type: "string" },
@@ -80,14 +80,11 @@ export default defineType({
     select: {
       title: "title",
       subtitle: "category",
-      customId: "sheetId",
-      systemId: "_id",
     },
-    prepare({ title, subtitle, customId, systemId }) {
-      const displayTitle = customId ? `[${customId}] ${title}` : title;
+    prepare({ title, subtitle }) {
       return {
-        title: displayTitle,
-        subtitle: `SysID: ${systemId} | ${subtitle}`,
+        title: title,
+        subtitle: subtitle,
       };
     },
   },

@@ -6,6 +6,7 @@
  */
 
 import { defineType, defineField } from "sanity";
+import { AutoSlugInput } from "../components/AutoSlugInput";
 
 // ======================
 // SCHEMA DEFINITION
@@ -16,12 +17,7 @@ export default defineType({
   title: "Course Category",
   type: "document",
   fields: [
-    defineField({
-      name: "categoryId",
-      title: "Category ID",
-      type: "string",
-      description: "Contoh: CAT-N5, CAT-TRAVEL",
-    }),
+
     defineField({
       name: "title",
       title: "Title",
@@ -46,6 +42,9 @@ export default defineType({
       title: "Slug",
       type: "slug",
       options: { source: "title", maxLength: 96 },
+      components: {
+        input: AutoSlugInput,
+      },
       validation: (Rule) => Rule.required(),
     }),
   ],
@@ -53,14 +52,11 @@ export default defineType({
     select: {
       title: "title",
       subtitle: "type",
-      customId: "categoryId",
-      systemId: "_id",
     },
-    prepare({ title, subtitle, customId, systemId }) {
-      const displayTitle = customId ? `[${customId}] ${title}` : title;
+    prepare({ title, subtitle }) {
       return {
-        title: displayTitle,
-        subtitle: `SysID: ${systemId} | Type: ${subtitle}`,
+        title: title,
+        subtitle: `Type: ${subtitle}`,
       };
     },
   },

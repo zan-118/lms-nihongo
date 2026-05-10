@@ -34,6 +34,7 @@ export const metadata: Metadata = {
 async function getExamsData() {
   const query = `*[_type == "mockExam" && !(_id in path("drafts.**"))] | order(_createdAt desc) {
     _id,
+    "slug": slug.current,
     title,
     description,
     "levelCode": course_category->slug.current,

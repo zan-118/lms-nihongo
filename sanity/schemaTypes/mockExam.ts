@@ -6,6 +6,7 @@
  */
 
 import { defineField, defineType } from "sanity";
+import { AutoSlugInput } from "../components/AutoSlugInput";
 
 // ======================
 // SCHEMA DEFINITION
@@ -16,17 +17,22 @@ export default defineType({
   title: "Mock Exam (Tryout JLPT)",
   type: "document",
   fields: [
-    defineField({
-      name: "examId",
-      title: "Exam ID",
-      type: "string",
-      description: "Contoh: EXM-N5-01",
-    }),
+
     defineField({
       name: "title",
       title: "Judul Ujian",
       type: "string",
       description: "Contoh: Simulasi JLPT N5 (Paket 1)",
+      validation: (Rule) => Rule.required(),
+    }),
+    defineField({
+      name: "slug",
+      title: "Slug",
+      type: "slug",
+      options: { source: "title" },
+      components: {
+        input: AutoSlugInput,
+      },
       validation: (Rule) => Rule.required(),
     }),
     defineField({
@@ -113,6 +119,18 @@ export default defineType({
               type: "number",
               validation: (Rule) => Rule.required().min(0).max(3),
             },
+            {
+              name: "explanation",
+              title: "Penjelasan Jawaban (Opsional)",
+              type: "text",
+              description: "Penjelasan mengapa jawaban ini benar (berguna untuk mode Review Ujian).",
+            },
+            {
+              name: "passageText",
+              title: "Teks Cerita / Passage (Khusus Dokkai)",
+              type: "text",
+              description: "Gunakan field ini pada soal PERTAMA dari sebuah teks bacaan Dokkai yang panjang.",
+            },
           ],
           preview: {
             select: {
@@ -144,14 +162,11 @@ export default defineType({
     select: {
       title: "title",
       subtitle: "course_category.title",
-      customId: "examId",
-      systemId: "_id",
     },
-    prepare({ title, subtitle, customId, systemId }) {
-      const displayTitle = customId ? `[${customId}] ${title}` : title;
+    prepare({ title, subtitle }) {
       return {
-        title: displayTitle,
-        subtitle: `SysID: ${systemId} | ${subtitle || ""}`,
+        title: title,
+        subtitle: subtitle || "",
       };
     },
   },
