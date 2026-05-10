@@ -57,6 +57,9 @@ export default defineType({
   name: "vocab",
   title: "Perpustakaan Kosakata Global",
   type: "document",
+  fieldsets: [
+    { name: "adjectiveConjugation", title: "Konjugasi Kata Sifat (Khusus Keiyoushi)" },
+  ],
   fields: [
     defineField({
       name: "vocabId",
@@ -173,6 +176,50 @@ export default defineType({
       title: "Antonim",
       type: "array",
       of: [{ type: "reference", to: [{ type: "vocab" }] }],
+    }),
+    defineField({
+      name: "examples",
+      title: "Contoh Kalimat",
+      type: "array",
+      of: [{ type: "exampleSentence" }],
+      description: "Daftar contoh kalimat penggunaan kata ini.",
+    }),
+
+    // --- KONJUGASI KATA SIFAT (CONDITIONAL) ---
+    defineField({
+      name: "negative",
+      title: "Bentuk Negatif (~kunai / ~ja nai)",
+      type: "string",
+      fieldset: "adjectiveConjugation",
+      hidden: ({ document }) => !["i-adjective", "na-adjective"].includes(document?.hinshi as string),
+    }),
+    defineField({
+      name: "past",
+      title: "Bentuk Lampau (~katta / ~datta)",
+      type: "string",
+      fieldset: "adjectiveConjugation",
+      hidden: ({ document }) => !["i-adjective", "na-adjective"].includes(document?.hinshi as string),
+    }),
+    defineField({
+      name: "pastNegative",
+      title: "Bentuk Lampau Negatif (~kunakatta / ~ja nakatta)",
+      type: "string",
+      fieldset: "adjectiveConjugation",
+      hidden: ({ document }) => !["i-adjective", "na-adjective"].includes(document?.hinshi as string),
+    }),
+    defineField({
+      name: "teForm",
+      title: "Bentuk ~Te (~kute / ~de)",
+      type: "string",
+      fieldset: "adjectiveConjugation",
+      hidden: ({ document }) => !["i-adjective", "na-adjective"].includes(document?.hinshi as string),
+    }),
+    defineField({
+      name: "adverbial",
+      title: "Bentuk Adverbial (~ku / ~ni)",
+      type: "string",
+      fieldset: "adjectiveConjugation",
+      hidden: ({ document }) => !["i-adjective", "na-adjective"].includes(document?.hinshi as string),
     }),
   ],
   preview: {

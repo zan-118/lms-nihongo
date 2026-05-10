@@ -31,9 +31,17 @@ export const GenerateAIAction = (props: DocumentActionProps) => {
       if (data.error) throw new Error(data.error);
 
       // Patch data ke dokumen
-      patch.execute([
+     patch.execute([
         { set: { mnemonic: data.mnemonic } },
-        { set: { examples: data.examples } },
+        { 
+          set: { 
+            examples: data.examples.map((ex: { jp: string; id: string; furigana?: string; romaji?: string }) => ({
+              ...ex,
+              _type: "exampleSentence", // Harus sesuai dengan nama skema objekmu
+              _key: Math.random().toString(36).substring(2, 10) // Buat random ID
+            })) 
+          } 
+        },
       ]);
 
       alert("✨ Konten berhasil dibuat oleh AI!");

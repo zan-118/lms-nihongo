@@ -5,12 +5,15 @@ import { splitFurigana } from "@/components/ui/SmartJapanese";
 import { useUIStore } from "@/store/useUIStore";
 import * as wanakana from "wanakana";
 
+import WordPopover from "@/components/features/reading/components/WordPopover";
+
 interface FuriganaDisplayProps {
   text: string;
   furigana: string;
   size?: "small" | "medium" | "large" | "xl";
   className?: string;
   mode?: "kanji" | "furigana" | "hiragana";
+  interactive?: boolean;
 }
 
 export default function FuriganaDisplay({ 
@@ -18,7 +21,8 @@ export default function FuriganaDisplay({
   furigana, 
   size = "medium", 
   className = "",
-  mode
+  mode,
+  interactive = false
 }: FuriganaDisplayProps) {
   const globalShowFurigana = useUIStore((state) => state.settings.showFurigana);
   
@@ -39,26 +43,39 @@ export default function FuriganaDisplay({
       className={`font-noto-serif leading-[2.8] tracking-normal inline-block w-full text-justify ${className}`}
       style={{ rubyPosition: 'over', rubyAlign: 'space-around' } as React.CSSProperties}
     >
-      {parts.map((part, i) => (
-        <React.Fragment key={i}>
-          {part.furi && (currentMode === "furigana" || currentMode === "hiragana") ? (
-            <ruby className="group">
-              <span className={`${kanjiSize} font-medium transition-colors ${currentMode === "hiragana" ? "text-primary" : "text-foreground"}`}>
-                {currentMode === "hiragana" ? part.furi : part.text}
+      {parts.map((part, i) => {
+        const content = (
+          <React.Fragment key={i}>
+            {part.furi && (currentMode === "furigana" || currentMode === "hiragana") ? (
+              <ruby className="group">
+                <span className={`${kanjiSize} font-medium transition-colors ${currentMode === "hiragana" ? "text-primary" : "text-foreground"}`}>
+                  {currentMode === "hiragana" ? part.furi : part.text}
+                </span>
+                {currentMode === "furigana" && (
+                  <rt className={`${furiSize} text-primary/60 font-medium tracking-normal select-none`}>
+                    {part.furi}
+                  </rt>
+                )}
+              </ruby>
+            ) : (
+              <span className={`${kanjiSize} font-medium transition-colors ${wanakana.isKanji(part.text) ? "text-foreground" : "text-foreground/90"}`}>
+                {part.text}
               </span>
-              {currentMode === "furigana" && (
-                <rt className={`${furiSize} text-primary/60 font-medium tracking-normal select-none`}>
-                  {part.furi}
-                </rt>
-              )}
-            </ruby>
-          ) : (
-            <span className={`${kanjiSize} font-medium transition-colors ${wanakana.isKanji(part.text) ? "text-foreground" : "text-foreground/90"}`}>
-              {part.text}
-            </span>
-          )}
-        </React.Fragment>
-      ))}
+            )}
+          </React.Fragment>
+        );
+
+        // Wrap with Popover if interactive and is kanji or has furigana
+        if (interactive && (wanakana.isKanji(part.text) || part.furi)) {
+          return (
+            <WordPopover key={i} word={part.text} reading={part.furi}>
+              {content}
+            </WordPopover>
+          );
+        }
+
+        return content;
+      })}
     </div>
   );
 }

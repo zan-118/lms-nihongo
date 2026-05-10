@@ -65,3 +65,23 @@ desktop.ini
 .idea/
 *.swp
 *.swo
+
+# Vocabulary Migration Files
+vocab.ndjson
+vocab_pass1.json
+vocab_n5_to_process.json
+scripts/process-vocab-*.js
+scripts/clean-vocab.js
+
+# Migration & Scratch Scripts
+scripts/process-vocab*
+scripts/filter-n5.js
+scripts/clean-vocab.js
+*.ndjson
+vocab_*.json
+.agents/
+.gemini/
+
+.claude/
+.cursor/
+.vscode/

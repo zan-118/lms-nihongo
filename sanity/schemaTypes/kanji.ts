@@ -93,9 +93,6 @@ export default defineType({
       title: "Romaji / Cara Baca Utama",
     }),
     defineField({
-      of: [{ type: "string" }],
-    }),
-    defineField({
       name: "jlptLevel",
       title: "JLPT Level",
       type: "string",
@@ -155,6 +152,13 @@ export default defineType({
       type: "array",
       of: [{ type: "block" }],
       description: "Gunakan Portable Text untuk mnemonic yang lebih kaya (gambar/bold).",
+    }),
+    defineField({
+      name: "examples",
+      title: "Contoh Kalimat",
+      type: "array",
+      of: [{ type: "exampleSentence" }],
+      description: "Daftar contoh kalimat penggunaan karakter ini.",
     }),
   ],
   preview: {

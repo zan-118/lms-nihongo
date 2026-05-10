@@ -21,6 +21,14 @@ export interface FlashcardProps {
   isAnswerChecked?: boolean;
   inputResult?: "correct" | "wrong" | null;
   mnemonic?: string;
+  pitchAccent?: string;
+  examples?: Array<{ japanese: string; indonesian: string }>;
+  hinshi?: string;
+  negative?: string;
+  past?: string;
+  pastNegative?: string;
+  teForm?: string;
+  adverbial?: string;
   relatedKanji?: Array<{
     character: string;
     meaning: string;

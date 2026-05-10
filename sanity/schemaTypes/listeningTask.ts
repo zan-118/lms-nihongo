@@ -48,7 +48,7 @@ export const listeningTask = defineType({
               name: "text",
               title: "Japanese Text",
               type: "array", // Portable text to support VocabTrigger
-              of: [{ type: "block" }, { type: "vocab" }],
+              of: [{ type: "block" }],
             }),
             defineField({
               name: "translation",

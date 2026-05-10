@@ -1,16 +1,24 @@
 "use client";
 
-import React from "react";
+import React, { useState } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import AudioController from "@/components/features/reading/components/AudioController";
 import FuriganaDisplay from "@/components/ui/FuriganaDisplay";
-import { Badge } from "@/components/ui/badge";
-import { ChevronLeft, Languages } from "lucide-react";
+import { Card } from "@/components/ui/card";
+import { 
+  ChevronLeft, 
+  Languages, 
+  Maximize2, 
+  Minimize2, 
+  Type,
+  Sparkles
+} from "lucide-react";
 import Link from "next/link";
 import { ReadingProvider } from "@/components/features/reading/components/ReadingContext";
 import { cn } from "@/lib/utils";
 import { useReadingLogic } from "@/components/features/reading/hooks/useReadingLogic";
 import { ReadingData } from "@/components/features/reading/types";
+import { Button } from "@/components/ui/button";
 
 interface ReadingPageClientProps {
   data: ReadingData;
@@ -28,164 +36,243 @@ function ReadingPageContent({ data }: ReadingPageClientProps) {
     setMode,
   } = useReadingLogic(data);
 
+  const [isZenMode, setIsZenMode] = useState(false);
+  const [fontSize, setFontSize] = useState<"standard" | "large" | "extra">("large");
+
+  const fontSizeClasses = {
+    standard: "text-xl md:text-2xl",
+    large: "text-2xl md:text-4xl",
+    extra: "text-4xl md:text-5xl",
+  };
+
   return (
-    <div className="min-h-screen bg-background relative pb-40">
-      {/* Dynamic Background */}
-      <div className="fixed inset-0 pointer-events-none overflow-hidden">
-        <div className="absolute top-[-10%] left-[-10%] w-[40%] h-[40%] bg-primary/5 blur-[100px] rounded-full animate-pulse" />
-        <div className="absolute bottom-[-10%] right-[-10%] w-[40%] h-[40%] bg-primary/5 blur-[100px] rounded-full animate-pulse" />
+    <div className={cn(
+      "min-h-screen transition-all duration-700 relative",
+      isZenMode ? "bg-background pb-20" : "bg-background/95 pb-40"
+    )}>
+      {/* Immersive Background Glows */}
+      <div className="fixed inset-0 pointer-events-none overflow-hidden z-0">
+        <div className="absolute top-[-20%] left-[-10%] w-[60%] h-[60%] bg-primary/5 blur-[150px] rounded-full animate-pulse" />
+        <div className="absolute bottom-[-20%] right-[-10%] w-[60%] h-[60%] bg-emerald-500/5 blur-[150px] rounded-full animate-pulse delay-1000" />
+        <div className="absolute inset-0 bg-[linear-gradient(rgba(0,0,0,0.01)_1px,transparent_1px),linear-gradient(90deg,rgba(0,0,0,0.01)_1px,transparent_1px)] dark:bg-[linear-gradient(rgba(255,255,255,0.01)_1px,transparent_1px),linear-gradient(90deg,rgba(255,255,255,0.01)_1px,transparent_1px)] bg-[size:100px_100px] pointer-events-none opacity-20" />
       </div>
 
-      <div className="max-w-4xl mx-auto px-6 pt-12 relative z-10">
-        {/* Navigation & Header */}
-        <div className="flex flex-col gap-8 mb-12">
-          <Link 
-            href="/library" 
-            className="group flex items-center gap-2 text-muted-foreground hover:text-primary transition-colors w-fit"
+      {/* Top Navbar - Glassmorphic */}
+      <AnimatePresence>
+        {!isZenMode && (
+          <motion.nav 
+            initial={{ y: -100, opacity: 0 }}
+            animate={{ y: 0, opacity: 1 }}
+            exit={{ y: -100, opacity: 0 }}
+            className="fixed top-0 inset-x-0 h-20 z-50 border-b border-border/40 glass flex items-center px-6 justify-between"
           >
-            <div className="p-2 rounded-full bg-background/5 group-hover:bg-primary/10 border border-white/5 group-hover:border-primary/20 transition-all">
-              <ChevronLeft size={18} />
-            </div>
-            <span className="text-sm font-bold uppercase tracking-widest">Back to Library</span>
-          </Link>
-
-          <div className="flex flex-col lg:flex-row lg:items-end justify-between gap-8">
-            <div className="space-y-4">
-              <div className="flex items-center gap-3">
-                <Badge variant="outline" className="border-primary/40 text-primary bg-primary/5 px-4 py-1">
-                  Level {data.difficulty}
-                </Badge>
-                <div className="w-1.5 h-1.5 rounded-full bg-primary/30" />
-                <span className="text-[10px] font-bold uppercase tracking-widest text-muted-foreground/60">
-                  Interactive Reading
-                </span>
+            <div className="flex items-center gap-6">
+              <Link 
+                href="/library" 
+                className="group flex items-center gap-2 text-muted-foreground hover:text-primary transition-all"
+              >
+                <div className="p-2 rounded-xl bg-muted/30 group-hover:bg-primary/10 border border-border group-hover:border-primary/30 transition-all">
+                  <ChevronLeft size={20} className="group-hover:-translate-x-1 transition-transform" />
+                </div>
+                <span className="text-[10px] font-black uppercase tracking-[0.2em] hidden md:block">Pustaka</span>
+              </Link>
+              <div className="h-6 w-px bg-border mx-2 hidden md:block" />
+              <div className="flex flex-col">
+                 <h2 className="text-sm font-black text-foreground truncate max-w-[200px] md:max-w-[400px]">
+                   {data.title}
+                 </h2>
+                 <span className="text-[10px] font-bold text-primary uppercase tracking-widest">Level {data.difficulty}</span>
               </div>
-              <h1 className="text-3xl md:text-5xl font-bold text-foreground tracking-tight leading-tight">
-                {data.title}
-              </h1>
             </div>
 
-            {/* Reading Mode Switcher - Desktop/Tablet */}
-            <div className="flex flex-col md:flex-row items-center gap-4">
-              <div className="flex items-center gap-1 p-1 rounded-2xl bg-background/[0.03] border border-white/5 backdrop-blur-xl shadow-2xl">
+            <div className="flex items-center gap-2 md:gap-4">
+              <Button 
+                variant="ghost" 
+                size="icon" 
+                className="rounded-xl hover:bg-primary/10 hover:text-primary transition-all"
+                onClick={() => setIsZenMode(true)}
+                aria-label="Mode Zen"
+              >
+                <Maximize2 size={20} />
+              </Button>
+              <div className="h-6 w-px bg-border mx-1" />
+              <div className="hidden lg:flex items-center gap-1 p-1 rounded-xl bg-muted/30 border border-border">
                 {modes.map((m) => (
-                  <button
+                  <Button
                     key={m.id}
+                    variant={mode === m.id ? "default" : "ghost"}
+                    size="sm"
                     onClick={() => setMode(m.id)}
                     className={cn(
-                      "flex items-center gap-2 px-4 py-2 rounded-xl text-xs font-bold uppercase tracking-widest transition-all",
-                      mode === m.id 
-                        ? "bg-primary text-primary-foreground shadow-[0_0_15px_rgba(0,238,255,0.4)]" 
-                        : "text-muted-foreground hover:text-foreground hover:bg-background/5"
+                      "rounded-lg px-3 py-1.5 h-auto text-[10px] font-black uppercase tracking-wider",
+                      mode === m.id && "shadow-lg shadow-primary/20"
                     )}
                   >
-                    <m.icon size={14} />
-                    <span className="hidden lg:inline">{m.label}</span>
-                  </button>
+                    <m.icon size={14} className="mr-2" />
+                    {m.label}
+                  </Button>
                 ))}
-                <div className="w-px h-4 bg-background/10 mx-2" />
-                <button
-                  onClick={toggleTranslation}
-                  className={cn(
-                    "flex items-center gap-2 px-4 py-2 rounded-xl text-xs font-bold uppercase tracking-widest transition-all",
-                    showTranslation 
-                      ? "bg-success text-white shadow-[0_0_15px_rgba(16,185,129,0.4)]" 
-                      : "text-muted-foreground hover:text-foreground hover:bg-background/5"
-                  )}
-                >
-                  <Languages size={14} />
-                  ID
-                </button>
               </div>
+            </div>
+          </motion.nav>
+        )}
+      </AnimatePresence>
 
-              {/* Audio Control in Header */}
-              <div className="px-2 py-1 rounded-2xl bg-background/[0.03] border border-white/5 backdrop-blur-xl shadow-xl flex items-center gap-2">
-                <AudioController 
-                  audioUrl={data.audioUrl} 
-                  textToSpeak={data.body} 
-                  isTTSDisabled={data.isTTSDisabled}
-                  compact={true}
-                />
-              </div>
+      {/* Floating Mode Exit for Zen Mode */}
+      <AnimatePresence>
+        {isZenMode && (
+          <motion.div 
+            initial={{ scale: 0, opacity: 0 }}
+            animate={{ scale: 1, opacity: 1 }}
+            exit={{ scale: 0, opacity: 0 }}
+            className="fixed top-8 right-8 z-[100]"
+          >
+            <Button 
+              size="lg" 
+              className="rounded-full w-14 h-14 bg-background/80 backdrop-blur-xl border border-border shadow-2xl group hover:border-primary/40 transition-all"
+              onClick={() => setIsZenMode(false)}
+              aria-label="Keluar Mode Zen"
+            >
+              <Minimize2 size={24} className="text-muted-foreground group-hover:text-primary transition-colors" />
+            </Button>
+          </motion.div>
+        )}
+      </AnimatePresence>
+
+      {/* Main Reading Container */}
+      <div className={cn(
+        "max-w-4xl mx-auto px-6 relative z-10 transition-all duration-1000",
+        isZenMode ? "pt-24 md:pt-40" : "pt-32 md:pt-48"
+      )}>
+        {/* Immersive Header Decoration */}
+        {!isZenMode && (
+          <div className="flex flex-col items-center mb-24 md:mb-32 text-center">
+            <div className="flex items-center gap-3 mb-8">
+               <div className="w-1.5 h-1.5 rounded-full bg-primary animate-ping" />
+               <span className="text-primary font-black text-[10px] md:text-xs uppercase tracking-[0.4em]">Graded Reading Experience</span>
+            </div>
+            <h1 className="text-5xl md:text-7xl font-black text-foreground tracking-tighter leading-[0.9] mb-12 max-w-3xl drop-shadow-2xl">
+              {data.title}
+            </h1>
+            <div className="h-1.5 w-32 bg-gradient-to-r from-primary/0 via-primary to-primary/0 rounded-full" />
+          </div>
+        )}
+
+        <div className="relative">
+          {/* Audio & Settings Floating Sidebar (Desktop) */}
+          <div className="hidden xl:block absolute -left-32 top-0 h-full">
+            <div className="sticky top-40 flex flex-col items-center gap-6">
+               <Card className="p-3 bg-card/30 border-border rounded-2xl glass flex flex-col gap-4 shadow-2xl">
+                  <AudioController 
+                    audioUrl={data.audioUrl} 
+                    textToSpeak={data.body} 
+                    isTTSDisabled={data.isTTSDisabled}
+                    compact={true}
+                  />
+                  <div className="h-px w-8 bg-border mx-auto" />
+                  <Button variant="ghost" size="icon" className="rounded-xl" onClick={() => setFontSize(fontSize === "standard" ? "large" : fontSize === "large" ? "extra" : "standard")}>
+                    <Type size={20} />
+                  </Button>
+                  <Button 
+                    variant={showTranslation ? "success" : "ghost"} 
+                    size="icon" 
+                    className={cn("rounded-xl transition-all", showTranslation && "text-white shadow-lg shadow-success/20")}
+                    onClick={toggleTranslation}
+                  >
+                    <Languages size={20} />
+                  </Button>
+               </Card>
             </div>
           </div>
-        </div>
 
-        {/* Content Body */}
-        <div className="grid grid-cols-1 gap-12 relative">
-          <motion.div
-            initial={{ opacity: 0, y: 20 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.8, ease: "easeOut" }}
-            className="w-full"
-          >
-            {/* Japanese Text Reading Container */}
-            <div className="p-6 md:p-12 lg:p-16 rounded-[2.5rem] bg-card/20 backdrop-blur-3xl border border-white/5 shadow-xl relative overflow-hidden group">
-              <div className="absolute inset-0 bg-neural-pattern opacity-[0.005] pointer-events-none" />
-              
-              <div className="space-y-10 relative z-10">
-                {paragraphs.map((para, idx) => (
-                  <div key={idx} className="space-y-4">
-                    <FuriganaDisplay 
-                      text={para} 
-                      furigana={hiraganaParagraphs[idx] || ""} 
-                      mode={mode}
-                      size="medium"
-                      className="text-foreground/90"
-                    />
-                  </div>
-                ))}
-              </div>
-
-              {/* Explicit Translation Toggle inside Card */}
-              <div className="mt-16 pt-8 border-t border-white/5 flex justify-center">
-                <button
-                  onClick={toggleTranslation}
-                  className={cn(
-                    "group flex items-center gap-3 px-8 py-3 rounded-full text-sm font-semibold uppercase tracking-widest transition-all duration-300",
-                    showTranslation
-                      ? "bg-success text-white shadow-lg"
-                      : "bg-background/5 text-muted-foreground hover:bg-background/10 hover:text-foreground border border-white/5"
-                  )}
-                >
-                  <Languages size={18} className={cn("transition-transform duration-500", showTranslation && "rotate-180")} />
-                  {showTranslation ? "Sembunyikan Terjemahan" : "Lihat Terjemahan"}
-                </button>
-              </div>
-            </div>
-          </motion.div>
-
-          {/* Full Translation Container (Optional secondary view) */}
-          <AnimatePresence>
-            {showTranslation && (
-              <motion.div
-                initial={{ opacity: 0, height: 0, y: 20 }}
-                animate={{ opacity: 1, height: "auto", y: 0 }}
-                exit={{ opacity: 0, height: 0, y: 20 }}
-                transition={{ duration: 0.5, ease: "circOut" }}
-                className="w-full overflow-hidden"
-              >
-                <div className="p-8 md:p-16 rounded-[3rem] bg-success/[0.03] backdrop-blur-[20px] border border-success/10 shadow-xl relative group">
-                   <div className="flex items-center gap-3 mb-8 opacity-60">
-                     <Languages size={18} className="text-success" />
-                     <span className="text-[10px] font-bold uppercase tracking-[0.4em] text-success">Terjemahan Lengkap Indonesia</span>
-                   </div>
-                   <div className="space-y-8">
-                      {translationParagraphs.map((t, i) => (
-                        <p key={i} className="text-lg md:text-xl text-muted-foreground/90 italic leading-relaxed">
-                          {t}
-                        </p>
-                      ))}
-                   </div>
-                </div>
-              </motion.div>
+          {/* Body Content */}
+          <motion.article
+            layout
+            className={cn(
+              "p-8 md:p-16 lg:p-24 rounded-[3rem] transition-all duration-700 relative",
+              isZenMode 
+                ? "bg-transparent shadow-none border-none" 
+                : "bg-card/10 backdrop-blur-3xl border border-border/40 shadow-[0_40px_100px_-20px_rgba(0,0,0,0.2)]"
             )}
-          </AnimatePresence>
+          >
+            <div className="absolute top-0 left-0 w-full h-1.5 bg-gradient-to-r from-transparent via-primary/20 to-transparent opacity-50" />
+            
+            <div className="space-y-16 relative z-10">
+              {paragraphs.map((para, idx) => (
+                <div key={idx} className="group/para relative">
+                  <FuriganaDisplay 
+                    text={para} 
+                    furigana={hiraganaParagraphs[idx] || ""} 
+                    mode={mode}
+                    size="medium"
+                    interactive={true}
+                    className={cn(
+                      "transition-all duration-500",
+                      fontSizeClasses[fontSize]
+                    )}
+                  />
+                  
+                  {/* Inline Translation on Hover/Click */}
+                  <AnimatePresence>
+                    {showTranslation && (
+                      <motion.p 
+                        initial={{ opacity: 0, y: 5 }}
+                        animate={{ opacity: 1, y: 0 }}
+                        exit={{ opacity: 0, y: 5 }}
+                        className="mt-6 text-base md:text-lg text-muted-foreground/80 italic font-medium leading-relaxed border-l-2 border-primary/20 pl-6"
+                      >
+                        {translationParagraphs[idx]}
+                      </motion.p>
+                    )}
+                  </AnimatePresence>
+                </div>
+              ))}
+            </div>
+
+            {/* Bottom Interaction */}
+            {!isZenMode && (
+              <div className="mt-24 pt-12 border-t border-border/40 flex flex-col items-center gap-8">
+                 <div className="flex items-center gap-4">
+                    <Sparkles size={20} className="text-warning animate-pulse" />
+                    <span className="text-[10px] font-black uppercase tracking-[0.3em] text-muted-foreground">Selesaikan Bacaan Untuk XP</span>
+                 </div>
+                 <Button className="px-16 py-8 h-auto rounded-2xl text-xs font-black uppercase tracking-[0.3em] bg-primary text-primary-foreground shadow-[0_20px_50px_-10px_rgba(0,238,255,0.4)] hover:shadow-[0_20px_70px_-10px_rgba(0,238,255,0.6)] hover:scale-105 active:scale-95 transition-all">
+                   Tandai Selesai
+                 </Button>
+              </div>
+            )}
+          </motion.article>
         </div>
       </div>
 
-      {/* Bottom Padding for scroll space */}
-      <div className="h-40" />
+      {/* Mobile Toolbar */}
+      <AnimatePresence>
+        {!isZenMode && (
+          <motion.div 
+            initial={{ y: 100 }}
+            animate={{ y: 0 }}
+            exit={{ y: 100 }}
+            className="fixed bottom-8 inset-x-6 z-50 xl:hidden"
+          >
+            <Card className="p-3 bg-card/60 backdrop-blur-2xl border-border/60 rounded-[2rem] shadow-[0_20px_60px_-15px_rgba(0,0,0,0.3)] flex items-center justify-between gap-2 max-w-md mx-auto">
+              <AudioController 
+                audioUrl={data.audioUrl} 
+                textToSpeak={data.body} 
+                isTTSDisabled={data.isTTSDisabled}
+                compact={true}
+              />
+              <div className="flex items-center gap-1">
+                <Button variant="ghost" size="icon" className="rounded-2xl" onClick={toggleTranslation}>
+                  <Languages size={18} className={cn(showTranslation && "text-primary")} />
+                </Button>
+                <Button variant="ghost" size="icon" className="rounded-2xl" onClick={() => setIsZenMode(true)}>
+                  <Maximize2 size={18} />
+                </Button>
+              </div>
+            </Card>
+          </motion.div>
+        )}
+      </AnimatePresence>
     </div>
   );
 }

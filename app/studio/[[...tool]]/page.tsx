@@ -2,10 +2,13 @@
 
 import { NextStudio } from 'next-sanity/studio'
 import config from '../../../sanity.config'
+import dynamicImport from 'next/dynamic'
 
-export const dynamic = 'force-static'
-
-
-export default function StudioPage() {
+const StudioPage = () => {
   return <NextStudio config={config} />
 }
+
+// Disable SSR for Sanity Studio
+export default dynamicImport(() => Promise.resolve(StudioPage), {
+  ssr: false,
+})

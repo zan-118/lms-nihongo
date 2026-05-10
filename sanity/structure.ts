@@ -4,7 +4,7 @@ import {
   Library, 
   GraduationCap, 
   Trophy, 
-  Dictionary, 
+  BookA, 
   FileText, 
   CheckCircle, 
   Languages 
@@ -16,14 +16,14 @@ export const structure: StructureResolver = (S) =>
     .items([
       // --- FOLDER: KAMUS GLOBAL ---
       S.listItem()
-        .title("📚 Kamus Global")
+        .title("Kamus Global")
         .icon(Library)
         .child(
           S.list()
             .title("Database Kosakata & Kanji")
             .items([
               S.documentTypeListItem("vocab").title("Daftar Kosakata").icon(Languages),
-              S.documentTypeListItem("verb_dictionary").title("Kamus Kata Kerja").icon(Dictionary),
+              S.documentTypeListItem("verb_dictionary").title("Kamus Kata Kerja").icon(BookA),
               S.documentTypeListItem("kanji").title("Perpustakaan Kanji").icon(FileText),
             ])
         ),
@@ -63,7 +63,11 @@ export const structure: StructureResolver = (S) =>
         .title("⚙️ Sistem Gamifikasi")
         .icon(Trophy)
         .child(
-          S.documentTypeListItem("achievement").title("Pencapaian (Achievements)")
+          S.list()
+            .title("Sistem Gamifikasi")
+            .items([
+              S.documentTypeListItem("achievement").title("Pencapaian (Achievements)")
+            ])
         ),
 
       S.divider(),

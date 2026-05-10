@@ -32,6 +32,7 @@ export default defineType({
     defineField({
       name: "course_category",
       title: "Course Category",
+      type: "reference",
       to: [{ type: "course_category" }],
     }),
     defineField({

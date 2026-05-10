@@ -20,6 +20,9 @@ export const vocabByIdsQuery = `*[_type == "vocab" && _id in $ids] {
   romaji,
   meaning,
   hinshi,
+  pitchAccent,
+  mnemonic,
+  examples,
   "audioUrl": audio.asset->url
 }`;
 
@@ -82,6 +85,7 @@ export const listeningListQuery = `*[_type == "listeningTask"] | order(_createdA
 }`;
 
 export const kanjiQuery = `*[_type == "kanji" && slug.current == $slug][0] {
+  _id,
   character,
   meaning,
   onyomi,
@@ -91,7 +95,13 @@ export const kanjiQuery = `*[_type == "kanji" && slug.current == $slug][0] {
   strokeOrderSvg,
   radicals,
   mnemonics,
-  "slug": slug.current
+  "slug": slug.current,
+  "relatedVocab": *[_type == "vocab" && references(^._id)] {
+    _id,
+    word,
+    furigana,
+    meaning
+  }
 }`;
 
 export const listeningTaskQuery = `*[_type == "listeningTask" && slug.current == $slug][0] {
@@ -113,4 +123,34 @@ export const listeningTaskQuery = `*[_type == "listeningTask" && slug.current ==
     },
     explanation
   }
+}`;
+
+export const vocabDetailQuery = `*[_type == "vocab" && (_id == $id || vocabId == $id)][0] {
+  _id,
+  word,
+  furigana,
+  romaji,
+  meaning,
+  hinshi,
+  pitchAccent,
+  mnemonic,
+  showInFlashcard,
+  jlptLevel,
+  "audioUrl": audio.asset->url,
+  relatedKanji[]->{ 
+    _id, 
+    character, 
+    meaning, 
+    onyomi, 
+    kunyomi,
+    "slug": slug.current 
+  },
+  synonyms[]->{ _id, word, meaning, furigana },
+  antonyms[]->{ _id, word, meaning, furigana },
+  examples[] { japanese, indonesian },
+  negative,
+  past,
+  pastNegative,
+  teForm,
+  adverbial
 }`;

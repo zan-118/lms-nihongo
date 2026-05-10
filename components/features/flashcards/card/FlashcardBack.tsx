@@ -1,7 +1,7 @@
 import { Card } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
-import { PenTool, ExternalLink, Sparkles } from "lucide-react";
+import { PenTool, ExternalLink } from "lucide-react";
 import TTSReader from "@/components/features/tools/tts/TTSReader";
 import { FlashcardThemeContext } from "./types";
 import Link from "next/link";
@@ -14,7 +14,6 @@ interface FlashcardBackProps {
   meaning: string;
   furigana?: string;
   romaji?: string;
-  kanjiDetails?: { onyomi?: string; kunyomi?: string };
   themeContext: FlashcardThemeContext;
   onDrawClick: (e: React.MouseEvent) => void;
   srsState?: {
@@ -24,12 +23,9 @@ interface FlashcardBackProps {
     nextReview: number;
   };
   mnemonic?: string;
-  relatedKanji?: Array<{
-    character: string;
-    meaning: string;
-    onyomi?: string;
-    kunyomi?: string;
-  }>;
+  pitchAccent?: string;
+  hinshi?: string;
+  examples?: Array<{ japanese: string; indonesian: string }>;
 }
 
 export function FlashcardBack({
@@ -38,12 +34,13 @@ export function FlashcardBack({
   meaning,
   furigana,
   romaji,
-  kanjiDetails,
   themeContext,
   onDrawClick,
   srsState,
   mnemonic,
-  relatedKanji,
+  pitchAccent,
+  hinshi,
+  examples,
 }: FlashcardBackProps) {
   const { isKanji, themeColor, themeBorder, themeShadow } = themeContext;
 
@@ -63,40 +60,45 @@ export function FlashcardBack({
 
   return (
     <Card
-      className={`absolute inset-0 w-full h-full border ${themeBorder} rounded-2xl ${themeShadow} flex flex-col p-4 md:p-8 transition-all duration-500 shadow-none overflow-hidden bg-card bg-card`}
+      className={`absolute inset-0 w-full h-full border ${themeBorder} rounded-2xl ${themeShadow} flex flex-col p-4 md:p-6 transition-all duration-500 shadow-none overflow-hidden bg-card`}
       style={{
         transform: "rotateY(180deg)",
         backfaceVisibility: "hidden",
         WebkitBackfaceVisibility: "hidden",
       }}
     >
-      <div className={`w-full h-full flex flex-col relative ${isKanji ? '' : 'overflow-y-auto no-scrollbar'}`}>
+      <div className="w-full h-full flex flex-col relative">
         {/* HEADER SECTION */}
-        <div className="w-full flex items-center justify-between mb-4 shrink-0">
+        <div className="w-full flex items-center justify-between mb-2 shrink-0">
           <Badge
             variant="outline"
-            className={`text-[9px] md:text-xs font-black uppercase tracking-widest ${themeColor} border-current/20 px-3 py-1 rounded-lg h-auto bg-muted dark:bg-black/20 z-30`}
+            className={`text-[8px] md:text-[10px] font-black uppercase tracking-widest ${themeColor} border-current/20 px-2 py-0.5 rounded-lg h-auto bg-muted dark:bg-black/20 z-30`}
           >
-            {isKanji ? "Detail Karakter" : "Definisi & Arti"}
+            {isKanji ? "Detail Karakter" : (hinshi || "Definisi")}
           </Badge>
 
-          <div className="z-20">
+          <div className="flex items-center gap-2 z-20">
+            {pitchAccent && (
+              <span className="text-[8px] font-black text-muted-foreground opacity-40 uppercase tracking-widest">
+                PITCH: {pitchAccent}
+              </span>
+            )}
             <TTSReader text={word} minimal={true} />
           </div>
         </div>
 
-        <div className={`text-center w-full flex flex-col items-center flex-1 ${isKanji ? 'space-y-2 md:space-y-4 justify-between' : 'space-y-4'}`}>
-          {/* WORD DISPLAY */}
+        <div className="flex flex-col items-center justify-between flex-1 min-h-0 py-1">
+          {/* WORD DISPLAY - Tighter sizing */}
           <div className="flex flex-col items-center relative group/kanji shrink-0">
             <h2
-              className={`${isKanji ? "text-6xl md:text-7xl" : word.length > 4 ? "text-4xl sm:text-5xl md:text-6xl lg:text-7xl" : "text-5xl sm:text-6xl md:text-7xl lg:text-8xl"} font-black text-foreground tracking-tight font-japanese leading-none drop-shadow-sm dark:drop-shadow-lg transition-all`}
+              className={`${isKanji ? "text-5xl md:text-7xl" : word.length > 5 ? "text-2xl md:text-5xl" : "text-4xl md:text-7xl"} font-black text-foreground tracking-tight font-japanese leading-none drop-shadow-sm`}
             >
               {isKanji ? word : (
                 splitFurigana(word, hiraReading).map((chunk, i) => (
                   chunk.furi ? (
                     <ruby key={i}>
                       {chunk.text}
-                      <rt className="text-xs md:text-sm text-primary/80 font-bold tracking-widest not-italic mb-1">
+                      <rt className="text-[0.5em] text-primary/80 font-bold tracking-widest not-italic">
                         {chunk.furi}
                       </rt>
                     </ruby>
@@ -107,126 +109,79 @@ export function FlashcardBack({
               )}
             </h2>
             {!isKanji && displayRomaji && (
-              <p className="text-[10px] md:text-xs font-black text-muted-foreground uppercase tracking-[0.2em] opacity-40 mt-4">
+              <p className="text-[7px] md:text-[10px] font-black text-muted-foreground uppercase tracking-[0.2em] opacity-40 mt-1">
                 {displayRomaji}
               </p>
             )}
           </div>
 
-          {/* KANJI DETAILS */}
-          {isKanji && kanjiDetails && (
-            <div className="grid grid-cols-2 gap-2 w-full max-w-sm px-2">
-              {kanjiDetails.onyomi && (
-                <div className="bg-muted/30 dark:bg-background/[0.03] p-2 md:p-3 rounded-2xl border border-border/50 dark:border-white/[0.05] flex flex-col items-center shadow-none">
-                  <span className="text-[8px] text-muted-foreground uppercase tracking-[0.2em] font-black mb-1 opacity-60">
-                    Onyomi
-                  </span>
-                  <span className="text-purple-600 dark:text-purple-400 font-japanese font-bold text-[10px] md:text-base leading-tight text-center line-clamp-2">
-                    {kanjiDetails.onyomi}
-                  </span>
-                </div>
-              )}
-              {kanjiDetails.kunyomi && (
-                <div className="bg-muted/30 dark:bg-background/[0.03] p-2 md:p-3 rounded-2xl border border-border/50 dark:border-white/[0.05] flex flex-col items-center shadow-none">
-                  <span className="text-[8px] text-muted-foreground uppercase tracking-[0.2em] font-black mb-1 opacity-60">
-                    Kunyomi
-                  </span>
-                  <span className="text-purple-600 dark:text-purple-400 font-japanese font-bold text-[10px] md:text-base leading-tight text-center line-clamp-2">
-                    {kanjiDetails.kunyomi}
-                  </span>
-                </div>
-              )}
-            </div>
-          )}
-
-          {/* MEANING CARD */}
-          <div className="w-full px-2">
-            <Card
-              className={`${isKanji ? 'p-3 md:p-4 min-h-[60px]' : 'p-5 md:p-6 min-h-[80px]'} bg-muted/50 dark:bg-background/[0.03] rounded-2xl border ${themeBorder} w-full flex items-center justify-center shadow-none relative group/meaning overflow-hidden`}
-            >
-              <h3
-                className={`${themeColor} ${isKanji ? 'text-base md:text-xl' : 'text-lg md:text-xl lg:text-2xl'} font-black uppercase tracking-tight leading-snug`}
-              >
+          {/* MEANING CARD - More compact padding */}
+          <div className="w-full px-1">
+            <div className="bg-muted/30 dark:bg-background/[0.03] p-3 md:p-6 rounded-xl border border-border w-full flex flex-col items-center justify-center text-center shadow-none relative group/meaning">
+              <h3 className={`${themeColor} text-base md:text-2xl font-black uppercase tracking-tight leading-tight line-clamp-2`}>
                 {meaning}
               </h3>
-              
-              <Button
-                asChild
-                variant="ghost"
-                onClick={(e) => e.stopPropagation()}
-                className="absolute -bottom-3 right-4 h-8 bg-background border border-border hover:bg-muted text-[8px] font-black uppercase tracking-widest rounded-lg px-3 shadow-sm opacity-0 group-hover/meaning:opacity-100 transition-all"
-              >
-                <Link href={`/library/${isKanji ? 'kanji' : 'vocab'}/${id}`}>
-                  <ExternalLink size={12} className="mr-1.5" /> Lihat Detail
-                </Link>
-              </Button>
-            </Card>
+            </div>
           </div>
 
-          {/* WRITE PRACTICE BUTTON */}
-          {isKanji && (
-            <Button
-              onClick={onDrawClick}
-              className="mt-1 flex items-center justify-center gap-2 w-full max-w-[200px] mx-auto bg-purple-600 dark:bg-purple-500 hover:bg-foreground hover:text-background dark:hover:bg-background text-white dark:text-foreground font-black uppercase tracking-widest h-auto py-2 px-4 rounded-xl transition-all shadow-lg border-none text-[9px] md:text-xs shrink-0"
-            >
-              <PenTool size={14} />
-              <span>Latih Menulis</span>
-            </Button>
-          )}
-
-          {/* MNEMONIC SECTION */}
-          {mnemonic && (
-            <div className="w-full px-2 mt-4">
-              <div className="p-4 bg-warning/5 border border-warning/20 rounded-2xl text-left relative overflow-hidden group/mnemonic">
-                <div className="absolute top-0 right-0 p-2 opacity-20 group-hover/mnemonic:opacity-40 transition-opacity">
-                  <Sparkles size={14} className="text-warning" />
-                </div>
-                <span className="text-[8px] font-black uppercase tracking-widest text-warning/80 block mb-1">Mnemonic</span>
-                <p className="text-[11px] md:text-xs font-medium text-muted-foreground leading-relaxed italic">
+          {/* CONTENT SECTION (Example OR Mnemonic) - Tighter constraints */}
+          <div className="w-full px-1 space-y-2">
+            {examples && examples.length > 0 ? (
+              <div className="p-2.5 bg-primary/[0.03] border border-primary/10 rounded-xl text-left">
+                <span className="text-[7px] font-black uppercase tracking-widest text-primary/60 block mb-0.5">Contoh</span>
+                <p className="text-[10px] md:text-[12px] font-bold text-foreground font-japanese leading-tight line-clamp-1">
+                  {examples[0].japanese}
+                </p>
+                <p className="text-[8px] md:text-[11px] font-medium text-muted-foreground italic line-clamp-1">
+                  {examples[0].indonesian}
+                </p>
+              </div>
+            ) : mnemonic && (
+              <div className="p-2.5 bg-warning/[0.03] border border-warning/10 rounded-xl text-left relative overflow-hidden">
+                <span className="text-[7px] font-black uppercase tracking-widest text-warning/60 block mb-0.5">Mnemonic</span>
+                <p className="text-[9px] md:text-[11px] font-medium text-muted-foreground italic leading-tight line-clamp-2">
                   &quot;{mnemonic}&quot;
                 </p>
               </div>
-            </div>
-          )}
+            )}
 
-          {/* KANJI BREAKDOWN SECTION */}
-          {relatedKanji && relatedKanji.length > 0 && (
-            <div className="w-full px-2 mt-4">
-              <span className="text-[8px] font-black uppercase tracking-widest text-muted-foreground opacity-50 block mb-2 text-center">Analisis Karakter</span>
-              <div className="flex flex-wrap justify-center gap-2">
-                {relatedKanji.map((k, i) => (
-                  <div key={i} className="flex flex-col items-center p-3 rounded-xl bg-muted/30 border border-border/50 min-w-[70px] relative group/kitem">
-                    <span className="text-2xl font-japanese font-bold text-foreground mb-1">{k.character}</span>
-                    <div className="flex flex-col items-center gap-0.5 w-full border-t border-border/30 pt-1.5 mt-1">
-                      {k.onyomi && (
-                        <span className="text-[7px] font-bold text-primary/70 uppercase leading-none">{k.onyomi}</span>
-                      )}
-                      {k.kunyomi && (
-                        <span className="text-[7px] font-bold text-success/70 leading-none">{k.kunyomi}</span>
-                      )}
-                    </div>
-                    <span className="text-[8px] font-black text-muted-foreground uppercase tracking-tighter truncate max-w-[60px] text-center mt-2 opacity-50 group-hover/kitem:opacity-100 transition-opacity">
-                      {k.meaning}
-                    </span>
-                  </div>
-                ))}
-              </div>
+            {/* QUICK ACTIONS - Lower height */}
+            <div className="flex gap-2 w-full">
+              {isKanji && (
+                <Button
+                  onClick={onDrawClick}
+                  aria-label="Latih menulis kanji"
+                  className="flex-1 bg-purple-600 hover:bg-purple-700 text-white font-black uppercase tracking-widest h-7 rounded-lg text-[8px] md:text-[10px]"
+                >
+                  <PenTool size={10} className="mr-1" aria-hidden="true" />
+                  <span>Tulis</span>
+                </Button>
+              )}
+              <Button
+                asChild
+                variant="outline"
+                className="flex-1 h-7 bg-background border-border hover:bg-muted text-[8px] md:text-[10px] font-black uppercase tracking-widest rounded-lg px-2 shadow-none"
+              >
+                <Link href={`/library/vocab/${id}`} aria-label="Lihat detail kata ini">
+                  <ExternalLink size={10} className="mr-1" aria-hidden="true" /> Detail
+                </Link>
+              </Button>
             </div>
-          )}
+          </div>
         </div>
 
         {/* SRS STATUS FOOTER */}
-        <div className={`w-full pt-2 flex items-center justify-center gap-4 border-t border-border/50 dark:border-white/5 ${isKanji ? 'mt-2' : 'mt-4'} shrink-0`}>
-          <div className={`flex flex-col items-center gap-1`}>
-            <span className="text-[8px] text-muted-foreground uppercase tracking-widest font-bold opacity-50">Kekuatan Memori</span>
-            <Badge variant="outline" className={`${memory.color} border-none text-[9px] font-black uppercase px-3 py-1 rounded-full h-auto`}>
+        <div className="w-full pt-2 flex items-center justify-between border-t border-border/50 shrink-0">
+          <div className="flex flex-col items-start">
+            <span className="text-[7px] text-muted-foreground uppercase tracking-widest font-bold opacity-50">Memori</span>
+            <span className={`text-[9px] font-black uppercase ${memory.color.split(' ')[0]}`}>
               {memory.label}
-            </Badge>
+            </span>
           </div>
           {srsState && (
-              <div className="flex flex-col items-center gap-1 border-l border-border/50 dark:border-white/5 pl-4">
-              <span className="text-[8px] text-muted-foreground uppercase tracking-widest font-bold opacity-50">Interval</span>
-              <span className="text-[10px] font-black text-foreground">{srsState.interval} Hari</span>
+            <div className="flex flex-col items-end">
+              <span className="text-[7px] text-muted-foreground uppercase tracking-widest font-bold opacity-50">Interval</span>
+              <span className="text-[9px] font-black text-foreground">{srsState.interval} Hari</span>
             </div>
           )}
         </div>
