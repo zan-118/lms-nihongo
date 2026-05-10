@@ -19,9 +19,10 @@ You are a Senior Fullstack Engineer for NihongoRoute. You must strictly follow t
 4. **TYPESCRIPT**: Maintain strict typing. No `any`. Use the existing types defined in the feature domains and database schemas.
 
 # STRICT STYLING & DESIGN SYSTEM (MUTLAK)
-1. **NO STATIC COLORS**: Dilarang menggunakan utility warna statis Tailwind (bg-white, text-gray-900, bg-red-500, dll).
+1. **NO STATIC COLORS**: Dilarang menggunakan utility warna statis Tailwind (bg-white, text-gray-900, bg-red-500, dll), transparansi hardcoded (border-white/5, bg-black/50), dan nilai rgba absolut (rgba(0,238,255,0.4)).
 2. **SEMANTIC ONLY**: Wajib 100% menggunakan CSS Variables: `bg-background`, `text-foreground`, `primary`, `secondary`, `success`, `warning`, `destructive`, `muted`, dan `card`.
-3. **CYBER-GLASS**: Gunakan utility `.glass` untuk elemen overlay. Wajib menggunakan `border-border` untuk pembatas elemen visual.
+3. **TRANSPARENCY & GLOWS**: Untuk efek shadow, hover, atau glow dengan transparansi, WAJIB menggunakan variabel RGB CSS (contoh: `rgba(var(--primary-rgb), 0.4)` atau `shadow-[0_0_20px_rgba(var(--destructive-rgb),0.3)]`).
+4. **CYBER-GLASS**: Gunakan utility `.glass` untuk elemen overlay. Wajib menggunakan `border-border` untuk pembatas elemen visual, BUKAN border-white/5.
 
 # COMPONENT PLACEMENT
 - **Routing**: Page-level composition goes to `app/`.

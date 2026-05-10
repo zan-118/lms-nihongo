@@ -25,7 +25,7 @@
 ## ✨ Fitur Unggulan
 
 ### 💎 UI/UX Semantic Cyber-Glass
-Antarmuka imersif yang dibangun sepenuhnya di atas **Token Desain Semantik**. Tidak ada lagi warna statis—sistem kami beradaptasi secara dinamis antara mode Terang dan Gelap dengan estetika "Glassmorphism" premium, menyediakan lingkungan yang berorientasi pada fokus belajar.
+Antarmuka imersif yang dibangun sepenuhnya di atas **Token Desain Semantik** dan **Variabel RGB**. Tidak ada lagi warna statis (seperti `bg-white`, `border-white/5` atau absolute `rgba`)—sistem kami beradaptasi 100% secara dinamis antara mode Terang dan Gelap. Setiap border, shadow, dan efek neon (glow) memanfaatkan variabel dinamis untuk menyediakan lingkungan yang berorientasi pada fokus belajar dengan estetika premium.
 
 ### 🧠 Mesin Pembelajaran Cerdas & SRS
 - **Spaced Repetition (SRS) Lanjutan**: Algoritma cerdas berbasis *local-first* yang menjamin retensi ingatan jangka panjang.

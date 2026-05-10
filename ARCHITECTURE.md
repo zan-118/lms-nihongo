@@ -131,9 +131,10 @@ Setiap interaksi user langsung memperbarui state lokal dan menandai ID sebagai `
 ## 7. Technical Standards (Development Rules)
 
 ### 🎨 Strict Styling & Design System
-- **BANNED**: Dilarang keras menggunakan utility warna statis Tailwind (misal: `bg-white`, `text-gray-900`, `bg-red-500`, `text-blue-400`, `dark:bg-slate-800`).
+- **BANNED**: Dilarang keras menggunakan utility warna statis Tailwind (misal: `bg-white`, `text-gray-900`, `bg-red-500`, `text-blue-400`, `dark:bg-slate-800`), transparansi hardcoded (misal: `border-white/5`, `bg-black/50`), dan nilai `rgba` absolut (misal: `rgba(0,238,255,0.4)`).
 - **ALLOWED**: Wajib 100% menggunakan **Semantic CSS Variables**: `bg-background`, `text-foreground`, `primary`, `secondary`, `success` (hijau), `warning` (kuning/oranye), `destructive` (merah), `muted`, dan `card`.
-- **Cyber-Glass Aesthetic**: Gunakan utility `.glass` untuk elemen overlay/card. Pastikan `border-border` selalu digunakan untuk membatasi elemen visual.
+- **TRANSPARENCY & GLOWS**: Untuk efek shadow, hover, atau glow dengan transparansi, WAJIB menggunakan variabel RGB CSS (misal: `rgba(var(--primary-rgb), 0.4)` atau `shadow-[0_0_20px_rgba(var(--destructive-rgb),0.3)]`).
+- **Cyber-Glass Aesthetic**: Gunakan utility `.glass` untuk elemen overlay/card. Pastikan `border-border` selalu digunakan untuk membatasi elemen visual, BUKAN `border-white/5`.
 
 ### 📂 Directory Rules (Strict Placement)
 - **lib/**: **HARAM** berisi file `.jsx` atau `.tsx`. Folder ini murni untuk utilitas TypeScript, fetcher, dan konfigurasi.
