@@ -2,7 +2,7 @@
 
 import React, { useState } from "react";
 import { createClient } from "@/lib/supabase/client";
-import { User, LogIn, ChevronRight, Sparkles, Mail, Lock, Apple, Facebook } from "lucide-react";
+import { User, LogIn, ChevronRight, Sparkles, Mail, Lock, ArrowLeft } from "lucide-react";
 import { useRouter, useSearchParams } from "next/navigation";
 import Link from "next/link";
 import { toast } from "sonner";
@@ -70,14 +70,13 @@ export default function LoginPage() {
     }
   };
 
-  const handleSocialLogin = async (provider: "google" | "apple" | "facebook") => {
+  const handleSocialLogin = async (provider: "google") => {
     setLoading(true);
     try {
       const { error } = await supabase.auth.signInWithOAuth({
         provider,
         options: {
           redirectTo: `${window.location.origin}/auth/callback`,
-          ...(provider === 'apple' ? { skipBrowserRedirect: false } : {})
         },
       });
       if (error) throw error;
@@ -117,12 +116,12 @@ export default function LoginPage() {
       <div className="w-full max-w-md bg-card/80 backdrop-blur-xl border border-border rounded-3xl p-8 z-10 shadow-2xl animate-in fade-in slide-in-from-bottom-4 duration-500 relative">
         <Link 
           href="/" 
-          className="absolute -top-12 left-0 flex items-center gap-2 text-xs font-black uppercase tracking-[0.2em] text-muted-foreground hover:text-primary transition-colors group"
+          className="inline-flex items-center gap-2 text-xs font-bold uppercase tracking-widest text-muted-foreground hover:text-primary transition-all group mb-8"
         >
-          <div className="w-8 h-8 rounded-full bg-muted/50 border border-border flex items-center justify-center group-hover:border-primary/30 transition-all">
-            <ChevronRight className="rotate-180" size={14} />
+          <div className="w-8 h-8 rounded-full bg-muted/50 border border-border flex items-center justify-center group-hover:border-primary/30 group-hover:bg-primary/5 transition-all">
+            <ArrowLeft size={14} className="group-hover:-translate-x-0.5 transition-transform" />
           </div>
-          Kembali ke Beranda
+          Beranda
         </Link>
 
         <div className="text-center mb-6">
@@ -241,31 +240,7 @@ export default function LoginPage() {
             <ChevronRight size={16} className="text-muted-foreground" />
           </button>
 
-          <button
-            type="button"
-            onClick={() => handleSocialLogin("apple")}
-            disabled={loading}
-            className="w-full flex items-center justify-between p-3 rounded-xl bg-foreground text-background hover:opacity-90 transition-all disabled:opacity-50 font-semibold text-sm"
-          >
-            <div className="flex items-center gap-3">
-              <Apple size={20} className="fill-current" />
-              Masuk dengan akun Apple
-            </div>
-            <ChevronRight size={16} className="text-muted-foreground" />
-          </button>
 
-          <button
-            type="button"
-            onClick={() => handleSocialLogin("facebook")}
-            disabled={loading}
-            className="w-full flex items-center justify-between p-3 rounded-xl bg-[#1877F2] text-white hover:opacity-90 transition-all disabled:opacity-50 font-semibold text-sm"
-          >
-            <div className="flex items-center gap-3">
-              <Facebook size={20} className="fill-current" />
-              Masuk dengan akun Facebook
-            </div>
-            <ChevronRight size={16} className="opacity-50" />
-          </button>
 
           <button
             type="button"

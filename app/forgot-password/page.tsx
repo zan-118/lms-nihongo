@@ -49,10 +49,12 @@ export default function ForgotPasswordPage() {
       <div className="w-full max-w-md bg-card/80 backdrop-blur-xl border border-border rounded-3xl p-8 z-10 shadow-2xl animate-in fade-in slide-in-from-bottom-4 duration-500">
         <Link 
           href="/login" 
-          className="inline-flex items-center gap-2 text-sm text-muted-foreground hover:text-foreground transition-colors mb-6"
+          className="inline-flex items-center gap-2 text-xs font-bold uppercase tracking-widest text-muted-foreground hover:text-primary transition-all group mb-8"
         >
-          <ArrowLeft size={16} />
-          Kembali ke Login
+          <div className="w-8 h-8 rounded-full bg-muted/50 border border-border flex items-center justify-center group-hover:border-primary/30 group-hover:bg-primary/5 transition-all">
+            <ArrowLeft size={14} className="group-hover:-translate-x-0.5 transition-transform" />
+          </div>
+          Login
         </Link>
 
         <div className="text-center mb-6">
