@@ -18,7 +18,7 @@ export interface ReadingData {
   difficulty: string;
   audioUrl?: string;
   isTTSDisabled?: boolean;
-  body: string;
-  hiragana: string;
-  translation: string;
+  body: any; // Can be string or PortableText array
+  hiragana: any;
+  translation: any; // Can be string or PortableText array
 }

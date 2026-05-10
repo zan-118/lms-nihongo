@@ -17,11 +17,24 @@ export function useReadingLogic(data: ReadingData) {
     });
   }, [data, setReadingState]);
 
+  // Helper to extract text from either string or PortableText blocks
+  const extractText = (content: any): string[] => {
+    if (!content) return [];
+    if (typeof content === "string") return content.split(/\n+/).filter(p => p.trim());
+    if (Array.isArray(content)) {
+      return content
+        .filter((block: any) => block._type === "block" && block.children)
+        .map((block: any) => block.children.map((child: any) => child.text).join(""))
+        .filter((text: string) => text.trim().length > 0);
+    }
+    return [];
+  };
+
   // Split content into paragraphs
   const content = useMemo(() => {
-    const paragraphs = data.body.split(/\n+/).filter(p => p.trim());
-    const hiraganaParagraphs = data.hiragana.split(/\n+/).filter(p => p.trim());
-    const translationParagraphs = data.translation.split(/\n+/).filter(p => p.trim());
+    const paragraphs = extractText(data.body);
+    const hiraganaParagraphs = extractText(data.hiragana);
+    const translationParagraphs = extractText(data.translation);
     
     return {
       paragraphs,
