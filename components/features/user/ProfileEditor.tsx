@@ -101,7 +101,7 @@ export default function ProfileEditor() {
               variant="ghost"
               onClick={handleSave}
               disabled={isLoading}
-              className="w-10 h-10 rounded-xl bg-success/10 text-success text-success hover:bg-success hover:text-white dark:hover:text-foreground transition-all"
+              className="w-10 h-10 rounded-xl bg-success/10 text-success text-success hover:bg-success hover:text-success-foreground transition-all"
               aria-label="Simpan Nama"
             >
               {isLoading ? <Loader2 size={16} className="animate-spin" /> : <Check size={18} />}

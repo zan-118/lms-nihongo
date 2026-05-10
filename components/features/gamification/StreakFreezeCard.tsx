@@ -29,18 +29,18 @@ export default function StreakFreezeCard() {
   };
 
   return (
-    <Card className="p-6 rounded-2xl bg-indigo-500/5 border border-indigo-500/20 shadow-lg relative overflow-hidden group h-full flex flex-col justify-between">
-      <div className="absolute -top-4 -right-4 text-indigo-500/10 rotate-12 group-hover:scale-125 transition-transform duration-700">
+    <Card className="p-6 rounded-2xl bg-secondary/5 border border-secondary/20 shadow-lg relative overflow-hidden group h-full flex flex-col justify-between">
+      <div className="absolute -top-4 -right-4 text-secondary/10 rotate-12 group-hover:scale-125 transition-transform duration-700">
         <ShieldCheck size={120} />
       </div>
 
       <div className="relative z-10">
         <div className="flex items-center gap-3 mb-4">
-          <div className="w-10 h-10 rounded-xl bg-indigo-500/20 flex items-center justify-center text-indigo-500">
+          <div className="w-10 h-10 rounded-xl bg-secondary/20 flex items-center justify-center text-secondary">
             <ShieldCheck size={20} />
           </div>
           <div>
-            <h4 className="text-xs font-bold text-indigo-500 uppercase tracking-widest mb-0.5">Peningkatan</h4>
+            <h4 className="text-xs font-bold text-secondary uppercase tracking-widest mb-0.5">Peningkatan</h4>
             <h3 className="text-sm font-black text-foreground uppercase tracking-tight">Pelindung Streak</h3>
           </div>
         </div>
@@ -51,7 +51,7 @@ export default function StreakFreezeCard() {
 
         <div className="flex items-center justify-between mb-4">
           <span className="text-xs font-bold text-muted-foreground uppercase tracking-widest">Milikmu:</span>
-          <span className="text-xl font-black text-indigo-500">{freezeCount}</span>
+          <span className="text-xl font-black text-secondary">{freezeCount}</span>
         </div>
       </div>
 
@@ -61,7 +61,7 @@ export default function StreakFreezeCard() {
           disabled={xp < COST}
           className={`w-full h-10 text-xs font-black uppercase tracking-widest rounded-xl transition-all border-none ${
             xp >= COST 
-              ? 'bg-indigo-500 hover:bg-indigo-600 text-white shadow-lg shadow-indigo-500/20' 
+              ? 'bg-secondary hover:bg-secondary/90 text-secondary-foreground shadow-lg shadow-secondary/20' 
               : 'bg-muted text-muted-foreground'
           }`}
         >

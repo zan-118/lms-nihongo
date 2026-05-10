@@ -44,7 +44,7 @@ export function Hero() {
           initial={{ filter: "blur(20px)" }}
           animate={{ filter: "blur(0px)" }}
           transition={{ delay: 0.2, duration: 1 }}
-          className="text-transparent bg-clip-text bg-gradient-to-r from-cyan-500 to-blue-600 dark:from-cyan-400 dark:to-blue-500 drop-shadow-sm dark:drop-shadow-[0_0_25px_rgba(34,211,238,0.4)]"
+          className="text-transparent bg-clip-text bg-gradient-to-r from-primary to-secondary drop-shadow-sm dark:drop-shadow-[0_0_25px_hsl(var(--primary)/0.4)]"
         >
           Bahasa Jepang.
         </motion.span>
@@ -68,7 +68,7 @@ export function Hero() {
       >
         <Button
           asChild
-          className="bg-primary hover:bg-foreground text-primary-foreground font-black uppercase tracking-widest h-auto py-4 px-10 rounded-xl shadow-[0_0_20px_rgba(0,238,255,0.3)] hover:shadow-[0_0_40px_rgba(0,238,255,0.5)] transition-all group border-none"
+          className="bg-primary hover:bg-foreground text-primary-foreground font-black uppercase tracking-widest h-auto py-4 px-10 rounded-xl shadow-[0_0_20px_hsl(var(--primary)/0.3)] hover:shadow-[0_0_40px_hsl(var(--primary)/0.5)] transition-all group border-none"
         >
           <Link href="/dashboard">
             Mulai Belajar Sekarang{" "}

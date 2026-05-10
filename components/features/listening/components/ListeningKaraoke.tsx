@@ -129,7 +129,7 @@ export default function ListeningKaraoke({
                     >
                       <p className={cn(
                         "text-base font-medium leading-relaxed border-t pt-4 transition-colors",
-                        isActive ? "text-primary/70 border-primary/10 italic" : "text-muted-foreground/30 border-white/5"
+                        isActive ? "text-primary/70 border-primary/10 italic" : "text-muted-foreground/30 border-border"
                       )}>
                         {line.translation}
                       </p>
@@ -150,8 +150,8 @@ export default function ListeningKaraoke({
         </div>
  
         {/* Top & Bottom Mask Fades */}
-        <div className="absolute top-0 left-0 w-full h-32 bg-gradient-to-b from-black/60 to-transparent z-20 pointer-events-none" />
-        <div className="absolute bottom-0 left-0 w-full h-32 bg-gradient-to-t from-black/60 to-transparent z-20 pointer-events-none" />
+        <div className="absolute top-0 left-0 w-full h-32 bg-gradient-to-b from-card/80 via-card/20 to-transparent z-20 pointer-events-none" />
+        <div className="absolute bottom-0 left-0 w-full h-32 bg-gradient-to-t from-card/80 via-card/20 to-transparent z-20 pointer-events-none" />
       </div>
 
     </div>

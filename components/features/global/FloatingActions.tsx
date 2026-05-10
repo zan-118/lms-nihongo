@@ -69,7 +69,7 @@ export default function FloatingActions() {
               <motion.div whileHover={{ x: -5 }}>
                 <Link href="/support">
                   <Button
-                    className="bg-card hover:bg-destructive hover:text-white text-foreground border border-border shadow-xl rounded-2xl px-4 py-6 flex items-center gap-3 transition-all h-auto group"
+                    className="bg-card hover:bg-destructive hover:text-destructive-foreground text-foreground border border-border shadow-xl rounded-2xl px-4 py-6 flex items-center gap-3 transition-all h-auto group"
                   >
                     <span className="text-xs font-black uppercase tracking-widest hidden md:block">Donasi</span>
                     <Coffee size={20} className="text-destructive group-hover:text-current" />
@@ -125,7 +125,7 @@ export default function FloatingActions() {
               <button
                 onClick={() => setReadingState({ showTranslation: !readingState.showTranslation })}
                 className={`bg-card/90 backdrop-blur-3xl border border-border shadow-2xl rounded-2xl px-4 py-4 flex items-center gap-3 transition-all h-auto group w-full justify-between ${
-                  readingState.showTranslation ? "hover:bg-success hover:text-white" : "hover:bg-success/20"
+                  readingState.showTranslation ? "hover:bg-success hover:text-success-foreground" : "hover:bg-success/20"
                 }`}
               >
                 <span className="text-[10px] font-black uppercase tracking-widest hidden md:block">

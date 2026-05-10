@@ -120,7 +120,7 @@ export default function AchievementsGrid() {
           >
             <div className="flex items-start gap-4">
               <div className={`w-12 h-12 rounded-xl flex items-center justify-center transition-all duration-500 ${
-                isUnlocked ? 'bg-primary text-white dark:text-foreground shadow-lg scale-110' : 'bg-muted text-muted-foreground'
+                isUnlocked ? 'bg-primary text-primary-foreground shadow-lg scale-110' : 'bg-muted text-muted-foreground'
               }`}>
                 <ach.icon size={24} />
               </div>

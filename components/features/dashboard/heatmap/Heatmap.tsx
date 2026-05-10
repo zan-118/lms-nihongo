@@ -49,8 +49,8 @@ export default function Heatmap({ studyDays }: Props) {
               key={day}
               className={`w-6 h-6 md:w-8 md:h-8 lg:w-9 lg:h-9 rounded-lg md:rounded-xl border transition-all duration-300 hover:scale-125 hover:z-20 cursor-help group relative ${getBoxStyle(value)}`}
             >
-              <div className="absolute bottom-full left-1/2 -translate-x-1/2 mb-2 md:mb-3 w-max px-3 py-2 md:px-4 md:py-3 bg-black/95 dark:bg-card backdrop-blur-xl border border-white/10 dark:border-border text-white dark:text-foreground text-xs md:text-xs font-bold uppercase tracking-widest rounded-xl opacity-0 group-hover:opacity-100 transition-all pointer-events-none shadow-2xl z-30 neo-card scale-90 group-hover:scale-100 origin-bottom">
-                {day} <span className="text-white/20 dark:text-border mx-2">|</span> <span className="text-primary">{value} KATA</span>
+              <div className="absolute bottom-full left-1/2 -translate-x-1/2 mb-2 md:mb-3 w-max px-3 py-2 md:px-4 md:py-3 bg-popover/95 backdrop-blur-xl border border-border text-popover-foreground text-xs md:text-xs font-bold uppercase tracking-widest rounded-xl opacity-0 group-hover:opacity-100 transition-all pointer-events-none shadow-2xl z-30 neo-card scale-90 group-hover:scale-100 origin-bottom">
+                {day} <span className="text-muted-foreground/30 mx-2">|</span> <span className="text-primary">{value} KATA</span>
               </div>
             </motion.div>
           );

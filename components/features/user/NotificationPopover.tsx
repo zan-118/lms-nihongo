@@ -37,9 +37,9 @@ export default function NotificationPopover({ isOpen, onClose }: { isOpen: boole
               initial={{ opacity: 0, y: 10, scale: 0.95 }}
               animate={{ opacity: 1, y: 0, scale: 1 }}
               exit={{ opacity: 0, y: 10, scale: 0.95 }}
-              className="w-full bg-[#0a0a0a] border border-border shadow-[0_30px_60px_-15px_rgba(0,0,0,0.8)] rounded-[2rem] overflow-hidden"
+              className="w-full bg-card border border-border shadow-[0_30px_60px_-15px_rgba(0,0,0,0.8)] rounded-[2rem] overflow-hidden"
             >
-              <div className="p-5 border-b border-border flex items-center justify-between bg-zinc-900/50">
+              <div className="p-5 border-b border-border flex items-center justify-between bg-muted/50">
                 <div className="flex items-center gap-3">
                   <div className="w-8 h-8 rounded-xl bg-primary/10 flex items-center justify-center text-primary">
                     <Bell size={18} />
@@ -121,7 +121,7 @@ export default function NotificationPopover({ isOpen, onClose }: { isOpen: boole
                 <div className="p-4 border-t border-border/50 bg-muted/20">
                   <Button 
                     variant="ghost" 
-                    className="w-full h-10 rounded-xl text-[10px] font-black uppercase tracking-[0.2em] text-primary hover:bg-primary hover:text-white dark:hover:text-foreground transition-all shadow-none border border-primary/20"
+                    className="w-full h-10 rounded-xl text-[10px] font-black uppercase tracking-[0.2em] text-primary hover:bg-primary hover:text-primary-foreground transition-all shadow-none border border-primary/20"
                     onClick={() => notifications.forEach(n => markAsRead(n.id))}
                   >
                     Tandai Semua Selesai

@@ -4,56 +4,62 @@
 
 @layer base {
   :root {
-    --background: 210 40% 98%;
-    --foreground: 222 47% 11%;
+    --background: 216 20% 98%;
+    --foreground: 216 15% 5%; 
     --card: 0 0% 100%;
-    --card-foreground: 222 47% 11%;
+    --card-foreground: 216 15% 5%;
     --popover: 0 0% 100%;
-    --popover-foreground: 222 47% 11%;
-    --primary: 189 94% 43%;
-    --primary-foreground: 189 94% 5%;
-    --secondary: 262 80% 50%;
-    --secondary-foreground: 210 20% 98%;
-    --muted: 210 40% 96.1%;
-    --muted-foreground: 215.4 16.3% 46.9%;
-    --accent: 189 94% 43%;
-    --accent-foreground: 210 20% 98%;
-    --destructive: 346 84% 61%;
-    --destructive-foreground: 210 20% 98%;
-    --success: 160 84% 39%;
+    --popover-foreground: 216 15% 5%;
+    --primary: 184 100% 35%; 
+    --primary-rgb: 0 179 191;
+    --primary-foreground: 0 0% 100%; 
+    --secondary: 263 70% 40%;
+    --secondary-rgb: 68 31 173;
+    --secondary-foreground: 0 0% 100%;
+    --muted: 216 15% 94%;
+    --muted-foreground: 216 15% 25%;
+    --accent: 184 100% 95%;
+    --accent-foreground: 184 100% 25%;
+    --destructive: 0 84.2% 50%;
+    --destructive-rgb: 239 68 68;
+    --destructive-foreground: 210 40% 98%;
+    --success: 142 70% 35%;
     --success-foreground: 210 20% 98%;
-    --warning: 38 92% 50%;
+    --warning: 38 92% 40%;
     --warning-foreground: 210 20% 98%;
-    --border: 214.3 31.8% 91.4%;
-    --input: 214.3 31.8% 91.4%;
-    --ring: 189 94% 43%;
+    --border: 216 15% 85%;
+    --input: 216 15% 85%;
+    --ring: 184 100% 35%;
     --radius: 1rem;
   }
 
   .dark {
-    --background: 222 47% 4%;
-    --foreground: 210 40% 98%;
-    --card: 222 47% 6%;
-    --card-foreground: 210 40% 98%;
-    --popover: 222 47% 6%;
-    --popover-foreground: 210 40% 98%;
-    --primary: 189 94% 43%;
-    --primary-foreground: 222 47% 4%;
-    --secondary: 262 70% 60%;
-    --secondary-foreground: 222 47% 4%;
-    --muted: 217.2 32.6% 12.5%;
-    --muted-foreground: 215 20.2% 65.1%;
-    --accent: 262 70% 60%;
-    --accent-foreground: 210 40% 98%;
-    --destructive: 346 84% 65%;
-    --destructive-foreground: 222 47% 4%;
-    --success: 160 84% 45%;
-    --success-foreground: 222 47% 4%;
+    --background: 216 11% 9%;
+    --foreground: 0 0% 98%;
+    --card: 216 11% 12%;
+    --card-foreground: 0 0% 98%;
+    --popover: 216 11% 9%;
+    --popover-foreground: 0 0% 98%;
+    --primary: 184 100% 50%;
+    --primary-rgb: 0 238 255;
+    --primary-foreground: 216 11% 5%;
+    --secondary: 263 70% 50%;
+    --secondary-rgb: 139 92 246;
+    --secondary-foreground: 210 20% 98%;
+    --muted: 216 11% 15%;
+    --muted-foreground: 216 11% 70%;
+    --accent: 184 100% 12%;
+    --accent-foreground: 184 100% 80%;
+    --destructive: 0 62.8% 30.6%;
+    --destructive-rgb: 127 29 29;
+    --destructive-foreground: 0 0% 98%;
+    --success: 142 70% 45%;
+    --success-foreground: 216 11% 5%;
     --warning: 38 92% 55%;
-    --warning-foreground: 222 47% 4%;
-    --border: 217.2 32.6% 17.5%;
-    --input: 217.2 32.6% 17.5%;
-    --ring: 189 94% 43%;
+    --warning-foreground: 216 11% 5%;
+    --border: 216 11% 20%;
+    --input: 216 11% 20%;
+    --ring: 184 100% 50%;
   }
 
   * {
@@ -73,7 +79,7 @@
   }
   
   .dark h1, .dark h2, .dark h3, .dark h4, .dark h5, .dark h6 {
-    @apply text-white;
+    @apply text-foreground;
   }
 
   p {
@@ -87,7 +93,7 @@
   }
   
   .dark .neo-card {
-    @apply bg-[#0f1115] border-white/10 shadow-[8px_8px_16px_rgba(0,0,0,0.6),-4px_-4px_10px_rgba(255,255,255,0.03)];
+    @apply bg-card border-border shadow-[8px_8px_16px_rgba(0,0,0,0.6),-4px_-4px_10px_rgba(255,255,255,0.01)];
   }
 
   .neo-inset {
@@ -95,7 +101,7 @@
   }
   
   .dark .neo-inset {
-    @apply bg-[#0a0c10] border-white/10 shadow-[inset_4px_4px_10px_rgba(0,0,0,0.6),inset_-2px_-2px_8px_rgba(255,255,255,0.02)];
+    @apply bg-background/50 border-border shadow-[inset_4px_4px_10px_rgba(0,0,0,0.6),inset_-2px_-2px_8px_rgba(255,255,255,0.01)];
   }
 
   .btn-cyber {
@@ -118,7 +124,7 @@
   }
 
   .dark .glass {
-    @apply bg-background/40 border-white/10 shadow-[0_8px_32px_0_rgba(0,0,0,0.8)];
+    @apply bg-background/40 border-border shadow-[0_8px_32px_0_rgba(0,0,0,0.8)];
   }
 
   .neural-grid {

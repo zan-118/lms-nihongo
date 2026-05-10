@@ -29,7 +29,7 @@ export default function TTSReader({ text, minimal = false }: Props) {
       } ${
         isPlaying
           ? "bg-destructive/10 border-destructive/40 text-destructive shadow-[0_0_20px_rgba(239,68,68,0.2)] neo-card shadow-none"
-          : "bg-black/40 border-white/5 text-muted-foreground hover:text-destructive hover:border-destructive/30 neo-inset shadow-none"
+          : "bg-muted/50 border-border text-muted-foreground hover:text-destructive hover:border-destructive/30 neo-inset shadow-none"
       }`}
       title="Vocal_Synthesis_Execution"
       aria-label={isPlaying ? "Berhenti mendengarkan" : "Dengarkan pengucapan"}

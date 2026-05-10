@@ -66,7 +66,7 @@ export default function ProfileSection({
 
   return (
     <motion.div variants={itemVariants}>
-      <Card className="bg-background/[0.01] backdrop-blur-3xl border border-white/5 rounded-[2.5rem] p-8 md:p-10 shadow-2xl overflow-hidden relative group">
+      <Card className="bg-background/[0.01] backdrop-blur-3xl border border-border rounded-[2.5rem] p-8 md:p-10 shadow-2xl overflow-hidden relative group">
         {/* Pilot ID Card Decorative Elements */}
         <div className="absolute top-0 right-0 w-64 h-64 bg-primary/5 blur-[100px] rounded-full -mr-32 -mt-32 animate-pulse" />
         <div className="absolute bottom-0 left-0 w-32 h-32 bg-primary/5 blur-[60px] rounded-full -ml-16 -mb-16" />
@@ -79,13 +79,13 @@ export default function ProfileSection({
           <div className="flex flex-col items-center gap-4">
              <div className="relative group/avatar">
                 <div className="absolute -inset-1 bg-gradient-to-br from-primary to-blue-600 rounded-[2.5rem] blur opacity-25 group-hover/avatar:opacity-50 transition duration-1000 group-hover/avatar:duration-200" />
-                <div className="w-28 h-28 md:w-32 md:h-32 rounded-[2.2rem] bg-card border border-white/10 flex items-center justify-center text-foreground relative z-10 overflow-hidden">
+                <div className="w-28 h-28 md:w-32 md:h-32 rounded-[2.2rem] bg-card border border-border flex items-center justify-center text-foreground relative z-10 overflow-hidden">
                    <div className="absolute inset-0 bg-gradient-to-br from-primary/10 to-transparent opacity-50" />
                    <span className="text-5xl font-black italic text-transparent bg-clip-text bg-gradient-to-br from-primary to-blue-500 drop-shadow-sm">
                       {(name || "S").charAt(0).toUpperCase()}
                    </span>
                 </div>
-                <div className="absolute -bottom-2 -right-2 w-10 h-10 bg-card border border-white/10 rounded-2xl flex items-center justify-center z-20 shadow-xl group-hover:scale-110 transition-transform">
+                <div className="absolute -bottom-2 -right-2 w-10 h-10 bg-card border border-border rounded-2xl flex items-center justify-center z-20 shadow-xl group-hover:scale-110 transition-transform">
                    <ShieldCheck size={20} className="text-success" />
                 </div>
              </div>
@@ -110,7 +110,7 @@ export default function ProfileSection({
 
             {/* STATS COUNTERS */}
             <div className="grid grid-cols-2 gap-4">
-               <div className="bg-background/[0.03] border border-white/5 rounded-2xl p-5 flex items-center gap-4 group/stat hover:bg-background/[0.05] transition-all">
+               <div className="bg-background/[0.03] border border-border rounded-2xl p-5 flex items-center gap-4 group/stat hover:bg-background/[0.05] transition-all">
                   <div className="w-12 h-12 rounded-xl bg-primary/10 flex items-center justify-center text-primary shadow-inner">
                      <Zap size={22} className="fill-current animate-pulse" />
                   </div>
@@ -121,7 +121,7 @@ export default function ProfileSection({
                      <p className="text-[10px] font-black uppercase tracking-widest text-muted-foreground/60">Total XP</p>
                   </div>
                </div>
-               <div className="bg-background/[0.03] border border-white/5 rounded-2xl p-5 flex items-center gap-4 group/stat hover:bg-background/[0.05] transition-all">
+               <div className="bg-background/[0.03] border border-border rounded-2xl p-5 flex items-center gap-4 group/stat hover:bg-background/[0.05] transition-all">
                   <div className="w-12 h-12 rounded-xl bg-warning/10 flex items-center justify-center text-warning shadow-inner">
                      <Flame size={22} className="fill-current" />
                   </div>
@@ -144,7 +144,7 @@ export default function ProfileSection({
                   value={newName}
                   onChange={(e) => setNewName(e.target.value)}
                   placeholder="Masukkan nama pilot..."
-                  className="w-full h-14 bg-background/[0.02] border border-white/10 rounded-2xl pl-12 pr-4 text-sm font-black text-foreground uppercase tracking-tight focus:ring-2 focus:ring-primary/20 focus:border-primary outline-none transition-all placeholder:text-muted-foreground/20"
+                  className="w-full h-14 bg-background/[0.02] border border-border rounded-2xl pl-12 pr-4 text-sm font-black text-foreground uppercase tracking-tight focus:ring-2 focus:ring-primary/20 focus:border-primary outline-none transition-all placeholder:text-muted-foreground/20"
                 />
               </div>
               <Button 

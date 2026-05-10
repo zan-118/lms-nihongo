@@ -29,13 +29,13 @@ export default function ExamError({
       {/* Efek Latar Belakang Cyber Glow */}
       <div className="absolute top-0 left-1/4 w-[400px] h-[400px] bg-destructive/10 blur-[120px] rounded-full pointer-events-none" />
       
-      <Card className="p-10 md:p-14 border-destructive/20 max-w-lg w-full relative z-10 my-auto neo-card rounded-[2rem] bg-cyber-surface">
+      <Card className="p-10 md:p-14 border-destructive/30 max-w-lg w-full relative z-10 my-auto neo-card rounded-[2rem] bg-card">
         {/* Ikon Peringatan Neumorphic */}
-        <div className="w-20 h-20 mx-auto neo-inset text-destructive flex items-center justify-center rounded-full mb-8 shadow-inner bg-black/20">
+        <div className="w-20 h-20 mx-auto neo-inset text-destructive flex items-center justify-center rounded-full mb-8 shadow-inner bg-destructive/10">
           <span className="text-4xl block">⚠️</span>
         </div>
         
-        <h1 className="text-2xl md:text-3xl font-black text-white uppercase tracking-tight mb-4">
+        <h1 className="text-2xl md:text-3xl font-black text-foreground uppercase tracking-tight mb-4">
           Gagal Memuat Ujian
         </h1>
         
@@ -46,7 +46,7 @@ export default function ExamError({
 
         {/* Debug Info (Hanya di Development) */}
         {process.env.NODE_ENV === "development" && (
-          <div className="mb-8 p-4 bg-black/40 rounded-lg border border-destructive/20 text-left overflow-auto max-h-32">
+          <div className="mb-8 p-4 bg-muted rounded-lg border border-destructive/20 text-left overflow-auto max-h-32">
             <code className="text-[10px] text-destructive font-mono break-all">
               [DEV LOG]: {error.message}
             </code>
@@ -65,7 +65,7 @@ export default function ExamError({
           <Button
             asChild
             variant="ghost"
-            className="bg-card neo-inset border border-white/5 hover:border-white/20 text-foreground hover:text-primary font-black uppercase tracking-widest h-auto py-4 px-8 rounded-xl text-[10px] transition-all"
+            className="bg-card neo-inset border border-border hover:border-primary/50 text-foreground hover:text-primary font-black uppercase tracking-widest h-auto py-4 px-8 rounded-xl text-[10px] transition-all"
           >
             <Link href="/courses">
               Batal & Kembali

@@ -70,7 +70,7 @@ export function ExamIntro({ exam, setGameState, backLink }: ExamIntroProps) {
         </Button>
         <Button
           onClick={() => setGameState("playing")}
-          className="w-full bg-destructive hover:bg-destructive bg-destructive dark:hover:bg-background text-white dark:text-foreground font-black uppercase tracking-widest h-auto py-5 px-10 rounded-xl transition-all shadow-lg active:scale-95 text-xs sm:text-xs border-none"
+          className="w-full bg-destructive hover:bg-destructive/90 text-destructive-foreground font-black uppercase tracking-widest h-auto py-5 px-10 rounded-xl transition-all shadow-lg active:scale-95 text-xs sm:text-xs border-none"
         >
           Mulai Sekarang
         </Button>

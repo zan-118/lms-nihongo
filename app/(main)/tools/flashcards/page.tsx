@@ -199,7 +199,7 @@ function FlashcardsContent() {
               onClick={() => setSelectedCategory("all")}
               className="group p-6 rounded-3xl border border-primary/20 bg-primary/5 hover:border-primary/50 hover:bg-primary/10 transition-all duration-300 cursor-pointer flex flex-col gap-4 relative overflow-hidden"
             >
-              <div className="w-12 h-12 rounded-2xl bg-primary flex items-center justify-center text-white shadow-lg">
+              <div className="w-12 h-12 rounded-2xl bg-primary flex items-center justify-center text-primary-foreground shadow-lg">
                 <Layers size={24} />
               </div>
               <div>
@@ -266,7 +266,7 @@ function FlashcardsContent() {
               onClick={() => fetchCardsAndStart('vocab')}
               className="group p-8 rounded-3xl border border-primary/20 bg-card hover:border-primary/60 hover:bg-primary/[0.02] transition-all duration-300 cursor-pointer flex flex-col items-center text-center gap-5 relative overflow-hidden shadow-sm hover:shadow-xl"
             >
-              <div className="w-16 h-16 rounded-2xl bg-muted border border-border text-primary flex items-center justify-center group-hover:bg-primary group-hover:text-white group-hover:scale-110 transition-all duration-500 shadow-inner">
+              <div className="w-16 h-16 rounded-2xl bg-muted border border-border text-primary flex items-center justify-center group-hover:bg-primary group-hover:text-primary-foreground group-hover:scale-110 transition-all duration-500 shadow-inner">
                 <Layers size={28} />
               </div>
               <div>
@@ -281,7 +281,7 @@ function FlashcardsContent() {
               onClick={() => fetchCardsAndStart('kanji')}
               className="group p-8 rounded-3xl border border-secondary/20 bg-card hover:border-secondary/60 hover:bg-secondary/[0.02] transition-all duration-300 cursor-pointer flex flex-col items-center text-center gap-5 relative overflow-hidden shadow-sm hover:shadow-xl"
             >
-              <div className="w-16 h-16 rounded-2xl bg-muted border border-border text-secondary flex items-center justify-center group-hover:bg-secondary group-hover:text-white group-hover:scale-110 transition-all duration-500 shadow-inner">
+              <div className="w-16 h-16 rounded-2xl bg-muted border border-border text-secondary flex items-center justify-center group-hover:bg-secondary group-hover:text-secondary-foreground group-hover:scale-110 transition-all duration-500 shadow-inner">
                 <PenTool size={28} />
               </div>
               <div>
@@ -296,7 +296,7 @@ function FlashcardsContent() {
               onClick={() => fetchCardsAndStart('survival')}
               className="group p-8 rounded-3xl border border-destructive/20 bg-card hover:border-destructive/60 hover:bg-destructive/[0.02] transition-all duration-300 cursor-pointer flex flex-col items-center text-center gap-5 relative overflow-hidden shadow-sm hover:shadow-xl"
             >
-              <div className="w-16 h-16 rounded-2xl bg-muted border border-border text-destructive flex items-center justify-center group-hover:bg-destructive group-hover:text-white group-hover:scale-110 transition-all duration-500 shadow-inner">
+              <div className="w-16 h-16 rounded-2xl bg-muted border border-border text-destructive flex items-center justify-center group-hover:bg-destructive group-hover:text-destructive-foreground group-hover:scale-110 transition-all duration-500 shadow-inner">
                 <Flame size={28} />
               </div>
               <div>

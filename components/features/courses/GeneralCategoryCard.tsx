@@ -67,7 +67,7 @@ export function GeneralCategoryCard({ cat, variants }: GeneralCategoryCardProps)
         <div className="mt-auto pt-8 border-t border-border relative z-10">
           <Link
             href={`/courses/${cat.slug}`}
-            className="inline-flex items-center gap-3 px-8 py-4 rounded-2xl bg-warning hover:bg-foreground text-white dark:text-foreground font-black uppercase tracking-widest text-xs dark:hover:bg-background transition-all duration-300 shadow-lg"
+            className="inline-flex items-center gap-3 px-8 py-4 rounded-2xl bg-warning hover:bg-foreground text-warning-foreground hover:text-background font-black uppercase tracking-widest text-xs transition-all duration-300 shadow-lg"
           >
             Buka Semua Materi <ArrowRight size={16} />
           </Link>

@@ -113,7 +113,7 @@ export function ExamReview({ exam, answers, setGameState }: ExamReviewProps) {
                         key={optIdx}
                         className={`p-6 flex items-center gap-5 transition-all rounded-2xl border neo-inset shadow-none ${variantStyle}`}
                       >
-                        <Badge variant="outline" className={`font-mono font-black text-xs h-8 w-8 rounded-lg flex items-center justify-center border-none ${isCorrectAnswer ? "bg-success bg-success text-white dark:text-foreground" : isUserSelection ? "bg-destructive bg-destructive text-white dark:text-foreground" : "bg-muted dark:bg-background/5 text-muted-foreground"}`}>
+                        <Badge variant="outline" className={`font-mono font-black text-xs h-8 w-8 rounded-lg flex items-center justify-center border-none ${isCorrectAnswer ? "bg-success text-success-foreground" : isUserSelection ? "bg-destructive text-destructive-foreground" : "bg-muted text-muted-foreground"}`}>
                           {optIdx + 1}
                         </Badge>
                         <span className="text-base md:text-xl font-japanese font-medium leading-tight flex-1">

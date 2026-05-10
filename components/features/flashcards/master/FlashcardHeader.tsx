@@ -73,7 +73,7 @@ export function FlashcardHeader({
               }}
               className={`flex-1 rounded-lg md:rounded-xl h-10 md:h-12 text-[10px] md:text-xs font-bold uppercase tracking-widest transition-all ${
                 studyMode === "tantangan"
-                  ? `bg-rose-500 text-white shadow-lg shadow-rose-500/20`
+                  ? `bg-destructive text-destructive-foreground shadow-lg shadow-destructive/20`
                   : "text-muted-foreground hover:text-foreground"
               }`}
             >
@@ -83,7 +83,7 @@ export function FlashcardHeader({
         )}
 
         {combo > 1 && (
-          <div className="flex items-center gap-1.5 bg-warning text-white px-3 py-2 rounded-xl animate-in zoom-in duration-300 shadow-lg shadow-orange-500/20">
+          <div className="flex items-center gap-1.5 bg-warning text-warning-foreground px-3 py-2 rounded-xl animate-in zoom-in duration-300 shadow-lg shadow-orange-500/20">
             <span className="text-sm font-black">🔥 {combo}</span>
           </div>
         )}
@@ -92,7 +92,7 @@ export function FlashcardHeader({
           variant="ghost"
           size="icon"
           onClick={() => router.push("/dashboard")}
-          className="shrink-0 w-10 h-10 md:w-12 md:h-12 rounded-xl bg-muted/50 hover:bg-rose-500 hover:text-white transition-all border border-border"
+          className="shrink-0 w-10 h-10 md:w-12 md:h-12 rounded-xl bg-muted/50 hover:bg-destructive hover:text-destructive-foreground transition-all border border-border"
         >
           <X size={20} />
         </Button>

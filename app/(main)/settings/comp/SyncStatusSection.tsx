@@ -20,7 +20,7 @@ export default function SyncStatusSection({
 }: SyncStatusSectionProps) {
   return (
     <motion.div variants={itemVariants}>
-      <Card className="bg-background/[0.01] backdrop-blur-3xl border border-white/5 rounded-[2.5rem] p-8 shadow-2xl relative overflow-hidden group">
+      <Card className="bg-background/[0.01] backdrop-blur-3xl border border-border rounded-[2.5rem] p-8 shadow-2xl relative overflow-hidden group">
         <div className="flex flex-col md:flex-row items-center justify-between gap-6">
           <div className="flex items-center gap-6">
             <div className={`w-16 h-16 rounded-2xl flex items-center justify-center border transition-all duration-500 shadow-xl ${
@@ -49,7 +49,7 @@ export default function SyncStatusSection({
             className={`h-14 px-8 rounded-2xl text-[10px] font-black uppercase tracking-[0.2em] transition-all duration-300 shadow-xl ${
               dirtySrsCount > 0
                 ? 'bg-primary text-primary-foreground hover:scale-[1.02] shadow-primary/20'
-                : 'bg-background/5 text-muted-foreground border border-white/10 opacity-50 cursor-not-allowed'
+                : 'bg-background/5 text-muted-foreground border border-border opacity-50 cursor-not-allowed'
             }`}
           >
             <RefreshCw size={18} className={`mr-3 ${isSyncing ? 'animate-spin' : ''}`} />

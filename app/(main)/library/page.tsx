@@ -79,7 +79,7 @@ export default function LibraryPage() {
   return (
     <div className="w-full px-4 md:px-8 lg:px-12 relative overflow-hidden pb-24 bg-background text-foreground transition-colors duration-300 min-h-screen pt-12">
       {/* Background Neural Overlays */}
-      <div className="absolute inset-0 bg-[radial-gradient(circle_at_20%_20%,rgba(0,238,255,0.05)_0%,transparent_50%)] pointer-events-none z-0" />
+      <div className="absolute inset-0 bg-[radial-gradient(circle_at_20%_20%,rgba(var(--primary-rgb),0.05)_0%,transparent_50%)] pointer-events-none z-0" />
       <div className="neural-grid" />
 
       <div className="max-w-7xl mx-auto relative z-10">
@@ -106,7 +106,7 @@ export default function LibraryPage() {
                 className="text-4xl md:text-7xl lg:text-7xl font-black uppercase tracking-tight text-foreground mb-6 md:mb-10 drop-shadow-2xl leading-none md:leading-[0.85]"
               >
                 Pustaka<br />
-                <span className="text-primary drop-shadow-[0_0_30px_rgba(0,238,255,0.4)]">Materi</span>
+                <span className="text-primary drop-shadow-[0_0_30px_rgba(var(--primary-rgb),0.4)]">Materi</span>
               </motion.h1>
               
               <motion.p

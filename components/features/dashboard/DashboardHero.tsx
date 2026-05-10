@@ -133,7 +133,7 @@ export default function DashboardHero({
                 </div>
                 <span className="text-[8px] font-black uppercase tracking-widest text-muted-foreground">Streak</span>
               </div>
-              <div className="flex flex-col items-center gap-1 border-x border-white/5">
+              <div className="flex flex-col items-center gap-1 border-x border-border">
                 <div className="flex items-center gap-1.5 text-primary">
                   <Star size={14} className="fill-current" />
                   <span className="text-sm font-black">Lvl {level}</span>
@@ -152,14 +152,14 @@ export default function DashboardHero({
             {dueCount > 0 ? (
               <div className="flex flex-col sm:flex-row gap-4 w-full">
                 <motion.div whileHover={{ scale: 1.02 }} whileTap={{ scale: 0.98 }} className="flex-1">
-                  <Button asChild className="w-full h-16 bg-primary hover:bg-foreground text-primary-foreground font-black uppercase tracking-widest rounded-2xl text-xs transition-all shadow-[0_0_20px_rgba(0,238,255,0.3)] hover:shadow-[0_0_40px_rgba(0,238,255,0.5)] border-none">
+                  <Button asChild className="w-full h-16 bg-primary hover:bg-foreground text-primary-foreground hover:text-background font-black uppercase tracking-widest rounded-2xl text-xs transition-all shadow-primary/30 hover:shadow-primary/50 border-none">
                     <Link href="/review">
                       Mulai Review Sekarang <ArrowRight size={18} className="ml-2" />
                     </Link>
                   </Button>
                 </motion.div>
                 <motion.div whileHover={{ scale: 1.02 }} whileTap={{ scale: 0.98 }} className="flex-1">
-                  <Button asChild variant="outline" className="w-full h-16 bg-background/50 backdrop-blur-md border-white/10 hover:border-primary/50 hover:bg-primary/5 rounded-2xl text-xs font-black uppercase tracking-widest transition-all">
+                  <Button asChild variant="outline" className="w-full h-16 bg-background/50 backdrop-blur-md border-border hover:border-primary/50 hover:bg-primary/5 rounded-2xl text-xs font-black uppercase tracking-widest transition-all">
                     <Link href="/review?mode=quick">
                       <Zap size={18} className="mr-2 text-primary" /> Kuis Cepat
                     </Link>
@@ -169,14 +169,14 @@ export default function DashboardHero({
             ) : (
               <div className="flex flex-col sm:flex-row gap-4 w-full">
                 <motion.div whileHover={{ scale: 1.02 }} whileTap={{ scale: 0.98 }} className="flex-1">
-                  <Button asChild className="w-full h-16 bg-foreground text-background hover:bg-success hover:text-white font-black uppercase tracking-widest rounded-2xl text-xs transition-all shadow-xl border-none">
+                  <Button asChild className="w-full h-16 bg-foreground text-background hover:bg-success hover:text-success-foreground font-black uppercase tracking-widest rounded-2xl text-xs transition-all shadow-xl border-none">
                     <Link href="/courses">
                       Pelajari Materi Baru <BookMarked size={18} className="ml-2" />
                     </Link>
                   </Button>
                 </motion.div>
                 <motion.div whileHover={{ scale: 1.02 }} whileTap={{ scale: 0.98 }} className="flex-1">
-                  <Button asChild variant="outline" className="w-full h-16 bg-background/50 backdrop-blur-md border-white/10 hover:border-primary/50 hover:bg-primary/5 rounded-2xl text-xs font-black uppercase tracking-widest transition-all">
+                  <Button asChild variant="outline" className="w-full h-16 bg-background/50 backdrop-blur-md border-border hover:border-primary/50 hover:bg-primary/5 rounded-2xl text-xs font-black uppercase tracking-widest transition-all">
                     <Link href="/review?mode=quick">
                       <Zap size={18} className="mr-2 text-primary" /> Kuis Cepat
                     </Link>
@@ -206,7 +206,7 @@ export default function DashboardHero({
             initial={{ opacity: 0, y: 10 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ delay: 1 }}
-            className="mt-8 p-6 rounded-[1.5rem] bg-background/[0.02] backdrop-blur-xl border border-white/5 flex gap-5 items-center group hover:bg-background/[0.04] transition-all duration-300"
+            className="mt-8 p-6 rounded-[1.5rem] bg-background/[0.02] backdrop-blur-xl border border-border flex gap-5 items-center group hover:bg-background/[0.04] transition-all duration-300"
           >
             <div className="shrink-0 w-10 h-10 rounded-xl bg-primary/10 flex items-center justify-center text-primary group-hover:scale-110 transition-transform">
               <Sparkles size={18} />

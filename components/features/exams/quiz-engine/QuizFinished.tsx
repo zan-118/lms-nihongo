@@ -26,7 +26,7 @@ export function QuizFinished({
   const isPerfect = percentage === 100;
 
   return (
-    <Card className="bg-card dark:bg-cyber-surface p-10 md:p-16 rounded-[4rem] border border-border dark:border-white/5 text-center relative overflow-hidden neo-card shadow-2xl transition-colors duration-300">
+    <Card className="bg-card p-10 md:p-16 rounded-[4rem] border border-border text-center relative overflow-hidden neo-card shadow-2xl transition-colors duration-300">
       <div className="absolute inset-0 flex items-center justify-center pointer-events-none z-50">
         <XPPop show={showXP} amount={xpGained} />
       </div>
@@ -89,7 +89,7 @@ export function QuizFinished({
               const basePath = window.location.pathname.replace(/\/[^/]+$/, "");
               router.push(basePath || "/courses");
             }}
-            className="w-full sm:w-auto h-auto px-10 py-5 bg-destructive bg-destructive hover:bg-foreground dark:hover:bg-background text-white dark:text-foreground font-black rounded-2xl transition-all uppercase tracking-widest text-xs shadow-xl border-none"
+            className="w-full sm:w-auto h-auto px-10 py-5 bg-destructive hover:bg-destructive/90 text-destructive-foreground font-black rounded-2xl transition-all uppercase tracking-widest text-xs shadow-xl border-none"
           >
             Materi Selanjutnya <ArrowRight size={18} className="ml-3" />
           </Button>

@@ -65,7 +65,7 @@ export function FlashcardActions({
                   e.stopPropagation();
                   handleAnswer(0);
                 }}
-                className="flex flex-col h-auto py-3 border-rose-500/20 bg-rose-500/5 text-rose-500 hover:bg-rose-500 hover:text-white rounded-xl transition-all"
+                className="flex flex-col h-auto py-3 border-destructive/20 bg-destructive/5 text-destructive hover:bg-destructive hover:text-destructive-foreground rounded-xl transition-all"
               >
                 <X size={16} className="mb-1" />
                 <span className="text-[10px] font-bold uppercase tracking-tight">Lupa</span>
@@ -77,7 +77,7 @@ export function FlashcardActions({
                   e.stopPropagation();
                   handleAnswer(1);
                 }}
-                className="flex flex-col h-auto py-3 border-warning/20 bg-warning/5 text-warning hover:bg-warning hover:text-white rounded-xl transition-all"
+                className="flex flex-col h-auto py-3 border-warning/20 bg-warning/5 text-warning hover:bg-warning hover:text-warning-foreground rounded-xl transition-all"
               >
                 <Info size={16} className="mb-1" />
                 <span className="text-[10px] font-bold uppercase tracking-tight">Sulit</span>
@@ -89,7 +89,7 @@ export function FlashcardActions({
                   e.stopPropagation();
                   handleAnswer(2);
                 }}
-                className="flex flex-col h-auto py-3 border-success/20 bg-success/5 text-success hover:bg-success hover:text-white rounded-xl transition-all"
+                className="flex flex-col h-auto py-3 border-success/20 bg-success/5 text-success hover:bg-success hover:text-success-foreground rounded-xl transition-all"
               >
                 <Check size={16} className="mb-1" />
                 <span className="text-[10px] font-bold uppercase tracking-tight">Bisa</span>
@@ -101,7 +101,7 @@ export function FlashcardActions({
                   e.stopPropagation();
                   handleAnswer(3);
                 }}
-                className="flex flex-col h-auto py-3 border-sky-500/20 bg-sky-500/5 text-sky-400 hover:bg-sky-500 hover:text-white rounded-xl transition-all"
+                className="flex flex-col h-auto py-3 border-primary/20 bg-primary/5 text-primary hover:bg-primary hover:text-primary-foreground rounded-xl transition-all"
               >
                 <Check size={16} className="mb-1" />
                 <span className="text-[10px] font-bold uppercase tracking-tight">Mudah</span>

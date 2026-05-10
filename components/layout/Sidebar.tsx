@@ -27,7 +27,7 @@ export default function Sidebar({ isOpen, onClose }: { isOpen: boolean; onClose:
         />
       )}
 
-      <aside className={`fixed top-0 left-0 h-screen bg-background/60 backdrop-blur-3xl border-r border-white/5 p-6 z-[60] flex flex-col w-72 transition-transform duration-500 md:translate-x-0 ${isOpen ? 'translate-x-0' : '-translate-x-full'}`}>
+      <aside className={`fixed top-0 left-0 h-screen bg-background/60 backdrop-blur-3xl border-r border-border p-6 z-[60] flex flex-col w-72 transition-transform duration-500 md:translate-x-0 ${isOpen ? 'translate-x-0' : '-translate-x-full'}`}>
       {/* Background Neural Overlays */}
       <div className="absolute inset-0 bg-[radial-gradient(circle_at_20%_20%,rgba(0,238,255,0.02)_0%,transparent_50%)] pointer-events-none" />
       
@@ -101,12 +101,12 @@ export default function Sidebar({ isOpen, onClose }: { isOpen: boolean; onClose:
       </div>
 
       {/* MINI FOOTER - LEGAL & INFO */}
-      <div className="mt-6 pt-4 border-t border-white/5 relative z-10">
+      <div className="mt-6 pt-4 border-t border-border relative z-10">
         <div className="flex items-center justify-center gap-4 text-[10px] font-bold uppercase tracking-widest text-muted-foreground/30">
           <Link href="/privacy" className="hover:text-primary transition-colors">Privacy</Link>
-          <span className="w-1 h-1 rounded-full bg-background/5" />
+          <span className="w-1 h-1 rounded-full bg-muted" />
           <Link href="/terms" className="hover:text-primary transition-colors">Terms</Link>
-          <span className="w-1 h-1 rounded-full bg-background/5" />
+          <span className="w-1 h-1 rounded-full bg-muted" />
           <span className="opacity-50">© 2024</span>
         </div>
       </div>

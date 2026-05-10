@@ -111,7 +111,7 @@ export default function ListeningPageClient({ data }: ListeningPageClientProps) 
                 compact={true}
               />
 
-              <div className="flex p-1 bg-background/[0.03] dark:bg-background/[0.03] bg-black/[0.03] border border-border rounded-2xl backdrop-blur-md">
+              <div className="flex p-1 bg-muted/30 border border-border rounded-2xl backdrop-blur-md">
                 <button
                   onClick={() => setListeningState({ activeTab: "transcript" })}
                   className={cn(
@@ -177,7 +177,7 @@ export default function ListeningPageClient({ data }: ListeningPageClientProps) 
                         onComplete={handleQuizComplete} 
                       />
                     ) : (
-                      <div className="p-12 text-center bg-black/60 backdrop-blur-2xl border border-white/10 rounded-3xl">
+                      <div className="p-12 text-center bg-background/80 backdrop-blur-2xl border border-border rounded-3xl">
                         <p className="text-muted-foreground">No quiz available for this task.</p>
                         <button 
                           onClick={() => setListeningState({ activeTab: "transcript" })}
@@ -197,10 +197,10 @@ export default function ListeningPageClient({ data }: ListeningPageClientProps) 
           {/* Right Column: Sidebar */}
           <aside className="lg:col-span-4 flex flex-col gap-6">
             {/* Mission Info */}
-            <div className="p-6 rounded-3xl bg-background/[0.02] border border-white/5 flex flex-col gap-6">
+            <div className="p-6 rounded-3xl bg-background/[0.02] border border-border flex flex-col gap-6">
               <div className="flex items-center gap-3">
                 <Info size={18} className="text-primary/50" />
-                <h4 className="text-[10px] font-black uppercase tracking-[0.2em] text-white">Study Notes</h4>
+                <h4 className="text-[10px] font-black uppercase tracking-[0.2em] text-foreground">Study Notes</h4>
               </div>
               <ul className="flex flex-col gap-4">
                 <li className="flex gap-4 items-start">
@@ -229,7 +229,7 @@ export default function ListeningPageClient({ data }: ListeningPageClientProps) 
               <Trophy size={40} className="absolute -bottom-2 -right-2 text-primary/10 group-hover:scale-110 transition-transform" />
               <div className="flex flex-col gap-1">
                 <span className="text-[10px] font-black uppercase tracking-widest text-primary">Reward</span>
-                <span className="text-xl font-black text-white">+{data.quiz ? data.quiz.length * 50 : 0} XP</span>
+                <span className="text-xl font-black text-foreground">+{data.quiz ? data.quiz.length * 50 : 0} XP</span>
               </div>
               <p className="text-[10px] text-primary/60 font-medium leading-relaxed">
                 Complete the quiz with 100% accuracy to earn maximum XP bonus.

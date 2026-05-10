@@ -11,7 +11,7 @@ export function LandingFooter() {
   return (
     <footer className="mt-32 pt-12 border-t border-border flex flex-col md:flex-row items-center justify-between gap-8">
       <div className="flex items-center gap-4">
-        <div className="relative w-10 h-10 drop-shadow-sm dark:drop-shadow-[0_0_10px_rgba(34,211,238,0.3)]">
+        <div className="relative w-10 h-10 drop-shadow-sm dark:drop-shadow-[0_0_10px_hsl(var(--primary)/0.3)]">
           <Image
             src="/logo-branding.svg"
             alt="NihongoRoute"

@@ -58,7 +58,7 @@ export default function KanjiListClient({ kanjis }: KanjiListClientProps) {
             <Search className="absolute left-4 top-1/2 -translate-y-1/2 text-muted-foreground w-5 h-5" />
             <Input 
               placeholder="Cari kanji, arti, atau cara baca..." 
-              className="pl-12 h-14 bg-card/40 backdrop-blur-xl border-white/5 rounded-2xl text-lg shadow-2xl focus:ring-primary/20"
+              className="pl-12 h-14 bg-card/40 backdrop-blur-xl border border-border rounded-2xl text-lg shadow-2xl focus:ring-primary/20"
               value={search}
               onChange={(e) => setSearch(e.target.value)}
             />
@@ -70,8 +70,8 @@ export default function KanjiListClient({ kanjis }: KanjiListClientProps) {
                 variant={levelFilter === lvl ? "default" : "outline"}
                 className={`h-14 px-6 rounded-2xl font-bold transition-all duration-300 ${
                   levelFilter === lvl 
-                    ? "bg-primary text-primary-foreground shadow-[0_0_20px_rgba(0,238,255,0.3)]" 
-                    : "bg-card/40 border-white/5 hover:bg-background/5"
+                    ? "bg-primary text-primary-foreground shadow-[0_0_20px_rgba(var(--primary-rgb),0.3)]" 
+                    : "bg-card/40 border border-border hover:bg-muted"
                 }`}
                 onClick={() => setLevelFilter(levelFilter === lvl ? null : lvl)}
               >
@@ -95,7 +95,7 @@ export default function KanjiListClient({ kanjis }: KanjiListClientProps) {
               transition={{ delay: Math.min(idx * 0.02, 0.5), type: "spring", stiffness: 100, damping: 20 }}
             >
               <Link href={`/library/kanji/${kanji.slug}`}>
-                <Card className="group relative aspect-square flex flex-col items-center justify-center p-4 bg-card/30 backdrop-blur-3xl border-white/5 hover:border-primary/50 transition-all duration-500 rounded-[2rem] overflow-hidden hover:shadow-[0_0_40px_rgba(0,238,255,0.15)] cursor-pointer">
+                <Card className="group relative aspect-square flex flex-col items-center justify-center p-4 bg-card/30 backdrop-blur-3xl border border-border hover:border-primary/50 transition-all duration-500 rounded-[2rem] overflow-hidden hover:shadow-[0_0_40px_rgba(var(--primary-rgb),0.15)] cursor-pointer">
                   {/* Hover Background Accent */}
                   <div className="absolute inset-0 bg-gradient-to-br from-primary/5 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500" />
                   

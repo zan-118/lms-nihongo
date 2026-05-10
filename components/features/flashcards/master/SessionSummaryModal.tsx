@@ -81,14 +81,14 @@ export function SessionSummaryModal({
             {mistakeCount > 0 && (
               <Button
                 onClick={handleReviewMistakes}
-                className="w-full h-auto py-4 rounded-xl text-xs md:text-xs font-bold uppercase tracking-widest border border-primary/30 bg-primary/10 text-primary hover:bg-primary hover:text-white transition-all shadow-lg"
+                className="w-full h-auto py-4 rounded-xl text-xs md:text-xs font-bold uppercase tracking-widest border border-primary/30 bg-primary/10 text-primary hover:bg-primary hover:text-primary-foreground transition-all shadow-lg"
               >
                 Ulas {mistakeCount} Kesalahan
               </Button>
             )}
             <Button
               onClick={handleRestart}
-              className={`w-full h-auto py-4 rounded-xl text-xs md:text-xs font-bold uppercase tracking-widest border-none bg-primary text-white dark:text-foreground hover:bg-foreground hover:text-background dark:hover:bg-background transition-all shadow-lg`}
+              className={`w-full h-auto py-4 rounded-xl text-xs md:text-xs font-bold uppercase tracking-widest border-none bg-primary text-primary-foreground hover:bg-foreground hover:text-background transition-all shadow-lg`}
             >
               <RotateCcw size={16} className="mr-2" /> Ulangi Semua
             </Button>

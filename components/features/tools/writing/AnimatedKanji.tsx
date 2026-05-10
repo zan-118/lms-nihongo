@@ -19,7 +19,7 @@ export default function AnimatedKanji({
   if (error) {
     return (
       <div className="absolute inset-0 flex items-center justify-center pointer-events-none select-none">
-        <span className="text-[12rem] font-japanese font-black text-white/5 opacity-30">
+        <span className="text-[12rem] font-japanese font-black text-foreground/5 opacity-30">
           {character}
         </span>
       </div>

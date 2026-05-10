@@ -70,11 +70,11 @@ export default async function StandaloneExamSessionPage({ params }: PageProps) {
     return (
       <div className="w-full flex-1 flex flex-col items-center justify-center px-6 text-center relative overflow-hidden py-12">
         <div className="absolute top-0 right-1/4 w-[400px] h-[400px] bg-destructive/5 blur-[120px] rounded-full pointer-events-none" />
-        <Card className="p-10 md:p-14 border-destructive/20 max-w-lg w-full relative z-10 my-auto neo-card rounded-[2rem] bg-cyber-surface">
-          <div className="w-20 h-20 mx-auto neo-inset text-destructive flex items-center justify-center rounded-full mb-8 shadow-inner bg-black/20">
+        <Card className="p-10 md:p-14 border-destructive/30 max-w-lg w-full relative z-10 my-auto neo-card rounded-[2rem] bg-card">
+          <div className="w-20 h-20 mx-auto neo-inset text-destructive flex items-center justify-center rounded-full mb-8 shadow-inner bg-destructive/10">
             <span className="text-4xl block">🚫</span>
           </div>
-          <h1 className="text-2xl md:text-3xl font-black text-white uppercase tracking-tight mb-4">
+          <h1 className="text-2xl md:text-3xl font-black text-foreground uppercase tracking-tight mb-4">
             Ujian Tidak Ditemukan
           </h1>
           <p className="text-muted-foreground mb-10 text-sm leading-relaxed">
@@ -83,7 +83,7 @@ export default async function StandaloneExamSessionPage({ params }: PageProps) {
           <Button
             asChild
             variant="ghost"
-            className="bg-card neo-inset border border-white/5 hover:border-white/20 text-foreground hover:text-primary font-black uppercase tracking-widest h-auto py-4 px-8 rounded-xl text-[10px] transition-all"
+            className="bg-card neo-inset border border-border hover:border-primary/50 text-foreground hover:text-primary font-black uppercase tracking-widest h-auto py-4 px-8 rounded-xl text-[10px] transition-all"
           >
             <Link href={backLink}>
               ← Kembali ke Menu
@@ -99,11 +99,11 @@ export default async function StandaloneExamSessionPage({ params }: PageProps) {
     return (
       <div className="w-full flex-1 flex flex-col items-center justify-center px-6 text-center relative overflow-hidden py-12">
         <div className="absolute top-0 left-1/4 w-[400px] h-[400px] bg-warning/5 blur-[120px] rounded-full pointer-events-none" />
-        <Card className="p-10 md:p-14 border-warning/20 max-w-lg w-full relative z-10 my-auto neo-card rounded-[2rem] bg-cyber-surface">
-          <div className="w-20 h-20 mx-auto neo-inset text-warning flex items-center justify-center rounded-full mb-8 shadow-inner bg-black/20">
+        <Card className="p-10 md:p-14 border-warning/30 max-w-lg w-full relative z-10 my-auto neo-card rounded-[2rem] bg-card">
+          <div className="w-20 h-20 mx-auto neo-inset text-warning flex items-center justify-center rounded-full mb-8 shadow-inner bg-warning/10">
             <span className="text-4xl block">🚧</span>
           </div>
-          <h1 className="text-2xl md:text-3xl font-black text-white uppercase tracking-tight mb-4">
+          <h1 className="text-2xl md:text-3xl font-black text-foreground uppercase tracking-tight mb-4">
             Sedang Dalam Pembuatan
           </h1>
           <p className="text-muted-foreground mb-10 text-sm leading-relaxed">
@@ -114,7 +114,7 @@ export default async function StandaloneExamSessionPage({ params }: PageProps) {
           <Button
             asChild
             variant="ghost"
-            className="bg-card neo-inset border border-warning/20 hover:border-warning/50 text-warning hover:text-warning font-black uppercase tracking-widest h-auto py-4 px-8 rounded-xl text-[10px] transition-all"
+            className="bg-card neo-inset border border-warning/30 hover:border-warning/60 text-warning hover:text-warning font-black uppercase tracking-widest h-auto py-4 px-8 rounded-xl text-[10px] transition-all"
           >
             <Link href={backLink}>
               ← Kembali ke Menu

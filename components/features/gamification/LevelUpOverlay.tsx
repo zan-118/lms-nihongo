@@ -102,7 +102,7 @@ export default function LevelUpOverlay({ level }: { level: number }) {
 
               <Button
                 onClick={() => setShow(false)}
-                className="h-auto w-full sm:w-auto px-8 py-4 md:px-12 md:py-5 bg-primary hover:bg-foreground text-white dark:text-foreground font-bold rounded-[1.2rem] md:rounded-[1.5rem] text-xs md:text-xs uppercase tracking-widest transition-all shadow-xl hover:scale-105 active:scale-95 border-none group relative overflow-hidden"
+                className="h-auto w-full sm:w-auto px-8 py-4 md:px-12 md:py-5 bg-primary hover:bg-primary/90 text-primary-foreground font-bold rounded-[1.2rem] md:rounded-[1.5rem] text-xs md:text-xs uppercase tracking-widest transition-all shadow-xl hover:scale-105 active:scale-95 border-none group relative overflow-hidden"
               >
                 <span className="relative z-10 flex items-center justify-center">
                   Lanjutkan Perjalanan <ArrowRight size={16} className="ml-3 group-hover:translate-x-1.5 transition-transform duration-300 md:w-5 md:h-5" />

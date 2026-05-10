@@ -76,7 +76,7 @@ export default function ExamsClient({ exams }: { exams: ExamData[] }) {
             variants={itemVariants}
             className="flex items-center gap-4 mb-8"
           >
-            <div className="w-3.5 h-3.5 rounded-full bg-destructive animate-pulse shadow-[0_0_15px_#ef4444]" />
+            <div className="w-3.5 h-3.5 rounded-full bg-destructive animate-pulse shadow-[0_0_15px_rgba(var(--destructive-rgb),0.5)]" />
             <Badge
               variant="outline"
               className="text-destructive text-destructive font-bold uppercase tracking-widest text-xs md:text-xs border-destructive/30 px-4 py-1.5 bg-destructive/5 backdrop-blur-md rounded-xl h-auto"
@@ -90,7 +90,7 @@ export default function ExamsClient({ exams }: { exams: ExamData[] }) {
             className="text-5xl md:text-7xl lg:text-8xl font-black uppercase tracking-tighter leading-none mb-10 text-foreground drop-shadow-2xl"
           >
             Pusat <br />{" "}
-            <span className="text-destructive text-destructive drop-shadow-[0_0_30px_rgba(239,68,68,0.5)]">
+            <span className="text-destructive drop-shadow-[0_0_30px_rgba(var(--destructive-rgb),0.5)]">
               Simulasi
             </span>
           </motion.h1>
@@ -136,7 +136,7 @@ export default function ExamsClient({ exams }: { exams: ExamData[] }) {
                   href={`/exams/${exam._id}`}
                   className="block h-full"
                 >
-                  <Card className="p-6 md:p-8 group hover:border-destructive/40 hover:bg-destructive/[0.02] transition-all duration-300 flex flex-col h-full relative overflow-hidden cursor-pointer bg-card rounded-2xl border-border hover:shadow-[0_0_40px_rgba(239,68,68,0.06)]">
+                  <Card className="p-6 md:p-8 group hover:border-destructive/40 hover:bg-destructive/[0.02] transition-all duration-300 flex flex-col h-full relative overflow-hidden cursor-pointer bg-card rounded-2xl border-border hover:shadow-[0_0_40px_rgba(var(--destructive-rgb),0.06)]">
                     
                     <div className="flex justify-between items-start mb-8 md:mb-10 relative z-10">
                       <Badge
@@ -145,7 +145,7 @@ export default function ExamsClient({ exams }: { exams: ExamData[] }) {
                       >
                         {exam.levelCode || "GENERAL"}
                       </Badge>
-                      <div className="w-10 h-10 md:w-11 md:h-11 bg-muted border border-border rounded-xl flex items-center justify-center text-muted-foreground group-hover:bg-destructive group-hover:text-white dark:group-hover:text-foreground group-hover:border-none transition-all duration-300">
+                      <div className="w-10 h-10 md:w-11 md:h-11 bg-muted border border-border rounded-xl flex items-center justify-center text-muted-foreground group-hover:bg-destructive group-hover:text-destructive-foreground group-hover:border-none transition-all duration-300">
                         <Activity size={18} />
                       </div>
                     </div>
@@ -182,11 +182,11 @@ export default function ExamsClient({ exams }: { exams: ExamData[] }) {
                         </div>
                       </div>
 
-                      <div className="w-full bg-muted border border-border p-4 md:p-5 flex items-center justify-between group-hover:border-destructive/40 group-hover:bg-destructive group-hover:text-white dark:group-hover:text-foreground transition-all duration-300 rounded-xl shadow-sm">
-                        <span className="text-xs md:text-xs font-bold uppercase tracking-widest text-muted-foreground group-hover:text-white dark:group-hover:text-foreground transition-colors">
+                      <div className="w-full bg-muted border border-border p-4 md:p-5 flex items-center justify-between group-hover:border-destructive/40 group-hover:bg-destructive group-hover:text-destructive-foreground transition-all duration-300 rounded-xl shadow-sm">
+                        <span className="text-xs md:text-xs font-bold uppercase tracking-widest text-muted-foreground group-hover:text-destructive-foreground transition-colors">
                           Mulai Ujian
                         </span>
-                        <div className="w-7 h-7 md:w-8 md:h-8 rounded-lg bg-foreground/10 flex items-center justify-center group-hover:bg-black/20 transition-all duration-300">
+                        <div className="w-7 h-7 md:w-8 md:h-8 rounded-lg bg-foreground/10 flex items-center justify-center group-hover:bg-destructive-foreground/10 transition-all duration-300">
                            <ChevronRight size={16} />
                         </div>
                       </div>

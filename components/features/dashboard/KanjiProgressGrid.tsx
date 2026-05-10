@@ -91,9 +91,9 @@ export default function KanjiProgressGrid() {
                 className={`
                   aspect-square rounded-lg flex items-center justify-center text-lg font-japanese font-bold transition-all duration-300 border cursor-default
                   ${isMastered 
-                    ? 'bg-success border-success text-white shadow-[0_0_15px_rgba(16,185,129,0.3)]' 
+                    ? 'bg-success border-success text-success-foreground' 
                     : isLearning 
-                    ? 'bg-primary/20 border-primary/40 text-primary shadow-[0_0_10px_rgba(0,238,255,0.1)]' 
+                    ? 'bg-primary/20 border-primary/40 text-primary' 
                     : 'bg-muted/50 border-border/50 text-muted-foreground/30 hover:border-muted-foreground/50'}
                 `}
               >

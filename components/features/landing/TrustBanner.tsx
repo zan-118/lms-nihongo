@@ -28,7 +28,7 @@ export function TrustBanner() {
           </div>
           <div className="text-center md:text-left">
             <h4 className="text-foreground font-black uppercase text-2xl md:text-3xl tracking-tight mb-2">
-              Sepenuhnya <span className="text-primary drop-shadow-[0_0_10px_rgba(0,238,255,0.4)]">Gratis Untukmu</span>
+              Sepenuhnya <span className="text-primary drop-shadow-[0_0_10px_hsl(var(--primary)/0.4)]">Gratis Untukmu</span>
             </h4>
             <p className="text-muted-foreground text-sm md:text-base font-medium max-w-xl leading-relaxed">
               Dibuat dengan sepenuh hati untuk membantu siapa saja yang ingin belajar 

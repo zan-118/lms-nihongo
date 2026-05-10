@@ -6,7 +6,7 @@ export function QuestHeader() {
   return (
     <header className="flex items-center justify-between mb-8 relative z-10">
       <div className="flex items-center gap-3">
-        <Card className="w-10 h-10 rounded-xl bg-muted dark:bg-background/[0.04] border border-border dark:border-white/[0.08] flex items-center justify-center shadow-none shrink-0">
+        <Card className="w-10 h-10 rounded-xl bg-muted dark:bg-muted/50 border border-border flex items-center justify-center shadow-none shrink-0">
           <Target size={18} className="text-primary" />
         </Card>
         <div className="text-left">
@@ -20,7 +20,7 @@ export function QuestHeader() {
       </div>
       <Badge
         variant="ghost"
-        className="bg-muted dark:bg-background/[0.03] border border-border dark:border-white/[0.08] text-muted-foreground px-3 py-1.5 rounded-lg text-xs font-bold tracking-widest uppercase shadow-none h-auto"
+        className="bg-muted dark:bg-muted/30 border border-border text-muted-foreground px-3 py-1.5 rounded-lg text-xs font-bold tracking-widest uppercase shadow-none h-auto"
       >
         Reset 00:00
       </Badge>

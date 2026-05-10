@@ -128,7 +128,7 @@ export default function RootLayout({
           inter.variable,
           notoJsonJP.variable,
           notoSerifJP.variable,
-          "font-sans antialiased text-foreground selection:bg-destructive selection:text-white transition-colors duration-300"
+          "font-sans antialiased text-foreground selection:bg-destructive selection:text-destructive-foreground transition-colors duration-300"
         )}
       >
         <ThemeProvider

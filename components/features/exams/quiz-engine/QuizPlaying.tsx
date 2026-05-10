@@ -146,7 +146,7 @@ export function QuizPlaying({
               
               <Button 
                 onClick={nextQuestion}
-                className="w-full py-6 md:py-8 rounded-[1.5rem] md:rounded-[2rem] bg-destructive hover:bg-destructive text-white font-black text-sm md:text-lg uppercase tracking-widest shadow-xl transition-all hover:scale-[1.02] active:scale-[0.98]"
+                className="w-full py-6 md:py-8 rounded-[1.5rem] md:rounded-[2rem] bg-destructive hover:bg-destructive/90 text-destructive-foreground font-black text-sm md:text-lg uppercase tracking-widest shadow-xl transition-all hover:scale-[1.02] active:scale-[0.98]"
               >
                 Lanjutkan <ArrowRight size={20} className="ml-3" />
               </Button>

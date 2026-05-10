@@ -80,7 +80,7 @@ export default function FeedbackWidget({ forceOpen, onOpenChange }: FeedbackWidg
             <Button 
               type="submit" 
               disabled={isSubmitting || !message.trim()}
-              className="w-full bg-primary hover:bg-primary text-white dark:text-foreground dark:hover:bg-background transition-all border-none"
+              className="w-full bg-primary hover:bg-primary/90 text-primary-foreground transition-all border-none"
             >
               {isSubmitting ? (
                 <Loader2 className="w-5 h-5 animate-spin" />

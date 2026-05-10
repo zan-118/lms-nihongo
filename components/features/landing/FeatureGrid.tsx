@@ -51,11 +51,11 @@ export function FeatureGrid() {
 
       {/* Pustaka Lengkap */}
       <motion.div variants={itemVariants} className="h-full">
-        <Card className="p-6 md:p-8 group relative overflow-hidden transition-all duration-300 flex flex-col h-full bg-card rounded-2xl border border-border hover:border-purple-500/40 hover:bg-purple-500/[0.02] shadow-lg">
-          <div className="mb-8 p-4 bg-muted border border-border w-fit rounded-xl group-hover:bg-purple-600 dark:group-hover:bg-purple-500 group-hover:text-primary-foreground transition-all duration-300 shadow-inner text-purple-600 dark:text-purple-400 group-hover:border-none relative z-10">
+        <Card className="p-6 md:p-8 group relative overflow-hidden transition-all duration-300 flex flex-col h-full bg-card rounded-2xl border border-border hover:border-secondary/40 hover:bg-secondary/[0.02] shadow-lg">
+          <div className="mb-8 p-4 bg-muted border border-border w-fit rounded-xl group-hover:bg-secondary group-hover:text-secondary-foreground transition-all duration-300 shadow-inner text-secondary group-hover:border-none relative z-10">
             <Library size={24} />
           </div>
-          <h3 className="text-xl md:text-2xl font-black uppercase tracking-tight mb-4 relative z-10 transition-colors duration-300 text-foreground group-hover:text-purple-600 dark:group-hover:text-purple-400">
+          <h3 className="text-xl md:text-2xl font-black uppercase tracking-tight mb-4 relative z-10 transition-colors duration-300 text-foreground group-hover:text-secondary">
             Pustaka Lengkap
           </h3>
           <p className="text-muted-foreground text-xs md:text-sm leading-relaxed flex-1 font-medium group-hover:text-foreground transition-colors duration-300 relative z-10">
@@ -67,10 +67,10 @@ export function FeatureGrid() {
       {/* Siap Ujian JLPT */}
       <motion.div variants={itemVariants} className="h-full">
         <Card className="p-6 md:p-8 group relative overflow-hidden transition-all duration-300 flex flex-col h-full bg-card rounded-2xl border border-border hover:border-warning/40 hover:bg-warning/[0.02] shadow-lg">
-          <div className="mb-8 p-4 bg-muted border border-border w-fit rounded-xl group-hover:bg-warning dark:group-hover:bg-warning group-hover:text-primary-foreground transition-all duration-300 shadow-inner text-warning text-warning group-hover:border-none relative z-10">
+          <div className="mb-8 p-4 bg-muted border border-border w-fit rounded-xl group-hover:bg-warning group-hover:text-warning-foreground transition-all duration-300 shadow-inner text-warning group-hover:border-none relative z-10">
             <Zap size={24} />
           </div>
-          <h3 className="text-xl md:text-2xl font-black uppercase tracking-tight mb-4 relative z-10 transition-colors duration-300 text-foreground group-hover:text-warning dark:group-hover:text-warning">
+          <h3 className="text-xl md:text-2xl font-black uppercase tracking-tight mb-4 relative z-10 transition-colors duration-300 text-foreground group-hover:text-warning">
             Siap Ujian JLPT
           </h3>
           <p className="text-muted-foreground text-xs md:text-sm leading-relaxed flex-1 font-medium group-hover:text-foreground transition-colors duration-300 relative z-10">

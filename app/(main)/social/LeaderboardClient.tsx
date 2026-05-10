@@ -86,7 +86,7 @@ export default function LeaderboardClient() {
             <div className="w-16 h-16 sm:w-24 sm:h-24 rounded-full neo-inset flex items-center justify-center text-2xl font-black bg-muted border-2 border-secondary text-secondary">
               {topThree[1]?.full_name?.charAt(0).toUpperCase() || "?"}
             </div>
-            <div className="absolute -bottom-2 -right-2 w-8 h-8 rounded-full bg-secondary flex items-center justify-center text-white border-2 border-background">
+            <div className="absolute -bottom-2 -right-2 w-8 h-8 rounded-full bg-secondary flex items-center justify-center text-secondary-foreground border-2 border-background">
               <Medal size={16} />
             </div>
           </div>
@@ -133,7 +133,7 @@ export default function LeaderboardClient() {
             <div className="w-16 h-16 sm:w-24 sm:h-24 rounded-full neo-inset flex items-center justify-center text-2xl font-black bg-destructive/10 border-2 border-destructive text-destructive">
               {topThree[2]?.full_name?.charAt(0).toUpperCase() || "?"}
             </div>
-            <div className="absolute -bottom-2 -right-2 w-8 h-8 rounded-full bg-destructive flex items-center justify-center text-white border-2 border-background">
+            <div className="absolute -bottom-2 -right-2 w-8 h-8 rounded-full bg-destructive flex items-center justify-center text-destructive-foreground border-2 border-background">
               <Medal size={16} />
             </div>
           </div>

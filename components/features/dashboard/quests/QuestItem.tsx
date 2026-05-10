@@ -77,7 +77,7 @@ export function QuestItem({
         ) : isCompleted ? (
           <Button
             onClick={() => onClaim(quest)}
-            className="h-auto text-xs font-black text-white dark:text-foreground bg-success bg-success hover:bg-foreground hover:text-background dark:hover:bg-background uppercase tracking-widest px-4 py-2 rounded-xl transition-all border-none shrink-0"
+            className="h-auto text-xs font-black text-success-foreground bg-success hover:bg-success/90 uppercase tracking-widest px-4 py-2 rounded-xl transition-all border-none shrink-0"
           >
             Ambil
           </Button>

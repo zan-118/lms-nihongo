@@ -58,7 +58,7 @@ export function VerbFlashcardView({
         <Button
           variant="ghost"
           onClick={onBack}
-          className="flex items-center justify-center gap-3 px-8 py-6 rounded-2xl text-xs md:text-xs font-bold uppercase tracking-widest w-full sm:w-auto neo-card bg-muted border-border hover:bg-primary hover:text-white dark:hover:text-foreground transition-all"
+          className="flex items-center justify-center gap-3 px-8 py-6 rounded-2xl text-xs md:text-xs font-bold uppercase tracking-widest w-full sm:w-auto neo-card bg-muted border-border hover:bg-primary hover:text-primary-foreground transition-all"
         >
           <ArrowLeft size={18} /> Kembali
         </Button>

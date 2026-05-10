@@ -39,7 +39,7 @@ export function UserStatusSection({
   if (isAuthenticated) {
     return (
       <div className="space-y-4">
-        <div className="flex items-center gap-3 p-3 bg-background/[0.03] backdrop-blur-md rounded-2xl border border-white/5 group hover:border-primary/30 transition-all duration-500">
+        <div className="flex items-center gap-3 p-3 bg-background/[0.03] backdrop-blur-md rounded-2xl border border-border group hover:border-primary/30 transition-all duration-500">
           {/* Animated Gradient Avatar Border */}
           <div className="relative w-12 h-12 shrink-0">
             <motion.div 
@@ -77,7 +77,7 @@ export function UserStatusSection({
              <Button
                variant="ghost"
                onClick={handleLogout}
-               className="w-full h-10 rounded-xl bg-destructive/5 hover:bg-destructive hover:text-white dark:hover:text-foreground text-destructive text-xs font-black uppercase tracking-widest transition-all border border-destructive/10"
+               className="w-full h-10 rounded-xl bg-destructive/5 hover:bg-destructive hover:text-destructive-foreground text-destructive text-xs font-black uppercase tracking-widest transition-all border border-destructive/10"
              >
                <LogOut size={16} className="mr-2" /> Keluar
              </Button>

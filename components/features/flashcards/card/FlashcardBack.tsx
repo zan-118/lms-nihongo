@@ -55,7 +55,7 @@ export function FlashcardBack({
     if (interval <= 3) return { label: "Belajar", color: "text-primary bg-primary/10" };
     if (interval <= 10) return { label: "Akrab", color: "text-success bg-success/10" };
     if (interval <= 30) return { label: "Kuat", color: "text-warning bg-warning/10" };
-    return { label: "Master", color: "text-rose-500 bg-rose-500/10" };
+    return { label: "Master", color: "text-destructive bg-destructive/10" };
   };
 
   const memory = srsState ? getMemoryLevel(srsState.interval) : { label: "Baru", color: "text-primary bg-primary/10" };
@@ -153,7 +153,7 @@ export function FlashcardBack({
                 <Button
                   onClick={onDrawClick}
                   aria-label="Latih menulis kanji"
-                  className="flex-1 bg-purple-600 hover:bg-purple-700 text-white font-black uppercase tracking-widest h-7 rounded-lg text-[8px] md:text-[10px]"
+                  className="flex-1 bg-secondary hover:bg-secondary/90 text-secondary-foreground font-black uppercase tracking-widest h-7 rounded-lg text-[8px] md:text-[10px]"
                 >
                   <PenTool size={10} className="mr-1" aria-hidden="true" />
                   <span>Tulis</span>

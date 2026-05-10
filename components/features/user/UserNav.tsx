@@ -48,7 +48,7 @@ export default function UserNav() {
     <DropdownMenu>
       <DropdownMenuTrigger asChild>
         <button className="flex items-center gap-3 p-1 pr-3 rounded-2xl bg-muted/30 border border-border/50 hover:border-primary/30 transition-all group outline-none">
-          <div className="w-8 h-8 rounded-xl bg-gradient-to-br from-primary to-blue-600 flex items-center justify-center text-white text-xs font-black shadow-md group-hover:scale-105 transition-transform">
+          <div className="w-8 h-8 rounded-xl bg-gradient-to-br from-primary to-blue-600 flex items-center justify-center text-primary-foreground text-xs font-black shadow-md group-hover:scale-105 transition-transform">
             {userFullName ? userFullName.charAt(0).toUpperCase() : "U"}
           </div>
           <div className="hidden md:flex flex-col items-start">
@@ -89,7 +89,7 @@ export default function UserNav() {
         <div className="p-1">
           <DropdownMenuItem 
             onClick={handleLogout}
-            className="rounded-xl cursor-pointer bg-destructive/5 hover:bg-destructive hover:text-white dark:hover:text-foreground transition-all py-2.5 text-destructive"
+            className="rounded-xl cursor-pointer bg-destructive/5 hover:bg-destructive hover:text-destructive-foreground transition-all py-2.5 text-destructive"
           >
             <LogOut size={16} className="mr-3" />
             <span className="text-xs font-black uppercase tracking-widest">Keluar Akun</span>

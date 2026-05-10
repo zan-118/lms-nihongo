@@ -129,7 +129,7 @@ export default function UpdatePasswordPage() {
             <button
               type="submit"
               disabled={loading}
-              className="w-full py-3 px-4 bg-success hover:bg-success/90 text-white rounded-xl font-bold transition-colors disabled:opacity-50 disabled:hover:bg-success shadow-[0_0_15px_rgba(16,185,129,0.2)]"
+              className="w-full py-3 px-4 bg-success hover:bg-success/90 text-success-foreground rounded-xl font-bold transition-colors disabled:opacity-50 disabled:hover:bg-success shadow-[0_0_15px_rgba(16,185,129,0.2)]"
             >
               {loading ? "Lagi disimpan..." : "Aktifkan Sandi Baru"}
             </button>

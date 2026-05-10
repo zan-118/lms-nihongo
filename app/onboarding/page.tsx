@@ -110,7 +110,7 @@ export default function OnboardingPage() {
               <div className="pt-8">
                 <Button 
                   onClick={() => setStep(2)}
-                  className="rounded-2xl px-10 h-14 text-base font-black uppercase tracking-widest bg-primary hover:bg-primary text-white shadow-lg shadow-primary/20"
+                  className="rounded-2xl px-10 h-14 text-base font-black uppercase tracking-widest bg-primary hover:bg-primary/90 text-primary-foreground shadow-lg shadow-primary/20"
                 >
                   Mulai Perjalanan <ChevronRight className="ml-2" />
                 </Button>
@@ -205,7 +205,7 @@ export default function OnboardingPage() {
                   >
                     <div className={`p-4 rounded-2xl transition-colors ${
                       motivation === item.id 
-                        ? "bg-secondary text-white" 
+                        ? "bg-secondary text-secondary-foreground" 
                         : "bg-muted text-muted-foreground group-hover:text-secondary"
                     }`}>
                       <item.icon size={24} />
@@ -224,7 +224,7 @@ export default function OnboardingPage() {
                 <Button 
                   onClick={handleComplete}
                   disabled={!motivation || isSubmitting}
-                  className="rounded-xl px-8 h-12 font-black uppercase tracking-widest bg-secondary hover:bg-secondary/90 text-white shadow-lg shadow-secondary/20"
+                  className="rounded-xl px-8 h-12 font-black uppercase tracking-widest bg-secondary hover:bg-secondary/90 text-secondary-foreground shadow-lg shadow-secondary/20"
                 >
                   {isSubmitting ? (
                     <>

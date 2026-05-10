@@ -98,7 +98,7 @@ export default function Topbar({ onMenuClick }: { onMenuClick: () => void }) {
                 exit={{ opacity: 0, x: -10 }}
                 className="flex items-center gap-2"
               >
-                <CloudOff size={12} className="text-destructive drop-shadow-[0_0_8px_rgba(239,68,68,0.4)]" aria-hidden="true" />
+                <CloudOff size={12} className="text-destructive drop-shadow-[0_0_8px_rgba(var(--destructive-rgb),0.4)]" aria-hidden="true" />
                 <span className="text-destructive/90">Gagal</span>
               </motion.div>
             ) : hasPendingSync ? (
@@ -160,13 +160,13 @@ export default function Topbar({ onMenuClick }: { onMenuClick: () => void }) {
               aria-expanded={isNotificationsOpen}
               className={`w-10 h-10 flex items-center justify-center rounded-xl transition-all relative ${
                 isNotificationsOpen 
-                  ? 'bg-primary text-primary-foreground shadow-[0_0_15px_rgba(0,238,255,0.4)]' 
+                  ? 'bg-primary text-primary-foreground shadow-[0_0_15px_rgba(var(--primary-rgb),0.4)]' 
                   : 'bg-muted/50 border border-border/50 text-muted-foreground hover:text-primary'
               }`}
              >
                 <Bell size={18} />
                 {unreadNotifications > 0 && (
-                  <span className="absolute top-3 right-3 w-1.5 h-1.5 bg-destructive rounded-full shadow-[0_0_8px_rgba(239,68,68,1)] animate-pulse" />
+                  <span className="absolute top-3 right-3 w-1.5 h-1.5 bg-destructive rounded-full shadow-[0_0_8px_rgba(var(--destructive-rgb),1)] animate-pulse" />
                 )}
              </motion.button>
 

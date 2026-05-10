@@ -265,9 +265,9 @@ export default function SettingsPage() {
 
           {/* MOBILE EXTRA NAV */}
           <motion.div variants={itemVariants} className="md:hidden">
-            <Card className="bg-background/[0.02] backdrop-blur-xl border border-white/5 rounded-[2rem] p-6 shadow-2xl">
+            <Card className="bg-background/[0.02] backdrop-blur-xl border border-border rounded-[2rem] p-6 shadow-2xl">
               <h3 className="text-primary font-black uppercase tracking-[0.2em] text-[10px] mb-4">Navigasi Lanjutan</h3>
-              <Button asChild variant="ghost" className="w-full h-14 bg-background/[0.03] border border-white/5 justify-start hover:bg-primary/10 hover:text-primary rounded-2xl font-black uppercase tracking-widest text-[10px] transition-all">
+              <Button asChild variant="ghost" className="w-full h-14 bg-background/[0.03] border border-border justify-start hover:bg-primary/10 hover:text-primary rounded-2xl font-black uppercase tracking-widest text-[10px] transition-all">
                 <Link href="/library">
                   <Layers size={18} className="mr-3 text-primary" /> Buka Pustaka Data
                 </Link>

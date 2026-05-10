@@ -41,7 +41,7 @@ export default function SRSReviewEngine({ cards }: { cards: FlashcardType[] }) {
 
           <Button
             onClick={() => engine.router.push("/dashboard")}
-            className="w-full h-auto py-4 text-white font-bold uppercase tracking-widest text-xs md:text-xs bg-destructive hover:bg-destructive rounded-xl transition-all shadow-lg"
+            className="w-full h-auto py-4 bg-destructive hover:bg-destructive/90 text-destructive-foreground font-bold uppercase tracking-widest text-xs md:text-xs rounded-xl transition-all shadow-lg"
           >
             Kembali ke Dashboard
           </Button>
@@ -150,8 +150,8 @@ export default function SRSReviewEngine({ cards }: { cards: FlashcardType[] }) {
             </div>
 
             <div className="hidden md:flex justify-center mt-2">
-              <p className="text-xs text-muted-foreground uppercase tracking-widest font-bold bg-muted/50 dark:bg-black/40 px-4 py-2 rounded-xl neo-inset border border-border dark:border-white/5">
-                Tekan <kbd className="font-mono text-destructive text-destructive">Spasi</kbd> untuk
+              <p className="text-xs text-muted-foreground uppercase tracking-widest font-bold bg-muted/50 dark:bg-card/40 px-4 py-2 rounded-xl neo-inset border border-border">
+                Tekan <kbd className="font-mono text-destructive">Spasi</kbd> untuk
                 melihat jawaban
               </p>
             </div>
@@ -165,7 +165,7 @@ export default function SRSReviewEngine({ cards }: { cards: FlashcardType[] }) {
             <Button
               variant="ghost"
               onClick={() => engine.handleAnswer(0)}
-              className="relative h-auto py-8 bg-destructive/5 border border-destructive/20 rounded-[2.5rem] text-destructive text-destructive font-black uppercase tracking-[0.2em] text-xs md:text-xs neo-card hover:bg-destructive hover:text-white dark:hover:text-foreground transition-all group overflow-hidden"
+              className="relative h-auto py-8 bg-destructive/5 border border-destructive/20 rounded-[2.5rem] text-destructive font-black uppercase tracking-[0.2em] text-xs md:text-xs neo-card hover:bg-destructive hover:text-destructive-foreground transition-all group overflow-hidden"
             >
               <div className="relative z-10 flex items-center gap-2">
                 <X
@@ -182,7 +182,7 @@ export default function SRSReviewEngine({ cards }: { cards: FlashcardType[] }) {
             <Button
               variant="ghost"
               onClick={() => engine.handleAnswer(2)}
-              className="relative h-auto py-8 bg-success/5 border border-success/20 rounded-[2.5rem] text-success text-success font-black uppercase tracking-[0.2em] text-xs md:text-xs neo-card hover:bg-success hover:text-white dark:hover:text-foreground transition-all group shadow-sm dark:shadow-[0_0_20px_rgba(16,185,129,0.1)] overflow-hidden"
+              className="relative h-auto py-8 bg-success/5 border border-success/20 rounded-[2.5rem] text-success font-black uppercase tracking-[0.2em] text-xs md:text-xs neo-card hover:bg-success hover:text-success-foreground transition-all group shadow-sm dark:shadow-[0_0_20px_rgba(16,185,129,0.1)] overflow-hidden"
             >
               <div className="relative z-10 flex items-center gap-2">
                 <Check

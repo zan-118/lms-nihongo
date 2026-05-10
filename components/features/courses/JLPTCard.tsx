@@ -17,19 +17,19 @@ interface JLPTCardProps {
 }
 
 const colorMap: Record<string, string> = {
-  "N5": "from-cyan-500/20 to-cyan-500/5",
-  "N4": "from-emerald-500/20 to-emerald-500/5",
-  "N3": "from-indigo-500/20 to-indigo-500/5",
-  "N2": "from-purple-500/20 to-purple-500/5",
-  "N1": "from-rose-500/20 to-rose-500/5",
+  "N5": "from-primary/20 to-primary/5",
+  "N4": "from-success/20 to-success/5",
+  "N3": "from-warning/20 to-warning/5",
+  "N2": "from-secondary/20 to-secondary/5",
+  "N1": "from-destructive/20 to-destructive/5",
 };
 
 const textGlowMap: Record<string, string> = {
-  "N5": "text-primary drop-shadow-[0_0_15px_rgba(6,182,212,0.5)]",
-  "N4": "text-success drop-shadow-[0_0_15px_rgba(16,185,129,0.5)]",
-  "N3": "text-indigo-500 drop-shadow-[0_0_15px_rgba(99,102,241,0.5)]",
-  "N2": "text-purple-500 drop-shadow-[0_0_15px_rgba(168,85,247,0.5)]",
-  "N1": "text-rose-500 drop-shadow-[0_0_15px_rgba(244,63,94,0.5)]",
+  "N5": "text-primary drop-shadow-[0_0_15px_hsl(var(--primary)/0.5)]",
+  "N4": "text-success drop-shadow-[0_0_15px_hsl(var(--success)/0.5)]",
+  "N3": "text-warning drop-shadow-[0_0_15px_hsl(var(--warning)/0.5)]",
+  "N2": "text-secondary drop-shadow-[0_0_15px_hsl(var(--secondary)/0.5)]",
+  "N1": "text-destructive drop-shadow-[0_0_15px_hsl(var(--destructive)/0.5)]",
 };
 
 /**
@@ -66,7 +66,7 @@ export function JLPTCard({ cat, variants }: JLPTCardProps) {
               <span className="text-[10px] font-black uppercase tracking-[0.2em] text-muted-foreground group-hover:text-foreground transition-colors">
                 Mulai Jalur
               </span>
-              <div className="w-10 h-10 rounded-xl bg-muted border border-border flex items-center justify-center group-hover:bg-foreground group-hover:text-background dark:group-hover:bg-background dark:group-hover:text-foreground group-hover:border-none transition-all duration-500 shadow-lg">
+              <div className="w-10 h-10 rounded-xl bg-muted border border-border flex items-center justify-center group-hover:bg-primary group-hover:text-primary-foreground group-hover:border-none transition-all duration-500 shadow-lg">
                 <ArrowRight size={18} />
               </div>
             </div>

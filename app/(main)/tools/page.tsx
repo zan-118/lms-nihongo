@@ -145,7 +145,7 @@ export default function ToolsPage() {
 
         {/* Footer Info */}
         <div className="mt-16 p-8 rounded-3xl bg-muted/30 border border-border/50 text-center relative overflow-hidden">
-           <div className="absolute inset-0 bg-grid-white/5 [mask-image:radial-gradient(white,transparent)]" />
+           <div className="absolute inset-0 bg-grid-foreground/5 [mask-image:radial-gradient(hsl(var(--foreground)),transparent)]" />
            <p className="relative z-10 text-xs font-bold text-muted-foreground uppercase tracking-[0.2em]">
              Alat baru akan ditambahkan secara berkala • Tetap Semangat Belajar!
            </p>

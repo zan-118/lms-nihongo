@@ -49,7 +49,7 @@ export default function DashboardStats({
         {loading ? (
           <Skeleton className="h-[250px] w-full rounded-2xl" />
         ) : (
-          <Card className="h-full bg-card/40 backdrop-blur-xl border border-white/10 rounded-[2rem] p-6 md:p-8 flex flex-col justify-center relative overflow-hidden group transition-all duration-300 hover:border-success/30 shadow-lg">
+          <Card className="h-full bg-card/40 backdrop-blur-xl border border-border rounded-[2rem] p-6 md:p-8 flex flex-col justify-center relative overflow-hidden group transition-all duration-300 hover:border-success/30 shadow-lg">
             <div className="absolute top-0 right-0 w-64 h-64 bg-success/10 blur-[80px] rounded-full pointer-events-none" />
             <div className="relative z-10 flex flex-col md:flex-row justify-between items-start md:items-end gap-6 mb-8">
               <div>
@@ -99,7 +99,7 @@ export default function DashboardStats({
           </>
         ) : (
           <>
-            <Card className="h-[140px] bg-card/40 backdrop-blur-xl border border-white/10 rounded-[1.5rem] p-5 flex flex-col justify-between group overflow-hidden relative transition-all duration-300 hover:border-warning/30 shadow-lg">
+            <Card className="h-[140px] bg-card/40 backdrop-blur-xl border border-border rounded-[1.5rem] p-5 flex flex-col justify-between group overflow-hidden relative transition-all duration-300 hover:border-warning/30 shadow-lg">
               <h3 className="text-warning/60 font-bold uppercase tracking-widest text-xs">
                 Semangat Belajar
               </h3>
@@ -123,7 +123,7 @@ export default function DashboardStats({
       <motion.div variants={itemVariants} className="md:col-span-12">
         <div className="flex flex-col mb-8 mt-4">
           <h2 className="text-muted-foreground font-bold uppercase tracking-widest text-[10px] mb-2 flex items-center gap-2">
-            <div className="w-1.5 h-1.5 rounded-full bg-primary shadow-[0_0_8px_rgba(0,238,255,0.8)]" />
+            <div className="w-1.5 h-1.5 rounded-full bg-primary shadow-[0_0_8px_rgba(var(--primary-rgb),0.8)]" />
             Pencapaian Silabus
           </h2>
           <h3 className="text-xl md:text-2xl font-black text-foreground uppercase tracking-tight">
@@ -139,7 +139,7 @@ export default function DashboardStats({
              const percentage = total > 0 ? (completed / total) * 100 : 0;
              
              return (
-               <Card key={cat._id} className="bg-background/[0.03] backdrop-blur-xl border-white/10 p-6 rounded-[2rem] group hover:border-primary/40 transition-all duration-500">
+               <Card key={cat._id} className="bg-background/[0.03] backdrop-blur-xl border border-border p-6 rounded-[2rem] group hover:border-primary/40 transition-all duration-500">
                   <div className="flex items-center gap-4 mb-5">
                     <div className="w-12 h-12 rounded-2xl bg-primary/10 flex items-center justify-center text-primary border border-primary/20">
                       {percentage === 100 ? <CheckCircle2 size={24} /> : <BookOpen size={24} />}
@@ -155,7 +155,7 @@ export default function DashboardStats({
                     </div>
                   </div>
                   
-                  <div className="relative h-2 w-full bg-background/5 rounded-full overflow-hidden border border-white/5">
+                  <div className="relative h-2 w-full bg-background/5 rounded-full overflow-hidden border border-border">
                     <motion.div 
                       initial={{ width: 0 }}
                       whileInView={{ width: `${percentage}%` }}
@@ -164,7 +164,7 @@ export default function DashboardStats({
                       className={`h-full rounded-full ${
                         percentage === 100 
                           ? 'bg-success shadow-[0_0_10px_rgba(16,185,129,0.5)]' 
-                          : 'bg-gradient-to-r from-primary to-blue-500 shadow-[0_0_10px_rgba(0,238,255,0.4)]'
+                          : 'bg-gradient-to-r from-primary to-blue-500 shadow-[0_0_10px_rgba(var(--primary-rgb),0.4)]'
                       }`}
                     />
                   </div>
