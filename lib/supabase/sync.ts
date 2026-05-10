@@ -140,6 +140,9 @@ export async function syncLocalToCloud(userId: string, localData: UserProgress, 
  * @returns {Promise<boolean>} Status keberhasilan migrasi.
  */
 export async function handleLegacyMigration(userId: string, supabase: SupabaseClient): Promise<boolean> {
+  // Guard: localStorage is only available on the client
+  if (typeof window === "undefined") return false;
+
   const STATS_STORAGE_KEY = "nihongo-progress";
   const gamificationData = localStorage.getItem(STATS_STORAGE_KEY);
   

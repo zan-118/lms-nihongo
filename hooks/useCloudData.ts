@@ -101,7 +101,7 @@ export function useCloudData(session: Session | null | undefined, hasMounted: bo
         completedLessons: parsedLessons,
         inventory: profile?.inventory || { streakFreeze: 0 },
         settings: profile?.settings || { notificationsEnabled: false },
-        notifications: useUIStore.getState().notifications || [],
+        notifications: [],
       } as UserProgress;
     },
     enabled: hasMounted && !!session?.user,

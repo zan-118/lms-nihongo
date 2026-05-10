@@ -188,7 +188,12 @@ export const useUIStore = create<UIState>()(
         loading: false,
         isSyncing: false,
         notifications: [],
-        settings: { notificationsEnabled: false, showFurigana: true },
+        settings: {
+          dailyReviewGoal: 50,
+          dailyLessonGoal: 10,
+          notificationsEnabled: false,
+          showFurigana: true,
+        },
         readingState: { mode: "kanji", showTranslation: false }
       }),
     }),

@@ -18,6 +18,8 @@ export interface Inventory {
 }
 
 export interface Settings {
+  dailyReviewGoal: number;
+  dailyLessonGoal: number;
   notificationsEnabled: boolean;
   showFurigana: boolean;
 }

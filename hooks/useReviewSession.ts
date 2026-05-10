@@ -1,7 +1,7 @@
 "use client";
 
 import { useState, useMemo, useEffect } from "react";
-import { client } from "@/sanity/lib/client";
+
 import { useSearchParams } from "next/navigation";
 import { toast } from "sonner";
 import { MasterCardData } from "@/components/features/flashcards/master/types";
@@ -51,16 +51,9 @@ export function useReviewSession(loading: boolean) {
 
       let data: MasterCardData[] = [];
       try {
-        const query = `*[_id in $ids] {
-          _id,
-          "word": coalesce(jisho, word),
-          meaning,
-          romaji,
-          furigana,
-          category,
-          kanjiDetails
-        }`;
-        data = await client.fetch<MasterCardData[]>(query, { ids: targetIds });
+        const res = await fetch(`/api/cards?ids=${targetIds.join(",")}`);
+        if (!res.ok) throw new Error(`API /api/cards gagal: ${res.status}`);
+        data = await res.json();
       } catch (cmsError) {
         console.error("Gagal memuat kartu dari CMS:", cmsError);
         throw cmsError;
