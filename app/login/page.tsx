@@ -107,7 +107,7 @@ export default function LoginPage() {
       {/* Background Effect */}
       <div className="absolute inset-0 z-0 flex items-center justify-center">
         <div className="w-[500px] h-[500px] bg-primary/10 rounded-full blur-[100px] opacity-50 pointer-events-none" />
-        <div className="w-[300px] h-[300px] bg-purple-500/10 rounded-full blur-[80px] absolute -top-10 -right-10 opacity-30 pointer-events-none" />
+        <div className="w-[300px] h-[300px] bg-secondary/10 rounded-full blur-[80px] absolute -top-10 -right-10 opacity-30 pointer-events-none" />
       </div>
 
       <div className="w-full max-w-md bg-card/80 backdrop-blur-xl border border-border rounded-3xl p-8 z-10 shadow-2xl animate-in fade-in slide-in-from-bottom-4 duration-500 relative">

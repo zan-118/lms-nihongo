@@ -30,8 +30,8 @@ export const ptTypes = {
   callout: ({ value }: { value: { type: "info" | "warning" | "tip"; text: string } }) => {
     const config = {
       info: { icon: FileText, color: "text-primary", bg: "bg-primary/5", border: "border-primary/20" },
-      warning: { icon: AlertTriangle, color: "text-amber-500", bg: "bg-amber-500/5", border: "border-amber-500/20" },
-      tip: { icon: Lightbulb, color: "text-emerald-500", bg: "bg-emerald-500/5", border: "border-emerald-500/20" },
+      warning: { icon: AlertTriangle, color: "text-warning", bg: "bg-warning/5", border: "border-warning/20" },
+      tip: { icon: Lightbulb, color: "text-success", bg: "bg-success/5", border: "border-success/20" },
     };
     const { icon: Icon, color, bg, border } = config[value.type] || config.info;
 

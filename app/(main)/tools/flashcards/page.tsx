@@ -279,13 +279,13 @@ function FlashcardsContent() {
 
             <Card 
               onClick={() => fetchCardsAndStart('kanji')}
-              className="group p-8 rounded-3xl border border-purple-500/20 bg-card hover:border-purple-400/60 hover:bg-purple-500/[0.02] transition-all duration-300 cursor-pointer flex flex-col items-center text-center gap-5 relative overflow-hidden shadow-sm hover:shadow-xl"
+              className="group p-8 rounded-3xl border border-secondary/20 bg-card hover:border-secondary/60 hover:bg-secondary/[0.02] transition-all duration-300 cursor-pointer flex flex-col items-center text-center gap-5 relative overflow-hidden shadow-sm hover:shadow-xl"
             >
-              <div className="w-16 h-16 rounded-2xl bg-muted border border-border text-purple-500 flex items-center justify-center group-hover:bg-purple-500 group-hover:text-white group-hover:scale-110 transition-all duration-500 shadow-inner">
+              <div className="w-16 h-16 rounded-2xl bg-muted border border-border text-secondary flex items-center justify-center group-hover:bg-secondary group-hover:text-white group-hover:scale-110 transition-all duration-500 shadow-inner">
                 <PenTool size={28} />
               </div>
               <div>
-                <h3 className="text-xl font-black uppercase tracking-tight text-foreground group-hover:text-purple-500 transition-colors">Kamus Kanji</h3>
+                <h3 className="text-xl font-black uppercase tracking-tight text-foreground group-hover:text-secondary transition-colors">Kamus Kanji</h3>
                 <p className="text-xs text-muted-foreground font-medium mt-2 leading-relaxed">
                   Fitur lengkap Canvas menulis huruf. Pahami Onyomi, Kunyomi dan contoh katanya.
                 </p>
@@ -333,7 +333,7 @@ function FlashcardsContent() {
                 variant="outline"
                 className={`px-4 py-2 rounded-xl text-xs font-bold uppercase tracking-widest flex items-center gap-2 h-auto ${
                   selectedMode === "kanji" 
-                    ? "bg-purple-500/10 border-purple-500/30 text-purple-500" 
+                    ? "bg-secondary/10 border-secondary/30 text-secondary" 
                     : selectedMode === "survival"
                     ? "bg-destructive/10 border-destructive/30 text-destructive"
                     : "bg-primary/10 border-primary/30 text-primary"

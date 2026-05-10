@@ -75,7 +75,7 @@ export default function OnboardingPage() {
     <main className="min-h-screen bg-background flex flex-col items-center justify-center p-6 md:p-12 relative overflow-hidden">
       {/* Background Decor (Elegan Vibe) */}
       <div className="absolute top-0 right-0 w-[500px] h-[500px] bg-primary/5 blur-[150px] rounded-full pointer-events-none" />
-      <div className="absolute bottom-0 left-0 w-[400px] h-[400px] bg-indigo-500/5 blur-[120px] rounded-full pointer-events-none" />
+      <div className="absolute bottom-0 left-0 w-[400px] h-[400px] bg-secondary/5 blur-[120px] rounded-full pointer-events-none" />
 
       <div className="max-w-2xl w-full relative z-10 flex flex-col justify-center min-h-[400px]">
         <AnimatePresence mode="wait">
@@ -110,7 +110,7 @@ export default function OnboardingPage() {
               <div className="pt-8">
                 <Button 
                   onClick={() => setStep(2)}
-                  className="rounded-2xl px-10 h-14 text-base font-black uppercase tracking-widest bg-primary hover:bg-primary text-white shadow-lg shadow-cyan-500/20"
+                  className="rounded-2xl px-10 h-14 text-base font-black uppercase tracking-widest bg-primary hover:bg-primary text-white shadow-lg shadow-primary/20"
                 >
                   Mulai Perjalanan <ChevronRight className="ml-2" />
                 </Button>
@@ -199,14 +199,14 @@ export default function OnboardingPage() {
                     onClick={() => setMotivation(item.id)}
                     className={`cursor-pointer p-6 border-2 transition-all duration-300 rounded-[1.5rem] flex items-center gap-5 group shadow-none ${
                       motivation === item.id 
-                        ? "border-indigo-500 bg-indigo-500/5 shadow-md scale-[1.02]" 
-                        : "border-border/50 hover:border-indigo-500/30 hover:bg-muted/30"
+                        ? "border-secondary bg-secondary/5 shadow-md scale-[1.02]" 
+                        : "border-border/50 hover:border-secondary/30 hover:bg-muted/30"
                     }`}
                   >
                     <div className={`p-4 rounded-2xl transition-colors ${
                       motivation === item.id 
-                        ? "bg-indigo-500 text-white" 
-                        : "bg-muted text-muted-foreground group-hover:text-indigo-500"
+                        ? "bg-secondary text-white" 
+                        : "bg-muted text-muted-foreground group-hover:text-secondary"
                     }`}>
                       <item.icon size={24} />
                     </div>
@@ -224,7 +224,7 @@ export default function OnboardingPage() {
                 <Button 
                   onClick={handleComplete}
                   disabled={!motivation || isSubmitting}
-                  className="rounded-xl px-8 h-12 font-black uppercase tracking-widest bg-indigo-500 hover:bg-indigo-600 text-white shadow-lg shadow-indigo-500/20"
+                  className="rounded-xl px-8 h-12 font-black uppercase tracking-widest bg-secondary hover:bg-secondary/90 text-white shadow-lg shadow-secondary/20"
                 >
                   {isSubmitting ? (
                     <>

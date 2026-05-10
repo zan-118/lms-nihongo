@@ -40,16 +40,16 @@ export default function ForgotPasswordPage() {
   };
 
   return (
-    <div className="min-h-screen bg-slate-950 flex items-center justify-center p-4 relative overflow-hidden">
+    <div className="min-h-screen bg-background flex items-center justify-center p-4 relative overflow-hidden">
       <div className="absolute inset-0 z-0 flex items-center justify-center">
         <div className="w-[500px] h-[500px] bg-destructive/10 rounded-full blur-[100px] opacity-50 pointer-events-none" />
         <div className="w-[300px] h-[300px] bg-warning/10 rounded-full blur-[80px] absolute -top-10 -right-10 opacity-30 pointer-events-none" />
       </div>
 
-      <div className="w-full max-w-md bg-slate-900/80 backdrop-blur-xl border border-slate-800 rounded-3xl p-8 z-10 shadow-2xl animate-in fade-in slide-in-from-bottom-4 duration-500">
+      <div className="w-full max-w-md bg-card/80 backdrop-blur-xl border border-border rounded-3xl p-8 z-10 shadow-2xl animate-in fade-in slide-in-from-bottom-4 duration-500">
         <Link 
           href="/login" 
-          className="inline-flex items-center gap-2 text-sm text-slate-400 hover:text-white transition-colors mb-6"
+          className="inline-flex items-center gap-2 text-sm text-muted-foreground hover:text-foreground transition-colors mb-6"
         >
           <ArrowLeft size={16} />
           Kembali ke Login
@@ -59,10 +59,10 @@ export default function ForgotPasswordPage() {
           <div className="w-16 h-16 bg-destructive/10 rounded-2xl flex items-center justify-center mx-auto mb-4 border border-destructive/20 shadow-[0_0_15px_rgba(239,68,68,0.1)]">
             <KeyRound className="text-destructive" size={32} />
           </div>
-          <h1 className="text-2xl font-bold text-white mb-2">
+          <h1 className="text-2xl font-bold text-foreground mb-2">
             Lupa Kata Sandi? Tenang aja!
           </h1>
-          <p className="text-sm text-slate-400">
+          <p className="text-sm text-muted-foreground">
             {emailSent 
               ? "Yess! Email buat ganti sandi udah dikirim. Tunggu bentar ya..." 
               : "Yuk, tulis email kamu di bawah, nanti kita kirim link buat bikin sandi baru."}
@@ -78,14 +78,14 @@ export default function ForgotPasswordPage() {
               value={email}
               onChange={(e) => setEmail(e.target.value)}
               required
-              className="w-full bg-slate-950 border border-slate-800 rounded-xl py-3 pl-10 pr-4 text-white placeholder-slate-500 focus:outline-none focus:border-destructive focus:ring-1 focus:ring-red-500 transition-all"
+              className="w-full bg-muted border border-border rounded-xl py-3 pl-10 pr-4 text-foreground placeholder-muted-foreground focus:outline-none focus:border-destructive focus:ring-1 focus:ring-destructive transition-all"
             />
           </div>
 
           <button
             type="submit"
             disabled={loading || !email}
-            className="w-full py-3 px-4 bg-destructive hover:bg-destructive text-white rounded-xl font-bold transition-colors disabled:opacity-50 disabled:hover:bg-destructive shadow-[0_0_15px_rgba(239,68,68,0.2)]"
+            className="w-full py-3 px-4 bg-destructive hover:bg-destructive/90 text-destructive-foreground rounded-xl font-bold transition-colors disabled:opacity-50 disabled:hover:bg-destructive shadow-[0_0_15px_rgba(239,68,68,0.2)]"
           >
             {loading ? "Lagi dikirim..." : "Kirim Link Pemulihan"}
           </button>

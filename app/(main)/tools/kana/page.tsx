@@ -235,10 +235,10 @@ export default function KanaPage() {
   const currentData = kanaData[category];
   const isHira = type === "hiragana";
 
-  const themeColor = isHira ? "text-primary text-primary" : "text-purple-600 dark:text-purple-400";
-  const themeBorder = isHira ? "border-primary/30" : "border-purple-500/30";
-  const themeBgHover = isHira ? "hover:bg-primary/10" : "hover:bg-purple-500/10";
-  const themeAccent = isHira ? "bg-primary" : "bg-purple-500";
+  const themeColor = isHira ? "text-primary" : "text-secondary";
+  const themeBorder = isHira ? "border-primary/30" : "border-secondary/30";
+  const themeBgHover = isHira ? "hover:bg-primary/10" : "hover:bg-secondary/10";
+  const themeAccent = isHira ? "bg-primary" : "bg-secondary";
 
   return (
     <div className="w-full flex-1 relative overflow-hidden flex flex-col bg-background transition-colors duration-300 pt-12 pb-24 px-4 md:px-8">
@@ -288,7 +288,7 @@ export default function KanaPage() {
             <Button
               variant={!isHira ? "default" : "ghost"}
               onClick={() => setType("katakana")}
-              className={`relative z-10 flex-1 py-6 rounded-xl font-bold uppercase tracking-widest text-xs md:text-xs transition-all duration-500 h-10 ${!isHira ? "bg-purple-500 text-foreground hover:bg-purple-600 shadow-lg" : "text-muted-foreground hover:text-foreground"}`}
+              className={`relative z-10 flex-1 py-6 rounded-xl font-bold uppercase tracking-widest text-xs md:text-xs transition-all duration-500 h-10 ${!isHira ? "bg-secondary text-foreground hover:bg-secondary/90 shadow-lg" : "text-muted-foreground hover:text-foreground"}`}
             >
               Katakana
             </Button>
@@ -381,7 +381,7 @@ export default function KanaPage() {
                 <div className="relative z-10 flex flex-col h-full">
                   <header className="flex items-center gap-3 mb-5 sm:mb-6 pr-10 shrink-0">
                     <div
-                      className={`w-10 h-10 shrink-0 rounded-xl ${isHira ? "bg-primary/10" : "bg-purple-500/10"} border ${themeBorder} flex items-center justify-center shadow-sm`}
+                      className={`w-10 h-10 shrink-0 rounded-xl ${isHira ? "bg-primary/10" : "bg-secondary/10"} border ${themeBorder} flex items-center justify-center shadow-sm`}
                     >
                       <PenTool size={18} className={themeColor} />
                     </div>
@@ -455,11 +455,11 @@ export default function KanaPage() {
                 <div className="relative z-10 flex flex-col h-full">
                   <header className="flex justify-between items-center mb-6">
                     <div className="flex items-center gap-2">
-                      <div className={`flex items-center gap-1.5 px-3 py-1.5 rounded-lg bg-destructive/10 border border-destructive/20 text-destructive text-destructive font-black text-sm`}>
+                      <div className={`flex items-center gap-1.5 px-3 py-1.5 rounded-lg bg-destructive/10 border border-destructive/20 text-destructive font-black text-sm`}>
                         <Heart size={16} className={quizLives > 0 ? "fill-current" : ""} />
                         {quizLives}
                       </div>
-                      <div className={`flex items-center gap-1.5 px-3 py-1.5 rounded-lg bg-warning/10 border border-warning/20 text-warning text-warning font-black text-sm`}>
+                      <div className={`flex items-center gap-1.5 px-3 py-1.5 rounded-lg bg-warning/10 border border-warning/20 text-warning font-black text-sm`}>
                         <Trophy size={16} className="fill-current" />
                         {quizScore}
                       </div>
