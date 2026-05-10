@@ -95,7 +95,7 @@ async function getLessonData(categoryId: string, slug: string) {
       "slug": slug.current, title
     }
   }`;
-  return await sanityFetch({
+  return await sanityFetch<any>({
     query,
     params: { categoryId, slug },
     tags: ["lesson", "course_category", "vocab", "verb_dictionary", "kanji"],

@@ -9,9 +9,9 @@ export const metadata: Metadata = {
 };
 
 export default async function ListeningListPage() {
-  const tasks = await sanityFetch({
+  const tasks: any[] = await sanityFetch<any[]>({
     query: listeningListQuery,
-    tags: ["listeningTask"],
+    tags: ["listening_task"],
   });
 
   return (

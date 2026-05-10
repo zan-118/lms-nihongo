@@ -9,7 +9,7 @@ export const metadata: Metadata = {
 };
 
 export default async function KanjiListPage() {
-  const kanjis = await sanityFetch({
+  const kanjis: any[] = await sanityFetch({
     query: kanjiListQuery,
     tags: ["kanji"],
   });

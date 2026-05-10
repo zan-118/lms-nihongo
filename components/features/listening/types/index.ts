@@ -3,11 +3,9 @@
  * @description Tipe data untuk fitur Listening Comprehension (Karaoke-Style).
  */
 
-import { TypedObject } from "@/components/ui/portable-text/SharedPortableText";
-
 export interface TranscriptLine {
   _key: string;
-  text: string | TypedObject[]; // Bisa text biasa atau Portable Text (VocabTrigger)
+  text: string | any[]; // Bisa text biasa atau Portable Text (VocabTrigger)
   startTime: number; // Dalam detik
   endTime: number; // Dalam detik
   speaker?: string;

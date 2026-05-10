@@ -9,9 +9,9 @@ export const metadata: Metadata = {
 };
 
 export default async function ReadingListPage() {
-  const materials = await sanityFetch({
+  const materials: any[] = await sanityFetch<any[]>({
     query: readingListQuery,
-    tags: ["readingMaterial"],
+    tags: ["reading_material"],
   });
 
   return (

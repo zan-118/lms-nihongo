@@ -39,7 +39,7 @@ export default async function VocabLibraryPage() {
     "hinshi": coalesce(hinshi, "verb") 
   }`;
   
-  const initialData = await sanityFetch({
+  const initialData: any[] = await sanityFetch({
     query: initialQuery,
     tags: ["vocab", "verb_dictionary", "course_category"],
   });
@@ -51,7 +51,7 @@ export default async function VocabLibraryPage() {
       <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_top,rgba(239,68,68,0.05)_0%,transparent_70%)] pointer-events-none z-0" />
 
       <div className="max-w-7xl mx-auto w-full relative z-10 flex flex-col pt-10">
-        <VocabClient initialData={initialData} />
+        <VocabClient initialVocab={initialData} />
       </div>
     </main>
   );

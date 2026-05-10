@@ -32,7 +32,7 @@ export async function generateMetadata({
   params: Promise<{ id: string }>;
 }): Promise<Metadata> {
   const { id } = await params;
-  const vocab = await sanityFetch({
+  const vocab: any = await sanityFetch({
     query: vocabDetailQuery,
     params: { id },
     tags: ["vocab"],
@@ -56,7 +56,7 @@ export default async function VocabDetailPage({
   params: Promise<{ id: string }>;
 }) {
   const { id } = await params;
-  const vocab = await sanityFetch({
+  const vocab: any = await sanityFetch({
     query: vocabDetailQuery,
     params: { id },
     tags: ["vocab"],

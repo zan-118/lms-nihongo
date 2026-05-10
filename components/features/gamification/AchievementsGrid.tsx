@@ -79,6 +79,7 @@ export default function AchievementsGrid() {
   const inventory = useUserStore(s => s.inventory);
   const id = useUserStore(s => s.id);
   const isGuest = useUserStore(s => s.isGuest);
+  const completedLessons = useUserStore(s => s.completedLessons);
   
   const srs = useSRSStore(s => s.srs);
   const notifications = useUIStore(s => s.notifications);
@@ -96,8 +97,9 @@ export default function AchievementsGrid() {
     studyDays: studyDays || {}, 
     inventory: inventory || { streakFreeze: 0, claimedQuests: { date: "", quests: [] } }, 
     srs: srs || {}, 
+    completedLessons: completedLessons || {},
     notifications: notifications || [], 
-    settings: settings || { notificationsEnabled: true } 
+    settings: settings || { notificationsEnabled: true, showFurigana: true } 
   };
 
   return (

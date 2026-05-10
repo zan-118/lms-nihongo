@@ -30,7 +30,7 @@ async function getCategories() {
       _id, title, "slug": slug.current
     }
   }`;
-  return await sanityFetch({
+  return await sanityFetch<any[]>({
     query,
     tags: ["course_category", "lesson"],
   });

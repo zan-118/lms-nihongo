@@ -30,6 +30,7 @@ export default function ProfileEditor() {
   const inventory = useUserStore(s => s.inventory);
   const id = useUserStore(s => s.id);
   const isGuest = useUserStore(s => s.isGuest);
+  const completedLessons = useUserStore(s => s.completedLessons);
   const updateProfileName = useUserStore(s => s.updateProfileName);
 
   const isAuthenticated = useAuthStore(s => s.isAuthenticated);
@@ -37,7 +38,7 @@ export default function ProfileEditor() {
   const notifications = useUIStore(s => s.notifications);
   const settings = useUIStore(s => s.settings);
   
-  const progress: UserProgress = { id, isGuest, name, xp, level, streak, todayReviewCount, lastStudyDate, studyDays, inventory, srs, notifications, settings };
+  const progress: UserProgress = { id, isGuest, name, xp, level, streak, todayReviewCount, lastStudyDate, studyDays, inventory, srs, notifications, settings, completedLessons };
   
   const [isEditing, setIsEditing] = useState(false);
   const [editName, setEditName] = useState(progress.name || "");

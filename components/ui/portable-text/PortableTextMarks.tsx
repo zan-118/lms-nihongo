@@ -17,15 +17,15 @@ const FuriganaWrapper = ({ children, reading }: { children: React.ReactNode; rea
   );
 };
 
-export const ptMarks: Record<string, PortableTextMarkComponent<unknown>> = {
-  vocabRef: ({ children, value }: { children: React.ReactNode; value?: { reference: { _ref: string } } }) => {
+export const ptMarks: Record<string, PortableTextMarkComponent<any>> = {
+  vocabRef: ({ children, value }: { children: React.ReactNode; value?: any }) => {
     return (
       <VocabTrigger text={String(children)} vocabId={value?.reference?._ref}>
         {children}
       </VocabTrigger>
     );
   },
-  furigana: ({ children, value }: { children: React.ReactNode; value?: { reading: string } }) => {
+  furigana: ({ children, value }: { children: React.ReactNode; value?: any }) => {
     return <FuriganaWrapper reading={value?.reading || ""}>{children}</FuriganaWrapper>;
   },
   strong: ({ children }: { children?: React.ReactNode }) => (

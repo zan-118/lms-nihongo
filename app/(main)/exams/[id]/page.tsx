@@ -52,7 +52,7 @@ export default async function StandaloneExamSessionPage({ params }: PageProps) {
     }
   }`;
 
-  const examData = await sanityFetch({
+  const examData = await sanityFetch<any>({
     query,
     params: { id },
     tags: ["mockExam"],

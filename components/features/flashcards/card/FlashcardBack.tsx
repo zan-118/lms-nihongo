@@ -26,6 +26,8 @@ interface FlashcardBackProps {
   pitchAccent?: string;
   hinshi?: string;
   examples?: Array<{ japanese: string; indonesian: string }>;
+  kanjiDetails?: any;
+  relatedKanji?: any[];
 }
 
 export function FlashcardBack({

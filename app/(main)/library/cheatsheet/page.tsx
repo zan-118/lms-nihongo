@@ -28,7 +28,7 @@ export default async function CheatsheetPage() {
   // ======================
   // DATABASE OPERATIONS
   // ======================
-  const sheets = await sanityFetch({
+  const sheets = await sanityFetch<any[]>({
     query: `*[_type == "cheatsheet"] | order(category asc, title asc) {
       _id, title, category, items,
       linkedVocab[]->{ "jp": word, "label": meaning, romaji }

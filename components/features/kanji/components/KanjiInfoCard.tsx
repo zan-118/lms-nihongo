@@ -4,7 +4,7 @@ import { BookOpen, Sparkles } from "lucide-react";
 
 interface KanjiInfoCardProps {
   radicals?: string[];
-  mnemonics?: unknown; // Portable Text content
+  mnemonics?: any; // Portable Text content
   meaning?: string;
 }
 

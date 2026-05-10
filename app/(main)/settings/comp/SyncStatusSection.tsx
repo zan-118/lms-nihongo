@@ -3,7 +3,7 @@
 import { motion, Variants } from "framer-motion";
 import { Card } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
-import { Cloud, CloudCheck, RefreshCw } from "lucide-react";
+import { Cloud, CheckCircle, RefreshCw } from "lucide-react";
 
 interface SyncStatusSectionProps {
   dirtySrsCount: number;
@@ -31,7 +31,7 @@ export default function SyncStatusSection({
               {dirtySrsCount > 0 ? (
                 <Cloud size={32} className="animate-pulse" />
               ) : (
-                <CloudCheck size={32} className="drop-shadow-[0_0_8px_rgba(16,185,129,0.4)]" />
+                <CheckCircle size={32} className="drop-shadow-[0_0_8px_rgba(16,185,129,0.4)]" />
               )}
             </div>
             <div>

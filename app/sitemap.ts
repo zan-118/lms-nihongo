@@ -34,7 +34,7 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
 
   // Ambil Data Level dari Sanity
   const levelsQuery = `*[_type == "level"] { code }`;
-  const levels = await sanityFetch({
+  const levels: any[] = await sanityFetch({
     query: levelsQuery,
     tags: ["level"],
   });
@@ -54,7 +54,7 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
     "level_code": level->code,
     _updatedAt
   }`;
-  const lessons = await sanityFetch({
+  const lessons: any[] = await sanityFetch({
     query: lessonsQuery,
     tags: ["lesson", "level"],
   });

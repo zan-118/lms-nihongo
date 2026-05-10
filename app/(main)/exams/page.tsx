@@ -41,7 +41,7 @@ async function getExamsData() {
     passingScore
   }`;
 
-  return await sanityFetch({
+  return await sanityFetch<any[]>({
     query,
     tags: ["mockExam"],
   });

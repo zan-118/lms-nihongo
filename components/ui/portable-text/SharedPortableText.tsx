@@ -1,4 +1,4 @@
-import { PortableText, PortableTextComponents, TypedObject } from "@portabletext/react";
+import { PortableText, PortableTextComponents } from "@portabletext/react";
 import { ptMarks } from "./PortableTextMarks";
 import { ptBlock, ptList, ptListItem } from "./PortableTextBlock";
 import { ptTypes } from "./PortableTextTypes";
@@ -11,7 +11,6 @@ export const sharedPtComponents: PortableTextComponents = {
   types: ptTypes,
 };
 
-export function SharedPortableText({ value }: { value: unknown }) {
-  // Cast to TypedObject[] to satisfy PortableText component requirements
-  return <PortableText value={value as TypedObject[]} components={sharedPtComponents} />;
+export function SharedPortableText({ value }: { value: any }) {
+  return <PortableText value={value as any[]} components={sharedPtComponents} />;
 }

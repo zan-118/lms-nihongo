@@ -170,14 +170,15 @@ function ReadingPageContent({ data }: ReadingPageClientProps) {
                     compact={true}
                   />
                   <div className="h-px w-8 bg-border mx-auto" />
-                  <Button variant="ghost" size="icon" className="rounded-xl" onClick={() => setFontSize(fontSize === "standard" ? "large" : fontSize === "large" ? "extra" : "standard")}>
+                  <Button variant="ghost" size="icon" className="rounded-xl" onClick={() => setFontSize(fontSize === "standard" ? "large" : fontSize === "large" ? "extra" : "standard")} aria-label="Ubah Ukuran Font">
                     <Type size={20} />
                   </Button>
                   <Button 
-                    variant={showTranslation ? "success" : "ghost"} 
+                    variant={showTranslation ? "default" : "ghost"} 
                     size="icon" 
-                    className={cn("rounded-xl transition-all", showTranslation && "text-white shadow-lg shadow-success/20")}
+                    className={cn("rounded-xl transition-all", showTranslation && "text-white shadow-lg")}
                     onClick={toggleTranslation}
+                    aria-label="Toggle Terjemahan"
                   >
                     <Languages size={20} />
                   </Button>
@@ -262,10 +263,10 @@ function ReadingPageContent({ data }: ReadingPageClientProps) {
                 compact={true}
               />
               <div className="flex items-center gap-1">
-                <Button variant="ghost" size="icon" className="rounded-2xl" onClick={toggleTranslation}>
+                <Button variant="ghost" size="icon" className="rounded-2xl" onClick={toggleTranslation} aria-label="Toggle Terjemahan">
                   <Languages size={18} className={cn(showTranslation && "text-primary")} />
                 </Button>
-                <Button variant="ghost" size="icon" className="rounded-2xl" onClick={() => setIsZenMode(true)}>
+                <Button variant="ghost" size="icon" className="rounded-2xl" onClick={() => setIsZenMode(true)} aria-label="Masuk Mode Zen">
                   <Maximize2 size={18} />
                 </Button>
               </div>

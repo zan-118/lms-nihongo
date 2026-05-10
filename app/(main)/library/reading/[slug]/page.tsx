@@ -5,10 +5,10 @@ import { notFound } from "next/navigation";
 
 export default async function ReadingPage({ params }: { params: Promise<{ slug: string }> }) {
   const { slug } = await params;
-  const data = await sanityFetch({
+  const data: any = await sanityFetch<any>({
     query: readingMaterialQuery,
     params: { slug },
-    tags: ["readingMaterial"],
+    tags: ["reading_material"],
   });
 
   if (!data) {

@@ -42,7 +42,7 @@ async function getCourseData(slug: string) {
       _id, title, timeLimit, passingScore
     }
   }`;
-  return await sanityFetch({
+  return await sanityFetch<any>({
     query,
     params: { slug },
     tags: ["course_category", "lesson", "mockExam"],

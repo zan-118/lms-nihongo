@@ -114,7 +114,8 @@ export default function DashboardClient({ courseMetadata }: DashboardClientProps
     inventory: inventory || { streakFreeze: 0, claimedQuests: { date: "", quests: [] } }, 
     srs: srs || {}, 
     notifications: notifications || [], 
-    settings: settings || { notificationsEnabled: true }
+    settings: settings || { notificationsEnabled: true },
+    completedLessons: {}
   };
   const [guestId, setGuestId] = useState<string>("MEMUAT...");
   const [confirmModal, setConfirmModal] = useState({

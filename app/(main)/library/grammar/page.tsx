@@ -15,19 +15,15 @@ export const metadata = {
 // Aktifkan ISR setiap 1 jam
 
 export default async function GrammarArticlesPage() {
-  // Pre-fetch artikel N5 di sisi server
-  const baseLevel = "n5";
-  const jlptLevel = "jlpt-n5";
-
-  const initialQuery = `*[_type == "grammar_article" && course_category->slug.current in [$baseLevel, $jlptLevel]] | order(title asc) { 
-    _id, 
-    title, 
-    "slug": slug.current 
-  }`;
-
-  const initialArticles = await sanityFetch({
-    query: initialQuery,
-    params: { baseLevel, jlptLevel },
+  // Pre-fetch artikel di sisi server
+  const grammarData: any[] = await sanityFetch({
+    query: `*[_type == "grammar_article"] | order(level.code asc, title asc) {
+      _id,
+      title,
+      "slug": slug.current,
+      description,
+      "level_code": level->code
+    }`,
     tags: ["grammar_article"],
   });
 
@@ -37,7 +33,7 @@ export default async function GrammarArticlesPage() {
       <div className="neural-grid" />
       <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_top,rgba(0,238,255,0.05)_0%,transparent_70%)] pointer-events-none z-0" />
 
-      <GrammarClient initialArticles={initialArticles} />
+      <GrammarClient initialArticles={grammarData} />
     </main>
   );
 }

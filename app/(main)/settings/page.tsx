@@ -49,6 +49,7 @@ export default function SettingsPage() {
   const lastStudyDate = useUserStore((state) => state.lastStudyDate);
   const studyDays = useUserStore((state) => state.studyDays);
   const inventory = useUserStore((state) => state.inventory);
+  const completedLessons = useUserStore((state) => state.completedLessons);
   
   const dirtySrs = useSRSStore((state) => state.dirtySrs);
   const clearDirtySrs = useSRSStore((state) => state.clearDirtySrs);
@@ -69,7 +70,7 @@ export default function SettingsPage() {
   const router = useRouter();
   const supabase = createClient();
 
-  const progress = { id, isGuest, name, xp, level, streak, todayReviewCount, lastStudyDate, studyDays, inventory, srs, notifications, settings };
+  const progress = { id, isGuest, name, xp, level, streak, todayReviewCount, lastStudyDate, studyDays, inventory, completedLessons, srs, notifications, settings };
 
   const [confirmModal, setConfirmModal] = useState({
     isOpen: false,

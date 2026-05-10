@@ -49,7 +49,7 @@ export async function generateMetadata({
   params: Promise<{ slug: string }>;
 }): Promise<Metadata> {
   const { slug } = await params;
-  const article = await sanityFetch({
+  const article = await sanityFetch<any>({
     query: articleQuery,
     params: { slug },
     tags: ["grammar_article"],
@@ -89,7 +89,7 @@ export default async function GrammarDetailPage({
   // ======================
   // DATABASE OPERATIONS
   // ======================
-  const article = await sanityFetch({
+  const article = await sanityFetch<any>({
     query: articleQuery,
     params: { slug },
     tags: ["grammar_article"],

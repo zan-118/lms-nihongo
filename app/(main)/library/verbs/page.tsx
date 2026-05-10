@@ -27,7 +27,7 @@ export default async function VerbDictionaryPage() {
     _id, group, jisho, meaning, masu, furigana, te, nai, ta, teiru, tai, nakereba, kanou, shieki, ukemi, katei, ikou, teshimau, meirei
   }`;
 
-  const verbs = await sanityFetch({
+  const initialData: any[] = await sanityFetch({
     query,
     tags: ["verb_dictionary"],
   });
@@ -42,7 +42,7 @@ export default async function VerbDictionaryPage() {
       <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_top,rgba(239,68,68,0.05)_0%,transparent_70%)] pointer-events-none z-0" />
 
       <div className="max-w-7xl mx-auto w-full relative z-10 flex flex-col pt-10">
-        <VerbListClient initialVerbs={verbs} />
+        <VerbListClient initialVerbs={initialData} />
       </div>
     </main>
   );

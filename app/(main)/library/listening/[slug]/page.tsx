@@ -5,10 +5,10 @@ import { notFound } from "next/navigation";
 
 export default async function ListeningPage({ params }: { params: Promise<{ slug: string }> }) {
   const { slug } = await params;
-  const data = await sanityFetch({
+  const data: any = await sanityFetch<any>({
     query: listeningTaskQuery,
     params: { slug },
-    tags: ["listeningTask"],
+    tags: ["listening_task"],
   });
 
   if (!data) {

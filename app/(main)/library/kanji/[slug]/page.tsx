@@ -32,7 +32,7 @@ export async function generateMetadata({
   params: Promise<{ slug: string }>;
 }): Promise<Metadata> {
   const { slug } = await params;
-  const kanji = await sanityFetch({
+  const kanji = await sanityFetch<any>({
     query: kanjiQuery,
     params: { slug },
     tags: ["kanji"],
@@ -56,7 +56,7 @@ export default async function KanjiDetailPage({
   params: Promise<{ slug: string }>;
 }) {
   const { slug } = await params;
-  const kanji = await sanityFetch({
+  const kanji = await sanityFetch<any>({
     query: kanjiQuery,
     params: { slug },
     tags: ["kanji"],

@@ -163,6 +163,7 @@ export async function handleLegacyMigration(userId: string, supabase: SupabaseCl
       lastStudyDate: userState.lastStudyDate,
       studyDays: userState.studyDays,
       inventory: userState.inventory,
+      completedLessons: userState.completedLessons,
       srs: useSRSStore.getState().srs,
       notifications: useUIStore.getState().notifications,
       settings: useUIStore.getState().settings,
