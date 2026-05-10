@@ -39,7 +39,7 @@ export default function ExamError({
           Gagal Memuat Ujian
         </h1>
         
-        <p className="text-slate-300 mb-8 text-sm leading-relaxed">
+        <p className="text-muted-foreground mb-8 text-sm leading-relaxed">
           Mohon maaf, terjadi kesalahan teknis saat memproses sesi ujian ini. 
           Ini mungkin disebabkan oleh data konten yang tidak lengkap atau gangguan koneksi.
         </p>
@@ -65,7 +65,7 @@ export default function ExamError({
           <Button
             asChild
             variant="ghost"
-            className="bg-card neo-inset border border-white/5 hover:border-white/20 text-slate-200 hover:text-white font-black uppercase tracking-widest h-auto py-4 px-8 rounded-xl text-[10px] transition-all"
+            className="bg-card neo-inset border border-white/5 hover:border-white/20 text-foreground hover:text-primary font-black uppercase tracking-widest h-auto py-4 px-8 rounded-xl text-[10px] transition-all"
           >
             <Link href="/courses">
               Batal & Kembali

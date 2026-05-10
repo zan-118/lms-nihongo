@@ -82,7 +82,7 @@ export default function CourseCategoryClient({
       <div
         className={`absolute top-0 left-[-10%] w-[500px] h-[500px] rounded-full blur-[150px] pointer-events-none ${isSideQuest ? "bg-warning/5" : "bg-primary/5"}`}
       />
-      <div className="absolute bottom-[20%] right-[-5%] w-[400px] h-[400px] bg-indigo-500/5 rounded-full blur-[120px] pointer-events-none" />
+      <div className="absolute bottom-[20%] right-[-5%] w-[400px] h-[400px] bg-secondary/5 rounded-full blur-[120px] pointer-events-none" />
 
       <motion.div
         className="max-w-5xl mx-auto relative z-10"
@@ -169,12 +169,12 @@ export default function CourseCategoryClient({
               </Link>
 
               <Link href={`/tools/flashcards?category=${categoryId}`} className="group flex flex-col h-full">
-                <Card className="p-6 md:p-8 bg-card border border-border rounded-2xl hover:border-purple-500/40 hover:bg-purple-500/[0.02] transition-all duration-300 flex flex-col items-center text-center gap-5 h-full cursor-pointer relative overflow-hidden group hover:shadow-xl">
-                  <div className="w-12 h-12 md:w-14 md:h-14 bg-muted border border-border rounded-xl text-purple-500 dark:text-purple-400 flex items-center justify-center group-hover:bg-purple-500 group-hover:text-white transition-all duration-300 shadow-inner relative z-10">
+                <Card className="p-6 md:p-8 bg-card border border-border rounded-2xl hover:border-secondary/40 hover:bg-secondary/[0.02] transition-all duration-300 flex flex-col items-center text-center gap-5 h-full cursor-pointer relative overflow-hidden group hover:shadow-xl">
+                  <div className="w-12 h-12 md:w-14 md:h-14 bg-muted border border-border rounded-xl text-secondary flex items-center justify-center group-hover:bg-secondary group-hover:text-white transition-all duration-300 shadow-inner relative z-10">
                     <PenTool size={24} />
                   </div>
                   <div className="mt-auto relative z-10">
-                    <p className="text-lg md:text-xl font-black text-foreground group-hover:text-purple-500 dark:group-hover:text-purple-400 transition-colors uppercase tracking-tight mb-1">
+                    <p className="text-lg md:text-xl font-black text-foreground group-hover:text-secondary transition-colors uppercase tracking-tight mb-1">
                       Kamus Kanji
                     </p>
                     <p className="text-muted-foreground text-[9px] font-bold uppercase tracking-wider">

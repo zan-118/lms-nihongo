@@ -77,13 +77,13 @@ export default async function StandaloneExamSessionPage({ params }: PageProps) {
           <h1 className="text-2xl md:text-3xl font-black text-white uppercase tracking-tight mb-4">
             Ujian Tidak Ditemukan
           </h1>
-          <p className="text-slate-300 mb-10 text-sm leading-relaxed">
+          <p className="text-muted-foreground mb-10 text-sm leading-relaxed">
             Data ujian ini tidak ditemukan atau sudah dihapus dari sistem.
           </p>
           <Button
             asChild
             variant="ghost"
-            className="bg-card neo-inset border border-white/5 hover:border-white/20 text-slate-200 hover:text-white font-black uppercase tracking-widest h-auto py-4 px-8 rounded-xl text-[10px] transition-all"
+            className="bg-card neo-inset border border-white/5 hover:border-white/20 text-foreground hover:text-primary font-black uppercase tracking-widest h-auto py-4 px-8 rounded-xl text-[10px] transition-all"
           >
             <Link href={backLink}>
               ← Kembali ke Menu
@@ -106,7 +106,7 @@ export default async function StandaloneExamSessionPage({ params }: PageProps) {
           <h1 className="text-2xl md:text-3xl font-black text-white uppercase tracking-tight mb-4">
             Sedang Dalam Pembuatan
           </h1>
-          <p className="text-slate-300 mb-10 text-sm leading-relaxed">
+          <p className="text-muted-foreground mb-10 text-sm leading-relaxed">
             Paket ujian{" "}
             <strong className="text-warning">{examData.title}</strong> belum
             memiliki butir soal di database.

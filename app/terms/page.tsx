@@ -17,13 +17,13 @@ export default function TermsPage() {
           <h1 className="text-4xl md:text-5xl font-black text-foreground font-japanese tracking-tight mb-3">
             利用規約
           </h1>
-          <p className="text-sm md:text-base font-bold text-indigo-500 dark:text-indigo-400 uppercase tracking-widest">
+          <p className="text-sm md:text-base font-bold text-secondary uppercase tracking-widest">
             Terms of Service (Syarat & Ketentuan)
           </p>
         </header>
 
         {/* Konten Tipografi Minimalis */}
-        <article className="prose prose-slate dark:prose-invert prose-headings:font-black prose-headings:tracking-tight prose-a:text-indigo-500 max-w-none mb-20">
+        <article className="prose prose-slate dark:prose-invert prose-headings:font-black prose-headings:tracking-tight prose-a:text-secondary max-w-none mb-20">
           <p className="lead font-medium text-muted-foreground">
             Terakhir diperbarui: {new Date().toLocaleDateString("id-ID", { month: "long", year: "numeric" })}
           </p>

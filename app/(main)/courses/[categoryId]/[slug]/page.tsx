@@ -156,7 +156,7 @@ export default async function LessonPage({ params }: Props) {
     <div className="w-full text-foreground px-4 md:px-8 relative overflow-hidden flex flex-col flex-1 transition-colors duration-300">
       {/* Background Ambient Decor */}
       <div className="absolute top-0 right-0 w-[500px] h-[500px] bg-primary/5 blur-[150px] rounded-full pointer-events-none" />
-      <div className="absolute bottom-0 left-0 w-[400px] h-[400px] bg-indigo-500/5 blur-[120px] rounded-full pointer-events-none" />
+      <div className="absolute bottom-0 left-0 w-[400px] h-[400px] bg-secondary/5 blur-[120px] rounded-full pointer-events-none" />
 
       <article className="max-w-4xl mx-auto w-full relative z-10 flex-1">
         <AppBreadcrumbs 
@@ -211,7 +211,7 @@ export default async function LessonPage({ params }: Props) {
                             {v.romaji || (v.furigana ? wanakana.toRomaji(v.furigana) : "-")}
                           </span>
                           {v.hinshi && (
-                            <span className="text-[9px] font-mono font-black text-purple-600 dark:text-purple-400 uppercase tracking-widest bg-purple-500/10 border border-purple-500/20 px-2 py-0.5 rounded">
+                            <span className="text-[9px] font-mono font-black text-secondary uppercase tracking-widest bg-secondary/10 border border-secondary/20 px-2 py-0.5 rounded">
                               {v.hinshi === "Meishi" ? "Kata Benda" :
                                v.hinshi === "Doushi" ? "Kata Kerja" :
                                v.hinshi === "I-Keiyoushi" ? "Kata Sifat-I" :
@@ -252,7 +252,7 @@ export default async function LessonPage({ params }: Props) {
                         {(v.onyomi || v.kunyomi) && (
                           <div className="flex flex-wrap gap-2 mb-3">
                             {v.onyomi && (
-                              <span className="text-[10px] font-bold text-purple-500 dark:text-purple-400 border border-purple-500/20 px-2 py-0.5 rounded-lg bg-purple-500/5">
+                              <span className="text-[10px] font-bold text-secondary border border-secondary/20 px-2 py-0.5 rounded-lg bg-secondary/5">
                                 ON: {v.onyomi}
                               </span>
                             )}

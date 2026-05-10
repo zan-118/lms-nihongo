@@ -49,7 +49,7 @@ export default function DataManagementSection({
           <Button
             variant="ghost"
             onClick={handleImportData}
-            className="h-16 bg-background/[0.03] border border-white/5 hover:bg-purple-500/10 hover:border-purple-500/30 hover:text-purple-400 text-muted-foreground rounded-2xl uppercase tracking-[0.2em] font-black text-[10px] transition-all group/btn shadow-lg"
+            className="h-16 bg-background/[0.03] border border-white/5 hover:bg-secondary/10 hover:border-secondary/30 hover:text-secondary text-muted-foreground rounded-2xl uppercase tracking-[0.2em] font-black text-[10px] transition-all group/btn shadow-lg"
           >
             <Upload size={18} className="mr-3 group-hover/btn:scale-110 transition-transform" /> Impor Backup
           </Button>

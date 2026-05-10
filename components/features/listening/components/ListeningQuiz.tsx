@@ -2,7 +2,7 @@
 
 import React, { useState } from "react";
 import { motion, AnimatePresence } from "framer-motion";
-import { CheckCircle2, XCircle, ChevronRight, HelpCircle } from "lucide-react";
+import { CheckCircle2, XCircle, ChevronRight, CircleHelp } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { QuizItem } from "../types";
 import { cn } from "@/lib/utils";
@@ -73,7 +73,7 @@ export default function ListeningQuiz({ questions, onComplete }: ListeningQuizPr
       <div className="flex items-center justify-between px-2">
         <div className="flex items-center gap-3">
           <div className="w-8 h-8 rounded-lg bg-primary/10 flex items-center justify-center text-primary">
-            <HelpCircle size={18} />
+            <CircleHelp size={18} />
           </div>
           <span className="text-[10px] font-black uppercase tracking-[0.2em] text-muted-foreground">
             Question {currentIndex + 1} of {questions.length}

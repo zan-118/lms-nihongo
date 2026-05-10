@@ -10,7 +10,7 @@ import {
   Settings,
   Share2,
   Users,
-  HelpCircle,
+  CircleHelp,
   Wrench,
   LucideIcon
 } from "lucide-react";
@@ -57,7 +57,7 @@ export function useNavbar() {
     system: [
       { href: "/settings", label: "Pengaturan", icon: Settings },
       { href: "/share", label: "Bagikan", icon: Share2 },
-      { href: "/support", label: "Bantuan", icon: HelpCircle },
+      { href: "/support", label: "Bantuan", icon: CircleHelp },
     ]
   }), []);
 

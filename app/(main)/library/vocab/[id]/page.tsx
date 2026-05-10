@@ -70,7 +70,7 @@ export default async function VocabDetailPage({
     <main className="w-full bg-background px-4 md:px-8 lg:px-12 relative overflow-hidden flex flex-col justify-start min-h-screen pb-32 transition-colors duration-300">
       {/* Ambient Background Glows */}
       <div className="absolute top-[10%] -left-[10%] w-[40%] h-[40%] bg-primary/10 blur-[120px] rounded-full pointer-events-none z-0 animate-pulse" />
-      <div className="absolute bottom-[10%] -right-[10%] w-[30%] h-[30%] bg-purple-500/5 blur-[120px] rounded-full pointer-events-none z-0" />
+      <div className="absolute bottom-[10%] -right-[10%] w-[30%] h-[30%] bg-secondary/5 blur-[120px] rounded-full pointer-events-none z-0" />
       
       {/* Background Grid Overlay */}
       <div className="absolute inset-0 bg-[linear-gradient(rgba(0,0,0,0.01)_1px,transparent_1px),linear-gradient(90deg,rgba(0,0,0,0.01)_1px,transparent_1px)] dark:bg-[linear-gradient(rgba(255,255,255,0.01)_1px,transparent_1px),linear-gradient(90deg,rgba(255,255,255,0.01)_1px,transparent_1px)] bg-[size:60px_60px] pointer-events-none z-0" />
@@ -193,7 +193,7 @@ export default async function VocabDetailPage({
                   <Sparkles size={16} className="text-warning" />
                   <span className="text-[10px] font-black uppercase tracking-[0.2em] text-warning">Mnemonic Memory</span>
                 </div>
-                <p className="text-sm md:text-base font-medium text-amber-900/80 dark:text-amber-100/70 leading-relaxed italic">
+                <p className="text-sm md:text-base font-medium text-warning leading-relaxed italic">
                   &quot;{vocab.mnemonic}&quot;
                 </p>
               </Card>

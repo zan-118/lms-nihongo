@@ -36,9 +36,9 @@ const tools = [
     description: "Latih hafalan kosakata dan verba dengan sistem kartu pintar.",
     icon: BrainCircuit,
     href: "/tools/flashcards",
-    color: "text-purple-500",
-    bgColor: "bg-purple-500/10",
-    border: "border-purple-500/20"
+    color: "text-secondary",
+    bgColor: "bg-secondary/10",
+    border: "border-secondary/20"
   },
   {
     title: "Kamus Global",

@@ -103,7 +103,7 @@
   }
 
   .dark .btn-cyber {
-    @apply bg-cyan-400 text-[#0a0c10] hover:bg-white hover:shadow-[0_0_20px_rgba(34,211,238,0.6)];
+    @apply bg-primary text-primary-foreground hover:bg-primary/90 hover:shadow-[0_0_20px_var(--primary)];
   }
 
   .font-japanese {
