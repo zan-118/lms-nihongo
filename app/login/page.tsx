@@ -2,7 +2,7 @@
 
 import React, { useState } from "react";
 import { createClient } from "@/lib/supabase/client";
-import { User, LogIn, ChevronRight, Sparkles, Mail, Lock } from "lucide-react";
+import { User, LogIn, ChevronRight, Sparkles, Mail, Lock, Apple, Facebook } from "lucide-react";
 import { useRouter, useSearchParams } from "next/navigation";
 import Link from "next/link";
 import { toast } from "sonner";
@@ -70,18 +70,22 @@ export default function LoginPage() {
     }
   };
 
-  const handleGoogleLogin = async () => {
+  const handleSocialLogin = async (provider: "google" | "apple" | "facebook") => {
     setLoading(true);
     try {
       const { error } = await supabase.auth.signInWithOAuth({
-        provider: "google",
+        provider,
         options: {
           redirectTo: `${window.location.origin}/auth/callback`,
+          ...(provider === 'apple' ? { skipBrowserRedirect: false } : {})
         },
       });
       if (error) throw error;
     } catch (error) {
-      console.error("Gagal login dengan Google:", error);
+      console.error(`Gagal login dengan ${provider}:`, error);
+      toast.error(`Gagal login dengan ${provider}`, {
+        description: "Ada masalah saat menghubungkan ke akun sosmedmu. Coba lagi nanti ya!"
+      });
       setLoading(false);
     }
   };
@@ -221,7 +225,7 @@ export default function LoginPage() {
         <div className="space-y-3">
           <button
             type="button"
-            onClick={handleGoogleLogin}
+            onClick={() => handleSocialLogin("google")}
             disabled={loading}
             className="w-full flex items-center justify-between p-3 rounded-xl bg-foreground text-background hover:opacity-90 transition-all disabled:opacity-50 font-semibold text-sm"
           >
@@ -235,6 +239,32 @@ export default function LoginPage() {
               Masuk dengan akun Google
             </div>
             <ChevronRight size={16} className="text-muted-foreground" />
+          </button>
+
+          <button
+            type="button"
+            onClick={() => handleSocialLogin("apple")}
+            disabled={loading}
+            className="w-full flex items-center justify-between p-3 rounded-xl bg-foreground text-background hover:opacity-90 transition-all disabled:opacity-50 font-semibold text-sm"
+          >
+            <div className="flex items-center gap-3">
+              <Apple size={20} className="fill-current" />
+              Masuk dengan akun Apple
+            </div>
+            <ChevronRight size={16} className="text-muted-foreground" />
+          </button>
+
+          <button
+            type="button"
+            onClick={() => handleSocialLogin("facebook")}
+            disabled={loading}
+            className="w-full flex items-center justify-between p-3 rounded-xl bg-[#1877F2] text-white hover:opacity-90 transition-all disabled:opacity-50 font-semibold text-sm"
+          >
+            <div className="flex items-center gap-3">
+              <Facebook size={20} className="fill-current" />
+              Masuk dengan akun Facebook
+            </div>
+            <ChevronRight size={16} className="opacity-50" />
           </button>
 
           <button
