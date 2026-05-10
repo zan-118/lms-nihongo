@@ -39,7 +39,6 @@ export function useFlashcardMaster({
 
   const srs = useSRSStore((state) => state.srs);
   const updateProgress = useSRSStore((state) => state.updateProgress);
-  const xp = useUserStore((state) => state.xp);
   const isSyncing = useUIStore((state) => state.isSyncing);
   const router = useRouter();
 
@@ -112,7 +111,9 @@ export function useFlashcardMaster({
       setCombo(0);
     }
 
-    updateProgress(xp + xpReward, {
+    // Always read xp fresh from store to prevent stale snapshot across multi-card sessions
+    const currentXp = useUserStore.getState().xp;
+    updateProgress(currentXp + xpReward, {
       [cardId]: newState,
     });
 
@@ -130,7 +131,7 @@ export function useFlashcardMaster({
       }
       isProcessing.current = false;
     }, 200);
-  }, [currentCards, currentIndex, srs, xp, updateProgress]);
+  }, [currentCards, currentIndex, srs, updateProgress]);
 
   const checkAnswer = useCallback(() => {
     if (studyMode !== "tantangan" || isAnswerChecked) return;

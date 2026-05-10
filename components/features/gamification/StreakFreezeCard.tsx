@@ -4,19 +4,17 @@ import { Card } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { ShieldCheck, Zap, Info } from "lucide-react";
 import { toast } from "sonner";
-import { useUserStore } from "@/store/useUserStore";
+import { useUserStore, STREAK_FREEZE_COST } from "@/store/useUserStore";
 
 export default function StreakFreezeCard() {
   const xp = useUserStore(s => s.xp);
   const freezeCount = useUserStore(s => s.inventory.streakFreeze || 0);
   const buyStreakFreeze = useUserStore(s => s.buyStreakFreeze);
 
-  const COST = 500;
-
   const handleBuy = () => {
-    if (xp < COST) {
+    if (xp < STREAK_FREEZE_COST) {
       toast.error("XP Tidak Cukup", {
-        description: `Kamu butuh ${COST - xp} XP lagi untuk membeli ini.`
+        description: `Kamu butuh ${STREAK_FREEZE_COST - xp} XP lagi untuk membeli ini.`
       });
       return;
     }
@@ -58,9 +56,9 @@ export default function StreakFreezeCard() {
       <div className="relative z-10 flex flex-col gap-3">
         <Button 
           onClick={handleBuy}
-          disabled={xp < COST}
+          disabled={xp < STREAK_FREEZE_COST}
           className={`w-full h-10 text-xs font-black uppercase tracking-widest rounded-xl transition-all border-none ${
-            xp >= COST 
+            xp >= STREAK_FREEZE_COST 
               ? 'bg-secondary hover:bg-secondary/90 text-secondary-foreground shadow-lg shadow-secondary/20' 
               : 'bg-muted text-muted-foreground'
           }`}

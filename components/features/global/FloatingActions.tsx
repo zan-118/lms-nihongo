@@ -10,7 +10,7 @@ import FeedbackWidget from "../feedback/FeedbackWidget";
 import { useUIStore } from "@/store/useUIStore";
 import { ReadingMode } from "@/components/features/reading/types";
 import AudioController from "@/components/features/reading/components/AudioController";
-import { Eye, Languages, BookOpen as BookIcon, EyeOff, GraduationCap, FileText, Headphones } from "lucide-react";
+import { Eye, Languages, BookOpen as BookIcon, GraduationCap, FileText, Headphones } from "lucide-react";
 
 import React from "react";
 import { cn } from "@/lib/utils";
@@ -38,7 +38,7 @@ export default function FloatingActions() {
   const modes: { id: ReadingMode; label: string; icon: React.ElementType }[] = [
     { id: "kanji", label: "Kanji", icon: BookIcon },
     { id: "furigana", label: "Furigana", icon: Eye },
-    { id: "hiragana", label: "Hiragana", icon: EyeOff },
+    { id: "hiragana", label: "Hiragana", icon: Languages },
   ];
 
   return (
@@ -197,18 +197,6 @@ export default function FloatingActions() {
         </Button>
       </div>
 
-      {/* Reusing existing Feedback Dialog logic but triggered from here */}
-      {showFeedbackDialog && (
-        <div className="hidden">
-            {/* 
-                We keep the FeedbackWidget mounted but hidden if needed, 
-                or we can just trigger its dialog state.
-                Since FeedbackWidget is usually global, we'll ensure it's controlled correctly.
-            */}
-        </div>
-      )}
-      
-      {/* Ensure the actual widget is available for the dialog */}
       <FeedbackWidget forceOpen={showFeedbackDialog} onOpenChange={setShowFeedbackDialog} />
     </>
   );

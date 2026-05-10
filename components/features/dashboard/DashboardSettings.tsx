@@ -50,7 +50,7 @@ export default function DashboardSettings({
               <Button
                 variant="outline"
                 onClick={handleImportData}
-                className="h-14 bg-background border-border hover:bg-indigo-500/10 hover:border-indigo-500 hover:text-indigo-500 text-muted-foreground rounded-2xl uppercase tracking-widest font-bold text-xs transition-all"
+                className="h-14 bg-background border-border hover:bg-secondary/10 hover:border-secondary hover:text-secondary text-muted-foreground rounded-2xl uppercase tracking-widest font-bold text-xs transition-all"
               >
                 <Upload size={16} className="mr-2" /> Restore Data
               </Button>

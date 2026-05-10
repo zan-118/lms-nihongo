@@ -1,6 +1,6 @@
 "use client";
 
-import React, { useEffect } from "react";
+import React, { useEffect, useRef } from "react";
 import { createClient } from "@/lib/supabase/client";
 import { toast } from "sonner";
 import { useAuthStore } from "@/store/useAuthStore";
@@ -20,14 +20,14 @@ export const ProgressProvider = ({
   const syncUserData = useUserStore((state) => state.syncUserData);
   const dirtySrs = useSRSStore((state) => state.dirtySrs);
   
-  const supabase = createClient();
+  const supabaseRef = useRef(createClient());
 
   // Inisialisasi Sinkronisasi via React Query Hook
   useSyncProgress();
 
   // AUTHENTICATION LISTENER
   useEffect(() => {
-    supabase.auth.getSession().then(({ data: { session } }) => {
+    supabaseRef.current.auth.getSession().then(({ data: { session } }) => {
       const userFullName = session?.user?.user_metadata?.full_name || session?.user?.email?.split('@')[0] || "Siswa";
       setAuth(!!session?.user);
       if (session?.user) {
@@ -39,7 +39,7 @@ export const ProgressProvider = ({
 
     const {
       data: { subscription },
-    } = supabase.auth.onAuthStateChange((event, session) => {
+    } = supabaseRef.current.auth.onAuthStateChange((event, session) => {
       const userFullName = session?.user?.user_metadata?.full_name || session?.user?.email?.split('@')[0] || "Siswa";
       setAuth(!!session?.user);
       if (session?.user) {
@@ -63,7 +63,7 @@ export const ProgressProvider = ({
     });
 
     return () => subscription.unsubscribe();
-  }, [supabase.auth, setAuth, syncUserData]);
+  }, [setAuth, syncUserData]);
   
   // UNSYNCED DATA WARNING (beforeunload)
   useEffect(() => {

@@ -33,6 +33,9 @@ interface UserState {
 
 
 
+/** Biaya XP untuk membeli Streak Freeze. Exported sebagai satu sumber kebenaran. */
+export const STREAK_FREEZE_COST = 500;
+
 export const useUserStore = create<UserState>()(
   persist(
     (set, get) => ({
@@ -81,11 +84,10 @@ export const useUserStore = create<UserState>()(
 
       buyStreakFreeze: () => {
         const state = get();
-        const COST = 500;
-        if (state.xp < COST) return false;
+        if (state.xp < STREAK_FREEZE_COST) return false;
 
         set({
-          xp: state.xp - COST,
+          xp: state.xp - STREAK_FREEZE_COST,
           inventory: {
             ...state.inventory,
             streakFreeze: (state.inventory.streakFreeze || 0) + 1

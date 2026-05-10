@@ -12,6 +12,7 @@ import ProfileEditor from "../user/ProfileEditor";
 import { Trophy, Flame, Star, ArrowRight } from "lucide-react";
 import AnimatedCounter from "@/components/ui/AnimatedCounter";
 import ContinueLearning from "./ContinueLearning";
+import { getLevelProgressPercent } from "@/lib/level";
 
 interface DashboardHeroProps {
   guestId: string;
@@ -45,7 +46,7 @@ export default function DashboardHero({
   const level = useUserStore(s => s.level);
   const streak = useUserStore(s => s.streak);
 
-  const xpProgress = (xp % 1000) / 10;
+  const xpProgress = Math.round(getLevelProgressPercent(xp, level));
 
   return (
     <motion.div variants={itemVariants} className="flex flex-col gap-6 md:gap-10 items-start w-full">
@@ -56,10 +57,10 @@ export default function DashboardHero({
           <div className="flex flex-col items-center lg:items-start gap-3 mb-10">
             <Badge 
               variant="outline" 
-              className={`px-5 py-2 rounded-xl text-[10px] font-black uppercase tracking-[0.2em] flex items-center gap-2 w-fit border-white/10 backdrop-blur-md shadow-xl transition-all ${
+              className={`px-5 py-2 rounded-xl text-[10px] font-black uppercase tracking-[0.2em] flex items-center gap-2 w-fit border-border backdrop-blur-md shadow-xl transition-all ${
                 isAuthenticated 
-                  ? 'bg-gradient-to-r from-emerald-500/20 to-teal-500/20 text-success border-success/30' 
-                  : 'bg-gradient-to-r from-primary/20 to-blue-500/20 text-primary border-primary/30'
+                  ? 'bg-success/10 text-success border-success/30' 
+                  : 'bg-primary/10 text-primary border-primary/30'
               }`}
             >
               <Sparkles size={14} className="animate-pulse" /> 
@@ -97,7 +98,7 @@ export default function DashboardHero({
             <motion.div 
               animate={dueCount > 0 ? {
                 scale: [1, 1.05, 1],
-                boxShadow: ["0 0 0px rgba(0,238,255,0)", "0 0 20px rgba(0,238,255,0.3)", "0 0 0px rgba(0,238,255,0)"]
+                boxShadow: ["0 0 0px rgba(var(--primary-rgb),0)", "0 0 20px rgba(var(--primary-rgb),0.3)", "0 0 0px rgba(var(--primary-rgb),0)"]
               } : {}}
               transition={{ duration: 3, repeat: Infinity, ease: "easeInOut" }}
               className={`w-24 h-24 rounded-3xl flex items-center justify-center mb-8 shadow-2xl border transition-all duration-500 ${
@@ -107,9 +108,9 @@ export default function DashboardHero({
               }`}
             >
               {dueCount > 0 ? (
-                <BrainCircuit size={48} className="drop-shadow-[0_0_10px_rgba(0,238,255,0.5)]" />
+                <BrainCircuit size={48} className="drop-shadow-[0_0_10px_rgba(var(--primary-rgb),0.5)]" />
               ) : (
-                <Trophy size={48} className="drop-shadow-[0_0_10px_rgba(52,211,153,0.5)]" />
+                <Trophy size={48} className="drop-shadow-[0_0_10px_rgba(var(--success-rgb),0.5)]" />
               )}
             </motion.div>
             
