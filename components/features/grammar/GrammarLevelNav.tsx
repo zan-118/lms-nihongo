@@ -14,7 +14,7 @@ interface GrammarLevelNavProps {
  */
 export function GrammarLevelNav({ levels, selectedLevel, onLevelChange }: GrammarLevelNavProps) {
   return (
-    <nav className="inline-flex p-1.5 bg-muted/50 dark:bg-black/40 backdrop-blur-md rounded-2xl md:rounded-[2rem] border border-border dark:border-white/5 shadow-2xl overflow-x-auto w-full xl:w-auto no-scrollbar relative">
+    <nav className="inline-flex p-1.5 bg-[rgba(var(--muted-rgb),0.5)] dark:bg-[rgba(var(--background-rgb),0.4)] backdrop-blur-md rounded-2xl md:rounded-[2rem] border border-border shadow-2xl overflow-x-auto w-full xl:w-auto no-scrollbar relative">
       {levels.map((lvl) => (
         <button
           key={lvl}
@@ -28,7 +28,7 @@ export function GrammarLevelNav({ levels, selectedLevel, onLevelChange }: Gramma
           {selectedLevel === lvl && (
             <motion.div
               layoutId="activeTab"
-              className="absolute inset-0 bg-primary rounded-xl md:rounded-[1.5rem] shadow-[0_0_20px_rgba(0,238,255,0.4)] z-[-1]"
+              className="absolute inset-0 bg-primary rounded-xl md:rounded-[1.5rem] shadow-[0_0_20px_rgba(var(--primary-rgb),0.4)] z-[-1]"
               transition={{ type: "spring", bounce: 0.2, duration: 0.6 }}
             />
           )}

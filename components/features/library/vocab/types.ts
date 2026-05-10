@@ -7,6 +7,7 @@ export interface VocabItem {
   meaning: string;
   hinshi?: string;
   mnemonic?: string;
+  slug?: string;
   relatedKanji?: Array<{
     character: string;
     meaning: string;

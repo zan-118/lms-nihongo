@@ -39,8 +39,8 @@ export const ptTypes = {
       <div className={`my-10 md:my-14 p-6 md:p-10 rounded-[2.5rem] border ${border} ${bg.replace("/5", "/20")} bg-card/80 backdrop-blur-xl relative overflow-hidden group shadow-2xl transition-all duration-500 hover:scale-[1.01]`}>
         <div className={`absolute top-0 left-0 w-1.5 h-full ${color.replace("text", "bg")} opacity-50`} />
         <div className="flex items-start gap-6 relative z-10">
-          <div className={`p-4 rounded-2xl ${bg} border ${border} ${color} shadow-lg group-hover:rotate-12 transition-transform`}>
-            <Icon size={28} />
+          <div className={`p-4 rounded-2xl ${bg} border border-border ${color} shadow-lg group-hover:rotate-12 transition-transform`}>
+            <Icon size={28} aria-hidden="true" />
           </div>
           <div className="flex-1 pt-1">
             <span className={`text-[10px] font-black uppercase tracking-[0.3em] ${color} mb-2 block`}>
@@ -57,7 +57,7 @@ export const ptTypes = {
   vocabulary: ({ value }: { value: VocabularyValue }) => {
     return (
       <div className="my-10 md:my-16 group">
-        <div className="p-8 md:p-12 rounded-[3rem] bg-card/80 backdrop-blur-3xl border border-white/5 shadow-2xl relative overflow-hidden transition-all duration-500 hover:border-primary/40 hover:bg-card/90">
+        <div className="p-8 md:p-12 rounded-[3rem] bg-card/80 backdrop-blur-3xl border border-border shadow-2xl relative overflow-hidden transition-all duration-500 hover:border-primary/40 hover:bg-card/90">
           <div className="absolute top-0 right-0 w-48 h-48 bg-primary/5 blur-[80px] rounded-full -mr-24 -mt-24 group-hover:bg-primary/10 transition-all" />
           
           <div className="flex flex-col md:flex-row md:items-center justify-between gap-10 relative z-10">
@@ -69,7 +69,7 @@ export const ptTypes = {
               </div>
 
              <div className="flex flex-col items-end gap-4">
-                <div className="bg-background/[0.03] p-4 rounded-[2rem] border border-white/5 group-hover:border-primary/30 group-hover:bg-primary/5 transition-all shadow-xl">
+                <div className="bg-background/5 p-4 rounded-[2rem] border border-border group-hover:border-primary/30 group-hover:bg-primary/5 transition-all shadow-xl">
                   <TTSReader text={value.jp} minimal={true} />
                 </div>
              </div>
@@ -80,7 +80,7 @@ export const ptTypes = {
   },
   exampleSentence: ({ value }: { value: { jp: string; furigana: string; id: string } }) => {
     return (
-      <div className="my-10 md:my-14 p-8 md:p-10 rounded-[2.5rem] bg-card/80 backdrop-blur-xl border border-white/5 relative overflow-hidden group shadow-2xl transition-all duration-500 hover:scale-[1.01]">
+      <div className="my-10 md:my-14 p-8 md:p-10 rounded-[2.5rem] bg-card/80 backdrop-blur-xl border border-border relative overflow-hidden group shadow-2xl transition-all duration-500 hover:scale-[1.01]">
         <div className="absolute top-0 left-0 w-full h-1 bg-gradient-to-r from-primary/30 to-transparent" />
         
         <div className="flex flex-col gap-8 relative z-10">

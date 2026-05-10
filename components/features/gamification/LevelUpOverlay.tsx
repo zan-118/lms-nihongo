@@ -77,7 +77,7 @@ export default function LevelUpOverlay({ level }: { level: number }) {
               </motion.div>
 
               <Badge variant="outline" className="text-primary text-xs md:text-xs font-bold uppercase tracking-widest mb-4 md:mb-6 h-auto neo-inset px-4 py-1.5 md:px-8 md:py-2.5 border-primary/30 bg-primary/5 rounded-xl">
-                Level Baru Tercapai
+                Naik Level!
               </Badge>
               
               <h1 className="text-4xl md:text-6xl lg:text-7xl font-black text-foreground uppercase tracking-tighter mb-4 md:mb-6 drop-shadow-sm dark:drop-shadow-[0_0_20px_rgba(255,255,255,0.2)]">
@@ -97,7 +97,7 @@ export default function LevelUpOverlay({ level }: { level: number }) {
               </div>
 
               <p className="text-muted-foreground text-xs md:text-sm lg:text-base font-medium max-w-sm mx-auto mb-8 md:mb-12 leading-relaxed uppercase tracking-wide px-4 md:px-0">
-                &quot;Selamat! Kemampuan bahasamu semakin meningkat. Pintu ke tantangan yang lebih sulit kini telah terbuka untukmu.&quot;
+                &quot;Selamat! Kemampuan bahasamu makin jago. Terus semangat ya, perjalanan masih panjang!&quot;
               </p>
 
               <Button
@@ -105,7 +105,7 @@ export default function LevelUpOverlay({ level }: { level: number }) {
                 className="h-auto w-full sm:w-auto px-8 py-4 md:px-12 md:py-5 bg-primary hover:bg-primary/90 text-primary-foreground font-bold rounded-[1.2rem] md:rounded-[1.5rem] text-xs md:text-xs uppercase tracking-widest transition-all shadow-xl hover:scale-105 active:scale-95 border-none group relative overflow-hidden"
               >
                 <span className="relative z-10 flex items-center justify-center">
-                  Lanjutkan Perjalanan <ArrowRight size={16} className="ml-3 group-hover:translate-x-1.5 transition-transform duration-300 md:w-5 md:h-5" />
+                  Lanjut Belajar <ArrowRight size={16} className="ml-3 group-hover:translate-x-1.5 transition-transform duration-300 md:w-5 md:h-5" />
                 </span>
                 <div className="absolute inset-0 bg-background/20 translate-y-full group-hover:translate-y-0 transition-transform duration-300" />
               </Button>

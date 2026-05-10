@@ -117,7 +117,7 @@ export default function DashboardClient({ courseMetadata }: DashboardClientProps
     settings: settings || { notificationsEnabled: true },
     completedLessons: {}
   };
-  const [guestId, setGuestId] = useState<string>("MEMUAT...");
+  const [guestId, setGuestId] = useState<string>("MENYIAPKAN...");
   const [confirmModal, setConfirmModal] = useState({
     isOpen: false,
     title: "",
@@ -181,13 +181,13 @@ export default function DashboardClient({ courseMetadata }: DashboardClientProps
 
   const handleResetData = () => {
     openConfirm(
-      "Hapus Semua Data?",
-      "Peringatan: Semua progres belajar akan dihapus permanen secara lokal. Tindakan ini tidak dapat dibatalkan.",
-      "Ya, Hapus Data",
+      "Hapus Seluruh Riwayat Belajar?",
+      "Tindakan ini akan menghapus permanen seluruh progres, XP, dan pencapaian Anda secara lokal. Anda yakin?",
+      "Ya, Hapus Permanen",
       true,
       () => {
         resetProgress();
-        toast.success("Semua data telah dihapus.");
+        toast.success("Data telah dibersihkan.");
         window.location.reload(); 
       }
     );
@@ -195,9 +195,9 @@ export default function DashboardClient({ courseMetadata }: DashboardClientProps
 
   const handleLogout = () => {
     openConfirm(
-      "Keluar Akun?",
-      "Sesi belajar Anda akan diakhiri. Pastikan data sudah tersinkronisasi sebelum keluar.",
-      "Keluar",
+      "Akhiri Sesi Belajar?",
+      "Anda akan keluar dari akun. Pastikan progres terakhir Anda sudah tersimpan di cloud.",
+      "Keluar Sekarang",
       true,
       async () => {
         await supabase.auth.signOut();
@@ -263,10 +263,10 @@ export default function DashboardClient({ courseMetadata }: DashboardClientProps
                 <div className="flex flex-col">
                   <h2 className="text-muted-foreground font-bold uppercase tracking-widest text-xs mb-2 flex items-center gap-2">
                     <div className="w-1.5 h-1.5 rounded-full bg-primary" />
-                    Peta Penguasaan Kanji
+                    Progres Kanji
                   </h2>
                   <h3 className="text-lg md:text-xl font-black text-foreground uppercase tracking-tight">
-                    Ringkasan <span className="text-primary">Progress</span> Cepat
+                    Ringkasan <span className="text-primary">Belajar</span>
                   </h3>
                 </div>
                 <KanjiProgressGrid />
@@ -293,10 +293,10 @@ export default function DashboardClient({ courseMetadata }: DashboardClientProps
               <div className="flex flex-col">
                 <h2 className="text-muted-foreground font-bold uppercase tracking-widest text-xs mb-2 flex items-center gap-2">
                   <div className="w-1.5 h-1.5 rounded-full bg-primary" />
-                  Penguasaan Kanji
+                  Detail Progres Kanji
                 </h2>
                 <h3 className="text-lg md:text-xl font-black text-foreground uppercase tracking-tight">
-                  Visualisasi <span className="text-primary">Progress</span> Kamu
+                  Data Belajar <span className="text-primary">Kamu</span>
                 </h3>
               </div>
               <KanjiProgressGrid />
@@ -309,10 +309,10 @@ export default function DashboardClient({ courseMetadata }: DashboardClientProps
             <div className="flex flex-col">
               <h2 className="text-muted-foreground font-bold uppercase tracking-widest text-xs mb-2 flex items-center gap-2">
                 <div className="w-1.5 h-1.5 rounded-full bg-primary" />
-                Pencapaian & Badge
+                Koleksi Medali
               </h2>
               <h3 className="text-lg md:text-xl font-black text-foreground uppercase tracking-tight">
-                Koleksi <span className="text-primary">Trophy</span> Kamu
+                Medali <span className="text-primary">& Pencapaian</span>
               </h3>
             </div>
             <AchievementsGrid />

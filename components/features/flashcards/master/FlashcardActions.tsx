@@ -68,7 +68,7 @@ export function FlashcardActions({
                 className="flex flex-col h-auto py-3 border-destructive/20 bg-destructive/5 text-destructive hover:bg-destructive hover:text-destructive-foreground rounded-xl transition-all"
               >
                 <X size={16} className="mb-1" />
-                <span className="text-[10px] font-bold uppercase tracking-tight">Lupa</span>
+                <span className="text-[10px] font-bold uppercase tracking-tight">Ulangi</span>
                 <span className="text-[8px] opacity-60">Again</span>
               </Button>
               <Button
@@ -92,7 +92,7 @@ export function FlashcardActions({
                 className="flex flex-col h-auto py-3 border-success/20 bg-success/5 text-success hover:bg-success hover:text-success-foreground rounded-xl transition-all"
               >
                 <Check size={16} className="mb-1" />
-                <span className="text-[10px] font-bold uppercase tracking-tight">Bisa</span>
+                <span className="text-[10px] font-bold uppercase tracking-tight">Paham</span>
                 <span className="text-[8px] opacity-60">Good</span>
               </Button>
               <Button

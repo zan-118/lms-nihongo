@@ -18,23 +18,23 @@ export default function SRSReviewEngine({ cards }: { cards: FlashcardType[] }) {
   if (engine.isFinished) {
     return (
       <section className="w-full max-w-xl mx-auto px-4 mt-10">
-        <Card className="w-full bg-card bg-card p-8 md:p-10 rounded-2xl border border-border dark:border-white/[0.08] text-center relative overflow-hidden shadow-2xl">
+        <Card className="w-full bg-card p-8 md:p-10 rounded-2xl border border-border text-center relative overflow-hidden shadow-2xl">
           <div className="absolute top-0 left-0 right-0 h-1.5 bg-destructive shadow-lg" />
           
-          <div className="w-16 h-16 md:w-20 md:h-20 mx-auto bg-muted/50 dark:bg-background/[0.04] rounded-xl flex items-center justify-center border border-border dark:border-white/[0.08] mb-6 shadow-none">
-            <Trophy size={32} className="text-warning text-warning drop-shadow-sm" />
+          <div className="w-16 h-16 md:w-20 md:h-20 mx-auto bg-[rgba(var(--muted-rgb),0.5)] dark:bg-[rgba(var(--background-rgb),0.04)] rounded-xl flex items-center justify-center border border-border mb-6 shadow-none">
+            <Trophy size={32} aria-hidden="true" className="text-warning drop-shadow-sm" />
           </div>
 
           <h2 className="text-2xl md:text-3xl font-black text-foreground uppercase tracking-tight mb-2 text-center">
-            Review Selesai
+            Sesi Tinjauan Berakhir
           </h2>
           <p className="text-muted-foreground text-xs md:text-xs mb-8 uppercase font-bold tracking-widest">
-            {engine.shuffledCards.length} KARTU SELESAI DITINJAU
+            {engine.shuffledCards.length} KARTU TELAH DIPERBARUI
           </p>
 
-          <Card className="bg-muted/50 dark:bg-background/[0.03] py-4 rounded-xl border border-border dark:border-white/[0.08] mb-8 flex justify-center items-center gap-3 shadow-none">
-            <Flame size={18} className="text-destructive" />
-            <span className="text-foreground text-foreground font-mono font-black text-base md:text-lg">
+          <Card className="bg-[rgba(var(--muted-rgb),0.5)] dark:bg-[rgba(var(--background-rgb),0.03)] py-4 rounded-xl border border-border mb-8 flex justify-center items-center gap-3 shadow-none">
+            <Flame size={18} aria-hidden="true" className="text-destructive" />
+            <span className="text-foreground font-mono font-black text-base md:text-lg">
               +{engine.earnedXP} XP
             </span>
           </Card>
@@ -43,7 +43,7 @@ export default function SRSReviewEngine({ cards }: { cards: FlashcardType[] }) {
             onClick={() => engine.router.push("/dashboard")}
             className="w-full h-auto py-4 bg-destructive hover:bg-destructive/90 text-destructive-foreground font-bold uppercase tracking-widest text-xs md:text-xs rounded-xl transition-all shadow-lg"
           >
-            Kembali ke Dashboard
+            Selesai & Tutup
           </Button>
         </Card>
       </section>
@@ -65,31 +65,31 @@ export default function SRSReviewEngine({ cards }: { cards: FlashcardType[] }) {
       {/* HEADER */}
       <header className="flex flex-col gap-6 mb-10">
         <div className="flex items-center gap-3">
-          <Card className="w-10 h-10 rounded-xl bg-destructive/10 border border-destructive/20 flex items-center justify-center neo-inset shadow-none">
-            <BrainCircuit size={20} className="text-destructive" />
+          <Card className="w-10 h-10 rounded-xl bg-[rgba(var(--destructive-rgb),0.1)] border border-destructive/20 flex items-center justify-center neo-inset shadow-none">
+            <BrainCircuit size={20} aria-hidden="true" className="text-destructive" />
           </Card>
           <div>
             <Badge
               variant="outline"
               className="text-destructive text-destructive font-black text-xs tracking-[0.3em] uppercase bg-destructive/5 px-4 py-1.5 rounded-xl border-destructive/20 neo-inset h-auto"
             >
-              Latihan Mengingat (SRS)
+              Asah Ingatan (SRS)
             </Badge>
             <p className="text-muted-foreground text-xs font-bold uppercase mt-1 tracking-widest">
-              Mari segarkan ingatanmu hari ini
+              Waktunya menguji sejauh mana hafalanmu bertahan.
             </p>
           </div>
         </div>
 
-        <Card className="bg-destructive/5 border-destructive/10 p-4 rounded-[1.5rem] neo-inset shadow-none border-dashed">
+        <Card className="bg-[rgba(var(--destructive-rgb),0.05)] border-destructive/10 p-4 rounded-[1.5rem] neo-inset shadow-none border-dashed">
           <div className="flex items-start gap-3">
-            <ShieldCheck size={16} className="shrink-0 text-destructive text-destructive mt-0.5" />
+            <ShieldCheck size={16} aria-hidden="true" className="shrink-0 text-destructive mt-0.5" />
             <div className="space-y-1">
               <p className="text-destructive/80 text-destructive/80 text-xs leading-relaxed italic font-medium">
-                Kejujuran adalah kunci. Beritahu kami jika kamu benar-benar ingat atau lupa kata ini.
+                Bersikaplah jujur pada diri sendiri. SRS paling efektif saat kamu mengakui jika benar-benar lupa.
               </p>
               <p className="text-muted-foreground text-xs leading-relaxed uppercase tracking-widest font-bold">
-                Sistem SRS akan menjadwalkan ulang kata ini secara otomatis agar kamu tidak lupa.
+                Sistem akan mengatur ulang jadwal munculnya kata ini berdasarkan performamu.
               </p>
             </div>
           </div>
@@ -142,7 +142,7 @@ export default function SRSReviewEngine({ cards }: { cards: FlashcardType[] }) {
         {!engine.isFlipped ? (
           <div className="flex flex-col items-center gap-6">
             <div className="text-muted-foreground font-mono text-xs font-black tracking-[0.4em] uppercase text-center flex flex-col gap-1">
-              <span className="text-muted-foreground/40 italic">Kartu Tersisa</span>
+              <span className="text-muted-foreground/40 italic">Progres Sesi</span>
               <span className="text-foreground text-lg">
                 {engine.currentIndex + 1} <span className="text-border mx-1">/</span>{" "}
                 {engine.shuffledCards.length}
@@ -150,7 +150,7 @@ export default function SRSReviewEngine({ cards }: { cards: FlashcardType[] }) {
             </div>
 
             <div className="hidden md:flex justify-center mt-2">
-              <p className="text-xs text-muted-foreground uppercase tracking-widest font-bold bg-muted/50 dark:bg-card/40 px-4 py-2 rounded-xl neo-inset border border-border">
+              <p className="text-xs text-muted-foreground uppercase tracking-widest font-bold bg-[rgba(var(--muted-rgb),0.5)] dark:bg-card/40 px-4 py-2 rounded-xl neo-inset border border-border">
                 Tekan <kbd className="font-mono text-destructive">Spasi</kbd> untuk
                 melihat jawaban
               </p>
@@ -172,7 +172,7 @@ export default function SRSReviewEngine({ cards }: { cards: FlashcardType[] }) {
                   size={18}
                   className="group-hover:scale-125 transition-transform"
                 />
-                Masih Lupa
+                Lupa / Salah
               </div>
               <kbd className="hidden md:inline-block absolute top-4 left-4 bg-destructive/20 text-destructive text-destructive px-2 py-0.5 rounded font-mono text-xs">
                 1
@@ -189,7 +189,7 @@ export default function SRSReviewEngine({ cards }: { cards: FlashcardType[] }) {
                   size={18}
                   className="group-hover:scale-125 transition-transform"
                 />
-                Sudah Ingat
+                Ingat / Benar
               </div>
               <kbd className="hidden md:inline-block absolute top-4 right-4 bg-success/20 text-success text-success px-2 py-0.5 rounded font-mono text-xs">
                 2

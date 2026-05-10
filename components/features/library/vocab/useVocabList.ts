@@ -50,6 +50,7 @@ export function useVocabList(initialData: VocabItem[] = []) {
       "items": *[${filterStr}] | order(coalesce(romaji, "") asc) [$start...$end] { 
         _id, 
         _type,
+        "slug": slug.current,
         "word": coalesce(word, jisho), 
         furigana, 
         romaji, 

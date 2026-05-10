@@ -238,7 +238,7 @@ export default async function LessonPage({ params }: Props) {
                                 chunk.furi ? (
                                   <ruby key={i}>
                                     {chunk.text}
-                                    <rt className="text-xs text-primary/80 font-bold tracking-widest not-italic">
+                                    <rt className="text-primary/80 font-bold tracking-widest not-italic" style={{ fontSize: '0.55em' }}>
                                       {chunk.furi}
                                     </rt>
                                   </ruby>
@@ -294,8 +294,8 @@ export default async function LessonPage({ params }: Props) {
                 <div className="h-[1px] flex-1 bg-border" />
               </div>
               <div className="neo-card p-8 md:p-14 relative overflow-hidden">
-                <div className="absolute top-0 right-0 p-10 opacity-[0.05] pointer-events-none">
-                  <FileText size={180} />
+                <div className="absolute top-0 right-0 p-10 opacity-5 pointer-events-none">
+                  <FileText size={180} aria-hidden="true" />
                 </div>
                 <div className="relative z-10 prose-custom">
                   <PortableText
@@ -327,7 +327,7 @@ export default async function LessonPage({ params }: Props) {
               className="neo-card h-full p-8 group flex flex-col justify-center items-start hover:bg-primary/5 hover:border-primary/30 transition-all duration-300"
             >
               <span className="text-[9px] font-bold uppercase tracking-widest text-muted-foreground group-hover:text-primary dark:group-hover:text-primary mb-3 flex items-center gap-2 transition-colors">
-                <ChevronLeft size={14} /> Materi Sebelumnya
+                <ChevronLeft size={14} aria-hidden="true" /> Materi Sebelumnya
               </span>
               <h4 className="text-xl font-black uppercase text-foreground tracking-tight leading-tight">
                 {prevLesson.title}
@@ -342,7 +342,7 @@ export default async function LessonPage({ params }: Props) {
               className="neo-card h-full p-8 group flex flex-col justify-center items-end text-right hover:bg-primary/5 hover:border-primary/30 transition-all duration-300"
             >
               <span className="text-[10px] font-black uppercase tracking-widest text-muted-foreground group-hover:text-primary dark:group-hover:text-primary mb-3 flex items-center gap-2 transition-colors">
-                Materi Selanjutnya <ChevronRight size={14} />
+                Materi Selanjutnya <ChevronRight size={14} aria-hidden="true" />
               </span>
               <h4 className="text-xl font-black italic uppercase text-foreground tracking-tight leading-tight">
                 {nextLesson.title}

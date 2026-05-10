@@ -60,7 +60,7 @@ export default function ExamsClient({ exams }: { exams: ExamData[] }) {
   // RENDER
   // ======================
   return (
-    <div className="w-full px-6 relative overflow-hidden bg-background text-foreground transition-colors duration-300 min-h-screen pt-12 pb-24">
+    <div className="w-full px-4 sm:px-6 relative overflow-hidden bg-background text-foreground transition-colors duration-300 min-h-screen pt-8 sm:pt-12 pb-24">
       {/* Background Ambient Decor */}
       <div className="absolute top-[-10%] right-[-5%] w-[600px] h-[600px] bg-destructive/5 rounded-full blur-[150px] pointer-events-none animate-pulse" />
       <div className="absolute bottom-[10%] left-[-10%] w-[500px] h-[500px] bg-primary/5 rounded-full blur-[120px] pointer-events-none" />
@@ -88,7 +88,7 @@ export default function ExamsClient({ exams }: { exams: ExamData[] }) {
 
           <motion.h1
             variants={itemVariants}
-            className="text-5xl md:text-7xl lg:text-8xl font-black uppercase tracking-tighter leading-none mb-10 text-foreground drop-shadow-2xl"
+            className="text-4xl sm:text-5xl md:text-7xl lg:text-8xl font-black uppercase tracking-tighter leading-none mb-10 text-foreground drop-shadow-2xl"
           >
             Pusat <br />{" "}
             <span className="text-destructive drop-shadow-[0_0_30px_rgba(var(--destructive-rgb),0.5)]">

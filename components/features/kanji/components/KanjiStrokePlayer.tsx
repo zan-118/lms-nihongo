@@ -88,13 +88,13 @@ export default function KanjiStrokePlayer({
   }, [status, currentStroke]);
 
   if (loading) return (
-    <div className="flex items-center justify-center bg-card/20 backdrop-blur-xl rounded-3xl border border-white/10" style={{ width: size, height: size }}>
+    <div className="flex items-center justify-center bg-[rgba(var(--card-rgb),0.2)] backdrop-blur-xl rounded-3xl border border-border" style={{ width: size, height: size }}>
       <div className="animate-spin rounded-full h-8 w-8 border-b-2 border-primary" />
     </div>
   );
 
   if (error || !data) return (
-    <div className="flex items-center justify-center bg-card/20 backdrop-blur-xl rounded-3xl border border-white/10 text-destructive text-xs p-4 text-center" style={{ width: size, height: size }}>
+    <div className="flex items-center justify-center bg-[rgba(var(--card-rgb),0.2)] backdrop-blur-xl rounded-3xl border border-border text-destructive text-xs p-4 text-center" style={{ width: size, height: size }}>
       Gagal memuat animasi kanji.
     </div>
   );
@@ -103,12 +103,12 @@ export default function KanjiStrokePlayer({
     <div className="flex flex-col items-center gap-6">
       {/* CYBER-GLASS PLAYER CONTAINER */}
       <div 
-        className="relative bg-card/40 backdrop-blur-2xl rounded-[2.5rem] border border-border shadow-2xl overflow-hidden group p-8"
+        className="relative bg-[rgba(var(--card-rgb),0.4)] backdrop-blur-2xl rounded-[2.5rem] border border-border shadow-2xl overflow-hidden group p-8"
 
         style={{ width: size + 64, height: size + 64 }}
       >
         {/* Neon Glow Border */}
-        <div className="absolute inset-0 rounded-[2.5rem] ring-1 ring-white/10 group-hover:ring-primary/30 transition-all duration-500" />
+        <div className="absolute inset-0 rounded-[2.5rem] ring-1 ring-border group-hover:ring-primary/30 transition-all duration-500" />
         
         {/* Grid Pattern Background */}
         <div className="absolute inset-0 bg-[radial-gradient(#ffffff05_1px,transparent_1px)] [background-size:20px_20px] opacity-50" />
@@ -208,58 +208,63 @@ export default function KanjiStrokePlayer({
 
         {/* Speed Indicator Badge */}
         <div className="absolute top-6 right-8 z-20">
-          <div className="px-2 py-1 rounded-md bg-background/5 border border-white/10 text-[8px] font-bold uppercase tracking-widest text-primary flex items-center gap-1">
-            <Zap size={8} /> {speed}x SPEED
+          <div className="px-2 py-1 rounded-md bg-[rgba(var(--background-rgb),0.05)] border border-border text-[8px] font-bold uppercase tracking-widest text-primary flex items-center gap-1">
+            <Zap size={8} aria-hidden="true" /> {speed}x SPEED
           </div>
         </div>
       </div>
 
       {/* PLAYBACK CONTROLS */}
       <div className="flex flex-col gap-4 w-full max-w-[320px]">
-        <div className="grid grid-cols-5 gap-2 bg-background/5 p-2 rounded-2xl border border-white/10">
+        <div className="grid grid-cols-5 gap-2 bg-[rgba(var(--background-rgb),0.05)] p-2 rounded-2xl border border-border">
           <Button
             variant="ghost"
             size="icon"
             onClick={handlePrev}
+            aria-label="Previous stroke"
             className="rounded-xl hover:bg-background/10"
           >
-            <ChevronLeft size={18} />
+            <ChevronLeft size={18} aria-hidden="true" />
           </Button>
 
           <Button
             variant="ghost"
             size="icon"
             onClick={togglePlay}
+            aria-label={status === "playing" ? "Pause animation" : "Play animation"}
             className="rounded-xl bg-primary/10 text-primary hover:bg-primary/20 col-span-1"
           >
-            {status === "playing" ? <Pause size={20} /> : <Play size={20} className="ml-0.5" />}
+            {status === "playing" ? <Pause size={20} aria-hidden="true" /> : <Play size={20} aria-hidden="true" className="ml-0.5" />}
           </Button>
 
           <Button
             variant="ghost"
             size="icon"
             onClick={handleNext}
+            aria-label="Next stroke"
             className="rounded-xl hover:bg-background/10"
           >
-            <ChevronRight size={18} />
+            <ChevronRight size={18} aria-hidden="true" />
           </Button>
 
           <Button
             variant="ghost"
             size="icon"
             onClick={handleReset}
+            aria-label="Reset animation"
             className="rounded-xl hover:bg-background/10"
           >
-            <RotateCcw size={18} />
+            <RotateCcw size={18} aria-hidden="true" />
           </Button>
 
           <Button
             variant="ghost"
             size="icon"
             onClick={() => setShowNumbers(!showNumbers)}
+            aria-label={showNumbers ? "Hide stroke numbers" : "Show stroke numbers"}
             className={`rounded-xl transition-colors ${showNumbers ? "text-primary bg-primary/5" : "text-muted-foreground"}`}
           >
-            <Hash size={18} />
+            <Hash size={18} aria-hidden="true" />
           </Button>
         </div>
 

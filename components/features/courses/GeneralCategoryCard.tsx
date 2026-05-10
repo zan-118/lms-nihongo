@@ -28,7 +28,7 @@ export function GeneralCategoryCard({ cat, variants }: GeneralCategoryCardProps)
         
         <div className="flex flex-col md:flex-row md:items-center justify-between gap-6 mb-10 relative z-10">
           <div>
-            <span className="text-xs font-black uppercase tracking-[0.2em] text-warning text-warning/60 mb-3 block">
+            <span className="text-xs font-black uppercase tracking-[0.2em] text-warning opacity-60 mb-3 block">
               Kategori Umum
             </span>
             <h4 className="text-3xl md:text-5xl font-black text-foreground tracking-tight leading-none">
@@ -36,7 +36,7 @@ export function GeneralCategoryCard({ cat, variants }: GeneralCategoryCardProps)
             </h4>
           </div>
           <div className="w-14 h-14 md:w-16 md:h-16 rounded-2xl bg-muted border border-border flex items-center justify-center text-warning text-warning shadow-inner">
-            <BookOpen size={28} />
+            <BookOpen size={28} aria-hidden="true" />
           </div>
         </div>
 
@@ -58,7 +58,7 @@ export function GeneralCategoryCard({ cat, variants }: GeneralCategoryCardProps)
                 <span className="text-xs md:text-sm font-bold text-muted-foreground group-hover/item:text-foreground transition-colors">
                   {preview.title}
                 </span>
-                <ArrowRight size={14} className="text-muted-foreground/30 group-hover/item:text-warning transition-colors" />
+                <ArrowRight size={14} className="text-muted-foreground/30 group-hover/item:text-warning transition-colors" aria-hidden="true" />
               </Link>
             ))}
           </div>
@@ -69,7 +69,7 @@ export function GeneralCategoryCard({ cat, variants }: GeneralCategoryCardProps)
             href={`/courses/${cat.slug}`}
             className="inline-flex items-center gap-3 px-8 py-4 rounded-2xl bg-warning hover:bg-foreground text-warning-foreground hover:text-background font-black uppercase tracking-widest text-xs transition-all duration-300 shadow-lg"
           >
-            Buka Semua Materi <ArrowRight size={16} />
+            Buka Semua Materi <ArrowRight size={16} aria-hidden="true" />
           </Link>
         </div>
       </Card>

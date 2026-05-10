@@ -21,8 +21,8 @@ const SEARCH_ITEMS: SearchItem[] = [
   { id: "materi", title: "Materi", description: "Jalur belajar JLPT dan Topik Umum", href: "/courses", icon: BookOpen, category: "Platform" },
   { id: "ujian", title: "Ujian", description: "Simulasi JLPT dan Test Mandiri", href: "/exams", icon: Trophy, category: "Platform" },
   { id: "pustaka", title: "Pustaka", description: "Daftar kata benda, kata kerja, dan kanji", href: "/library", icon: Layers, category: "Belajar" },
-  { id: "hafalan", title: "Hafalan", description: "Latihan SRS untuk ingatan jangka panjang", href: "/review", icon: BrainCircuit, category: "Belajar" },
-  { id: "sosial", title: "Sosial", description: "Peringkat global dan komunitas", href: "/social", icon: Trophy, category: "Belajar" },
+  { id: "hafalan", title: "Peninjauan", description: "Latihan SRS untuk ingatan jangka panjang", href: "/review", icon: BrainCircuit, category: "Belajar" },
+  { id: "sosial", title: "Papan Skor", description: "Peringkat global dan komunitas", href: "/social", icon: Trophy, category: "Belajar" },
   { id: "dukungan", title: "Dukungan", description: "Bantuan dan panduan penggunaan", href: "/support", icon: Heart, category: "Sistem" },
   { id: "pengaturan", title: "Pengaturan", description: "Kelola profil dan preferensi aplikasi", href: "/settings", icon: Settings, category: "Sistem" },
   { id: "bagikan", title: "Bagikan", description: "Ajak teman belajar bersama di NihongoRoute", href: "/share", icon: Share2, category: "Sistem" },
@@ -225,7 +225,7 @@ export default function SearchModal({ isOpen, onClose }: { isOpen: boolean; onCl
                   <div className="w-20 h-20 rounded-full bg-muted/50 flex items-center justify-center mx-auto mb-6 border border-border/50">
                     <Search className="text-muted-foreground/20" size={32} />
                   </div>
-                  <h3 className="text-lg font-black uppercase tracking-[0.2em] text-foreground mb-2">Tidak Menemukan Hasil</h3>
+                  <h3 className="text-lg font-black uppercase tracking-[0.2em] text-foreground mb-2">Data Tidak Ditemukan</h3>
                   <p className="text-sm text-muted-foreground max-w-xs mx-auto">
                     Coba gunakan kata kunci lain atau cari melalui navigasi utama.
                   </p>

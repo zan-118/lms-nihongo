@@ -71,12 +71,12 @@ export default function Topbar({ onMenuClick }: { onMenuClick: () => void }) {
         </div>
       </div>
 
-      <div className="flex items-center gap-4 md:gap-5">
+      <div className="flex items-center gap-1 sm:gap-2 md:gap-5">
         {/* Sync Status Indicator */}
         <div 
           aria-live="polite"
           aria-atomic="true"
-          className="hidden sm:flex items-center gap-2 px-3 py-1.5 rounded-lg bg-muted/30 border border-border/50 text-[10px] font-bold uppercase tracking-widest text-muted-foreground/60 transition-all overflow-hidden min-w-[100px]"
+          className="hidden sm:flex items-center gap-2 px-2 md:px-3 py-1.5 rounded-lg bg-muted/30 border border-border/50 text-[10px] font-bold uppercase tracking-widest text-muted-foreground/60 transition-all overflow-hidden min-w-fit md:min-w-[100px]"
         >
           <AnimatePresence mode="wait">
             {isSyncing ? (
@@ -88,7 +88,7 @@ export default function Topbar({ onMenuClick }: { onMenuClick: () => void }) {
                 className="flex items-center gap-2"
               >
                 <RefreshCw size={12} className="animate-spin text-primary" aria-hidden="true" />
-                <span className="animate-pulse">Sinkron...</span>
+                <span className="animate-pulse hidden md:inline">Sinkronisasi...</span>
               </motion.div>
             ) : syncError ? (
               <motion.div 
@@ -99,7 +99,7 @@ export default function Topbar({ onMenuClick }: { onMenuClick: () => void }) {
                 className="flex items-center gap-2"
               >
                 <CloudOff size={12} className="text-destructive drop-shadow-[0_0_8px_rgba(var(--destructive-rgb),0.4)]" aria-hidden="true" />
-                <span className="text-destructive/90">Gagal</span>
+                <span className="text-destructive/90 hidden md:inline">Gagal Sinkron</span>
               </motion.div>
             ) : hasPendingSync ? (
               <motion.div 
@@ -110,7 +110,7 @@ export default function Topbar({ onMenuClick }: { onMenuClick: () => void }) {
                 className="flex items-center gap-2"
               >
                 <CloudUpload size={12} className="text-amber-500 drop-shadow-[0_0_8px_rgba(245,158,11,0.4)]" aria-hidden="true" />
-                <span className="text-amber-500/90">Tertunda</span>
+                <span className="text-amber-500/90 hidden md:inline">Tertunda</span>
               </motion.div>
             ) : (
               <motion.div 
@@ -121,7 +121,7 @@ export default function Topbar({ onMenuClick }: { onMenuClick: () => void }) {
                 className="flex items-center gap-2"
               >
                 <Cloud size={12} className="text-emerald-500 drop-shadow-[0_0_8px_rgba(16,185,129,0.4)]" aria-hidden="true" />
-                <span className="text-emerald-500/70">Terpusat</span>
+                <span className="text-emerald-500/70 hidden md:inline">Tersinkronisasi</span>
               </motion.div>
             )}
           </AnimatePresence>
@@ -149,8 +149,10 @@ export default function Topbar({ onMenuClick }: { onMenuClick: () => void }) {
           <Search size={18} />
         </button>
 
-        <div className="flex items-center gap-2 border-l border-border/50 pl-2 md:pl-5">
-          <ThemeToggle />
+        <div className="flex items-center gap-1 sm:gap-1.5 md:gap-2 sm:border-l sm:border-border/50 sm:pl-2 md:pl-5">
+          <div className="hidden sm:flex">
+            <ThemeToggle />
+          </div>
 
           <div className="flex items-center gap-2 relative">
              <motion.button 

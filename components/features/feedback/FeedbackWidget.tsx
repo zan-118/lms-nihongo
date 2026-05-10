@@ -34,10 +34,10 @@ export default function FeedbackWidget({ forceOpen, onOpenChange }: FeedbackWidg
   return (
     <>
       <Dialog open={openState} onOpenChange={setOpenState}>
-        <DialogContent className="sm:max-w-[425px] border-border dark:border-white/10 bg-card bg-background text-foreground transition-colors duration-300 shadow-2xl rounded-3xl">
+        <DialogContent className="sm:max-w-[425px] border-border bg-card bg-background text-foreground transition-colors duration-300 shadow-2xl rounded-3xl">
           <DialogHeader>
             <DialogTitle className="text-xl font-bold text-foreground flex items-center gap-2 font-black uppercase tracking-tight">
-              <MessageSquarePlus className="text-primary" />
+              <MessageSquarePlus aria-hidden="true" className="text-primary" />
               Kirim Masukan
             </DialogTitle>
             <DialogDescription className="text-muted-foreground">
@@ -56,8 +56,8 @@ export default function FeedbackWidget({ forceOpen, onOpenChange }: FeedbackWidg
                     onClick={() => setType(t)}
                     className={`flex-1 py-2 px-3 rounded-lg text-sm font-medium border transition-all ${
                       type === t 
-                        ? 'bg-primary/20 border-primary text-primary text-primary' 
-                        : 'bg-muted/50 dark:bg-black/20 border border-border dark:border-white/10 text-muted-foreground hover:bg-muted dark:hover:bg-background/5'
+                        ? 'bg-[rgba(var(--primary-rgb),0.2)] border-primary text-primary text-primary' 
+                        : 'bg-[rgba(var(--muted-rgb),0.5)] dark:bg-[rgba(var(--background-rgb),0.2)] border border-border text-muted-foreground hover:bg-muted dark:hover:bg-[rgba(var(--background-rgb),0.05)]'
                     }`}
                   >
                     {t === 'bug' ? '🐛 Bug' : t === 'suggestion' ? '💡 Saran' : '💖 Pujian'}
@@ -72,7 +72,7 @@ export default function FeedbackWidget({ forceOpen, onOpenChange }: FeedbackWidg
                value={message}
                onChange={(e) => setMessage(e.target.value)}
                placeholder="Ceritakan detailnya di sini..."
-               className="w-full min-h-[120px] p-3 rounded-lg bg-background border border-border text-foreground placeholder:text-muted-foreground/50 focus:outline-none focus:border-primary focus:ring-1 focus:ring-blue-500 transition-all resize-none"
+               className="w-full min-h-[120px] p-3 rounded-lg bg-background border border-border text-foreground placeholder:text-muted-foreground/50 focus:outline-none focus:border-primary focus:ring-1 focus:ring-ring transition-all resize-none"
                required
               />
             </div>
@@ -83,10 +83,10 @@ export default function FeedbackWidget({ forceOpen, onOpenChange }: FeedbackWidg
               className="w-full bg-primary hover:bg-primary/90 text-primary-foreground transition-all border-none"
             >
               {isSubmitting ? (
-                <Loader2 className="w-5 h-5 animate-spin" />
+                <Loader2 aria-hidden="true" className="w-5 h-5 animate-spin" />
               ) : (
                 <>
-                  <Send className="w-4 h-4 mr-2" />
+                  <Send aria-hidden="true" className="w-4 h-4 mr-2" />
                   Kirim Masukan
                 </>
               )}

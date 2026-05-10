@@ -73,7 +73,7 @@ export default function DictionaryPopup() {
       } else {
         setResult({ 
           word: text, 
-          meaning: "Sedang mencari definisi...", 
+          meaning: "Tunggu sebentar ya...", 
           furigana: "???" 
         });
       }
@@ -141,7 +141,7 @@ export default function DictionaryPopup() {
               </div>
             ) : (
               <div className="text-center py-4">
-                <p className="text-xs text-muted-foreground uppercase font-black tracking-widest">Tidak Ditemukan</p>
+                <p className="text-xs text-muted-foreground uppercase font-black tracking-widest">Kosakata belum tersedia</p>
               </div>
             )}
             

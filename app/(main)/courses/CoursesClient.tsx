@@ -40,7 +40,7 @@ export default function CoursesClient({ categories }: CoursesClientProps) {
   const generalCategories = categories.filter((cat) => cat.type === "general");
 
   return (
-    <div className="w-full px-6 relative overflow-hidden bg-background text-foreground transition-colors duration-300 min-h-screen pt-12 pb-24">
+    <div className="w-full px-4 sm:px-6 relative overflow-hidden bg-background text-foreground transition-colors duration-300 min-h-screen pt-8 md:pt-12 pb-24">
       {/* Background Decor */}
       <div className="absolute top-0 left-1/4 w-[500px] h-[500px] bg-primary/5 bg-primary/10 rounded-full blur-[120px] pointer-events-none" />
 
@@ -51,16 +51,16 @@ export default function CoursesClient({ categories }: CoursesClientProps) {
         variants={containerVariants}
       >
         {/* HERO HEADER */}
-        <header className="mb-20">
+        <header className="mb-12 md:mb-20">
           <motion.h1
             variants={itemVariants}
-            className="text-4xl md:text-7xl font-black uppercase tracking-tighter text-foreground"
+            className="text-3xl sm:text-4xl md:text-7xl font-black uppercase tracking-tighter text-foreground"
           >
-            MAU MULAI <br />
-            <span className="text-primary drop-shadow-sm dark:drop-shadow-[0_0_15px_rgba(34,211,238,0.5)]">
-              DARI
+            PILIH RUTE <br />
+            <span className="text-primary drop-shadow-sm dark:drop-shadow-[0_0_15px_rgba(var(--primary-rgb),0.5)]">
+              BELAJAR
             </span>{" "}
-            MANA?
+            ANDA
           </motion.h1>
         </header>
 
@@ -70,7 +70,7 @@ export default function CoursesClient({ categories }: CoursesClientProps) {
           <motion.section variants={itemVariants} className="mb-24">
             <div className="flex items-center gap-6 mb-10">
               <h3 className="text-xs md:text-xs font-bold uppercase tracking-widest text-primary/60 dark:text-primary/50">
-                Jalur Level JLPT
+                Kurikulum Berbasis JLPT
               </h3>
               <div className="h-[1px] flex-1 bg-border" />
             </div>
@@ -88,7 +88,7 @@ export default function CoursesClient({ categories }: CoursesClientProps) {
           <motion.section variants={itemVariants}>
             <div className="flex items-center gap-6 mb-10">
               <h3 className="text-xs md:text-xs font-bold uppercase tracking-widest text-warning text-warning/50">
-                Topik Umum & Praktis
+                Kompetensi Bahasa Praktis
               </h3>
               <div className="h-[1px] flex-1 bg-border" />
             </div>

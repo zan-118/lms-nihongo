@@ -122,6 +122,16 @@ export default defineType({
       validation: (Rule) => Rule.required(),
     }),
     defineField({
+      name: "slug",
+      type: "slug",
+      title: "Slug",
+      options: {
+        source: (doc: any) => doc.romaji || doc.word || doc._id,
+        maxLength: 96,
+      },
+      validation: (Rule) => Rule.required(),
+    }),
+    defineField({
       name: "pitchAccent",
       title: "Pitch Accent",
       type: "string",

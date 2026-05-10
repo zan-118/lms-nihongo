@@ -15,22 +15,22 @@ interface Step {
 const steps: Step[] = [
   {
     title: "Selamat Datang!",
-    description: "NihongoRoute adalah ekosistem belajar bahasa Jepang modern. Mari kita keliling sebentar!",
+    description: "NihongoRoute adalah tempat asik buat belajar bahasa Jepang. Yuk, kenalan bentar sama fitur-fiturnya!",
     icon: <Sparkles className="text-primary" size={32} />,
   },
   {
-    title: "Fokus Harian",
-    description: "Tab Beranda adalah pusat aktivitasmu. Di sini kamu bisa melihat sesi review yang jatuh tempo.",
+    title: "Fokus Hari Ini",
+    description: "Halaman Beranda itu pusat belajar kamu. Semua kata yang harus di-review ada di sini.",
     icon: <CheckCircle2 className="text-success" size={32} />,
   },
   {
     title: "Pantau Progres",
-    description: "Gunakan tab Progres untuk melihat statistik detail dan penguasaan kanji kamu secara visual.",
+    description: "Di sini kamu bisa lihat sejauh mana perkembangan belajarmu, lengkap dengan grafik yang seru!",
     icon: <div className="text-primary text-2xl font-bold">📈</div>,
   },
   {
-    title: "Koleksi Trophy",
-    description: "Selesaikan quest dan raih prestasi untuk mengoleksi badge keren di tab Koleksi.",
+    title: "Koleksi Medali",
+    description: "Selesaikan tantangan harian dan kumpulkan medali keren buat dipajang di koleksimu!",
     icon: <div className="text-warning text-2xl font-bold">🏆</div>,
   },
 ];
@@ -106,7 +106,7 @@ export default function OnboardingTour() {
                   onClick={handleNext}
                   className="w-full h-14 bg-primary hover:bg-foreground text-primary-foreground font-black uppercase tracking-widest rounded-2xl shadow-lg transition-all flex items-center justify-center gap-3"
                 >
-                  {currentStep === steps.length - 1 ? "Mulai Belajar" : "Lanjut Tour"}
+                  {currentStep === steps.length - 1 ? "Mulai Belajar" : "Lanjut"}
                   <ArrowRight size={18} />
                 </Button>
                 

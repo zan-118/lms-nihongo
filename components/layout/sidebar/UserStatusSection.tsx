@@ -65,7 +65,7 @@ export function UserStatusSection({
             <div className="flex items-center gap-1.5 mt-0.5">
               <div className="w-1 h-1 rounded-full bg-emerald-500 animate-pulse" />
               <span className="text-[8px] font-black text-muted-foreground uppercase tracking-widest">
-                Cloud Synced
+                Sinkronisasi Aktif
               </span>
             </div>
           </div>
@@ -95,7 +95,7 @@ export function UserStatusSection({
            asChild
            className="w-full h-12 bg-primary text-primary-foreground font-black text-xs uppercase tracking-widest rounded-2xl shadow-lg border-none hover:opacity-90"
          >
-           <Link href="/login">Masuk / Daftar</Link>
+           <Link href="/login">Masuk atau Daftar</Link>
          </Button>
        </motion.div>
     </div>

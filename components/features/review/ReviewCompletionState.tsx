@@ -17,11 +17,11 @@ export function ReviewCompletionState({ mode, onBack }: ReviewCompletionStatePro
     <div className="flex-1 flex flex-col items-center justify-center px-4 w-full">
       <EmptyState 
         icon={mode === "srs" ? Sparkles : Trophy}
-        title={mode === "srs" ? "Ingatan Terjaga!" : "Latihan Selesai"}
+        title={mode === "srs" ? "Review Selesai!" : "Latihan Selesai!"}
         description={mode === "srs" 
-          ? "Kamu sudah menyelesaikan semua review yang jatuh tempo. Ingatanmu masih sangat tajam!" 
-          : "Bagus! Kamu baru saja menyelesaikan sesi latihan cepat. Mau coba sesi lainnya?"}
-        actionText="Kembali ke Menu"
+          ? "Keren! Semua materi hari ini sudah kamu review. Terus semangat belajarnya ya!" 
+          : "Sesi latihan cepat selesai! Terus asah kemampuan bahasamu biar makin jago."}
+        actionText="Kembali ke Beranda"
         onClick={onBack}
       />
     </div>

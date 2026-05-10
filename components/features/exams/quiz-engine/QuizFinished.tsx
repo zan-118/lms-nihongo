@@ -49,17 +49,17 @@ export function QuizFinished({
         </div>
 
         <Badge variant="outline" className="border-destructive/20 text-destructive text-destructive font-bold text-xs uppercase tracking-widest mb-6 h-auto px-6 py-2 rounded-xl neo-inset bg-destructive/5">
-          Evaluasi Latihan
+          Rangkuman Latihan
         </Badge>
         
         <h2 className="text-5xl md:text-6xl font-black text-foreground uppercase tracking-tighter mb-4">
-          {isPerfect ? "Latihan Sempurna!" : "Latihan Selesai"}
+          {isPerfect ? "Penguasaan Mutlak!" : "Latihan Tuntas"}
         </h2>
 
         <div className="flex items-center justify-center gap-10 my-12">
           <div className="text-center">
             <p className="text-muted-foreground text-xs font-bold uppercase tracking-widest mb-2">
-              Skor Akhir
+              Skor Benar
             </p>
             <p className="text-5xl font-black text-foreground tracking-tight">
               {score}<span className="text-xl opacity-10 mx-1">/</span>{totalQuestions}
@@ -68,7 +68,7 @@ export function QuizFinished({
           <div className="w-px h-16 bg-border dark:bg-background/5" />
           <div className="text-center">
             <p className="text-muted-foreground text-xs font-bold uppercase tracking-widest mb-2">
-              Akurasi
+              Persentase
             </p>
             <p className={`text-5xl font-black tracking-tight ${isPerfect ? "text-destructive text-destructive drop-shadow-sm dark:drop-shadow-[0_0_15px_rgba(239,68,68,0.4)]" : "text-warning text-warning"}`}>
               {percentage}%
@@ -91,7 +91,7 @@ export function QuizFinished({
             }}
             className="w-full sm:w-auto h-auto px-10 py-5 bg-destructive hover:bg-destructive/90 text-destructive-foreground font-black rounded-2xl transition-all uppercase tracking-widest text-xs shadow-xl border-none"
           >
-            Materi Selanjutnya <ArrowRight size={18} className="ml-3" />
+            Materi Berikutnya <ArrowRight size={18} className="ml-3" />
           </Button>
         </div>
       </motion.div>

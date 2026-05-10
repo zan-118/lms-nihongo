@@ -36,9 +36,12 @@ export default function UserNav() {
         </Button>
         <Button 
           asChild 
-          className="h-9 rounded-xl bg-primary text-primary-foreground text-xs font-black uppercase tracking-widest shadow-lg shadow-primary/20"
+          className="h-9 px-3 sm:px-4 rounded-xl bg-primary text-primary-foreground text-[10px] sm:text-xs font-black uppercase tracking-widest shadow-lg shadow-primary/20"
         >
-          <Link href="/login?mode=signup">Mulai Gratis</Link>
+          <Link href="/login?mode=signup">
+            <span className="sm:hidden">Mulai</span>
+            <span className="hidden sm:inline">Mulai Gratis</span>
+          </Link>
         </Button>
       </div>
     );
@@ -47,7 +50,7 @@ export default function UserNav() {
   return (
     <DropdownMenu>
       <DropdownMenuTrigger asChild>
-        <button className="flex items-center gap-3 p-1 pr-3 rounded-2xl bg-muted/30 border border-border/50 hover:border-primary/30 transition-all group outline-none">
+        <button className="flex items-center gap-1 sm:gap-3 p-1 pr-1 sm:pr-3 rounded-2xl bg-muted/30 border border-border/50 hover:border-primary/30 transition-all group outline-none">
           <div className="w-8 h-8 rounded-xl bg-gradient-to-br from-primary to-blue-600 flex items-center justify-center text-primary-foreground text-xs font-black shadow-md group-hover:scale-105 transition-transform">
             {userFullName ? userFullName.charAt(0).toUpperCase() : "U"}
           </div>
@@ -60,13 +63,13 @@ export default function UserNav() {
                <span className="text-[8px] font-bold text-muted-foreground uppercase tracking-widest">Level {level}</span>
              </div>
           </div>
-          <ChevronDown size={14} className="text-muted-foreground group-hover:text-primary transition-colors ml-1" />
+          <ChevronDown size={14} className="hidden sm:block text-muted-foreground group-hover:text-primary transition-colors ml-1" />
         </button>
       </DropdownMenuTrigger>
       <DropdownMenuContent className="w-56 mt-2 p-2 bg-card/95 backdrop-blur-xl border border-border rounded-2xl shadow-2xl animate-in fade-in zoom-in-95 duration-200">
         <DropdownMenuLabel className="px-3 py-3">
           <div className="flex flex-col space-y-1">
-            <p className="text-xs font-black uppercase tracking-wider text-foreground">{userFullName}</p>
+            <p className="text-xs font-black uppercase tracking-wider text-foreground">{userFullName || 'Pelajar'}</p>
             <p className="text-xs font-medium text-muted-foreground truncate italic">Akun NihongoRoute Aktif</p>
           </div>
         </DropdownMenuLabel>

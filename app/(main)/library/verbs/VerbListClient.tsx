@@ -71,15 +71,16 @@ export default function VerbListClient({
       {/* Breadcrumb Navigation */}
       <nav className="mb-8 md:mb-12 flex flex-wrap items-center gap-2 md:gap-4 text-xs md:text-xs font-bold text-muted-foreground uppercase tracking-widest">
         <Link href="/dashboard" className="hover:text-primary transition-colors flex items-center gap-1.5 md:gap-2">
-          <Home size={14} /> Beranda
+          <Home size={14} /> <span className="hidden sm:inline">Beranda</span>
         </Link>
         <span className="text-muted-foreground/20">/</span>
         <Link href="/library" className="hover:text-primary transition-colors flex items-center gap-1.5 md:gap-2">
-          <Library size={14} /> Pustaka
+          <Library size={14} /> <span className="hidden sm:inline">Pustaka</span>
         </Link>
         <span className="text-muted-foreground/20">/</span>
         <span className="text-primary flex items-center gap-1.5 md:gap-2">
-          <RefreshCw size={14} /> Kata Kerja
+          <RefreshCw size={14} /> <span className="hidden sm:inline">Kata Kerja</span>
+          <span className="sm:hidden">Kata Kerja</span>
         </span>
       </nav>
 
@@ -91,10 +92,10 @@ export default function VerbListClient({
               <RefreshCw size={28} className="text-primary md:w-8 md:h-8" />
             </Card>
             <div className="text-left">
-              <h1 className="text-4xl md:text-5xl lg:text-6xl font-black text-foreground tracking-tight leading-none mb-2">
+              <h1 className="text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-black text-foreground tracking-tight leading-none mb-2">
                 Kamus <span className="text-primary">Kata Kerja</span>
               </h1>
-              <span className="text-xs md:text-xs text-muted-foreground font-medium tracking-tight uppercase tracking-widest">Ubah bentuk kata kerja jadi lebih gampang.</span>
+              <span className="text-xs md:text-xs text-muted-foreground font-medium tracking-tight uppercase tracking-widest">Eksplorasi perubahan morfologi kata kerja bahasa Jepang.</span>
             </div>
           </div>
           <div className="flex items-center justify-between md:justify-end gap-6 w-full md:w-auto">
@@ -121,7 +122,7 @@ export default function VerbListClient({
               size={20}
             />
             <Input
-              placeholder="Cari kata kerja atau arti yang kamu mau..."
+              placeholder="Cari berdasarkan kata dasar, arti, atau romaji..."
               className="w-full pl-12 md:pl-16 pr-6 md:pr-8 py-6 md:py-8 h-auto bg-muted/30 border-border rounded-2xl md:rounded-[2rem] text-sm md:text-base text-foreground placeholder:text-muted-foreground font-medium neo-inset shadow-none focus-visible:ring-primary/30"
               value={searchTerm}
               onChange={(e) => handleSearchChange(e.target.value)}
@@ -174,7 +175,7 @@ export default function VerbListClient({
                  </div>
               </div>
               <p className="text-muted-foreground font-bold text-xs uppercase tracking-widest">
-                Waduh, kata kerjanya gak ketemu nih...
+                Maaf, kata kerja tidak ditemukan dalam database.
               </p>
             </motion.div>
           ) : (
@@ -301,7 +302,7 @@ export default function VerbListClient({
       <footer className="mt-16 md:mt-24 pt-10 md:pt-16 border-t border-border flex flex-col sm:flex-row justify-between items-center gap-6">
          <div className="flex items-center gap-3">
             <Activity size={16} className="text-primary animate-pulse" />
-            <span className="text-muted-foreground font-bold text-xs md:text-xs uppercase tracking-widest">Matriks Konjugasi Siap!</span>
+            <span className="text-muted-foreground font-bold text-xs md:text-xs uppercase tracking-widest">Sistem Morfologi Siap</span>
          </div>
          <Link href="/library" className="w-full sm:w-auto">
             <Button variant="ghost" className="w-full px-8 py-6 md:px-10 md:py-7 h-auto text-xs md:text-xs font-bold uppercase tracking-widest rounded-2xl bg-muted border border-border neo-card shadow-none hover:bg-primary hover:text-primary-foreground transition-all gap-3 group">

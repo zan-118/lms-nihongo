@@ -28,40 +28,42 @@ export function SurvivalGameOver({ gameState, score, startGame }: SurvivalGameOv
       >
         <div className={`absolute inset-0 ${bgGlowColor} pointer-events-none opacity-50`} />
 
-        <Card className={`w-24 h-24 md:w-32 md:h-32 mx-auto rounded-[2rem] md:rounded-[3rem] flex items-center justify-center mb-8 md:mb-12 neo-inset shadow-none border border-border dark:border-white/5 bg-muted/50 dark:bg-black/40 relative z-10`}>
+        <Card className={`w-24 h-24 md:w-32 md:h-32 mx-auto rounded-[2rem] md:rounded-[3rem] flex items-center justify-center mb-8 md:mb-12 neo-inset shadow-none border border-border bg-[rgba(var(--muted-rgb),0.5)] dark:bg-[rgba(var(--background-rgb),0.4)] relative z-10`}>
           {isVictory ? (
             <Trophy
               size={48}
-              className="text-warning text-warning drop-shadow-sm dark:drop-shadow-[0_0_20px_rgba(251,191,36,0.7)] md:w-16 md:h-16"
+              aria-hidden="true"
+              className="text-warning text-warning drop-shadow-sm dark:drop-shadow-[0_0_20px_rgba(var(--warning-rgb),0.7)] md:w-16 md:h-16"
             />
           ) : (
             <ShieldAlert
               size={48}
-              className="text-primary drop-shadow-sm dark:drop-shadow-[0_0_20px_rgba(0,238,255,0.7)] md:w-16 md:h-16"
+              aria-hidden="true"
+              className="text-primary drop-shadow-sm dark:drop-shadow-[0_0_20px_rgba(var(--primary-rgb),0.7)] md:w-16 md:h-16"
             />
           )}
         </Card>
 
         <h2 className={`text-4xl md:text-6xl lg:text-7xl font-black tracking-tight mb-6 md:mb-8 relative z-10 leading-none ${accentColor}`}>
-          {isVictory ? "Luar Biasa!" : "Evaluasi Selesai"}
+          {isVictory ? "Luar Biasa!" : "Yah, Tereliminasi"}
         </h2>
         
         <div className="flex flex-col items-center gap-3 md:gap-4 mb-10 md:mb-14 relative z-10">
-          <Badge variant="outline" className="text-muted-foreground font-bold uppercase tracking-widest text-xs md:text-xs h-auto border border-border dark:border-white/10 neo-inset px-6 py-2 md:px-8 md:py-3 rounded-2xl bg-muted/50 dark:bg-black/30">
+          <Badge variant="outline" className="text-muted-foreground font-bold uppercase tracking-widest text-xs md:text-xs h-auto border border-border neo-inset px-6 py-2 md:px-8 md:py-3 rounded-2xl bg-[rgba(var(--muted-rgb),0.5)] dark:bg-[rgba(var(--background-rgb),0.3)]">
             SKOR AKHIR
           </Badge>
           <div className="flex flex-col">
              <span className="text-foreground text-7xl md:text-7xl lg:text-7xl font-black drop-shadow-sm leading-none">{score}</span>
-             <span className="text-muted-foreground font-bold text-xs md:text-xs uppercase tracking-widest mt-3 md:mt-4">KATA TERJAWAB</span>
+             <span className="text-muted-foreground font-bold text-xs md:text-xs uppercase tracking-widest mt-3 md:mt-4">KATA BERHASIL DITEBAK</span>
           </div>
         </div>
 
         <Button
           onClick={startGame}
           variant="ghost"
-          className="flex items-center justify-center gap-4 md:gap-6 w-full h-auto py-6 md:py-8 relative z-10 font-bold uppercase tracking-widest text-xs md:text-xs border border-border dark:border-white/5 neo-card shadow-none bg-muted/50 dark:bg-black/40 hover:bg-primary hover:text-primary-foreground transition-all rounded-[2rem] group"
+          className="flex items-center justify-center gap-4 md:gap-6 w-full h-auto py-6 md:py-8 relative z-10 font-bold uppercase tracking-widest text-xs md:text-xs border border-border neo-card shadow-none bg-[rgba(var(--muted-rgb),0.5)] dark:bg-[rgba(var(--background-rgb),0.4)] hover:bg-primary hover:text-primary-foreground transition-all rounded-[2rem] group"
         >
-          <RotateCcw size={20} className="group-hover:-rotate-180 transition-transform duration-700 md:w-6 md:h-6" /> ULANGI EVALUASI
+          <RotateCcw size={20} aria-hidden="true" className="group-hover:-rotate-180 transition-transform duration-700 md:w-6 md:h-6" /> COBA LAGI
         </Button>
       </Card>
     </motion.div>

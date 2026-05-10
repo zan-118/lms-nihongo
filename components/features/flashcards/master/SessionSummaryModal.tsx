@@ -32,13 +32,14 @@ export function SessionSummaryModal({
   return (
     <Dialog open={isFinished} onOpenChange={setIsFinished}>
       <DialogContent className="max-w-md w-[90%] md:w-full p-0 border-none bg-transparent shadow-none mx-auto transition-colors duration-300">
-        <Card className="w-full bg-card bg-card p-8 md:p-10 rounded-2xl border border-border dark:border-white/[0.08] text-center relative overflow-hidden shadow-2xl">
+        <Card className="w-full bg-card bg-card p-8 md:p-10 rounded-2xl border border-border text-center relative overflow-hidden shadow-2xl">
           <div className={`absolute top-0 left-0 right-0 h-1.5 ${themeBgColor} ${themeShadow}`} />
 
-          <div className="w-16 h-16 md:w-20 md:h-20 mx-auto bg-muted/50 dark:bg-background/[0.04] rounded-xl flex items-center justify-center border border-border dark:border-white/[0.08] mb-6 shadow-none">
+          <div className="w-16 h-16 md:w-20 md:h-20 mx-auto bg-[rgba(var(--muted-rgb),0.5)] dark:bg-[rgba(var(--background-rgb),0.04)] rounded-xl flex items-center justify-center border border-border mb-6 shadow-none">
             <Trophy
               size={32}
-              className="text-warning text-warning drop-shadow-sm dark:drop-shadow-[0_0_15px_rgba(245,158,11,0.4)]"
+              aria-hidden="true"
+              className="text-warning text-warning drop-shadow-sm dark:drop-shadow-[0_0_15px_rgba(var(--warning-rgb),0.4)]"
             />
           </div>
 
@@ -70,8 +71,8 @@ export function SessionSummaryModal({
             </Card>
           </div>
 
-          <Card className="bg-muted/50 dark:bg-background/[0.03] py-4 rounded-xl border border-border dark:border-white/[0.08] mb-8 flex justify-center items-center gap-3 shadow-none">
-            <Flame size={18} className="text-primary" />
+          <Card className="bg-[rgba(var(--muted-rgb),0.5)] dark:bg-[rgba(var(--background-rgb),0.03)] py-4 rounded-xl border border-border mb-8 flex justify-center items-center gap-3 shadow-none">
+            <Flame size={18} aria-hidden="true" className="text-primary" />
             <span className="text-foreground text-foreground font-mono font-black text-base md:text-lg">
               +{sessionStats.xpGained} XP
             </span>
@@ -90,12 +91,12 @@ export function SessionSummaryModal({
               onClick={handleRestart}
               className={`w-full h-auto py-4 rounded-xl text-xs md:text-xs font-bold uppercase tracking-widest border-none bg-primary text-primary-foreground hover:bg-foreground hover:text-background transition-all shadow-lg`}
             >
-              <RotateCcw size={16} className="mr-2" /> Ulangi Semua
+              <RotateCcw size={16} aria-hidden="true" className="mr-2" /> Ulangi Semua
             </Button>
             <Button
               variant="ghost"
               onClick={() => router.push("/dashboard")}
-              className="w-full h-auto py-4 text-muted-foreground hover:text-foreground font-bold uppercase tracking-widest text-xs md:text-xs border-border dark:border-white/[0.08] bg-muted dark:bg-background/[0.03] rounded-xl transition-all"
+              className="w-full h-auto py-4 text-muted-foreground hover:text-foreground font-bold uppercase tracking-widest text-xs md:text-xs border border-border bg-muted dark:bg-[rgba(var(--background-rgb),0.03)] rounded-xl transition-all"
             >
               Kembali ke Dashboard
             </Button>

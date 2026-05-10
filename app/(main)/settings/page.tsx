@@ -116,9 +116,9 @@ export default function SettingsPage() {
 
   const handleResetData = () => {
     openConfirm(
-      "Hapus Semua Data?",
-      "Peringatan: Semua progres belajar kamu bakal dihapus permanen. Tindakan ini gak bisa dibatalin lho!",
-      "Ya, Hapus Semuanya",
+      "Hapus Seluruh Riwayat Belajar?",
+      "Peringatan: Seluruh progres belajar Anda akan dihapus secara permanen. Tindakan ini tidak dapat dibatalkan.",
+      "Ya, Hapus Permanen",
       true,
       () => {
         resetAll();
@@ -129,8 +129,8 @@ export default function SettingsPage() {
 
   const handleLogout = () => {
     openConfirm(
-      "Yakin Mau Keluar?",
-      "Sesi belajarmu bakal diakhiri. Pastikan semua data sudah tersinkronisasi biar aman.",
+      "Akhiri Sesi Belajar?",
+      "Sesi belajar Anda akan diakhiri. Pastikan data sudah tersinkronisasi ke Cloud untuk keamanan progres Anda.",
       "Keluar Sekarang",
       true,
       async () => {
@@ -211,14 +211,14 @@ export default function SettingsPage() {
         <header className="mb-12 px-1">
           <motion.div variants={itemVariants}>
             <Badge variant="outline" className="bg-background/5 text-primary border-primary/20 px-4 py-1.5 rounded-full text-[10px] font-black uppercase tracking-[0.2em] mb-6 flex items-center gap-2 w-fit shadow-xl backdrop-blur-md">
-              <SettingsIcon size={14} className="animate-spin-slow" /> Protokol Sistem
+              <SettingsIcon size={14} className="animate-spin-slow" /> Konfigurasi Sistem
             </Badge>
           </motion.div>
           <motion.h1 variants={itemVariants} className="text-4xl md:text-5xl font-black text-foreground italic tracking-tighter uppercase mb-4 leading-none">
             The Pilot&apos;s Cabin
           </motion.h1>
           <motion.p variants={itemVariants} className="text-muted-foreground text-sm md:text-base font-medium max-w-xl leading-relaxed opacity-70">
-            Pusat kendali identitas dan data belajarmu. Pastikan transmisi data ke Cloud selalu terverifikasi untuk keamanan progres maksimal.
+            Atur profil dan preferensi belajar Anda. Gunakan sinkronisasi Cloud untuk menjaga keamanan riwayat belajar Anda di berbagai perangkat.
           </motion.p>
         </header>
 
@@ -255,9 +255,9 @@ export default function SettingsPage() {
                 <ShieldAlert size={28} className="text-destructive" />
               </div>
               <div className="flex-1 text-center md:text-left">
-                <h4 className="text-destructive font-black uppercase italic tracking-tighter text-lg mb-2">Peringatan Keamanan</h4>
+                <h4 className="text-destructive font-black uppercase italic tracking-tighter text-lg mb-2">Zona Berbahaya</h4>
                 <p className="text-muted-foreground text-sm leading-relaxed opacity-60 font-medium">
-                  Penghapusan database bersifat destruktif dan tidak dapat dipulihkan. Seluruh riwayat XP, streak, dan memori SRS akan dimusnahkan dari server dan penyimpanan lokal.
+                  Penghapusan data bersifat permanen. Seluruh pencapaian, streak, dan data memori SRS Anda akan dihapus sepenuhnya dari sistem.
                 </p>
               </div>
             </Card>

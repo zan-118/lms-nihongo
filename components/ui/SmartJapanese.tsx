@@ -12,6 +12,7 @@ import React from "react";
  * Hasil: [{text: "食", furi: "た"}, {text: "べ"}, {text: "物", furi: "もの"}]
  */
 export function splitFurigana(word: string, reading: string) {
+  if (!word) return [];
   if (!reading || word === reading) return [{ text: word }];
 
   // Clean the reading string from spaces for better anchor matching
@@ -90,6 +91,7 @@ export function splitFurigana(word: string, reading: string) {
  * Komponen untuk merender teks Jepang dengan Furigana yang hanya muncul di atas Kanji.
  */
 export function SmartJapanese({ word, furigana, className = "" }: { word: string; furigana?: string; className?: string }) {
+  if (!word) return <span className={className}>{furigana}</span>;
   if (!furigana || word === furigana) {
     return <span className={className}>{word}</span>;
   }

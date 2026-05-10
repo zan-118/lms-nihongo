@@ -43,16 +43,17 @@ export function SurvivalPlaying({
   return (
     <div className="w-full flex flex-col h-full min-h-[60vh] max-w-3xl mx-auto pb-6 px-4 md:px-0 transition-colors duration-300">
       <Card
-        className={`flex justify-between items-center mb-4 md:mb-10 p-4 md:p-10 rounded-[1.5rem] md:rounded-[3rem] border transition-all duration-500 neo-card shadow-lg ${isCriticalHp ? "border-primary/60 bg-primary/10 shadow-[0_0_30px_rgba(0,238,255,0.15)]" : "bg-card border-border dark:border-white/5"}`}
+        className={`flex justify-between items-center mb-4 md:mb-10 p-4 md:p-10 rounded-[1.5rem] md:rounded-[3rem] border transition-all duration-500 neo-card shadow-lg ${isCriticalHp ? "border-primary/60 bg-primary/10 shadow-[0_0_30px_rgba(var(--primary-rgb),0.15)]" : "bg-card border-border"}`}
       >
         <div className="flex gap-1 md:gap-4 items-center">
           {[...Array(MAX_HP)].map((_, i) => (
             <BatteryMedium
               key={i}
               size={18}
+              aria-hidden="true"
               className={`transition-all duration-500 ${
                 i < hp
-                  ? "text-primary drop-shadow-sm dark:drop-shadow-[0_0_10px_rgba(0,238,255,0.8)]"
+                  ? "text-primary drop-shadow-sm dark:drop-shadow-[0_0_10px_rgba(var(--primary-rgb),0.8)]"
                   : "text-muted-foreground/20 scale-75 opacity-30"
               } md:w-8 md:h-8`}
             />
@@ -60,14 +61,14 @@ export function SurvivalPlaying({
         </div>
 
         <div
-          className={`flex items-center gap-1.5 md:gap-4 font-mono text-xl md:text-4xl lg:text-5xl font-black tracking-tight transition-all ${isDangerTime ? "text-primary animate-pulse drop-shadow-sm dark:drop-shadow-[0_0_15px_rgba(0,238,255,0.8)]" : "text-foreground opacity-80"}`}
+          className={`flex items-center gap-1.5 md:gap-4 font-mono text-xl md:text-4xl lg:text-5xl font-black tracking-tight transition-all ${isDangerTime ? "text-primary animate-pulse drop-shadow-sm dark:drop-shadow-[0_0_15px_rgba(var(--primary-rgb),0.8)]" : "text-foreground opacity-80"}`}
         >
-          <Timer size={18} className="md:w-8 md:h-8 lg:w-10 lg:h-10" /> 
+          <Timer size={18} aria-hidden="true" className="md:w-8 md:h-8 lg:w-10 lg:h-10" /> 
           {timeLeft.toString().padStart(2, "0")}s
         </div>
 
         <div className="flex items-center gap-1.5 md:gap-3 text-primary font-black text-xl md:text-3xl lg:text-4xl">
-          <Zap size={18} className="fill-primary md:w-7 md:h-7 lg:w-8 lg:h-8" /> {score}
+          <Zap size={18} aria-hidden="true" className="fill-primary md:w-7 md:h-7 lg:w-8 lg:h-8" /> {score}
         </div>
       </Card>
 
@@ -89,22 +90,22 @@ export function SurvivalPlaying({
             className={`relative bg-card bg-background rounded-[2rem] md:rounded-[4rem] p-6 md:p-20 border text-center shadow-2xl flex flex-col items-center justify-center flex-1 min-h-[220px] md:min-h-[400px] lg:min-h-[500px] neo-card transition-all duration-300 ${
               isShaking
                 ? "border-primary shadow-xl"
-                : "border-border dark:border-white/5"
+                : "border-border"
             }`}
           >
-            <div className="absolute inset-0 bg-[linear-gradient(rgba(0,238,255,0.03)_1px,transparent_1px)] bg-[size:100%_4px] md:bg-[size:100%_6px] pointer-events-none opacity-40 rounded-[2rem] md:rounded-[4rem]" />
+            <div className="absolute inset-0 bg-[linear-gradient(rgba(var(--primary-rgb),0.03)_1px,transparent_1px)] bg-[size:100%_4px] md:bg-[size:100%_6px] pointer-events-none opacity-40 rounded-[2rem] md:rounded-[4rem]" />
 
             <Badge
               variant="outline"
-              className={`absolute top-4 md:top-10 left-1/2 -translate-x-1/2 text-[10px] md:text-xs font-bold uppercase tracking-widest border px-4 py-1 md:px-8 md:py-3 rounded-lg md:rounded-2xl neo-inset h-auto transition-all duration-300 ${isDangerTime ? "text-primary border-primary/50 bg-primary/10 shadow-sm" : "text-muted-foreground border-border dark:border-white/10 bg-muted/50 dark:bg-black/30"}`}
+              className={`absolute top-4 md:top-10 left-1/2 -translate-x-1/2 text-[10px] md:text-xs font-bold uppercase tracking-widest border px-4 py-1 md:px-8 md:py-3 rounded-lg md:rounded-2xl neo-inset h-auto transition-all duration-300 ${isDangerTime ? "text-primary border-primary/50 bg-primary/10 shadow-sm" : "text-muted-foreground border-border bg-muted/50 dark:bg-[rgba(var(--background-rgb),0.3)]"}`}
             >
               {isDangerTime ? (
                 <span className="flex items-center gap-1">
-                  <AlertTriangle size={12} className="animate-bounce md:w-4 md:h-4" /> WAKTU KRITIS
+                  <AlertTriangle size={12} aria-hidden="true" className="animate-bounce md:w-4 md:h-4" /> KEJAR WAKTU!
                 </span>
               ) : (
                 <span className="flex items-center gap-1">
-                  <Target size={12} className="animate-pulse md:w-4 md:h-4" /> KATA TARGET
+                  <Target size={12} aria-hidden="true" className="animate-pulse md:w-4 md:h-4" /> APA ARTINYA?
                 </span>
               )}
             </Badge>
@@ -141,7 +142,7 @@ export function SurvivalPlaying({
       <div className="mb-4 md:mb-10">
          <Progress 
            value={(timeLeft / TIME_PER_QUESTION) * 100} 
-           className="h-1.5 md:h-3 bg-muted border border-border dark:border-white/10 rounded-full overflow-hidden"
+           className="h-1.5 md:h-3 bg-muted border border-border rounded-full overflow-hidden"
            indicatorClassName={isDangerTime ? "bg-primary shadow-sm transition-all duration-1000" : "bg-foreground opacity-40 transition-all duration-1000"}
          />
       </div>
@@ -162,19 +163,19 @@ export function SurvivalPlaying({
                   ? "bg-destructive/20 border-destructive shadow-lg text-destructive text-destructive" 
                   : isCorrect
                   ? "bg-success/20 border-success shadow-lg text-success text-success"
-                  : "bg-muted/50 dark:bg-black/40 border-border dark:border-white/5 md:hover:border-primary/50 md:hover:bg-primary md:hover:text-primary-foreground neo-card active:scale-[0.98] transition-transform"
+                  : "bg-[rgba(var(--muted-rgb),0.5)] dark:bg-[rgba(var(--background-rgb),0.4)] border-border md:hover:border-primary/50 md:hover:bg-primary md:hover:text-primary-foreground neo-card active:scale-[0.98] transition-transform"
               }`}
             >
               <div className="flex items-center justify-center w-full h-full p-4 md:p-8 relative">
                  <span className={`absolute top-2 left-3 md:top-4 md:left-6 text-[8px] md:text-xs font-bold uppercase tracking-widest transition-colors ${isWrong ? 'text-destructive/30' : 'text-muted-foreground/30 md:group-hover:text-foreground/30 dark:md:group-hover:text-foreground/30'}`}>
-                   OPSI {idx+1}
+                   JAWABAN {idx+1}
                  </span>
                  <p className="font-bold text-sm md:text-xl lg:text-2xl text-center leading-tight w-full break-words text-foreground md:group-hover:text-primary-foreground">
                    {option.meaning}
                  </p>
                  {isWrong && (
                    <div className="absolute right-4 top-1/2 -translate-y-1/2">
-                      <ShieldAlert className="text-destructive text-destructive animate-pulse" size={20} />
+                      <ShieldAlert aria-hidden="true" className="text-destructive text-destructive animate-pulse" size={20} />
                    </div>
                  )}
               </div>

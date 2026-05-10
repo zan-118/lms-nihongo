@@ -33,7 +33,7 @@ export default function ConfirmModal({
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
             exit={{ opacity: 0 }}
-            className="fixed inset-0 z-[100] bg-black/60 backdrop-blur-sm"
+            className="fixed inset-0 z-[100] bg-background/80 backdrop-blur-sm"
             onClick={onClose}
           />
           <div className="fixed inset-0 z-[100] flex items-center justify-center p-4 pointer-events-none">
@@ -49,10 +49,10 @@ export default function ConfirmModal({
               <div className="flex flex-col items-center text-center">
                 <div className={`w-16 h-16 rounded-full flex items-center justify-center mb-6 border ${
                   isDestructive 
-                    ? 'bg-destructive/10 border-destructive/30 text-destructive shadow-lg' 
-                    : 'bg-primary/10 border-primary/30 text-primary shadow-lg'
+                    ? 'bg-destructive/10 border-destructive/30 text-destructive shadow-lg shadow-destructive/10' 
+                    : 'bg-primary/10 border-primary/30 text-primary shadow-lg shadow-primary/10'
                 }`}>
-                  <AlertTriangle size={32} />
+                  <AlertTriangle size={32} aria-hidden="true" />
                 </div>
                 
                 <h3 className="text-xl md:text-2xl font-black text-foreground uppercase tracking-tight mb-3">
@@ -77,8 +77,8 @@ export default function ConfirmModal({
                     }}
                     className={`flex-1 h-12 rounded-xl font-bold uppercase tracking-widest text-xs shadow-lg border-none ${
                       isDestructive
-                        ? 'bg-destructive hover:opacity-90 text-white transition-all'
-                        : 'bg-primary hover:bg-foreground text-white dark:text-foreground transition-all'
+                        ? 'bg-destructive hover:opacity-90 text-destructive-foreground transition-all'
+                        : 'bg-primary hover:bg-foreground text-primary-foreground dark:text-foreground transition-all'
                     }`}
                   >
                     {confirmText}

@@ -38,7 +38,7 @@ export function QuizPlaying({
              </Card>
               <div className="text-left">
                 <Badge variant="outline" className="text-destructive text-destructive font-bold text-[10px] md:text-xs tracking-widest uppercase bg-destructive/5 px-2 py-0.5 md:px-3 md:py-1 rounded-lg border-destructive/20 neo-inset h-auto">
-                   TAHAP {currentIndex + 1}
+                   PERTANYAAN {currentIndex + 1}
                 </Badge>
                 <span className="hidden sm:block text-muted-foreground text-[10px] font-bold uppercase tracking-widest mt-1">Tes Pemahaman</span>
               </div>
@@ -136,7 +136,7 @@ export function QuizPlaying({
                 <Card className="bg-destructive/5 border-l-4 border-l-red-500 p-5 md:p-8 rounded-[1.5rem] md:rounded-[2rem] border border-border neo-inset shadow-none">
                   <div className="flex items-center gap-2 md:gap-3 mb-2 md:mb-4">
                      <AlertCircle size={16} className="text-destructive md:w-5 md:h-5" />
-                     <span className="text-[10px] md:text-xs text-destructive text-destructive font-bold uppercase tracking-widest">Penjelasan Materi</span>
+                     <span className="text-[10px] md:text-xs text-destructive text-destructive font-bold uppercase tracking-widest">Kenapa Jawabannya Ini?</span>
                   </div>
                   <p className="text-muted-foreground text-sm md:text-lg leading-relaxed font-medium">
                    {currentQ.explanation}
@@ -148,7 +148,7 @@ export function QuizPlaying({
                 onClick={nextQuestion}
                 className="w-full py-6 md:py-8 rounded-[1.5rem] md:rounded-[2rem] bg-destructive hover:bg-destructive/90 text-destructive-foreground font-black text-sm md:text-lg uppercase tracking-widest shadow-xl transition-all hover:scale-[1.02] active:scale-[0.98]"
               >
-                Lanjutkan <ArrowRight size={20} className="ml-3" />
+                Lanjut Ke Soal Berikutnya <ArrowRight size={20} className="ml-3" />
               </Button>
             </motion.div>
           )}

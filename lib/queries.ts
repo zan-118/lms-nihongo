@@ -75,7 +75,7 @@ export const kanjiListQuery = `*[_type == "kanji"] | order(course_category->slug
   onyomi,
   kunyomi,
   "jlpt": course_category->slug.current,
-  "slug": character
+  "slug": coalesce(slug.current, character)
 }`;
 
 export const listeningListQuery = `*[_type == "listeningTask"] | order(_createdAt desc) {
@@ -84,7 +84,7 @@ export const listeningListQuery = `*[_type == "listeningTask"] | order(_createdA
   "slug": slug.current
 }`;
 
-export const kanjiQuery = `*[_type == "kanji" && (character == $slug || _id == $slug)][0] {
+export const kanjiQuery = `*[_type == "kanji" && (slug.current == $slug || character == $slug || _id == $slug)][0] {
   _id,
   character,
   meaning,
@@ -95,9 +95,10 @@ export const kanjiQuery = `*[_type == "kanji" && (character == $slug || _id == $
   strokeOrderSvg,
   radicals,
   mnemonics,
-  "slug": character,
-  "relatedVocab": *[_type == "vocab" && references(^._id)] {
+  "slug": coalesce(slug.current, character),
+  "relatedVocab": *[(_type == "vocab" || _type == "verb_dictionary") && references(^._id)] {
     _id,
+    "slug": slug.current,
     word,
     furigana,
     romaji,
@@ -126,9 +127,10 @@ export const listeningTaskQuery = `*[_type == "listeningTask" && slug.current ==
   }
 }`;
 
-export const vocabDetailQuery = `*[(_type == "vocab" || _type == "verb_dictionary") && (romaji == $id || _id == $id)][0] {
+export const vocabDetailQuery = `*[(_type == "vocab" || _type == "verb_dictionary") && (slug.current == $id || romaji == $id || _id == $id)][0] {
   _id,
-  word,
+  "slug": slug.current,
+  "word": coalesce(word, masu, jisho),
   furigana,
   romaji,
   meaning,
@@ -146,8 +148,8 @@ export const vocabDetailQuery = `*[(_type == "vocab" || _type == "verb_dictionar
     kunyomi,
     "slug": character 
   },
-  synonyms[]->{ _id, word, meaning, furigana, romaji },
-  antonyms[]->{ _id, word, meaning, furigana, romaji },
+  synonyms[]->{ _id, "slug": slug.current, word, meaning, furigana, romaji },
+  antonyms[]->{ _id, "slug": slug.current, word, meaning, furigana, romaji },
   examples[] { japanese, indonesian },
   negative,
   past,

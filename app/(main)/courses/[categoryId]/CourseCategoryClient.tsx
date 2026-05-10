@@ -155,7 +155,7 @@ export default function CourseCategoryClient({
               <Link href={`/tools/flashcards?category=${categoryId}`} className="group flex flex-col h-full">
                 <Card className="p-6 md:p-8 bg-card border border-border rounded-2xl hover:border-primary/40 hover:bg-primary/[0.02] transition-all duration-300 flex flex-col items-center text-center gap-5 h-full cursor-pointer relative overflow-hidden group hover:shadow-xl">
                   <div className="w-12 h-12 md:w-14 md:h-14 bg-muted border border-border rounded-xl text-primary flex items-center justify-center group-hover:bg-primary group-hover:text-primary-foreground transition-all duration-300 shadow-inner relative z-10">
-                    <Layers size={24} />
+                    <Layers size={24} aria-hidden="true" />
                   </div>
                   <div className="mt-auto relative z-10">
                     <p className="text-lg md:text-xl font-black text-foreground group-hover:text-primary dark:group-hover:text-primary transition-colors uppercase tracking-tight mb-1">
@@ -171,7 +171,7 @@ export default function CourseCategoryClient({
               <Link href={`/tools/flashcards?category=${categoryId}`} className="group flex flex-col h-full">
                 <Card className="p-6 md:p-8 bg-card border border-border rounded-2xl hover:border-secondary/40 hover:bg-secondary/[0.02] transition-all duration-300 flex flex-col items-center text-center gap-5 h-full cursor-pointer relative overflow-hidden group hover:shadow-xl">
                   <div className="w-12 h-12 md:w-14 md:h-14 bg-muted border border-border rounded-xl text-secondary flex items-center justify-center group-hover:bg-secondary group-hover:text-secondary-foreground transition-all duration-300 shadow-inner relative z-10">
-                    <PenTool size={24} />
+                    <PenTool size={24} aria-hidden="true" />
                   </div>
                   <div className="mt-auto relative z-10">
                     <p className="text-lg md:text-xl font-black text-foreground group-hover:text-secondary transition-colors uppercase tracking-tight mb-1">
@@ -187,7 +187,7 @@ export default function CourseCategoryClient({
               <Link href={`/tools/flashcards?category=${categoryId}`} className="group flex flex-col h-full">
                 <Card className="p-6 md:p-8 bg-card border border-border rounded-2xl hover:border-destructive/40 hover:bg-destructive/[0.02] transition-all duration-300 flex flex-col items-center text-center gap-5 h-full cursor-pointer relative overflow-hidden group hover:shadow-xl">
                   <div className="w-12 h-12 md:w-14 md:h-14 bg-muted border border-border rounded-xl text-destructive flex items-center justify-center group-hover:bg-destructive group-hover:text-destructive-foreground transition-all duration-300 shadow-inner relative z-10">
-                    <Flame size={24} />
+                    <Flame size={24} aria-hidden="true" />
                   </div>
                   <div className="mt-auto relative z-10">
                     <p className="text-lg md:text-xl font-black text-foreground group-hover:text-destructive dark:group-hover:text-destructive transition-colors uppercase tracking-tight mb-1">
@@ -230,7 +230,7 @@ export default function CourseCategoryClient({
           ) : (
             <div className="flex flex-col items-center justify-center py-20 md:py-32 bg-muted/20 border border-dashed border-border rounded-2xl text-center px-8 relative overflow-hidden group">
               <div className="w-20 h-20 bg-muted border border-border rounded-2xl flex items-center justify-center mb-8 group-hover:border-primary/30 transition-all duration-500">
-                <Sparkles size={32} className="text-muted-foreground group-hover:text-primary transition-colors" />
+                <Sparkles size={32} className="text-muted-foreground group-hover:text-primary transition-colors" aria-hidden="true" />
               </div>
               
               <h4 className="text-2xl md:text-3xl font-black text-foreground uppercase tracking-tight mb-3">

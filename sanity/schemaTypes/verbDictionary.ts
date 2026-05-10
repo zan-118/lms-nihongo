@@ -62,6 +62,16 @@ export default defineType({
       fieldset: "identity",
     }),
     defineField({
+      name: "slug",
+      type: "slug",
+      title: "Slug",
+      options: {
+        source: (doc: any) => doc.romaji || doc.masu || doc.jisho || doc._id,
+        maxLength: 96,
+      },
+      validation: (Rule) => Rule.required(),
+    }),
+    defineField({
       name: "jisho",
       title: "Bentuk Kamus (Jisho-kei)",
       type: "string",

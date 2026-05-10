@@ -68,9 +68,9 @@ export function ExamResult({
             className={`w-32 h-32 mx-auto neo-inset flex items-center justify-center rounded-[2.5rem] mb-10 bg-muted/50 border border-border ${isPassed ? "text-success" : "text-destructive"}`}
           >
             {isPassed ? (
-              <Trophy size={64} className="drop-shadow-[0_0_15px_rgba(16,185,129,0.5)]" />
+              <Trophy size={64} aria-hidden="true" className="drop-shadow-[0_0_15px_rgba(var(--success-rgb),0.5)]" />
             ) : (
-              <Skull size={64} className="drop-shadow-[0_0_15px_rgba(239,68,68,0.5)]" />
+              <Skull size={64} aria-hidden="true" className="drop-shadow-[0_0_15px_rgba(var(--destructive-rgb),0.5)]" />
             )}
           </motion.div>
 
@@ -110,7 +110,7 @@ export function ExamResult({
              {/* Breakdown Section */}
              <div className="space-y-6 text-left">
                 <h3 className="text-xs font-black uppercase tracking-[0.2em] text-foreground mb-6 flex items-center gap-3">
-                   <div className="w-1.5 h-6 bg-primary rounded-full shadow-[0_0_10px_rgba(0,238,255,1)]" />
+                   <div className="w-1.5 h-6 bg-primary rounded-full shadow-[0_0_10px_rgba(var(--primary-rgb),1)]" />
                    Performa Materi
                 </h3>
                 <div className="space-y-8 bg-muted/20 p-8 rounded-3xl border border-border neo-inset">
@@ -145,14 +145,14 @@ export function ExamResult({
              {/* Certificate/Action Section */}
              <div className="space-y-6 text-left">
                 <h3 className="text-xs font-black uppercase tracking-[0.2em] text-foreground mb-6 flex items-center gap-3">
-                   <div className="w-1.5 h-6 bg-warning rounded-full shadow-[0_0_10px_rgba(245,158,11,1)]" />
+                   <div className="w-1.5 h-6 bg-warning rounded-full shadow-[0_0_10px_rgba(var(--warning-rgb),1)]" />
                    Aksi & Sertifikasi
                 </h3>
                 
                 {isPassed ? (
-                  <div className="bg-warning/10 border border-warning/30 rounded-[2.5rem] p-8 relative group overflow-hidden">
-                    <div className="absolute -top-10 -right-10 w-40 h-40 bg-warning/10 blur-[60px] rounded-full group-hover:scale-150 transition-transform duration-700" />
-                    <Trophy className="text-warning mb-6 group-hover:scale-110 transition-transform" size={40} />
+                  <div className="bg-[rgba(var(--warning-rgb),0.1)] border border-warning/30 rounded-[2.5rem] p-8 relative group overflow-hidden">
+                    <div className="absolute -top-10 -right-10 w-40 h-40 bg-[rgba(var(--warning-rgb),0.1)] blur-[60px] rounded-full group-hover:scale-150 transition-transform duration-700" />
+                    <Trophy aria-hidden="true" className="text-warning mb-6 group-hover:scale-110 transition-transform" size={40} />
                     <h4 className="text-lg font-black uppercase tracking-tight text-warning text-warning mb-2">Klaim Sertifikat Anda</h4>
                     <p className="text-xs font-medium text-muted-foreground mb-8 leading-relaxed">
                       Selamat! Anda telah menguasai materi ini dengan baik. Unduh sertifikat digital Anda sekarang.
@@ -168,15 +168,15 @@ export function ExamResult({
                            handleShareResult();
                          }}
                          variant="ghost"
-                         className="w-full h-12 bg-background/5 border border-border text-xs font-black uppercase tracking-widest rounded-xl hover:bg-background/10 transition-all flex items-center justify-center gap-2"
+                         className="w-full h-12 bg-[rgba(var(--background-rgb),0.05)] border border-border text-xs font-black uppercase tracking-widest rounded-xl hover:bg-[rgba(var(--background-rgb),0.1)] transition-all flex items-center justify-center gap-2"
                        >
-                         <Share2 size={16} /> Bagikan Pencapaian
+                         <Share2 size={16} aria-hidden="true" /> Bagikan Pencapaian
                        </Button>
                     </div>
                   </div>
                 ) : (
-                  <div className="bg-muted/30 border border-border rounded-[2.5rem] p-8 opacity-80 h-full flex flex-col justify-center">
-                    <Skull className="text-muted-foreground/30 mb-6" size={40} />
+                  <div className="bg-[rgba(var(--muted-rgb),0.3)] border border-border rounded-[2.5rem] p-8 opacity-80 h-full flex flex-col justify-center">
+                    <Skull aria-hidden="true" className="text-muted-foreground/30 mb-6" size={40} />
                     <h4 className="text-lg font-black uppercase tracking-tight text-muted-foreground mb-2">Terus Berlatih!</h4>
                     <p className="text-xs font-medium text-muted-foreground mb-8 leading-relaxed">
                       Dibutuhkan lebih banyak latihan untuk mencapai skor kelulusan. Pelajari kembali materi yang salah.
@@ -184,7 +184,7 @@ export function ExamResult({
                     <Button
                       onClick={() => setGameState("review")}
                       variant="ghost"
-                      className="w-full h-12 bg-primary/10 border border-primary/30 text-primary text-xs font-black uppercase tracking-widest rounded-xl hover:bg-primary/20 transition-all"
+                      className="w-full h-12 bg-[rgba(var(--primary-rgb),0.1)] border border-primary/30 text-primary text-xs font-black uppercase tracking-widest rounded-xl hover:bg-[rgba(var(--primary-rgb),0.2)] transition-all"
                     >
                       Periksa Jawaban Salah
                     </Button>

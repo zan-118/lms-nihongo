@@ -48,7 +48,7 @@ export default function DashboardHero({
   const xpProgress = (xp % 1000) / 10;
 
   return (
-    <motion.div variants={itemVariants} className="flex flex-col gap-10 items-start w-full">
+    <motion.div variants={itemVariants} className="flex flex-col gap-6 md:gap-10 items-start w-full">
       <div className="flex-1 w-full flex flex-col items-center lg:items-start text-center lg:text-left">
         {loading ? (
           <Skeleton className="h-6 w-32 rounded-full mb-6" />
@@ -66,7 +66,7 @@ export default function DashboardHero({
               {isAuthenticated ? 'Student ID:' : 'Guest ID:'} {guestId}
             </Badge>
             <span className="text-[10px] text-muted-foreground font-bold uppercase tracking-widest opacity-40 ml-1">
-              {isAuthenticated ? 'Cloud Sync Active' : 'Local Storage Mode'}
+              {isAuthenticated ? 'Sinkronisasi Cloud Aktif' : 'Mode Penyimpanan Lokal'}
             </span>
           </div>
         )}
@@ -114,12 +114,12 @@ export default function DashboardHero({
             </motion.div>
             
             <h3 className={`text-2xl md:text-3xl font-black uppercase tracking-tight mb-3 ${dueCount > 0 ? 'text-foreground' : 'text-success'}`}>
-              {dueCount > 0 ? `Waktunya Sapa Ingatan, ${name}!` : `Ingatanmu Tajam, ${name}!`}
+              {dueCount > 0 ? `Ayo Lanjut Review, ${name || 'Pelajar'}!` : `Ingatanmu Masih Tajam, ${name || 'Pelajar'}!`}
             </h3>
             <p className="text-muted-foreground text-sm md:text-base mb-10 font-medium max-w-md leading-relaxed">
               {dueCount > 0 
-                ? `Ada ${dueCount} kosakata yang mulai memudar. Yuk, segarkan kembali ingatanmu!` 
-                : "Luar biasa! Semua hafalanmu sudah aman. Siap untuk tantangan baru hari ini?"}
+                ? `Ada ${dueCount} kata yang harus kamu review. Ayo segarkan lagi hafalanmu!` 
+                : "Hebat! Semua hafalanmu masih segar di ingatan. Siap melangkah ke materi baru?"}
             </p>
 
             {/* QUICK STATS INSIDE HERO */}
@@ -145,7 +145,7 @@ export default function DashboardHero({
                   <Target size={14} />
                   <span className="text-sm font-black">{Math.floor(xpProgress)}%</span>
                 </div>
-                <span className="text-[8px] font-black uppercase tracking-widest text-muted-foreground">Progress</span>
+                <span className="text-[8px] font-black uppercase tracking-widest text-muted-foreground">Kemajuan</span>
               </div>
             </div>
 
@@ -154,7 +154,7 @@ export default function DashboardHero({
                 <motion.div whileHover={{ scale: 1.02 }} whileTap={{ scale: 0.98 }} className="flex-1">
                   <Button asChild className="w-full h-16 bg-primary hover:bg-foreground text-primary-foreground hover:text-background font-black uppercase tracking-widest rounded-2xl text-xs transition-all shadow-primary/30 hover:shadow-primary/50 border-none">
                     <Link href="/review">
-                      Mulai Review Sekarang <ArrowRight size={18} className="ml-2" />
+                      Tinjau Hafalan Sekarang <ArrowRight size={18} className="ml-2" />
                     </Link>
                   </Button>
                 </motion.div>
@@ -171,7 +171,7 @@ export default function DashboardHero({
                 <motion.div whileHover={{ scale: 1.02 }} whileTap={{ scale: 0.98 }} className="flex-1">
                   <Button asChild className="w-full h-16 bg-foreground text-background hover:bg-success hover:text-success-foreground font-black uppercase tracking-widest rounded-2xl text-xs transition-all shadow-xl border-none">
                     <Link href="/courses">
-                      Pelajari Materi Baru <BookMarked size={18} className="ml-2" />
+                      Pelajari Pelajaran Baru <BookMarked size={18} className="ml-2" />
                     </Link>
                   </Button>
                 </motion.div>
@@ -212,9 +212,9 @@ export default function DashboardHero({
               <Sparkles size={18} />
             </div>
             <div>
-              <h4 className="text-[10px] font-black text-primary uppercase tracking-[0.2em] mb-1">Tips Ahli</h4>
+              <h4 className="text-[10px] font-black text-primary uppercase tracking-[0.2em] mb-1">Saran Untukmu</h4>
               <p className="text-xs text-muted-foreground leading-relaxed font-medium">
-                Selesaikan sesi review sebelum jam 10 malam untuk mempertahankan bonus XP harianmu!
+                Selesaikan tinjauan harian sebelum pukul 22:00 untuk menjaga bonus XP dan semangatmu!
               </p>
             </div>
           </motion.div>

@@ -19,7 +19,7 @@ interface LessonCardProps {
 }
 
 export function LessonCard({ lesson, index, categoryId, isSideQuest, progress = 0 }: LessonCardProps) {
-  const progressGradient = isSideQuest ? "from-amber-500 to-orange-500" : "from-cyan-500 to-emerald-500";
+  const progressGradient = isSideQuest ? "from-warning to-warning/80" : "from-primary to-primary/80";
 
   return (
     <motion.div
@@ -32,23 +32,23 @@ export function LessonCard({ lesson, index, categoryId, isSideQuest, progress = 
       }}
     >
       <Link href={`/courses/${categoryId}/${lesson.slug}`} className="group flex flex-col h-full">
-        <Card className="p-6 md:p-8 bg-card/40 backdrop-blur-xl border border-white/5 rounded-[2rem] group transition-all duration-500 flex flex-col items-start gap-6 cursor-pointer hover:border-primary/50 hover:bg-card/60 h-full shadow-2xl relative overflow-hidden">
+        <Card className="p-6 md:p-8 bg-card/40 backdrop-blur-xl border border-border rounded-[2rem] group transition-all duration-500 flex flex-col items-start gap-6 cursor-pointer hover:border-primary/50 hover:bg-card/60 h-full shadow-2xl relative overflow-hidden">
           {/* Hover Glow Effect */}
           <div className="absolute inset-0 bg-gradient-to-br from-primary/5 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500 pointer-events-none" />
           
           <div className="flex justify-between items-start w-full relative z-10">
             <div
-              className={`w-12 h-12 shrink-0 rounded-2xl flex items-center justify-center font-black text-lg font-mono bg-background/[0.03] border border-border/10 transition-all duration-500 shadow-sm ${
+              className={`w-12 h-12 shrink-0 rounded-2xl flex items-center justify-center font-black text-lg font-mono bg-background opacity-50 border border-border transition-all duration-500 shadow-sm ${
                 isSideQuest 
-                  ? "text-warning group-hover:bg-warning group-hover:text-warning-foreground" 
-                  : "text-primary group-hover:bg-primary group-hover:text-primary-foreground"
+                  ? "text-warning group-hover:bg-warning group-hover:text-warning-foreground group-hover:opacity-100" 
+                  : "text-primary group-hover:bg-primary group-hover:text-primary-foreground group-hover:opacity-100"
               }`}
             >
               {(index + 1).toString().padStart(2, "0")}
             </div>
             
             {progress > 0 && (
-              <div className="px-3 py-1 rounded-full bg-background/[0.05] border border-white/5 text-[10px] font-black uppercase tracking-widest text-muted-foreground group-hover:text-foreground transition-colors">
+              <div className="px-3 py-1 rounded-full bg-background/10 border border-border text-[10px] font-black uppercase tracking-widest text-muted-foreground group-hover:text-foreground transition-colors">
                 {progress}% Selesai
               </div>
             )}
@@ -65,27 +65,27 @@ export function LessonCard({ lesson, index, categoryId, isSideQuest, progress = 
             )}
           </div>
 
-          <div className="mt-auto pt-6 w-full flex items-center justify-between border-t border-white/5 relative z-10">
+          <div className="mt-auto pt-6 w-full flex items-center justify-between border-t border-border relative z-10">
             <span className={`text-[10px] font-black uppercase tracking-widest transition-colors ${
               isSideQuest ? "text-warning/50 group-hover:text-warning" : "text-primary/50 group-hover:text-primary"
             }`}>
               Baca Materi
             </span>
             <div
-              className={`w-10 h-10 rounded-xl border border-white/5 flex items-center justify-center transition-all duration-500 bg-background/[0.03] shadow-sm ${
+              className={`w-10 h-10 rounded-xl border border-border flex items-center justify-center transition-all duration-500 bg-background/5 shadow-sm ${
                 isSideQuest ? "group-hover:bg-warning group-hover:text-warning-foreground" : "group-hover:bg-primary group-hover:text-primary-foreground"
-              } group-hover:shadow-[0_0_15px_rgba(0,238,255,0.3)]`}
+              } group-hover:shadow-[0_0_15px_rgba(var(--primary-rgb),0.3)]`}
             >
-              <ChevronRight size={18} />
+              <ChevronRight size={18} aria-hidden="true" />
             </div>
           </div>
 
           {/* Bottom Progress Bar */}
-          <div className="absolute bottom-0 left-0 right-0 h-1.5 bg-background/[0.02]">
+          <div className="absolute bottom-0 left-0 right-0 h-1.5 bg-background/10">
             <motion.div 
               initial={{ width: 0 }}
               animate={{ width: `${progress}%` }}
-              className={`h-full bg-gradient-to-r ${progressGradient} shadow-[0_0_10px_rgba(0,238,255,0.5)]`}
+              className={`h-full bg-gradient-to-r ${progressGradient} shadow-[0_0_10px_rgba(var(--primary-rgb),0.5)]`}
             />
           </div>
         </Card>

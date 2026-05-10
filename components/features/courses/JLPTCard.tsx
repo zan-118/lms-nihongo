@@ -25,11 +25,11 @@ const colorMap: Record<string, string> = {
 };
 
 const textGlowMap: Record<string, string> = {
-  "N5": "text-primary drop-shadow-[0_0_15px_hsl(var(--primary)/0.5)]",
-  "N4": "text-success drop-shadow-[0_0_15px_hsl(var(--success)/0.5)]",
-  "N3": "text-warning drop-shadow-[0_0_15px_hsl(var(--warning)/0.5)]",
-  "N2": "text-secondary drop-shadow-[0_0_15px_hsl(var(--secondary)/0.5)]",
-  "N1": "text-destructive drop-shadow-[0_0_15px_hsl(var(--destructive)/0.5)]",
+  "N5": "text-primary drop-shadow-[0_0_15px_rgba(var(--primary-rgb),0.5)]",
+  "N4": "text-success drop-shadow-[0_0_15px_rgba(var(--success-rgb),0.5)]",
+  "N3": "text-warning drop-shadow-[0_0_15px_rgba(var(--warning-rgb),0.5)]",
+  "N2": "text-secondary drop-shadow-[0_0_15px_rgba(var(--secondary-rgb),0.5)]",
+  "N1": "text-destructive drop-shadow-[0_0_15px_rgba(var(--destructive-rgb),0.5)]",
 };
 
 /**
@@ -37,7 +37,7 @@ const textGlowMap: Record<string, string> = {
  */
 export function JLPTCard({ cat, variants }: JLPTCardProps) {
   const bgColor = colorMap[cat.title] || "from-primary/20 to-primary/5";
-  const textGlow = textGlowMap[cat.title] || "text-primary drop-shadow-[0_0_15px_rgba(34,211,238,0.5)]";
+  const textGlow = textGlowMap[cat.title] || "text-primary drop-shadow-[0_0_15px_rgba(var(--primary-rgb),0.5)]";
   const kanji = cat.title.includes("1") ? "壱" : cat.title.includes("2") ? "弐" : cat.title.includes("3") ? "参" : cat.title.includes("4") ? "肆" : "伍";
 
   return (
@@ -62,12 +62,12 @@ export function JLPTCard({ cat, variants }: JLPTCardProps) {
               {cat.description || `Kuasai materi ${cat.title} dengan kurikulum terstruktur dan metode SRS.`}
             </p>
 
-            <div className="mt-auto flex items-center justify-between pt-6 border-t border-border group-hover:border-white/10 transition-colors">
+            <div className="mt-auto flex items-center justify-between pt-6 border-t border-border group-hover:border-primary/20 transition-colors">
               <span className="text-[10px] font-black uppercase tracking-[0.2em] text-muted-foreground group-hover:text-foreground transition-colors">
                 Mulai Jalur
               </span>
               <div className="w-10 h-10 rounded-xl bg-muted border border-border flex items-center justify-center group-hover:bg-primary group-hover:text-primary-foreground group-hover:border-none transition-all duration-500 shadow-lg">
-                <ArrowRight size={18} />
+                <ArrowRight size={18} aria-hidden="true" />
               </div>
             </div>
           </div>

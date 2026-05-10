@@ -160,7 +160,7 @@ export default async function GrammarDetailPage({
                  <div className="absolute top-0 right-0 p-6 opacity-[0.03] group-hover:opacity-[0.08] group-hover:scale-125 transition-all duration-700 pointer-events-none">
                   <Lightbulb size={120} />
                 </div>
-                <span className="text-[10px] font-black uppercase tracking-[0.2em] text-muted-foreground block mb-6 opacity-60">Esensi (Key Notes)</span>
+                <span className="text-[10px] font-black uppercase tracking-[0.2em] text-muted-foreground block mb-6 opacity-60">Catatan Utama</span>
                 <p className="text-sm md:text-lg font-medium text-muted-foreground/80 leading-relaxed tracking-wide">
                   {article.notes}
                 </p>
@@ -187,7 +187,7 @@ export default async function GrammarDetailPage({
         <footer className="pt-16 border-t border-white/5 flex flex-col md:flex-row items-center justify-between gap-8">
           <Link href="/library/grammar" className="w-full md:w-auto">
             <Button variant="ghost" className="w-full px-10 py-8 h-auto text-[11px] md:text-xs font-black uppercase tracking-[0.2em] rounded-2xl bg-background/[0.03] border border-white/5 hover:bg-background/10 hover:border-white/20 transition-all gap-4 group shadow-xl">
-              <ChevronLeft size={20} className="group-hover:-translate-x-2 transition-transform" /> Kembali ke Galeri
+              <ChevronLeft size={20} className="group-hover:-translate-x-2 transition-transform" /> Kembali ke Daftar Tata Bahasa
             </Button>
           </Link>
 

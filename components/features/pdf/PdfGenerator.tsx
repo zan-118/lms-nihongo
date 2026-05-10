@@ -19,9 +19,9 @@ const PDFDownloadLink = dynamic(
       <Button 
         variant="ghost" 
         disabled 
-        className="bg-card border-white/5 neo-inset shadow-none px-6 py-3 rounded-xl text-slate-300 text-xs font-black uppercase tracking-widest flex items-center justify-center gap-2 w-full sm:w-auto h-auto"
+        className="bg-card border-border neo-inset shadow-none px-6 py-3 rounded-xl text-muted-foreground text-xs font-black uppercase tracking-widest flex items-center justify-center gap-2 w-full sm:w-auto h-auto"
       >
-        <Loader2 size={14} className="animate-spin text-primary" />
+        <Loader2 size={14} aria-hidden="true" className="animate-spin text-primary" />
         <span>Menyiapkan Engine...</span>
       </Button>
     ),
@@ -62,7 +62,7 @@ export default function PdfGenerator({
 
   if (!isClient || !data || (Array.isArray(data) && data.length === 0)) {
     return (
-      <Button variant="ghost" disabled className="bg-card border-white/5 neo-inset shadow-none px-6 py-3 rounded-xl text-slate-300 text-xs font-black uppercase tracking-widest flex items-center justify-center gap-2 w-full sm:w-auto h-auto">
+      <Button variant="ghost" disabled className="bg-card border-border neo-inset shadow-none px-6 py-3 rounded-xl text-muted-foreground text-xs font-black uppercase tracking-widest flex items-center justify-center gap-2 w-full sm:w-auto h-auto">
         Menunggu Data...
       </Button>
     );
@@ -78,13 +78,14 @@ export default function PdfGenerator({
         <Button
           variant="ghost"
           disabled={loading}
-          className="bg-[#0d1117] border-white/5 neo-card shadow-none hover:border-primary/50 hover:bg-primary/10 px-6 py-3 rounded-xl text-primary text-xs font-black uppercase tracking-widest transition-all flex items-center justify-center gap-2 w-full sm:w-auto active:scale-95 group h-auto"
+          className="bg-card border-border neo-card shadow-none hover:border-primary/50 hover:bg-primary/10 px-6 py-3 rounded-xl text-primary text-xs font-black uppercase tracking-widest transition-all flex items-center justify-center gap-2 w-full sm:w-auto active:scale-95 group h-auto"
         >
           {loading ? (
             <Loader2 size={14} className="animate-spin text-primary" />
           ) : (
             <Download
               size={14}
+              aria-hidden="true"
               className="group-hover:-translate-y-0.5 transition-transform"
             />
           )}
