@@ -25,16 +25,15 @@ export function VerbCard({ verb, idx, showRomaji, onClick }: VerbCardProps) {
 
   return (
     <motion.div
-      layout
-      initial={{ opacity: 0, y: 12 }}
+      initial={{ opacity: 0, y: 8 }}
       animate={{ opacity: 1, y: 0 }}
-      exit={{ opacity: 0, y: -8 }}
-      transition={{ delay: (idx % 12) * 0.03 }}
+      exit={{ opacity: 0 }}
+      transition={{ delay: (idx % 12) * 0.02 }}
       className="h-full"
     >
       <Card
         onClick={onClick}
-        className="h-full bg-card border border-border rounded-2xl cursor-pointer group hover:border-primary/40 hover:bg-primary/[0.03] hover:shadow-xl active:scale-[0.99] transition-all duration-300 shadow-sm"
+        className="h-full bg-card border border-border rounded-2xl cursor-pointer group hover:border-primary/40 hover:bg-primary/[0.03] transition-all duration-200 shadow-sm"
       >
         <div className="p-5 md:p-6 flex flex-col gap-4 h-full">
           <div className="flex justify-between items-center">

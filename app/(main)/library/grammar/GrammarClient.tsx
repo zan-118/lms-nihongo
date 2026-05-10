@@ -111,7 +111,7 @@ export default function GrammarClient({ initialArticles = [] }: GrammarClientPro
       <GrammarSearch value={searchTerm} onChange={setSearchTerm} />
 
       <section className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4 md:gap-5 items-stretch">
-        <AnimatePresence mode="popLayout">
+        <AnimatePresence>
           {loading ? (
             [...Array(6)].map((_, i) => (
               <Card key={i} className="h-48 md:h-56 bg-card/40 backdrop-blur-xl border-white/5 rounded-[2rem] overflow-hidden p-6 relative">

@@ -101,7 +101,7 @@ export default function DictionaryPopup() {
           }}
           className="pointer-events-auto"
         >
-          <Card className="w-64 bg-card/95 backdrop-blur-xl border border-border p-4 rounded-2xl shadow-2xl">
+          <Card className="w-64 bg-card/98 backdrop-blur-md border border-border p-4 rounded-2xl shadow-xl">
             <div className="flex justify-between items-start mb-3">
               <Badge variant="outline" className="bg-primary/10 text-primary border-primary/20 text-[8px] uppercase tracking-widest px-2 py-0.5">
                 Smart Jisho

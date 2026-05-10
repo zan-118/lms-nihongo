@@ -53,11 +53,10 @@ export default function ListeningListClient({ tasks }: ListeningListClientProps)
 
       {/* List */}
       <div className="grid grid-cols-1 gap-4">
-        <AnimatePresence mode="popLayout">
+        <AnimatePresence>
           {filteredTasks.map((task, idx) => (
             <motion.div
               key={task._id}
-              layout
               initial={{ opacity: 0, x: -20 }}
               animate={{ opacity: 1, x: 0 }}
               exit={{ opacity: 0, x: 20 }}

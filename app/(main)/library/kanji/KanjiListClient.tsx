@@ -84,11 +84,10 @@ export default function KanjiListClient({ kanjis }: KanjiListClientProps) {
 
       {/* Grid */}
       <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-6 gap-4">
-        <AnimatePresence mode="popLayout">
+        <AnimatePresence>
           {filteredKanjis.map((kanji, idx) => (
             <motion.div
               key={kanji._id}
-              layout
               initial={{ opacity: 0, scale: 0.9, y: 20 }}
               animate={{ opacity: 1, scale: 1, y: 0 }}
               exit={{ opacity: 0, scale: 0.9, y: 20 }}

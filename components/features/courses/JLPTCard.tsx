@@ -46,8 +46,8 @@ export function JLPTCard({ cat, variants }: JLPTCardProps) {
         href={`/courses/${cat.slug}`}
         className="group flex flex-col h-full"
       >
-        <Card className={`flex flex-col h-full min-h-[260px] bg-card rounded-[2.5rem] p-8 border border-border shadow-2xl cursor-pointer hover:border-transparent transition-all duration-500 group relative overflow-hidden`}>
-          <div className={`absolute inset-0 bg-gradient-to-br ${bgColor} opacity-0 group-hover:opacity-100 transition-opacity duration-500`} />
+        <Card className={`flex flex-col h-full min-h-[260px] bg-card rounded-[2.5rem] p-8 border border-border shadow-xl cursor-pointer hover:border-primary/30 transition-all duration-300 group relative overflow-hidden`}>
+          <div className={`absolute inset-0 bg-gradient-to-br ${bgColor} opacity-0 group-hover:opacity-100 transition-opacity duration-300`} />
           
           <div className="absolute -right-4 -top-8 text-[10rem] font-black text-foreground/[0.03] dark:text-foreground/[0.05] group-hover:text-foreground/[0.08] transition-all duration-700 pointer-events-none select-none font-japanese">
             {kanji}

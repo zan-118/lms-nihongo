@@ -145,6 +145,8 @@
       linear-gradient(rgba(0,0,0,0.05) 1px, transparent 1px),
       linear-gradient(90deg, rgba(0,0,0,0.05) 1px, transparent 1px);
     background-size: 60px 60px;
+    will-change: transform;
+    backface-visibility: hidden;
   }
 
   .dark .neural-grid {
@@ -175,3 +177,30 @@
   }
 }
 
+/* MOBILE PERFORMANCE OVERRIDES */
+@media (max-width: 768px) {
+  /* Disable heavy backdrop filters on mobile for 60fps performance */
+  .glass, 
+  .backdrop-blur-sm, 
+  .backdrop-blur-md, 
+  .backdrop-blur-lg, 
+  .backdrop-blur-xl, 
+  .backdrop-blur-2xl, 
+  .backdrop-blur-3xl {
+    backdrop-filter: none !important;
+    -webkit-backdrop-filter: none !important;
+    background-color: hsl(var(--card) / 0.98) !important;
+  }
+
+  /* Simplify transitions on mobile */
+  * {
+    transition-duration: 0.15s !important;
+  }
+
+  /* Force GPU for all cards */
+  .neo-card, .card {
+    will-change: transform;
+    transform: translateZ(0);
+    backface-visibility: hidden;
+  }
+}

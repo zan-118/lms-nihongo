@@ -42,10 +42,10 @@ export default function NavWrapper({ children }: NavWrapperProps) {
           <motion.main 
             key={pathname}
             id="main-content" 
-            initial={{ opacity: 0, y: 12, filter: "blur(10px)" }}
-            animate={{ opacity: 1, y: 0, filter: "blur(0px)" }}
-            exit={{ opacity: 0, y: -12, filter: "blur(10px)" }}
-            transition={{ duration: 0.4, ease: "easeOut" }}
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            exit={{ opacity: 0 }}
+            transition={{ duration: 0.2, ease: "linear" }}
             className={`flex-1 w-full flex flex-col ${!isExamPage ? 'pb-40 md:pb-12' : 'pb-12'} outline-none`}
           >
             {children}

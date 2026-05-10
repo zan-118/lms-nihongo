@@ -23,8 +23,8 @@ interface GeneralCategoryCardProps {
 export function GeneralCategoryCard({ cat, variants }: GeneralCategoryCardProps) {
   return (
     <motion.div variants={variants} className="h-full">
-      <Card className="flex flex-col h-full bg-card rounded-[2.5rem] p-8 md:p-12 border border-border shadow-2xl relative overflow-hidden group">
-        <div className="absolute top-0 right-0 w-64 h-64 bg-warning/5 blur-[80px] rounded-full -mr-20 -mt-20 pointer-events-none group-hover:bg-warning/10 transition-all duration-700" />
+      <Card className="flex flex-col h-full bg-card rounded-[2.5rem] p-8 md:p-12 border border-border shadow-xl relative overflow-hidden group">
+        <div className="absolute top-0 right-0 w-64 h-64 bg-warning/5 blur-[60px] rounded-full -mr-20 -mt-20 pointer-events-none group-hover:bg-warning/10 transition-all duration-300" />
         
         <div className="flex flex-col md:flex-row md:items-center justify-between gap-6 mb-10 relative z-10">
           <div>

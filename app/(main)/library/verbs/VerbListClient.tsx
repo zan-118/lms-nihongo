@@ -162,7 +162,7 @@ export default function VerbListClient({
 
       {/* Card Grid */}
       <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 md:gap-5 items-start">
-        <AnimatePresence mode="popLayout">
+        <AnimatePresence>
           {filteredVerbs.length === 0 ? (
             <motion.div
               initial={{ opacity: 0, scale: 0.95 }}

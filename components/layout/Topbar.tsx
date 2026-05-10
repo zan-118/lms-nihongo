@@ -2,8 +2,9 @@
 
 import { useState, useEffect } from "react";
 import Link from "next/link";
-import { Search, Bell, Menu, ChevronRight, Cloud, RefreshCw, CloudOff, CloudUpload } from "lucide-react";
+import { Search, Bell, Menu, ChevronRight, Cloud, RefreshCw, CloudOff, CloudUpload, ChevronLeft } from "lucide-react";
 import { motion, AnimatePresence } from "framer-motion";
+import { useRouter } from "next/navigation";
 import { useUIStore } from "@/store/useUIStore";
 import { useSRSStore } from "@/store/useSRSStore";
 import { useNavbar } from "@/components/layout/navbar/useNavbar";
@@ -12,6 +13,7 @@ import SearchModal from "@/components/features/tools/search/SearchModal";
 import UserNav from "@/components/features/user/UserNav";
 import { ThemeToggle } from "@/components/layout/ThemeToggle";
 export default function Topbar({ onMenuClick }: { onMenuClick: () => void }) {
+  const router = useRouter();
   const { pathname } = useNavbar();
   const notifications = useUIStore((s) => s.notifications);
   const isSyncing = useUIStore((s) => s.isSyncing);
@@ -40,15 +42,28 @@ export default function Topbar({ onMenuClick }: { onMenuClick: () => void }) {
     <>
     <header className="sticky top-0 z-40 w-full bg-background/60 backdrop-blur-xl border-b border-border/50 px-4 md:px-10 py-4 flex items-center justify-between transition-all">
       <div className="flex items-center gap-6">
-        {/* Mobile Menu Toggle */}
-        <motion.button 
-          whileTap={{ scale: 0.9 }}
-          onClick={onMenuClick}
-          aria-label="Buka Menu Navigasi"
-          className="md:hidden w-10 h-10 flex items-center justify-center rounded-xl bg-muted/50 border border-border/50 text-muted-foreground hover:text-primary transition-all"
-        >
-           <Menu size={20} />
-        </motion.button>
+        {/* Mobile Menu or Back Toggle */}
+        <div className="md:hidden flex items-center gap-2">
+          {pathSegments.length > 1 ? (
+            <motion.button 
+              whileTap={{ scale: 0.9 }}
+              onClick={() => router.back()}
+              aria-label="Kembali ke Halaman Sebelumnya"
+              className="w-10 h-10 flex items-center justify-center rounded-xl bg-muted/50 border border-border/50 text-muted-foreground hover:text-primary transition-all"
+            >
+               <ChevronLeft size={20} />
+            </motion.button>
+          ) : (
+            <motion.button 
+              whileTap={{ scale: 0.9 }}
+              onClick={onMenuClick}
+              aria-label="Buka Menu Navigasi"
+              className="w-10 h-10 flex items-center justify-center rounded-xl bg-muted/50 border border-border/50 text-muted-foreground hover:text-primary transition-all"
+            >
+               <Menu size={20} />
+            </motion.button>
+          )}
+        </div>
 
         <div className="flex flex-col min-w-0">
           <nav className="hidden md:flex items-center gap-2 text-[10px] font-black uppercase tracking-[0.2em] text-muted-foreground/50 mb-1.5">

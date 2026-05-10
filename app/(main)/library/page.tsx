@@ -101,12 +101,12 @@ export default function LibraryPage() {
           <div className="flex flex-col lg:flex-row lg:items-end justify-between gap-10 lg:gap-12">
             <div className="flex-1">
               <motion.h1
-                initial={{ opacity: 0, x: -20 }}
+                initial={{ opacity: 0, x: -10 }}
                 animate={{ opacity: 1, x: 0 }}
-                className="text-3xl sm:text-4xl md:text-7xl lg:text-7xl font-black uppercase tracking-tight text-foreground mb-4 md:mb-10 drop-shadow-2xl leading-none md:leading-[0.85]"
+                className="text-3xl sm:text-4xl md:text-7xl lg:text-7xl font-black uppercase tracking-tight text-foreground mb-4 md:mb-10 drop-shadow-lg leading-none md:leading-[0.85]"
               >
                 Pustaka<br />
-                <span className="text-primary drop-shadow-[0_0_30px_rgba(var(--primary-rgb),0.4)]">Materi</span>
+                <span className="text-primary">Materi</span>
               </motion.h1>
               
               <motion.p
