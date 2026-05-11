@@ -17,12 +17,17 @@ import {
   PenTool,
   Flame,
   Sparkles,
+  ChevronLeft,
+  ChevronRight,
+  ChevronsLeft,
+  ChevronsRight,
 } from "lucide-react";
 import { Card } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import AppBreadcrumbs from "@/components/layout/AppBreadcrumbs";
 import { LessonCard } from "@/components/features/course/LessonCard";
 import { useUserStore } from "@/store/useUserStore";
+import { useState } from "react";
 
 // ======================
 // CONFIG / CONSTANTS
@@ -39,6 +44,8 @@ const itemVariants: Variants = {
   hidden: { y: 20, opacity: 0 },
   visible: { y: 0, opacity: 1, transition: { type: "spring", stiffness: 100 } },
 };
+
+const ITEMS_PER_PAGE = 12;
 
 // ======================
 // MAIN EXECUTION
@@ -72,6 +79,18 @@ export default function CourseCategoryClient({
   const themeColor = isSideQuest ? "text-warning text-warning" : "text-primary text-primary";
   const themeBorder = isSideQuest ? "border-warning" : "border-primary";
   const completedLessons = useUserStore((s) => s.completedLessons);
+  const [currentPage, setCurrentPage] = useState(1);
+
+  const totalPages = Math.ceil((data.lessons?.length || 0) / ITEMS_PER_PAGE);
+  const paginatedLessons = (data.lessons || []).slice(
+    (currentPage - 1) * ITEMS_PER_PAGE,
+    currentPage * ITEMS_PER_PAGE
+  );
+
+  const handlePageChange = (page: number) => {
+    setCurrentPage(page);
+    window.scrollTo({ top: 0, behavior: 'smooth' });
+  };
 
   // ======================
   // RENDER
@@ -216,7 +235,7 @@ export default function CourseCategoryClient({
 
           {data.lessons && data.lessons.length > 0 ? (
             <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 md:gap-8">
-              {data.lessons.map((lesson: Lesson, index: number) => (
+              {paginatedLessons.map((lesson: Lesson, index: number) => (
                 <LessonCard
                   key={lesson._id}
                   lesson={lesson}
@@ -239,6 +258,84 @@ export default function CourseCategoryClient({
               <p className="max-w-md text-muted-foreground text-xs md:text-sm font-semibold leading-relaxed">
                 Bagian ini masih dalam proses pengembangan. Sabar ya, materi terbaik sedang disiapkan buat kamu!
               </p>
+            </div>
+          )}
+
+          {/* Pagination Controls */}
+          {totalPages > 1 && (
+            <div className="flex flex-col items-center gap-6 mt-16">
+              <div className="text-[10px] font-black text-muted-foreground uppercase tracking-[0.2em]">
+                Halaman <span className={themeColor}>{currentPage}</span> dari {totalPages}
+              </div>
+              <div className="flex items-center gap-2">
+                <Button
+                  variant="ghost"
+                  size="icon"
+                  onClick={() => handlePageChange(1)}
+                  disabled={currentPage === 1}
+                  className="w-10 h-10 rounded-xl bg-card border border-border text-muted-foreground hover:text-foreground transition-all disabled:opacity-30"
+                >
+                  <ChevronsLeft size={18} />
+                </Button>
+                <Button
+                  variant="ghost"
+                  size="icon"
+                  onClick={() => handlePageChange(currentPage - 1)}
+                  disabled={currentPage === 1}
+                  className="w-10 h-10 rounded-xl bg-card border border-border text-muted-foreground hover:text-foreground transition-all disabled:opacity-30"
+                >
+                  <ChevronLeft size={18} />
+                </Button>
+
+                <div className="flex items-center gap-2">
+                  {Array.from({ length: Math.min(5, totalPages) }, (_, i) => {
+                    let pageNum;
+                    if (totalPages <= 5) {
+                      pageNum = i + 1;
+                    } else if (currentPage <= 3) {
+                      pageNum = i + 1;
+                    } else if (currentPage >= totalPages - 2) {
+                      pageNum = totalPages - 4 + i;
+                    } else {
+                      pageNum = currentPage - 2 + i;
+                    }
+                    
+                    return (
+                      <Button
+                        key={pageNum}
+                        variant={currentPage === pageNum ? "default" : "ghost"}
+                        onClick={() => handlePageChange(pageNum)}
+                        className={`w-10 h-10 rounded-xl font-bold transition-all ${
+                          currentPage === pageNum 
+                            ? `bg-foreground text-background shadow-lg` 
+                            : "bg-card border border-border text-muted-foreground hover:border-foreground/40"
+                        }`}
+                      >
+                        {pageNum}
+                      </Button>
+                    );
+                  })}
+                </div>
+
+                <Button
+                  variant="ghost"
+                  size="icon"
+                  onClick={() => handlePageChange(currentPage + 1)}
+                  disabled={currentPage === totalPages}
+                  className="w-10 h-10 rounded-xl bg-card border border-border text-muted-foreground hover:text-foreground transition-all disabled:opacity-30"
+                >
+                  <ChevronRight size={18} />
+                </Button>
+                <Button
+                  variant="ghost"
+                  size="icon"
+                  onClick={() => handlePageChange(totalPages)}
+                  disabled={currentPage === totalPages}
+                  className="w-10 h-10 rounded-xl bg-card border border-border text-muted-foreground hover:text-foreground transition-all disabled:opacity-30"
+                >
+                  <ChevronsRight size={18} />
+                </Button>
+              </div>
             </div>
           )}
         </motion.section>

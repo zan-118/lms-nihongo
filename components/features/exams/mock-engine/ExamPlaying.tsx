@@ -10,16 +10,7 @@ import {
   CheckCircle,
   Lock as LockIcon,
 } from "lucide-react";
-import {
-  AlertDialog,
-  AlertDialogAction,
-  AlertDialogCancel,
-  AlertDialogContent,
-  AlertDialogDescription,
-  AlertDialogFooter,
-  AlertDialogHeader,
-  AlertDialogTitle,
-} from "@/components/ui/alert-dialog";
+import ConfirmModal from "@/components/ui/ConfirmModal";
 import { ExamData, ExamQuestion, AudioState, PendingConfirmType } from "./types";
 import { SECTION_LABELS } from "./constants";
 import { formatTime } from "@/lib/utils";
@@ -310,33 +301,17 @@ export function ExamPlaying({
         </div>
       </footer>
 
-      {/* Dialog Konfirmasi — menggantikan window.confirm() yang blocking */}
-      <AlertDialog open={!!pendingConfirm} onOpenChange={(open) => !open && setPendingConfirm(null)}>
-        <AlertDialogContent className="bg-card border border-border rounded-3xl">
-          <AlertDialogHeader>
-            <AlertDialogTitle className="font-black uppercase tracking-tight text-foreground">
-              {pendingConfirmLabel?.title}
-            </AlertDialogTitle>
-            <AlertDialogDescription className="text-muted-foreground text-sm leading-relaxed">
-              {pendingConfirmLabel?.description}
-            </AlertDialogDescription>
-          </AlertDialogHeader>
-          <AlertDialogFooter className="gap-3">
-            <AlertDialogCancel
-              onClick={() => setPendingConfirm(null)}
-              className="rounded-xl border-border font-bold uppercase tracking-widest text-xs"
-            >
-              Batal
-            </AlertDialogCancel>
-            <AlertDialogAction
-              onClick={confirmPendingAction}
-              className="rounded-xl bg-destructive hover:bg-destructive/90 text-destructive-foreground font-bold uppercase tracking-widest text-xs"
-            >
-              Ya, Lanjutkan
-            </AlertDialogAction>
-          </AlertDialogFooter>
-        </AlertDialogContent>
-      </AlertDialog>
+      {/* Modal Konfirmasi — menggunakan ConfirmModal custom yang sudah ada */}
+      <ConfirmModal
+        isOpen={!!pendingConfirm}
+        onClose={() => setPendingConfirm(null)}
+        onConfirm={confirmPendingAction}
+        title={pendingConfirmLabel?.title || ""}
+        description={pendingConfirmLabel?.description || ""}
+        confirmText="Ya, Lanjutkan"
+        cancelText="Batal"
+        isDestructive={pendingConfirm === "finish"}
+      />
     </div>
   );
 }

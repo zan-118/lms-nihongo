@@ -4,9 +4,10 @@ import { useState, useEffect } from "react";
 import { client } from "@/sanity/lib/client";
 import Link from "next/link";
 import { AnimatePresence } from "framer-motion";
-import { BookOpen, Home, Library } from "lucide-react";
+import { BookOpen, Home, Library, ChevronLeft, ChevronRight, ChevronsLeft, ChevronsRight } from "lucide-react";
 import { Card } from "@/components/ui/card";
 import { Skeleton } from "@/components/ui/skeleton";
+import { Button } from "@/components/ui/button";
 
 // Domain Components
 import { GrammarCard } from "@/components/features/grammar/GrammarCard";
@@ -15,6 +16,7 @@ import { GrammarSearch } from "@/components/features/grammar/GrammarSearch";
 import { GrammarEmptyState } from "@/components/features/grammar/GrammarEmptyState";
 
 const LEVELS = ["n5", "n4", "n3", "n2", "n1"];
+const ITEMS_PER_PAGE = 12;
 
 interface GrammarArticle {
   _id: string;
@@ -31,6 +33,7 @@ export default function GrammarClient({ initialArticles = [] }: GrammarClientPro
   const [searchTerm, setSearchTerm] = useState("");
   const [articles, setArticles] = useState<GrammarArticle[]>(initialArticles);
   const [loading, setLoading] = useState(false);
+  const [currentPage, setCurrentPage] = useState(1);
 
   useEffect(() => {
     // Hindari fetch ulang jika masih di level default (n5) dan ini render pertama
@@ -52,6 +55,7 @@ export default function GrammarClient({ initialArticles = [] }: GrammarClientPro
       try {
         const data = await client.fetch(queryStr, { baseLevel, jlptLevel });
         setArticles(data);
+        setCurrentPage(1); // Reset page on level change
       } catch (error) {
         console.error("Gagal memuat tata bahasa:", error);
       } finally {
@@ -65,6 +69,22 @@ export default function GrammarClient({ initialArticles = [] }: GrammarClientPro
   const filteredArticles = articles.filter(art => 
     art.title.toLowerCase().includes(searchTerm.toLowerCase())
   );
+
+  const totalPages = Math.ceil(filteredArticles.length / ITEMS_PER_PAGE);
+  const paginatedArticles = filteredArticles.slice(
+    (currentPage - 1) * ITEMS_PER_PAGE,
+    currentPage * ITEMS_PER_PAGE
+  );
+
+  const handlePageChange = (page: number) => {
+    setCurrentPage(page);
+    window.scrollTo({ top: 0, behavior: 'smooth' });
+  };
+
+  // Reset page when search changes
+  useEffect(() => {
+    setCurrentPage(1);
+  }, [searchTerm]);
 
   return (
     <div className="max-w-7xl mx-auto w-full relative z-10 pt-4 md:pt-10">
@@ -111,7 +131,7 @@ export default function GrammarClient({ initialArticles = [] }: GrammarClientPro
       <GrammarSearch value={searchTerm} onChange={setSearchTerm} />
 
       <section className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4 md:gap-5 items-stretch">
-        <AnimatePresence>
+        <AnimatePresence mode="popLayout">
           {loading ? (
             [...Array(6)].map((_, i) => (
               <Card key={i} className="h-48 md:h-56 bg-card/40 backdrop-blur-xl border-white/5 rounded-[2rem] overflow-hidden p-6 relative">
@@ -124,8 +144,8 @@ export default function GrammarClient({ initialArticles = [] }: GrammarClientPro
                 <div className="absolute inset-0 bg-gradient-to-r from-transparent via-white/[0.03] to-transparent -translate-x-full animate-[shimmer_2s_infinite] pointer-events-none" />
               </Card>
             ))
-          ) : filteredArticles.length > 0 ? (
-            filteredArticles.map((article, idx) => (
+          ) : paginatedArticles.length > 0 ? (
+            paginatedArticles.map((article, idx) => (
               <GrammarCard
                 key={article._id}
                 article={article}
@@ -142,6 +162,84 @@ export default function GrammarClient({ initialArticles = [] }: GrammarClientPro
           )}
         </AnimatePresence>
       </section>
+
+      {/* Pagination Controls */}
+      {totalPages > 1 && !loading && (
+        <div className="flex flex-col items-center gap-6 mt-16 pb-12">
+          <div className="text-xs font-black text-muted-foreground uppercase tracking-[0.2em]">
+            Halaman <span className="text-primary">{currentPage}</span> dari {totalPages}
+          </div>
+          <div className="flex items-center gap-2">
+            <Button
+              variant="ghost"
+              size="icon"
+              onClick={() => handlePageChange(1)}
+              disabled={currentPage === 1}
+              className="w-10 h-10 rounded-xl bg-card border border-border text-muted-foreground hover:text-primary transition-all disabled:opacity-30"
+            >
+              <ChevronsLeft size={18} />
+            </Button>
+            <Button
+              variant="ghost"
+              size="icon"
+              onClick={() => handlePageChange(currentPage - 1)}
+              disabled={currentPage === 1}
+              className="w-10 h-10 rounded-xl bg-card border border-border text-muted-foreground hover:text-primary transition-all disabled:opacity-30"
+            >
+              <ChevronLeft size={18} />
+            </Button>
+
+            <div className="flex items-center gap-2">
+              {Array.from({ length: Math.min(5, totalPages) }, (_, i) => {
+                let pageNum;
+                if (totalPages <= 5) {
+                  pageNum = i + 1;
+                } else if (currentPage <= 3) {
+                  pageNum = i + 1;
+                } else if (currentPage >= totalPages - 2) {
+                  pageNum = totalPages - 4 + i;
+                } else {
+                  pageNum = currentPage - 2 + i;
+                }
+                
+                return (
+                  <Button
+                    key={pageNum}
+                    variant={currentPage === pageNum ? "default" : "ghost"}
+                    onClick={() => handlePageChange(pageNum)}
+                    className={`w-10 h-10 rounded-xl font-bold transition-all ${
+                      currentPage === pageNum 
+                        ? "bg-primary text-primary-foreground shadow-lg" 
+                        : "bg-card border border-border text-muted-foreground hover:border-primary/40"
+                    }`}
+                  >
+                    {pageNum}
+                  </Button>
+                );
+              })}
+            </div>
+
+            <Button
+              variant="ghost"
+              size="icon"
+              onClick={() => handlePageChange(currentPage + 1)}
+              disabled={currentPage === totalPages}
+              className="w-10 h-10 rounded-xl bg-card border border-border text-muted-foreground hover:text-primary transition-all disabled:opacity-30"
+            >
+              <ChevronRight size={18} />
+            </Button>
+            <Button
+              variant="ghost"
+              size="icon"
+              onClick={() => handlePageChange(totalPages)}
+              disabled={currentPage === totalPages}
+              className="w-10 h-10 rounded-xl bg-card border border-border text-muted-foreground hover:text-primary transition-all disabled:opacity-30"
+            >
+              <ChevronsRight size={18} />
+            </Button>
+          </div>
+        </div>
+      )}
     </div>
   );
 }

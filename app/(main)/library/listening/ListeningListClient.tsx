@@ -1,9 +1,10 @@
 "use client";
 
-import React, { useState } from "react";
-import { Search, Headphones, Play, ArrowRight, Clock } from "lucide-react";
+import React, { useState, useEffect } from "react";
+import { Search, Headphones, Play, ArrowRight, Clock, ChevronLeft, ChevronRight, ChevronsLeft, ChevronsRight } from "lucide-react";
 import { Input } from "@/components/ui/input";
 import { Card } from "@/components/ui/card";
+import { Button } from "@/components/ui/button";
 import { motion, AnimatePresence } from "framer-motion";
 import Link from "next/link";
 
@@ -17,12 +18,30 @@ interface ListeningListClientProps {
   tasks: ListeningTask[];
 }
 
+const ITEMS_PER_PAGE = 10;
+
 export default function ListeningListClient({ tasks }: ListeningListClientProps) {
   const [search, setSearch] = useState("");
+  const [currentPage, setCurrentPage] = useState(1);
 
   const filteredTasks = tasks.filter(t => 
     t.title.toLowerCase().includes(search.toLowerCase())
   );
+
+  const totalPages = Math.ceil(filteredTasks.length / ITEMS_PER_PAGE);
+  const paginatedTasks = filteredTasks.slice(
+    (currentPage - 1) * ITEMS_PER_PAGE,
+    currentPage * ITEMS_PER_PAGE
+  );
+
+  useEffect(() => {
+    setCurrentPage(1);
+  }, [search]);
+
+  const handlePageChange = (page: number) => {
+    setCurrentPage(page);
+    window.scrollTo({ top: 0, behavior: 'smooth' });
+  };
 
   return (
     <div className="space-y-12">
@@ -53,8 +72,8 @@ export default function ListeningListClient({ tasks }: ListeningListClientProps)
 
       {/* List */}
       <div className="grid grid-cols-1 gap-4">
-        <AnimatePresence>
-          {filteredTasks.map((task, idx) => (
+        <AnimatePresence mode="popLayout">
+          {paginatedTasks.map((task, idx) => (
             <motion.div
               key={task._id}
               initial={{ opacity: 0, x: -20 }}
@@ -73,7 +92,7 @@ export default function ListeningListClient({ tasks }: ListeningListClientProps)
                     <div className="flex items-center gap-3">
                        <span className="text-lg md:text-2xl font-black text-foreground group-hover:text-primary transition-colors duration-300">
                         {task.title}
-                      </span>
+                       </span>
                     </div>
                     <div className="flex items-center gap-4 text-xs font-medium text-muted-foreground">
                       <span className="flex items-center gap-1.5 bg-background/5 px-2 py-1 rounded-md">
@@ -96,6 +115,84 @@ export default function ListeningListClient({ tasks }: ListeningListClientProps)
           ))}
         </AnimatePresence>
       </div>
+
+      {/* Pagination Controls */}
+      {totalPages > 1 && (
+        <div className="flex flex-col items-center gap-6 pt-8">
+          <div className="text-[10px] font-black text-muted-foreground uppercase tracking-[0.2em]">
+            Halaman <span className="text-primary">{currentPage}</span> dari {totalPages}
+          </div>
+          <div className="flex items-center gap-2">
+            <Button
+              variant="ghost"
+              size="icon"
+              onClick={() => handlePageChange(1)}
+              disabled={currentPage === 1}
+              className="w-10 h-10 rounded-xl bg-card border border-border text-muted-foreground hover:text-foreground transition-all disabled:opacity-30"
+            >
+              <ChevronsLeft size={18} />
+            </Button>
+            <Button
+              variant="ghost"
+              size="icon"
+              onClick={() => handlePageChange(currentPage - 1)}
+              disabled={currentPage === 1}
+              className="w-10 h-10 rounded-xl bg-card border border-border text-muted-foreground hover:text-foreground transition-all disabled:opacity-30"
+            >
+              <ChevronLeft size={18} />
+            </Button>
+
+            <div className="flex items-center gap-2">
+              {Array.from({ length: Math.min(5, totalPages) }, (_, i) => {
+                let pageNum;
+                if (totalPages <= 5) {
+                  pageNum = i + 1;
+                } else if (currentPage <= 3) {
+                  pageNum = i + 1;
+                } else if (currentPage >= totalPages - 2) {
+                  pageNum = totalPages - 4 + i;
+                } else {
+                  pageNum = currentPage - 2 + i;
+                }
+                
+                return (
+                  <Button
+                    key={pageNum}
+                    variant={currentPage === pageNum ? "default" : "ghost"}
+                    onClick={() => handlePageChange(pageNum)}
+                    className={`w-10 h-10 rounded-xl font-bold transition-all ${
+                      currentPage === pageNum 
+                        ? "bg-primary text-primary-foreground shadow-lg shadow-primary/20" 
+                        : "bg-card border border-border text-muted-foreground hover:border-primary/40"
+                    }`}
+                  >
+                    {pageNum}
+                  </Button>
+                );
+              })}
+            </div>
+
+            <Button
+              variant="ghost"
+              size="icon"
+              onClick={() => handlePageChange(currentPage + 1)}
+              disabled={currentPage === totalPages}
+              className="w-10 h-10 rounded-xl bg-card border border-border text-muted-foreground hover:text-foreground transition-all disabled:opacity-30"
+            >
+              <ChevronRight size={18} />
+            </Button>
+            <Button
+              variant="ghost"
+              size="icon"
+              onClick={() => handlePageChange(totalPages)}
+              disabled={currentPage === totalPages}
+              className="w-10 h-10 rounded-xl bg-card border border-border text-muted-foreground hover:text-foreground transition-all disabled:opacity-30"
+            >
+              <ChevronsRight size={18} />
+            </Button>
+          </div>
+        </div>
+      )}
 
       {filteredTasks.length === 0 && (
         <div className="flex flex-col items-center justify-center py-24 text-center">

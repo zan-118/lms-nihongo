@@ -1,7 +1,7 @@
 "use client";
 
 import React, { useState } from "react";
-import { Search, ArrowRight } from "lucide-react";
+import { Search, ArrowRight, ChevronLeft, ChevronRight, ChevronsLeft, ChevronsRight } from "lucide-react";
 import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
 import { Card } from "@/components/ui/card";
@@ -22,21 +22,40 @@ interface KanjiListClientProps {
   kanjis: Kanji[];
 }
 
+const ITEMS_PER_PAGE = 24;
+
 export default function KanjiListClient({ kanjis }: KanjiListClientProps) {
   const [search, setSearch] = useState("");
   const [levelFilter, setLevelFilter] = useState<string | null>(null);
+  const [currentPage, setCurrentPage] = useState(1);
 
   const filteredKanjis = kanjis.filter(k => {
     const matchesSearch = 
       k.character.includes(search) || 
       k.meaning.toLowerCase().includes(search.toLowerCase()) ||
-      k.onyomi?.includes(search) ||
-      k.kunyomi?.includes(search);
+      k.onyomi?.some(o => o.includes(search)) ||
+      k.kunyomi?.some(k => k.includes(search));
     
     const matchesFilter = !levelFilter || k.jlpt?.toUpperCase() === levelFilter?.toUpperCase();
     
     return matchesSearch && matchesFilter;
   });
+
+  const totalPages = Math.ceil(filteredKanjis.length / ITEMS_PER_PAGE);
+  const paginatedKanjis = filteredKanjis.slice(
+    (currentPage - 1) * ITEMS_PER_PAGE,
+    currentPage * ITEMS_PER_PAGE
+  );
+
+  const handlePageChange = (page: number) => {
+    setCurrentPage(page);
+    window.scrollTo({ top: 0, behavior: 'smooth' });
+  };
+
+  // Reset page when filter changes
+  React.useEffect(() => {
+    setCurrentPage(1);
+  }, [search, levelFilter]);
 
   const levels = ["N5", "N4", "N3", "N2", "N1"];
 
@@ -84,8 +103,8 @@ export default function KanjiListClient({ kanjis }: KanjiListClientProps) {
 
       {/* Grid */}
       <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-6 gap-4">
-        <AnimatePresence>
-          {filteredKanjis.map((kanji, idx) => (
+        <AnimatePresence mode="popLayout">
+          {paginatedKanjis.map((kanji, idx) => (
             <motion.div
               key={kanji._id}
               initial={{ opacity: 0, scale: 0.9, y: 20 }}
@@ -120,6 +139,84 @@ export default function KanjiListClient({ kanjis }: KanjiListClientProps) {
           ))}
         </AnimatePresence>
       </div>
+
+      {/* Pagination Controls */}
+      {totalPages > 1 && (
+        <div className="flex flex-col items-center gap-6 mt-12 pb-12">
+          <div className="text-xs font-black text-muted-foreground uppercase tracking-[0.2em]">
+            Halaman <span className="text-primary">{currentPage}</span> dari {totalPages}
+          </div>
+          <div className="flex items-center gap-2">
+            <Button
+              variant="ghost"
+              size="icon"
+              onClick={() => handlePageChange(1)}
+              disabled={currentPage === 1}
+              className="w-10 h-10 rounded-xl bg-card border border-border text-muted-foreground hover:text-primary transition-all disabled:opacity-30"
+            >
+              <ChevronsLeft size={18} />
+            </Button>
+            <Button
+              variant="ghost"
+              size="icon"
+              onClick={() => handlePageChange(currentPage - 1)}
+              disabled={currentPage === 1}
+              className="w-10 h-10 rounded-xl bg-card border border-border text-muted-foreground hover:text-primary transition-all disabled:opacity-30"
+            >
+              <ChevronLeft size={18} />
+            </Button>
+
+            <div className="flex items-center gap-2">
+              {Array.from({ length: Math.min(5, totalPages) }, (_, i) => {
+                let pageNum;
+                if (totalPages <= 5) {
+                  pageNum = i + 1;
+                } else if (currentPage <= 3) {
+                  pageNum = i + 1;
+                } else if (currentPage >= totalPages - 2) {
+                  pageNum = totalPages - 4 + i;
+                } else {
+                  pageNum = currentPage - 2 + i;
+                }
+                
+                return (
+                  <Button
+                    key={pageNum}
+                    variant={currentPage === pageNum ? "default" : "ghost"}
+                    onClick={() => handlePageChange(pageNum)}
+                    className={`w-10 h-10 rounded-xl font-bold transition-all ${
+                      currentPage === pageNum 
+                        ? "bg-primary text-primary-foreground shadow-lg" 
+                        : "bg-card border border-border text-muted-foreground hover:border-primary/40"
+                    }`}
+                  >
+                    {pageNum}
+                  </Button>
+                );
+              })}
+            </div>
+
+            <Button
+              variant="ghost"
+              size="icon"
+              onClick={() => handlePageChange(currentPage + 1)}
+              disabled={currentPage === totalPages}
+              className="w-10 h-10 rounded-xl bg-card border border-border text-muted-foreground hover:text-primary transition-all disabled:opacity-30"
+            >
+              <ChevronRight size={18} />
+            </Button>
+            <Button
+              variant="ghost"
+              size="icon"
+              onClick={() => handlePageChange(totalPages)}
+              disabled={currentPage === totalPages}
+              className="w-10 h-10 rounded-xl bg-card border border-border text-muted-foreground hover:text-primary transition-all disabled:opacity-30"
+            >
+              <ChevronsRight size={18} />
+            </Button>
+          </div>
+        </div>
+      )}
 
       {filteredKanjis.length === 0 && (
         <div className="flex flex-col items-center justify-center py-24 text-center">
