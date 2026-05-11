@@ -9,9 +9,9 @@ import Image from "next/image";
  */
 export function LandingFooter() {
   return (
-    <footer className="mt-32 pt-12 border-t border-border flex flex-col md:flex-row items-center justify-between gap-8">
-      <div className="flex items-center gap-4">
-        <div className="relative w-10 h-10 drop-shadow-sm dark:drop-shadow-[0_0_10px_hsl(var(--primary)/0.3)]">
+    <footer className="mt-[89px] pt-[55px] border-t border-border flex flex-col md:flex-row items-center justify-between gap-[34px] pb-[55px]">
+      <div className="flex items-center gap-[13px]">
+        <div className="relative w-10 h-10 dark:drop-shadow-[0_0_15px_rgba(var(--primary-rgb),0.3)]">
           <Image
             src="/logo-branding.svg"
             alt="NihongoRoute"
@@ -20,20 +20,20 @@ export function LandingFooter() {
           />
         </div>
         <div className="flex flex-col">
-          <span className="text-foreground font-black uppercase tracking-widest">
+          <span className="text-foreground font-bold tracking-tight">
             Nihongo<span className="text-primary">Route</span>
           </span>
-          <span className="text-[8px] text-muted-foreground font-bold uppercase tracking-widest">
+          <span className="text-[8px] text-muted-foreground font-bold uppercase tracking-widest opacity-60">
             Digital Learning Ecosystem © {new Date().getFullYear()}
           </span>
         </div>
       </div>
-      <div className="flex gap-6 text-xs font-black uppercase tracking-widest text-muted-foreground">
+      <div className="flex gap-[21px] text-[10px] font-bold uppercase tracking-[0.2em] text-muted-foreground">
         <Link
           href="/library"
           className="hover:text-primary transition-colors"
         >
-          Library
+          Perpustakaan
         </Link>
         <Link
           href="/review"

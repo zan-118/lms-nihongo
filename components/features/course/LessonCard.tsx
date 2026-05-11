@@ -19,12 +19,12 @@ interface LessonCardProps {
 }
 
 export function LessonCard({ lesson, index, categoryId, isSideQuest, progress = 0 }: LessonCardProps) {
-  const progressGradient = isSideQuest ? "from-warning to-warning/80" : "from-primary to-primary/80";
+  const progressGradient = isSideQuest ? "from-warning to-warning/60" : "from-primary to-primary/60";
 
   return (
     <motion.div
-      whileHover={{ y: -8 }}
-      transition={{ type: "spring", stiffness: 300, damping: 20 }}
+      whileHover={{ y: -5 }}
+      transition={{ type: "spring", stiffness: 400, damping: 25 }}
       style={{ 
         contentVisibility: 'auto', 
         containIntrinsicSize: '0 300px',
@@ -32,60 +32,60 @@ export function LessonCard({ lesson, index, categoryId, isSideQuest, progress = 
       }}
     >
       <Link href={`/courses/${categoryId}/${lesson.slug}`} className="group flex flex-col h-full">
-        <Card className="p-6 md:p-8 bg-card/40 backdrop-blur-xl border border-border rounded-[2rem] group transition-all duration-500 flex flex-col items-start gap-6 cursor-pointer hover:border-primary/50 hover:bg-card/60 h-full shadow-2xl relative overflow-hidden">
+        <Card className="p-8 bg-card/40 backdrop-blur-md border border-border/60 rounded-[2rem] group transition-all duration-500 flex flex-col items-start gap-8 cursor-pointer hover:border-foreground/10 hover:bg-card/60 h-full shadow-lg hover:shadow-2xl relative overflow-hidden">
           {/* Hover Glow Effect */}
-          <div className="absolute inset-0 bg-gradient-to-br from-primary/5 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500 pointer-events-none" />
+          <div className="absolute inset-0 bg-gradient-to-br from-foreground/[0.02] to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500 pointer-events-none" />
           
           <div className="flex justify-between items-start w-full relative z-10">
             <div
-              className={`w-12 h-12 shrink-0 rounded-2xl flex items-center justify-center font-black text-lg font-mono bg-background opacity-50 border border-border transition-all duration-500 shadow-sm ${
+              className={`w-11 h-11 shrink-0 rounded-xl flex items-center justify-center font-bold text-sm font-mono bg-background border border-border/50 transition-all duration-500 shadow-sm ${
                 isSideQuest 
-                  ? "text-warning group-hover:bg-warning group-hover:text-warning-foreground group-hover:opacity-100" 
-                  : "text-primary group-hover:bg-primary group-hover:text-primary-foreground group-hover:opacity-100"
+                  ? "text-warning/60 group-hover:bg-warning group-hover:text-warning-foreground group-hover:border-warning group-hover:opacity-100" 
+                  : "text-primary/60 group-hover:bg-primary group-hover:text-primary-foreground group-hover:border-primary group-hover:opacity-100"
               }`}
             >
               {(index + 1).toString().padStart(2, "0")}
             </div>
             
             {progress > 0 && (
-              <div className="px-3 py-1 rounded-full bg-background/10 border border-border text-[10px] font-black uppercase tracking-widest text-muted-foreground group-hover:text-foreground transition-colors">
-                {progress}% Selesai
+              <div className="px-3 py-1.5 rounded-full bg-background/50 backdrop-blur-sm border border-border/50 text-[9px] font-bold uppercase tracking-[0.2em] text-muted-foreground group-hover:text-foreground transition-colors shadow-sm">
+                {progress}% Complete
               </div>
             )}
           </div>
 
-          <div className="flex-1 relative z-10">
-            <h4 className="text-xl md:text-2xl font-black text-foreground group-hover:text-primary transition-all uppercase tracking-tight mb-3 leading-tight">
+          <div className="flex-1 relative z-10 w-full">
+            <h4 className="text-xl md:text-2xl font-bold text-foreground group-hover:text-primary transition-colors tracking-tight mb-3 leading-[1.2] text-balance">
               {lesson.title}
             </h4>
             {lesson.summary && (
-              <p className="text-muted-foreground text-xs font-medium line-clamp-3 opacity-70 group-hover:opacity-100 transition-opacity leading-relaxed">
+              <p className="text-muted-foreground text-[13px] font-medium line-clamp-3 opacity-60 group-hover:opacity-100 transition-opacity leading-relaxed">
                 {lesson.summary}
               </p>
             )}
           </div>
 
-          <div className="mt-auto pt-6 w-full flex items-center justify-between border-t border-border relative z-10">
-            <span className={`text-[10px] font-black uppercase tracking-widest transition-colors ${
-              isSideQuest ? "text-warning/50 group-hover:text-warning" : "text-primary/50 group-hover:text-primary"
+          <div className="mt-auto pt-8 w-full flex items-center justify-between border-t border-border/40 relative z-10">
+            <span className={`text-[10px] font-bold uppercase tracking-[0.2em] transition-colors ${
+              isSideQuest ? "text-warning/40 group-hover:text-warning" : "text-primary/40 group-hover:text-primary"
             }`}>
-              Baca Materi
+              View Lesson
             </span>
             <div
-              className={`w-10 h-10 rounded-xl border border-border flex items-center justify-center transition-all duration-500 bg-background/5 shadow-sm ${
+              className={`w-10 h-10 rounded-xl border border-border/50 flex items-center justify-center transition-all duration-500 bg-background shadow-sm ${
                 isSideQuest ? "group-hover:bg-warning group-hover:text-warning-foreground" : "group-hover:bg-primary group-hover:text-primary-foreground"
-              } group-hover:shadow-[0_0_15px_rgba(var(--primary-rgb),0.3)]`}
+              }`}
             >
-              <ChevronRight size={18} aria-hidden="true" />
+              <ChevronRight size={16} aria-hidden="true" />
             </div>
           </div>
 
-          {/* Bottom Progress Bar */}
-          <div className="absolute bottom-0 left-0 right-0 h-1.5 bg-background/10">
+          {/* Bottom Progress Bar - Ultra Thin & Subtle */}
+          <div className="absolute bottom-0 left-0 right-0 h-1 bg-background/5">
             <motion.div 
               initial={{ width: 0 }}
               animate={{ width: `${progress}%` }}
-              className={`h-full bg-gradient-to-r ${progressGradient} shadow-[0_0_10px_rgba(var(--primary-rgb),0.5)]`}
+              className={`h-full bg-gradient-to-r ${progressGradient} transition-all duration-1000`}
             />
           </div>
         </Card>

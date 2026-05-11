@@ -16,33 +16,34 @@ export function TrustBanner() {
       initial={{ opacity: 0, y: 30 }}
       whileInView={{ opacity: 1, y: 0 }}
       viewport={{ once: true }}
-      className="w-full"
+      className="w-full mb-[89px]"
     >
-      <Card className="p-8 md:p-12 rounded-[2.5rem] flex flex-col lg:flex-row items-center justify-between gap-10 bg-[rgba(var(--card-rgb),0.5)] backdrop-blur-2xl border border-border shadow-2xl relative overflow-hidden group transition-all duration-500 hover:border-primary/40 hover:shadow-primary/10">
-        <div className="absolute -top-24 -left-24 w-64 h-64 bg-primary/10 rounded-full blur-[80px] group-hover:bg-primary/20 transition-all duration-700" />
-        <div className="absolute -bottom-24 -right-24 w-64 h-64 bg-primary/10 rounded-full blur-[80px] group-hover:bg-primary/20 transition-all duration-700" />
+      <Card className="p-[55px] rounded-[34px] flex flex-col lg:flex-row items-center justify-between gap-[34px] bg-card/10 backdrop-blur-3xl border border-border shadow-none relative overflow-hidden group transition-all duration-700 hover:border-foreground/10">
+        {/* Background Decorative Glow */}
+        <div className="absolute -top-32 -left-32 w-89 h-89 bg-primary/5 rounded-full blur-[100px] group-hover:bg-primary/10 transition-all duration-700" />
+        <div className="absolute -bottom-32 -right-32 w-89 h-89 bg-secondary/5 rounded-full blur-[100px] group-hover:bg-secondary/10 transition-all duration-700" />
         
-        <div className="flex flex-col md:flex-row items-center gap-6 relative z-10">
-          <div className="w-16 h-16 md:w-20 md:h-20 bg-[rgba(var(--muted-rgb),0.5)] backdrop-blur-xl border border-border flex items-center justify-center rounded-2xl shrink-0 group-hover:border-primary/40 group-hover:scale-110 transition-all duration-500 shadow-xl">
-            <ShieldCheck size={36} aria-hidden="true" className="text-primary" />
+        <div className="flex flex-col md:flex-row items-center gap-[34px] relative z-10">
+          <div className="w-[89px] h-[89px] bg-background border border-border flex items-center justify-center rounded-2xl shrink-0 group-hover:scale-110 transition-all duration-700 shadow-sm">
+            <ShieldCheck size={40} aria-hidden="true" className="text-primary" />
           </div>
           <div className="text-center md:text-left">
-            <h4 className="text-foreground font-black uppercase text-2xl md:text-3xl tracking-tight mb-2">
-              Sepenuhnya <span className="text-primary drop-shadow-[0_0_10px_rgba(var(--primary-rgb),0.4)]">Gratis Untukmu</span>
+            <h4 className="text-foreground font-bold text-3xl md:text-4xl tracking-tight mb-[13px]">
+              Sepenuhnya <span className="text-primary">Gratis Untukmu</span>
             </h4>
-            <p className="text-muted-foreground text-sm md:text-base font-medium max-w-xl leading-relaxed">
+            <p className="text-muted-foreground text-lg font-medium max-w-xl leading-relaxed text-balance">
               Dibuat dengan sepenuh hati untuk membantu siapa saja yang ingin belajar 
-              bahasa Jepang tanpa harus terhalang biaya. Bergabunglah dengan komunitas pembelajar kami.
+              bahasa Jepang tanpa terhalang biaya.
             </p>
           </div>
         </div>
         <Button
           asChild
-          variant="link"
-          className="text-primary font-black uppercase tracking-[0.4em] text-xs md:text-sm flex items-center gap-3 hover:gap-6 transition-all whitespace-nowrap shrink-0 group hover:no-underline relative z-10"
+          variant="ghost"
+          className="h-[55px] px-8 bg-foreground/5 hover:bg-foreground hover:text-background transition-all text-xs font-bold uppercase tracking-widest rounded-2xl relative z-10"
         >
           <Link href="/support">
-            Kontribusi Project <ArrowRight size={20} aria-hidden="true" className="group-hover:translate-x-2 transition-transform" />
+            Dukung Kami <ArrowRight size={16} aria-hidden="true" className="ml-3" />
           </Link>
         </Button>
       </Card>

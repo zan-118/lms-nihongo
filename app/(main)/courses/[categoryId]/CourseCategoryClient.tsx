@@ -77,7 +77,6 @@ export default function CourseCategoryClient({
 }) {
   const isSideQuest = data.category.type === "general";
   const themeColor = isSideQuest ? "text-warning text-warning" : "text-primary text-primary";
-  const themeBorder = isSideQuest ? "border-warning" : "border-primary";
   const completedLessons = useUserStore((s) => s.completedLessons);
   const [currentPage, setCurrentPage] = useState(1);
 
@@ -96,145 +95,147 @@ export default function CourseCategoryClient({
   // RENDER
   // ======================
   return (
-    <div className="w-full px-4 md:px-6 relative overflow-hidden bg-background text-foreground transition-colors duration-300 min-h-screen pt-12 pb-24">
-      {/* Background Decor Ambient */}
+    <div className="w-full px-6 md:px-12 relative overflow-hidden bg-background text-foreground transition-colors duration-500 min-h-screen pt-20 pb-32">
+      {/* Background Decor Ambient - Refined for premium feel */}
       <div
-        className={`absolute top-0 left-[-10%] w-[500px] h-[500px] rounded-full blur-[150px] pointer-events-none ${isSideQuest ? "bg-warning/5" : "bg-primary/5"}`}
+        className={`absolute top-[-10%] left-[-5%] w-[600px] h-[600px] rounded-full blur-[160px] pointer-events-none opacity-20 ${isSideQuest ? "bg-warning" : "bg-primary"}`}
       />
-      <div className="absolute bottom-[20%] right-[-5%] w-[400px] h-[400px] bg-secondary/5 rounded-full blur-[120px] pointer-events-none" />
+      <div className="absolute bottom-[10%] right-[-10%] w-[500px] h-[500px] bg-secondary/10 rounded-full blur-[140px] pointer-events-none opacity-30" />
 
       <motion.div
-        className="max-w-5xl mx-auto relative z-10"
+        className="max-w-6xl mx-auto relative z-10"
         initial="hidden"
         animate="visible"
         variants={containerVariants}
       >
-        {/* HEADER & BREADCRUMB SECTION */}
-        <header className="mb-20">
-          <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-6 mb-8">
-            <AppBreadcrumbs 
-              items={[
-                { label: "Pusat Belajar", href: "/courses" },
-                { label: data.category.title, active: true }
-              ]} 
-            />
-            <Button
-              variant="ghost"
-              asChild
-              className="w-fit h-auto py-2.5 px-5 rounded-xl border border-border bg-muted/50 text-muted-foreground hover:text-foreground hover:bg-muted transition-all text-[9px] font-bold uppercase tracking-widest neo-inset shadow-none"
-            >
-              <Link href="/courses">← Kembali</Link>
-            </Button>
-          </div>
+        {/* HEADER SECTION - Asymmetrical & Dramatic */}
+        <header className="mb-[89px]">
+          <div className="flex flex-col lg:flex-row lg:items-end justify-between gap-[34px] mb-[21px]">
+            <div className="max-w-3xl">
+              <div className="flex items-center gap-[13px] mb-8">
+                <AppBreadcrumbs 
+                  items={[
+                    { label: "Courses", href: "/courses" },
+                    { label: data.category.title, active: true }
+                  ]} 
+                />
+              </div>
 
-          <motion.nav
-            variants={itemVariants}
-            className="mb-8 flex items-center gap-4"
-          >
-            <div className="h-[1px] flex-1 bg-border" />
-            <span
-              className={`text-[9px] font-bold uppercase tracking-widest px-3 py-1 rounded border hidden sm:block ${isSideQuest ? "bg-warning/10 text-warning text-warning border-warning/20" : "bg-primary/10 text-primary text-primary border-primary/20"}`}
-            >
-              {isSideQuest ? "Bahan Belajar Seru" : "Jalur Utama"}
-            </span>
-          </motion.nav>
-
-          <motion.h1
-            variants={itemVariants}
-            className={`text-5xl md:text-6xl lg:text-7xl font-black uppercase tracking-tighter leading-none mb-8 drop-shadow-lg ${isSideQuest ? "text-warning" : "text-foreground"}`}
-          >
-            {data.category.title}
-          </motion.h1>
-
-          {data.category.description && (
-            <motion.div
-              variants={itemVariants}
-              className={`p-6 md:p-8 rounded-2xl border-l-4 bg-card border-border shadow-sm ${themeBorder}`}
-            >
-              <p className="text-sm md:text-lg text-muted-foreground font-medium leading-relaxed">
-                {data.category.description}
-              </p>
-            </motion.div>
-          )}
-        </header>
-
-        {/* AREA LATIHAN SECTION */}
-        {!isSideQuest && (
-          <motion.section variants={itemVariants} className="mb-20 md:mb-24">
-            <div className="mb-6 md:mb-8 flex items-center gap-4">
-              <h3
-                className={`text-lg md:text-xl font-black uppercase tracking-tight flex items-center gap-3 ${themeColor}`}
+              <motion.div
+                variants={itemVariants}
+                className="flex items-center gap-4 mb-8"
               >
-                Area Latihan
-              </h3>
-              <div className="h-[1px] flex-1 bg-border" />
+                <span
+                  className={`text-[10px] font-bold uppercase tracking-[0.2em] px-4 py-1.5 rounded-full border ${
+                    isSideQuest 
+                      ? "bg-warning/5 text-warning border-warning/20 shadow-[0_0_15px_rgba(var(--warning-rgb),0.1)]" 
+                      : "bg-primary/5 text-primary border-primary/20 shadow-[0_0_15px_rgba(var(--primary-rgb),0.1)]"
+                  }`}
+                >
+                  {isSideQuest ? "Side Quest" : "Main Route"}
+                </span>
+                <div className="h-[1px] w-[34px] bg-border" />
+              </motion.div>
+
+              <motion.h1
+                variants={itemVariants}
+                className={`text-6xl md:text-8xl font-bold tracking-tighter leading-[0.9] mb-8 text-balance ${isSideQuest ? "text-warning" : "text-foreground"}`}
+              >
+                {data.category.title}
+              </motion.h1>
+
+              {data.category.description && (
+                <motion.p
+                  variants={itemVariants}
+                  className="text-lg md:text-xl text-muted-foreground font-medium leading-relaxed max-w-2xl text-balance"
+                >
+                  {data.category.description}
+                </motion.p>
+              )}
             </div>
 
-            <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-6 md:gap-8">
-              <Link href={`/tools/flashcards?category=${categoryId}`} className="group flex flex-col h-full">
-                <Card className="p-6 md:p-8 bg-card border border-border rounded-2xl hover:border-primary/40 hover:bg-primary/[0.02] transition-all duration-300 flex flex-col items-center text-center gap-5 h-full cursor-pointer relative overflow-hidden group hover:shadow-xl">
-                  <div className="w-12 h-12 md:w-14 md:h-14 bg-muted border border-border rounded-xl text-primary flex items-center justify-center group-hover:bg-primary group-hover:text-primary-foreground transition-all duration-300 shadow-inner relative z-10">
-                    <Layers size={24} aria-hidden="true" />
-                  </div>
-                  <div className="mt-auto relative z-10">
-                    <p className="text-lg md:text-xl font-black text-foreground group-hover:text-primary dark:group-hover:text-primary transition-colors uppercase tracking-tight mb-1">
-                      Kosakata
-                    </p>
-                    <p className="text-muted-foreground text-[9px] font-bold uppercase tracking-widest">
-                      Mode Flashcard
-                    </p>
-                  </div>
-                </Card>
-              </Link>
+            <motion.div variants={itemVariants} className="hidden lg:block pb-2">
+              <Button
+                variant="ghost"
+                asChild
+                className="h-[55px] px-8 rounded-2xl border border-border bg-card/50 backdrop-blur-sm text-muted-foreground hover:text-foreground hover:bg-card hover:border-border/80 transition-all text-xs font-bold uppercase tracking-widest"
+              >
+                <Link href="/courses">
+                  <ChevronLeft className="mr-2" size={16} /> Kembali ke Kursus
+                </Link>
+              </Button>
+            </motion.div>
+          </div>
+        </header>
 
-              <Link href={`/tools/flashcards?category=${categoryId}`} className="group flex flex-col h-full">
-                <Card className="p-6 md:p-8 bg-card border border-border rounded-2xl hover:border-secondary/40 hover:bg-secondary/[0.02] transition-all duration-300 flex flex-col items-center text-center gap-5 h-full cursor-pointer relative overflow-hidden group hover:shadow-xl">
-                  <div className="w-12 h-12 md:w-14 md:h-14 bg-muted border border-border rounded-xl text-secondary flex items-center justify-center group-hover:bg-secondary group-hover:text-secondary-foreground transition-all duration-300 shadow-inner relative z-10">
-                    <PenTool size={24} aria-hidden="true" />
-                  </div>
-                  <div className="mt-auto relative z-10">
-                    <p className="text-lg md:text-xl font-black text-foreground group-hover:text-secondary transition-colors uppercase tracking-tight mb-1">
-                      Kamus Kanji
-                    </p>
-                    <p className="text-muted-foreground text-[9px] font-bold uppercase tracking-wider">
-                      Baca & Tulis
-                    </p>
-                  </div>
-                </Card>
-              </Link>
+        {/* AREA LATIHAN SECTION - Refined Grid */}
+        {!isSideQuest && (
+          <motion.section variants={itemVariants} className="mb-[55px]">
+            <div className="mb-8 flex items-center gap-5">
+              <h3 className="text-sm font-bold uppercase tracking-[0.3em] text-muted-foreground/60 flex items-center gap-3">
+                <Sparkles size={14} className={themeColor} /> Area Latihan
+              </h3>
+              <div className="h-[1px] flex-1 bg-border/40" />
+            </div>
 
-              <Link href={`/tools/flashcards?category=${categoryId}`} className="group flex flex-col h-full">
-                <Card className="p-6 md:p-8 bg-card border border-border rounded-2xl hover:border-destructive/40 hover:bg-destructive/[0.02] transition-all duration-300 flex flex-col items-center text-center gap-5 h-full cursor-pointer relative overflow-hidden group hover:shadow-xl">
-                  <div className="w-12 h-12 md:w-14 md:h-14 bg-muted border border-border rounded-xl text-destructive flex items-center justify-center group-hover:bg-destructive group-hover:text-destructive-foreground transition-all duration-300 shadow-inner relative z-10">
-                    <Flame size={24} aria-hidden="true" />
-                  </div>
-                  <div className="mt-auto relative z-10">
-                    <p className="text-lg md:text-xl font-black text-foreground group-hover:text-destructive dark:group-hover:text-destructive transition-colors uppercase tracking-tight mb-1">
-                      Survival
-                    </p>
-                    <p className="text-muted-foreground text-[9px] font-bold uppercase tracking-widest">
-                      Adu Kecepatan
-                    </p>
-                  </div>
-                </Card>
-              </Link>
+            <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-8">
+              {[
+                { 
+                  title: "Kosakata", 
+                  desc: "Asah hafalan lewat flashcard", 
+                  icon: Layers, 
+                  color: "primary", 
+                  href: `/tools/flashcards?category=${categoryId}` 
+                },
+                { 
+                  title: "Lab Kanji", 
+                  desc: "Latihan baca & tulis kanji", 
+                  icon: PenTool, 
+                  color: "secondary", 
+                  href: `/tools/flashcards?category=${categoryId}` 
+                },
+                { 
+                  title: "Mode Survival", 
+                  desc: "Uji kecepatan ingatanmu", 
+                  icon: Flame, 
+                  color: "destructive", 
+                  href: `/tools/flashcards?category=${categoryId}` 
+                },
+              ].map((item, i) => (
+                <Link key={i} href={item.href} className="group">
+                  <Card className="p-8 bg-card/40 backdrop-blur-md border border-border rounded-3xl hover:border-foreground/20 hover:bg-card/60 transition-all duration-500 flex flex-col gap-8 h-full cursor-pointer relative overflow-hidden group hover:shadow-2xl">
+                    <div className={`w-14 h-14 bg-background border border-border rounded-2xl text-${item.color} flex items-center justify-center group-hover:scale-110 transition-transform duration-500 shadow-sm`}>
+                      <item.icon size={24} aria-hidden="true" />
+                    </div>
+                    <div>
+                      <h4 className="text-2xl font-bold text-foreground group-hover:text-primary transition-colors tracking-tight mb-2">
+                        {item.title}
+                      </h4>
+                      <p className="text-muted-foreground text-xs font-semibold uppercase tracking-wider opacity-60 group-hover:opacity-100 transition-opacity">
+                        {item.desc}
+                      </p>
+                    </div>
+                    <div className="absolute top-6 right-6 opacity-0 group-hover:opacity-100 transition-opacity">
+                      <ChevronRight className="text-muted-foreground" size={20} />
+                    </div>
+                  </Card>
+                </Link>
+              ))}
             </div>
           </motion.section>
         )}
 
         {/* DAFTAR SILABUS SECTION */}
-        <motion.section variants={itemVariants} className="pb-12">
-          <div className="mb-6 md:mb-8 flex items-center gap-4">
-            <h3
-              className={`text-lg md:text-xl font-black uppercase tracking-wider flex items-center gap-3 ${themeColor}`}
-            >
-              Daftar Materi
+        <motion.section variants={itemVariants} className="pb-32">
+          <div className="mb-8 flex items-center gap-5">
+            <h3 className="text-sm font-bold uppercase tracking-[0.3em] text-muted-foreground/60">
+              Daftar Pelajaran
             </h3>
-            <div className="h-[1px] flex-1 bg-border" />
+            <div className="h-[1px] flex-1 bg-border/40" />
           </div>
 
           {data.lessons && data.lessons.length > 0 ? (
-            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 md:gap-8">
+            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8">
               {paginatedLessons.map((lesson: Lesson, index: number) => (
                 <LessonCard
                   key={lesson._id}
@@ -247,33 +248,33 @@ export default function CourseCategoryClient({
               ))}
             </div>
           ) : (
-            <div className="flex flex-col items-center justify-center py-20 md:py-32 bg-muted/20 border border-dashed border-border rounded-2xl text-center px-8 relative overflow-hidden group">
-              <div className="w-20 h-20 bg-muted border border-border rounded-2xl flex items-center justify-center mb-8 group-hover:border-primary/30 transition-all duration-500">
-                <Sparkles size={32} className="text-muted-foreground group-hover:text-primary transition-colors" aria-hidden="true" />
+            <div className="flex flex-col items-center justify-center py-32 glass rounded-[2.5rem] text-center px-[55px] border-dashed border-2">
+              <div className="w-[89px] h-[89px] bg-background border border-border rounded-3xl flex items-center justify-center mb-8">
+                <Sparkles size={40} className="text-muted-foreground/40" aria-hidden="true" />
               </div>
               
-              <h4 className="text-2xl md:text-3xl font-black text-foreground uppercase tracking-tight mb-3">
-                Materi Lagi Diracik!
+              <h4 className="text-3xl font-bold text-foreground tracking-tight mb-4 uppercase">
+                Content Incoming
               </h4>
-              <p className="max-w-md text-muted-foreground text-xs md:text-sm font-semibold leading-relaxed">
-                Bagian ini masih dalam proses pengembangan. Sabar ya, materi terbaik sedang disiapkan buat kamu!
+              <p className="max-w-md text-muted-foreground text-sm font-medium leading-relaxed">
+                We&apos;re currently crafting the perfect lessons for this section. Stay tuned for a premium learning experience!
               </p>
             </div>
           )}
 
-          {/* Pagination Controls */}
+          {/* Pagination Controls - Refined */}
           {totalPages > 1 && (
-            <div className="flex flex-col items-center gap-6 mt-16">
-              <div className="text-[10px] font-black text-muted-foreground uppercase tracking-[0.2em]">
-                Halaman <span className={themeColor}>{currentPage}</span> dari {totalPages}
+            <div className="flex flex-col items-center gap-8 mt-[55px]">
+              <div className="text-[10px] font-bold text-muted-foreground/50 uppercase tracking-[0.3em]">
+                Page <span className="text-foreground">{currentPage}</span> of {totalPages}
               </div>
-              <div className="flex items-center gap-2">
+              <div className="flex items-center gap-3 p-2 bg-card/40 backdrop-blur-sm border border-border rounded-2xl">
                 <Button
                   variant="ghost"
                   size="icon"
                   onClick={() => handlePageChange(1)}
                   disabled={currentPage === 1}
-                  className="w-10 h-10 rounded-xl bg-card border border-border text-muted-foreground hover:text-foreground transition-all disabled:opacity-30"
+                  className="w-11 h-11 rounded-xl hover:bg-background transition-all disabled:opacity-20"
                 >
                   <ChevronsLeft size={18} />
                 </Button>
@@ -282,33 +283,28 @@ export default function CourseCategoryClient({
                   size="icon"
                   onClick={() => handlePageChange(currentPage - 1)}
                   disabled={currentPage === 1}
-                  className="w-10 h-10 rounded-xl bg-card border border-border text-muted-foreground hover:text-foreground transition-all disabled:opacity-30"
+                  className="w-11 h-11 rounded-xl hover:bg-background transition-all disabled:opacity-20"
                 >
                   <ChevronLeft size={18} />
                 </Button>
 
-                <div className="flex items-center gap-2">
+                <div className="flex items-center gap-1.5 px-2">
                   {Array.from({ length: Math.min(5, totalPages) }, (_, i) => {
                     let pageNum;
-                    if (totalPages <= 5) {
-                      pageNum = i + 1;
-                    } else if (currentPage <= 3) {
-                      pageNum = i + 1;
-                    } else if (currentPage >= totalPages - 2) {
-                      pageNum = totalPages - 4 + i;
-                    } else {
-                      pageNum = currentPage - 2 + i;
-                    }
+                    if (totalPages <= 5) pageNum = i + 1;
+                    else if (currentPage <= 3) pageNum = i + 1;
+                    else if (currentPage >= totalPages - 2) pageNum = totalPages - 4 + i;
+                    else pageNum = currentPage - 2 + i;
                     
                     return (
                       <Button
                         key={pageNum}
                         variant={currentPage === pageNum ? "default" : "ghost"}
                         onClick={() => handlePageChange(pageNum)}
-                        className={`w-10 h-10 rounded-xl font-bold transition-all ${
+                        className={`w-11 h-11 rounded-xl font-bold transition-all ${
                           currentPage === pageNum 
-                            ? `bg-foreground text-background shadow-lg` 
-                            : "bg-card border border-border text-muted-foreground hover:border-foreground/40"
+                            ? `bg-foreground text-background shadow-xl` 
+                            : "hover:bg-background text-muted-foreground"
                         }`}
                       >
                         {pageNum}
@@ -322,7 +318,7 @@ export default function CourseCategoryClient({
                   size="icon"
                   onClick={() => handlePageChange(currentPage + 1)}
                   disabled={currentPage === totalPages}
-                  className="w-10 h-10 rounded-xl bg-card border border-border text-muted-foreground hover:text-foreground transition-all disabled:opacity-30"
+                  className="w-11 h-11 rounded-xl hover:bg-background transition-all disabled:opacity-20"
                 >
                   <ChevronRight size={18} />
                 </Button>
@@ -331,7 +327,7 @@ export default function CourseCategoryClient({
                   size="icon"
                   onClick={() => handlePageChange(totalPages)}
                   disabled={currentPage === totalPages}
-                  className="w-10 h-10 rounded-xl bg-card border border-border text-muted-foreground hover:text-foreground transition-all disabled:opacity-30"
+                  className="w-11 h-11 rounded-xl hover:bg-background transition-all disabled:opacity-20"
                 >
                   <ChevronsRight size={18} />
                 </Button>

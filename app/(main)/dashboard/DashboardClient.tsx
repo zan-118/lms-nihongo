@@ -247,10 +247,12 @@ export default function DashboardClient({ courseMetadata }: DashboardClientProps
         initial={{ opacity: 0, y: 10 }}
         animate={{ opacity: 1, y: 0 }}
         transition={{ duration: 0.3 }}
+        className="mt-[34px]"
       >
         {activeTab === "beranda" && (
-          <div className="grid grid-cols-1 lg:grid-cols-3 gap-8">
-            <div className="lg:col-span-2 space-y-8">
+          <div className="grid grid-cols-1 lg:grid-cols-12 gap-[55px]">
+            {/* Main Content Area */}
+            <div className="lg:col-span-8 space-y-[89px]">
               <DashboardHero 
                 loading={loading} 
                 guestId={guestId} 
@@ -259,28 +261,37 @@ export default function DashboardClient({ courseMetadata }: DashboardClientProps
                 isAuthenticated={isAuthenticated}
                 courseMetadata={courseMetadata}
               />
-              <div className="space-y-8">
-                <div className="flex flex-col">
-                  <h2 className="text-muted-foreground font-bold uppercase tracking-widest text-xs mb-2 flex items-center gap-2">
-                    <div className="w-1.5 h-1.5 rounded-full bg-primary" />
-                    Progres Kanji
-                  </h2>
-                  <h3 className="text-lg md:text-xl font-black text-foreground uppercase tracking-tight">
-                    Ringkasan <span className="text-primary">Belajar</span>
+              
+              <section className="space-y-[34px]">
+                <div className="flex flex-col gap-2">
+                  <div className="flex items-center gap-[13px]">
+                    <div className="w-[34px] h-[1px] bg-primary/40" />
+                    <h2 className="text-[10px] font-bold uppercase tracking-[0.2em] text-primary">
+                      Ringkasan Belajar
+                    </h2>
+                  </div>
+                  <h3 className="text-3xl font-bold tracking-tight text-foreground">
+                    Rangkuman <span className="text-muted-foreground font-medium">Progresmu</span>
                   </h3>
                 </div>
-                <KanjiProgressGrid />
-              </div>
+                
+                <div className="p-[21px] rounded-[34px] bg-card/30 backdrop-blur-sm border border-border">
+                  <KanjiProgressGrid />
+                </div>
+              </section>
             </div>
             
-            <div className="space-y-8">
-              <DailyQuests />
-            </div>
+            {/* Sidebar Area */}
+            <aside className="lg:col-span-4 space-y-[34px]">
+              <div className="sticky top-[100px]">
+                <DailyQuests />
+              </div>
+            </aside>
           </div>
         )}
 
         {activeTab === "progres" && (
-          <div className="space-y-16">
+          <div className="space-y-[89px]">
             <DashboardStats 
               loading={loading} 
               progress={progress} 
@@ -289,30 +300,37 @@ export default function DashboardClient({ courseMetadata }: DashboardClientProps
               itemVariants={itemVariants} 
               courseMetadata={courseMetadata}
             />
-            <div className="space-y-8">
-              <div className="flex flex-col">
-                <h2 className="text-muted-foreground font-bold uppercase tracking-widest text-xs mb-2 flex items-center gap-2">
-                  <div className="w-1.5 h-1.5 rounded-full bg-primary" />
-                  Detail Progres Kanji
-                </h2>
-                <h3 className="text-lg md:text-xl font-black text-foreground uppercase tracking-tight">
-                  Data Belajar <span className="text-primary">Kamu</span>
+            
+            <section className="space-y-[34px]">
+              <div className="flex flex-col gap-2">
+                <div className="flex items-center gap-[13px]">
+                  <div className="w-[34px] h-[1px] bg-primary/40" />
+                  <h2 className="text-[10px] font-bold uppercase tracking-[0.2em] text-primary">
+                    Analisis Mendalam
+                  </h2>
+                </div>
+                <h3 className="text-3xl font-bold tracking-tight text-foreground">
+                  Data <span className="text-muted-foreground font-medium">Belajarmu</span>
                 </h3>
               </div>
-              <KanjiProgressGrid />
-            </div>
+              <div className="p-[21px] rounded-[34px] bg-card/30 backdrop-blur-sm border border-border">
+                <KanjiProgressGrid />
+              </div>
+            </section>
           </div>
         )}
 
         {activeTab === "pencapaian" && (
-          <div className="space-y-8">
-            <div className="flex flex-col">
-              <h2 className="text-muted-foreground font-bold uppercase tracking-widest text-xs mb-2 flex items-center gap-2">
-                <div className="w-1.5 h-1.5 rounded-full bg-primary" />
-                Koleksi Medali
-              </h2>
-              <h3 className="text-lg md:text-xl font-black text-foreground uppercase tracking-tight">
-                Medali <span className="text-primary">& Pencapaian</span>
+          <div className="space-y-[34px]">
+            <div className="flex flex-col gap-2">
+              <div className="flex items-center gap-[13px]">
+                <div className="w-[34px] h-[1px] bg-primary/40" />
+                <h2 className="text-[10px] font-bold uppercase tracking-[0.2em] text-primary">
+                  Koleksi
+                </h2>
+              </div>
+              <h3 className="text-3xl font-bold tracking-tight text-foreground">
+                Pencapaian <span className="text-muted-foreground font-medium">& Hadiah</span>
               </h3>
             </div>
             <AchievementsGrid />
