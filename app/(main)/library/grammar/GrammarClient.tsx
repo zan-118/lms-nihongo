@@ -34,6 +34,11 @@ export default function GrammarClient({ initialArticles = [] }: GrammarClientPro
   const [articles, setArticles] = useState<GrammarArticle[]>(initialArticles);
   const [loading, setLoading] = useState(false);
   const [currentPage, setCurrentPage] = useState(1);
+  const [mounted, setMounted] = useState(false);
+
+  useEffect(() => {
+    setMounted(true);
+  }, []);
 
   useEffect(() => {
     // Hindari fetch ulang jika ini render pertama dan kita sudah punya data awal untuk N5
@@ -86,6 +91,8 @@ export default function GrammarClient({ initialArticles = [] }: GrammarClientPro
     setCurrentPage(1);
   }, [searchTerm]);
 
+  if (!mounted) return null;
+
   return (
     <div className="max-w-7xl mx-auto w-full relative z-10 pt-4 md:pt-10">
       <nav className="mb-6 md:mb-10 flex flex-wrap items-center gap-2 md:gap-4 text-xs md:text-xs font-bold text-muted-foreground uppercase tracking-widest">
@@ -130,8 +137,8 @@ export default function GrammarClient({ initialArticles = [] }: GrammarClientPro
 
       <GrammarSearch value={searchTerm} onChange={setSearchTerm} />
 
-      <section className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4 md:gap-5 items-stretch">
-        <AnimatePresence mode="popLayout">
+      <section className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4 md:gap-5 items-stretch min-h-[400px]">
+        <AnimatePresence>
           {loading ? (
             [...Array(6)].map((_, i) => (
               <Card key={i} className="h-48 md:h-56 bg-card/40 backdrop-blur-xl border-white/5 rounded-[2rem] overflow-hidden p-6 relative">

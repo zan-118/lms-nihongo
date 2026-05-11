@@ -63,7 +63,7 @@ export default function StreakFreezeCard() {
               : 'bg-muted text-muted-foreground'
           }`}
         >
-          Beli dengan {COST} XP <Zap size={14} className="ml-2" />
+          Beli dengan {STREAK_FREEZE_COST} XP <Zap size={14} className="ml-2" />
         </Button>
         
         <div className="flex items-center gap-1.5 justify-center opacity-40">

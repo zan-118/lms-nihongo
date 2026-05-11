@@ -30,7 +30,6 @@ export function GrammarCard({ article, index, selectedLevel }: GrammarCardProps)
 
   return (
     <motion.div
-      layout
       initial={{ opacity: 0, y: 20 }}
       animate={{ opacity: 1, y: 0 }}
       exit={{ opacity: 0, scale: 0.95 }}
@@ -42,8 +41,6 @@ export function GrammarCard({ article, index, selectedLevel }: GrammarCardProps)
       }}
       className="group h-full"
       style={{ 
-        contentVisibility: 'auto', 
-        containIntrinsicSize: '0 320px',
         willChange: 'transform'
       }}
     >
