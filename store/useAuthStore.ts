@@ -1,5 +1,5 @@
 import { create } from "zustand";
-import { persist } from "zustand/middleware";
+import { persist, createJSONStorage } from "zustand/middleware";
 import { get, set as idbSet, del } from "idb-keyval";
 
 interface AuthState {
@@ -17,11 +17,12 @@ export const useAuthStore = create<AuthState>()(
     }),
     {
       name: "nihongoroute_auth_data",
-      storage: {
+      storage: createJSONStorage(() => ({
         getItem: async (name) => (await get(name)) ?? null,
         setItem: async (name, value) => await idbSet(name, value),
         removeItem: async (name) => await del(name),
-      },
+      })),
+      partialize: (state) => ({ isAuthenticated: state.isAuthenticated }),
     }
   )
 );

@@ -160,8 +160,12 @@ export default function RootLayout({
               duration: 4000,
             }}
           />
-          <Analytics />
-          <SpeedInsights />
+          {process.env.NODE_ENV === 'production' && (
+            <>
+              <Analytics />
+              <SpeedInsights />
+            </>
+          )}
         </ThemeProvider>
       </body>
 

@@ -17,14 +17,12 @@ export const metadata = {
 export default async function GrammarArticlesPage() {
   // Pre-fetch artikel di sisi server
   const grammarData: any[] = await sanityFetch({
-    query: `*[_type == "grammar_article"] | order(level.code asc, title asc) {
+    query: `*[_type == "grammar_article" && (course_category->slug.current match "n5*" || course_category->slug.current match "jlpt-n5*")] | order(title asc) {
       _id,
       title,
-      "slug": slug.current,
-      description,
-      "level_code": level->code
+      "slug": slug.current
     }`,
-    tags: ["grammar_article"],
+    tags: ["grammar_article", "course_category"],
   });
 
   return (

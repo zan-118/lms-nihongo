@@ -36,8 +36,8 @@ export default function GrammarClient({ initialArticles = [] }: GrammarClientPro
   const [currentPage, setCurrentPage] = useState(1);
 
   useEffect(() => {
-    // Hindari fetch ulang jika masih di level default (n5) dan ini render pertama
-    if (selectedLevel === "n5" && articles === initialArticles && initialArticles.length > 0) {
+    // Hindari fetch ulang jika ini render pertama dan kita sudah punya data awal untuk N5
+    if (selectedLevel === "n5" && articles.length > 0 && articles.length === (initialArticles?.length || 0)) {
       return;
     }
 
