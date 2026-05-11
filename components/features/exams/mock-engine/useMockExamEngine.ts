@@ -1,5 +1,5 @@
 import { useState, useEffect, useRef, useCallback, useMemo } from "react";
-import { ExamData, GameState, AudioState, ExamQuestion } from "./types";
+import { ExamData, GameState, AudioState, ExamQuestion, PendingConfirmType } from "./types";
 import { toast } from "sonner";
 import { useUserStore } from "@/store/useUserStore";
 import { SECTION_LABELS } from "./constants";
@@ -49,6 +49,7 @@ export function useMockExamEngine(exam: ExamData) {
   const [activeSectionIndex, setActiveSectionIndex] = useState(0);
   const [audioStatus, setAudioStatus] = useState<Record<string, AudioState>>({});
   const [cheatWarnings, setCheatWarnings] = useState(0);
+  const [pendingConfirm, setPendingConfirm] = useState<PendingConfirmType>(null);
 
   // Group questions by section
   const sections = useMemo(() => {
@@ -108,26 +109,32 @@ export function useMockExamEngine(exam: ExamData) {
     const isLastInSection = sectionQuestions[sectionQuestions.length - 1] === currentQuestionIndex;
 
     if (isLastInSection) {
-      // If it's the last question of the section, we move to the next section
       if (activeSectionIndex < availableSections.length - 1) {
-        if (confirm(`Lanjut ke bagian ${SECTION_LABELS[availableSections[activeSectionIndex + 1]]}? Setelah pindah, kamu tidak bisa kembali ke bagian ini.`)) {
-          const nextSecIndex = activeSectionIndex + 1;
-          setActiveSectionIndex(nextSecIndex);
-          const firstQuestionOfNextSection = sections[availableSections[nextSecIndex]][0];
-          setCurrentQuestionIndex(firstQuestionOfNextSection);
-          window.scrollTo({ top: 0, behavior: "smooth" });
-        }
+        // Tidak langsung pindah — minta konfirmasi via Dialog (bukan confirm())
+        setPendingConfirm("section");
       } else {
-        // If it's the last question of the last section
-        if (confirm("Kumpulkan jawaban sekarang?")) {
-          finishExam();
-        }
+        // Soal terakhir dari seksi terakhir — minta konfirmasi submit
+        setPendingConfirm("finish");
       }
     } else {
       setCurrentQuestionIndex((prev) => Math.min(prev + 1, exam.questions.length - 1));
       window.scrollTo({ top: 0, behavior: "smooth" });
     }
-  }, [currentQuestionIndex, exam.questions.length, sections, currentSection, activeSectionIndex, availableSections, finishExam]);
+  }, [currentQuestionIndex, exam.questions.length, sections, currentSection, activeSectionIndex, availableSections]);
+
+  /** Eksekusi aksi yang ditunda setelah user konfirmasi via Dialog */
+  const confirmPendingAction = useCallback(() => {
+    if (pendingConfirm === "section") {
+      const nextSecIndex = activeSectionIndex + 1;
+      setActiveSectionIndex(nextSecIndex);
+      const firstQuestionOfNextSection = sections[availableSections[nextSecIndex]][0];
+      setCurrentQuestionIndex(firstQuestionOfNextSection);
+      window.scrollTo({ top: 0, behavior: "smooth" });
+    } else if (pendingConfirm === "finish") {
+      finishExam();
+    }
+    setPendingConfirm(null);
+  }, [pendingConfirm, activeSectionIndex, sections, availableSections, finishExam]);
 
   const prevQuestion = useCallback(() => {
     const sectionQuestions = sections[currentSection];
@@ -278,11 +285,30 @@ export function useMockExamEngine(exam: ExamData) {
     }
   }, [exam.questions, currentSection, currentQuestionIndex, exam.choukaiAudioUrl]);
 
+  // Label dinamis untuk Dialog konfirmasi
+  const pendingConfirmLabel = useMemo(() => {
+    if (pendingConfirm === "section") {
+      const nextSec = availableSections[activeSectionIndex + 1];
+      return {
+        title: `Lanjut ke ${SECTION_LABELS[nextSec] || "Bagian Berikutnya"}?`,
+        description: "Setelah pindah bagian, kamu tidak bisa kembali ke soal di bagian ini.",
+      };
+    }
+    if (pendingConfirm === "finish") {
+      return {
+        title: "Kumpulkan Jawaban?",
+        description: "Pastikan semua soal sudah dijawab. Ujian akan berakhir dan nilaimu akan dihitung.",
+      };
+    }
+    return null;
+  }, [pendingConfirm, availableSections, activeSectionIndex]);
+
   return {
     gameState, setGameState, timeLeft, answers, currentQuestionIndex, audioStatus,
     cheatWarnings, audioRef, activeQuestion, isTimeCritical, isCurrentlyListening,
     disablePreviousButton, handlePlayAudio, finishExam, handleAnswer, nextQuestion,
     prevQuestion, calculateScore, handleShareResult,
-    sections, availableSections, currentSection, goToQuestion, activeSectionIndex
+    sections, availableSections, currentSection, goToQuestion, activeSectionIndex,
+    pendingConfirm, setPendingConfirm, confirmPendingAction, pendingConfirmLabel,
   };
 }

@@ -10,7 +10,17 @@ import {
   CheckCircle,
   Lock as LockIcon,
 } from "lucide-react";
-import { ExamData, ExamQuestion, AudioState } from "./types";
+import {
+  AlertDialog,
+  AlertDialogAction,
+  AlertDialogCancel,
+  AlertDialogContent,
+  AlertDialogDescription,
+  AlertDialogFooter,
+  AlertDialogHeader,
+  AlertDialogTitle,
+} from "@/components/ui/alert-dialog";
+import { ExamData, ExamQuestion, AudioState, PendingConfirmType } from "./types";
 import { SECTION_LABELS } from "./constants";
 import { formatTime } from "@/lib/utils";
 
@@ -26,7 +36,6 @@ interface ExamPlayingProps {
   isCurrentlyListening: boolean;
   disablePreviousButton: boolean;
   handlePlayAudio: () => void;
-  finishExam: () => void;
   handleAnswer: (idx: number) => void;
   nextQuestion: () => void;
   prevQuestion: () => void;
@@ -35,6 +44,10 @@ interface ExamPlayingProps {
   currentSection: string;
   goToQuestion: (idx: number) => void;
   activeSectionIndex: number;
+  pendingConfirm: PendingConfirmType;
+  setPendingConfirm: (v: PendingConfirmType) => void;
+  confirmPendingAction: () => void;
+  pendingConfirmLabel: { title: string; description: string } | null;
 }
 
 /**
@@ -90,7 +103,6 @@ export function ExamPlaying({
   isCurrentlyListening,
   disablePreviousButton,
   handlePlayAudio,
-  finishExam,
   handleAnswer,
   nextQuestion,
   prevQuestion,
@@ -99,6 +111,10 @@ export function ExamPlaying({
   currentSection,
   goToQuestion,
   activeSectionIndex,
+  pendingConfirm,
+  setPendingConfirm,
+  confirmPendingAction,
+  pendingConfirmLabel,
 }: ExamPlayingProps) {
   if (!activeQuestion) return null;
 
@@ -274,9 +290,7 @@ export function ExamPlaying({
 
           {currentQuestionIndex === exam.questions.length - 1 ? (
             <Button
-              onClick={() => {
-                if (confirm("Yakin ingin mengakhiri ujian sekarang? Waktu pengerjaan masih tersedia.")) finishExam();
-              }}
+              onClick={() => setPendingConfirm("finish")}
               className="flex-1 sm:flex-none bg-warning hover:bg-warning/90 text-warning-foreground px-8 py-6 rounded-xl font-bold uppercase tracking-wider text-[10px] transition-all shadow-md"
             >
               <CheckCircle size={16} aria-hidden="true" className="mr-2" /> Selesai
@@ -295,6 +309,34 @@ export function ExamPlaying({
           )}
         </div>
       </footer>
+
+      {/* Dialog Konfirmasi — menggantikan window.confirm() yang blocking */}
+      <AlertDialog open={!!pendingConfirm} onOpenChange={(open) => !open && setPendingConfirm(null)}>
+        <AlertDialogContent className="bg-card border border-border rounded-3xl">
+          <AlertDialogHeader>
+            <AlertDialogTitle className="font-black uppercase tracking-tight text-foreground">
+              {pendingConfirmLabel?.title}
+            </AlertDialogTitle>
+            <AlertDialogDescription className="text-muted-foreground text-sm leading-relaxed">
+              {pendingConfirmLabel?.description}
+            </AlertDialogDescription>
+          </AlertDialogHeader>
+          <AlertDialogFooter className="gap-3">
+            <AlertDialogCancel
+              onClick={() => setPendingConfirm(null)}
+              className="rounded-xl border-border font-bold uppercase tracking-widest text-xs"
+            >
+              Batal
+            </AlertDialogCancel>
+            <AlertDialogAction
+              onClick={confirmPendingAction}
+              className="rounded-xl bg-destructive hover:bg-destructive/90 text-destructive-foreground font-bold uppercase tracking-widest text-xs"
+            >
+              Ya, Lanjutkan
+            </AlertDialogAction>
+          </AlertDialogFooter>
+        </AlertDialogContent>
+      </AlertDialog>
     </div>
   );
 }

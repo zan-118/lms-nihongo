@@ -15,7 +15,6 @@ export function useQuizEngine(questions: QuizQuestion[], lessonId?: string) {
 
   const updateProgress = useSRSStore((state) => state.updateProgress);
   const completeLesson = useUserStore((state) => state.completeLesson);
-  const xp = useUserStore((state) => state.xp);
 
   const handleFinish = useCallback((finalScore: number) => {
     setIsFinished(true);
@@ -26,7 +25,9 @@ export function useQuizEngine(questions: QuizQuestion[], lessonId?: string) {
     if (totalXP > 0) {
       setXpGained(totalXP);
       setShowXP(true);
-      updateProgress(xp + totalXP, {});
+      // Baca xp fresh dari store untuk mencegah stale snapshot di sesi panjang
+      const currentXp = useUserStore.getState().xp;
+      updateProgress(currentXp + totalXP, {});
       
       // Mark lesson as completed if score is at least 70%
       if (lessonId && finalScore / questions.length >= 0.7) {
@@ -35,7 +36,7 @@ export function useQuizEngine(questions: QuizQuestion[], lessonId?: string) {
 
       setTimeout(() => setShowXP(false), 2000);
     }
-  }, [questions.length, xp, updateProgress, completeLesson, lessonId]);
+  }, [questions.length, updateProgress, completeLesson, lessonId]);
 
   const nextQuestion = useCallback(() => {
     if (currentIndex < questions.length - 1) {

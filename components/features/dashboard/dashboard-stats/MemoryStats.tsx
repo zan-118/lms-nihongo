@@ -14,29 +14,29 @@ export default function MemoryStats() {
     {
       label: "Tingkat Master",
       count: stats.master,
-      color: "text-success text-success",
-      indicatorColor: "bg-success shadow-[0_0_15px_rgba(16,185,129,0.5)]",
+      color: "text-success",
+      indicatorColor: "bg-success shadow-[0_0_15px_rgba(var(--success-rgb),0.5)]",
       icon: <Trophy size={16} />,
     },
     {
       label: "Memori Stabil",
       count: stats.intermediate,
-      color: "text-primary text-primary",
-      indicatorColor: "bg-primary shadow-[0_0_15px_rgba(59,130,246,0.5)]",
+      color: "text-primary",
+      indicatorColor: "bg-primary shadow-[0_0_15px_rgba(var(--primary-rgb),0.5)]",
       icon: <TrendingUp size={16} />,
     },
     {
       label: "Fase Belajar",
       count: stats.learning,
-      color: "text-warning text-warning",
-      indicatorColor: "bg-warning shadow-[0_0_15px_rgba(251,191,36,0.5)]",
+      color: "text-warning",
+      indicatorColor: "bg-warning shadow-[0_0_15px_rgba(var(--warning-rgb),0.5)]",
       icon: <Flame size={16} />,
     },
     {
       label: "Materi Baru",
       count: stats.new,
       color: "text-muted-foreground",
-      indicatorColor: "bg-slate-400 dark:bg-background0 shadow-none",
+      indicatorColor: "bg-muted-foreground/30 shadow-none",
       icon: <Sprout size={16} />,
     },
   ];
@@ -91,7 +91,7 @@ export default function MemoryStats() {
         </Link>
         <Link
           href="/courses/n5/kanji"
-          className="group relative p-4 md:p-5 bg-muted rounded-2xl md:rounded-3xl border border-border text-xs md:text-xs font-bold text-center uppercase tracking-widest text-muted-foreground transition-all neo-card shadow-none active:translate-y-1 hover:text-purple-500 hover:border-purple-500/30 hover:bg-purple-500/5"
+          className="group relative p-4 md:p-5 bg-muted rounded-2xl md:rounded-3xl border border-border text-xs md:text-xs font-bold text-center uppercase tracking-widest text-muted-foreground transition-all neo-card shadow-none active:translate-y-1 hover:text-secondary hover:border-secondary/30 hover:bg-secondary/5"
         >
           <div className="flex flex-col items-center gap-2 md:gap-3">
             <PenTool size={18} className="md:w-5 md:h-5 group-hover:scale-110 transition-transform duration-300" />
@@ -113,7 +113,8 @@ interface StatBarProps {
 }
 
 function StatBar({ label, count, total, indicatorColor, icon, colorClass }: StatBarProps) {
-  const percent = total > 1 || count > 0 ? (count / total) * 100 : 0;
+  // Guard: total > 0 mencegah NaN (divisi by zero) dan Infinity (count > 0 tapi total = 0)
+  const percent = total > 0 ? (count / total) * 100 : 0;
 
   return (
     <div className="group cursor-default">

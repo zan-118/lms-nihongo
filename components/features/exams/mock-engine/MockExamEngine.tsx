@@ -61,7 +61,6 @@ export default function MockExamEngine({ exam }: MockExamEngineProps) {
       isCurrentlyListening={engine.isCurrentlyListening}
       disablePreviousButton={engine.disablePreviousButton}
       handlePlayAudio={engine.handlePlayAudio}
-      finishExam={engine.finishExam}
       handleAnswer={engine.handleAnswer}
       nextQuestion={engine.nextQuestion}
       prevQuestion={engine.prevQuestion}
@@ -70,6 +69,10 @@ export default function MockExamEngine({ exam }: MockExamEngineProps) {
       currentSection={engine.currentSection}
       goToQuestion={engine.goToQuestion}
       activeSectionIndex={engine.activeSectionIndex}
+      pendingConfirm={engine.pendingConfirm}
+      setPendingConfirm={engine.setPendingConfirm}
+      confirmPendingAction={engine.confirmPendingAction}
+      pendingConfirmLabel={engine.pendingConfirmLabel}
     />
   );
 }

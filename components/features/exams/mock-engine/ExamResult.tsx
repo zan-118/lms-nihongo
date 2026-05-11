@@ -1,6 +1,7 @@
 "use client";
 
 import { motion } from "framer-motion";
+import { useMemo } from "react";
 import { Card } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { useUserStore } from "@/store/useUserStore";
@@ -33,7 +34,11 @@ export function ExamResult({
   calculateScore,
   handleShareResult,
 }: ExamResultProps) {
-  const { correctCount, finalScore, sectionBreakdown } = calculateScore();
+  // Memoize kalkulasi skor — iterasi penuh array soal, tidak perlu diulang setiap render
+  const { correctCount, finalScore, sectionBreakdown } = useMemo(
+    () => calculateScore(),
+    [calculateScore]
+  );
   const isPassed = finalScore >= exam.passingScore;
   const userFullName = useUserStore(s => s.name) || "Siswa NihongoRoute";
 

@@ -3,6 +3,7 @@ import { Card } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import { CheckCircle, XCircle, Volume2 } from "lucide-react";
+import { useTheme } from "next-themes";
 import { ExamData, GameState } from "./types";
 import { SECTION_LABELS } from "./constants";
 
@@ -13,6 +14,8 @@ interface ExamReviewProps {
 }
 
 export function ExamReview({ exam, answers, setGameState }: ExamReviewProps) {
+  // Gunakan useTheme agar reactive terhadap perubahan tema dan SSR-safe
+  const { resolvedTheme } = useTheme();
   return (
     <div className="w-full pb-20 max-w-4xl mx-auto transition-colors duration-300">
       <header className="relative z-20 flex justify-between items-center mb-10">
@@ -93,7 +96,7 @@ export function ExamReview({ exam, answers, setGameState }: ExamReviewProps) {
                     </p>
                     <audio
                       controls
-                      className={`w-full h-12 outline-none opacity-90 transition-all ${typeof window !== 'undefined' && document.documentElement.classList.contains('dark') ? 'invert' : ''}`}
+                      className={`w-full h-12 outline-none opacity-90 transition-all ${resolvedTheme === 'dark' ? 'invert' : ''}`}
                       src={q.audioUrl}
                     />
                   </Card>

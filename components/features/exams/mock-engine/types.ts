@@ -21,3 +21,5 @@ export interface ExamData {
 
 export type GameState = "intro" | "playing" | "result" | "review";
 export type AudioState = "idle" | "playing" | "played";
+/** State untuk konfirmasi navigasi seksi — menggantikan window.confirm() */
+export type PendingConfirmType = "section" | "finish" | null;
