@@ -11,6 +11,16 @@
 import { MetadataRoute } from "next";
 import { sanityFetch } from "@/lib/sanity.fetch";
 
+interface SitemapLevel {
+  code: string;
+}
+
+interface SitemapLesson {
+  slug: string;
+  level_code: string;
+  _updatedAt: string;
+}
+
 // ======================
 // MAIN EXECUTION
 // ======================
@@ -34,7 +44,7 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
 
   // Ambil Data Level dari Sanity
   const levelsQuery = `*[_type == "level"] { code }`;
-  const levels: any[] = await sanityFetch({
+  const levels: SitemapLevel[] = await sanityFetch<SitemapLevel[]>({
     query: levelsQuery,
     tags: ["level"],
   });
@@ -54,7 +64,7 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
     "level_code": level->code,
     _updatedAt
   }`;
-  const lessons: any[] = await sanityFetch({
+  const lessons: SitemapLesson[] = await sanityFetch<SitemapLesson[]>({
     query: lessonsQuery,
     tags: ["lesson", "level"],
   });

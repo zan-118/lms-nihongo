@@ -55,9 +55,9 @@ export function FlashcardFront({
     <Card
       className={`absolute inset-0 w-full h-full border rounded-2xl flex flex-col items-center justify-center p-6 md:p-8 transition-all duration-500 shadow-none overflow-hidden bg-card bg-card ${
         inputResult === "correct" 
-          ? "border-success/50 shadow-[0_0_40px_rgba(16,185,129,0.2)] bg-success/[0.02]" 
+          ? "border-success/50 shadow-[0_0_40px_rgba(var(--success-rgb),0.2)] bg-success/[0.02]" 
           : inputResult === "wrong"
-          ? "border-destructive/50 shadow-[0_0_40px_rgba(239,68,68,0.2)] bg-destructive/[0.02]"
+          ? "border-destructive/50 shadow-[0_0_40px_rgba(var(--destructive-rgb),0.2)] bg-destructive/[0.02]"
           : `${themeBorder} ${themeShadow}`
       }`}
       style={{
@@ -72,11 +72,11 @@ export function FlashcardFront({
         }`} 
       />
 
-      <div className={`absolute top-0 right-0 w-48 h-48 md:w-64 md:h-64 blur-[80px] md:blur-[100px] rounded-full opacity-10 pointer-events-none ${isKanji ? 'bg-purple-500' : 'bg-primary'}`} />
+      <div className={`absolute top-0 right-0 w-48 h-48 md:w-64 md:h-64 blur-[80px] md:blur-[100px] rounded-full opacity-10 pointer-events-none ${isKanji ? 'bg-secondary' : 'bg-primary'}`} />
 
       <Badge
         variant="outline"
-        className="absolute top-6 md:top-8 left-1/2 -translate-x-1/2 text-xs md:text-xs font-bold uppercase tracking-widest text-muted-foreground border-border dark:border-white/[0.08] px-4 md:px-5 py-1.5 rounded-lg bg-muted dark:bg-black/20 h-auto whitespace-nowrap"
+        className="absolute top-6 md:top-8 left-1/2 -translate-x-1/2 text-xs md:text-xs font-bold uppercase tracking-widest text-muted-foreground border-border px-4 md:px-5 py-1.5 rounded-lg bg-muted dark:bg-background/20 h-auto whitespace-nowrap"
       >
         {isChallenge ? "Tantangan Produksi" : isKanji ? "Karakter Kanji" : "Kosakata Utama"}
       </Badge>

@@ -154,8 +154,8 @@ export default function RootLayout({
                 borderRadius: '16px',
               },
               classNames: {
-                success: "border-cyber-neon/50 shadow-[0_0_20px_rgba(0,238,255,0.2)]",
-                error: "border-destructive/50 shadow-[0_0_20px_rgba(239,68,68,0.2)]",
+                success: "border-primary/50 shadow-[0_0_20px_rgba(var(--primary-rgb),0.2)]",
+                error: "border-destructive/50 shadow-[0_0_20px_rgba(var(--destructive-rgb),0.2)]",
               },
               duration: 4000,
             }}

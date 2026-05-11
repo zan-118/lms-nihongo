@@ -68,11 +68,11 @@ export default function FlashcardMaster({
   const cardId = card._id || card.id || "";
   const srsState = srs[cardId];
   const isKanji = type === "kanji";
-  const themeColor = isKanji ? "text-purple-600 dark:text-purple-400" : "text-primary";
-  const themeBgColor = isKanji ? "bg-purple-600 dark:bg-purple-500" : "bg-primary";
+  const themeColor = isKanji ? "text-secondary" : "text-primary";
+  const themeBgColor = isKanji ? "bg-secondary" : "bg-primary";
   const themeShadow = isKanji
-    ? "shadow-lg dark:shadow-[0_0_20px_rgba(168,85,247,0.3)]"
-    : "shadow-lg dark:shadow-[0_0_20px_rgba(0,238,255,0.3)]";
+    ? "shadow-lg dark:shadow-[0_0_20px_rgba(var(--secondary-rgb),0.3)]"
+    : "shadow-lg dark:shadow-[0_0_20px_rgba(var(--primary-rgb),0.3)]";
 
   return (
     <section className="w-full max-w-2xl mx-auto relative px-4 md:px-0 transition-colors duration-300">

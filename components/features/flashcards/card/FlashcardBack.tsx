@@ -74,7 +74,7 @@ export function FlashcardBack({
         <div className="w-full flex items-center justify-between mb-2 shrink-0">
           <Badge
             variant="outline"
-            className={`text-[8px] md:text-[10px] font-black uppercase tracking-widest ${themeColor} border-current/20 px-2 py-0.5 rounded-lg h-auto bg-muted dark:bg-black/20 z-30`}
+            className={`text-[8px] md:text-[10px] font-black uppercase tracking-widest ${themeColor} border-current/20 px-2 py-0.5 rounded-lg h-auto bg-muted dark:bg-background/20 z-30`}
           >
             {isKanji ? "Detail Karakter" : (hinshi || "Definisi")}
           </Badge>

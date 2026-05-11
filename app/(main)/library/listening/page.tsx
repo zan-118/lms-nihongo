@@ -3,13 +3,19 @@ import { listeningListQuery } from "@/lib/queries";
 import ListeningListClient from "@/app/(main)/library/listening/ListeningListClient";
 import type { Metadata } from "next";
 
+interface ListeningTaskItem {
+  _id: string;
+  title: string;
+  slug: string;
+}
+
 export const metadata: Metadata = {
   title: "Latihan Menyimak | NihongoRoute",
   description: "Pertajam pendengaranmu dengan latihan audio interaktif dan transkrip real-time.",
 };
 
 export default async function ListeningListPage() {
-  const tasks: any[] = await sanityFetch<any[]>({
+  const tasks: ListeningTaskItem[] = await sanityFetch<ListeningTaskItem[]>({
     query: listeningListQuery,
     tags: ["listening_task"],
   });

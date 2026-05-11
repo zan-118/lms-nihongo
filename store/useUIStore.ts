@@ -27,8 +27,8 @@ interface UIState {
   clearNotifications: () => void;
   toggleNotifications: (enabled: boolean) => void;
   toggleFurigana: (enabled: boolean) => void;
-  exportData: () => void;
-  importData: (jsonData: string) => boolean;
+  exportData: () => Promise<void>;
+  importData: (jsonData: string) => Promise<boolean>;
   setReadingState: (state: Partial<UIState['readingState']>) => void;
   setListeningState: (state: Partial<UIState['listeningState']>) => void;
 
@@ -101,14 +101,10 @@ export const useUIStore = create<UIState>()(
         settings: { ...state.settings, showFurigana: enabled }
       })),
 
-      exportData: () => {
+      exportData: async () => {
         if (typeof window === "undefined") return;
-        // Import stores dynamically to avoid circular dependencies if needed, 
-        // but here they are used inside the function.
-        // eslint-disable-next-line @typescript-eslint/no-require-imports
-        const { useUserStore } = require("./useUserStore");
-        // eslint-disable-next-line @typescript-eslint/no-require-imports
-        const { useSRSStore } = require("./useSRSStore");
+        const { useUserStore } = await import("./useUserStore");
+        const { useSRSStore } = await import("./useSRSStore");
         
         const user = useUserStore.getState();
         const srs = useSRSStore.getState();
@@ -137,15 +133,13 @@ export const useUIStore = create<UIState>()(
         downloadAnchorNode.remove();
       },
 
-      importData: (jsonData) => {
+      importData: async (jsonData) => {
         try {
           const parsed = JSON.parse(jsonData);
           if (typeof parsed !== 'object' || parsed === null) return false;
           
-          // eslint-disable-next-line @typescript-eslint/no-require-imports
-          const { useUserStore } = require("./useUserStore");
-          // eslint-disable-next-line @typescript-eslint/no-require-imports
-          const { useSRSStore } = require("./useSRSStore");
+          const { useUserStore } = await import("./useUserStore");
+          const { useSRSStore } = await import("./useSRSStore");
 
           // Basic validation
           if (typeof parsed.xp !== 'number' || typeof parsed.srs !== 'object') return false;

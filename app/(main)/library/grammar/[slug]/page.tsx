@@ -122,7 +122,7 @@ export default async function GrammarDetailPage({
             <BookOpen size={14} className="group-hover:scale-110 transition-transform" /> Tata Bahasa
           </Link>
           <span className="opacity-20">/</span>
-          <span className="text-primary flex items-center gap-1.5 md:gap-2 drop-shadow-[0_0_10px_rgba(0,238,255,0.3)] truncate max-w-[150px] md:max-w-none">
+          <span className="text-primary flex items-center gap-1.5 md:gap-2 drop-shadow-[0_0_10px_rgba(var(--primary-rgb),0.3)] truncate max-w-[150px] md:max-w-none">
             {article.title}
           </span>
         </nav>
@@ -139,7 +139,7 @@ export default async function GrammarDetailPage({
               </span>
             ))}
           </h1>
-          <div className="h-2 w-32 md:w-48 bg-gradient-to-r from-primary to-emerald-500 rounded-full shadow-[0_0_20px_rgba(0,238,255,0.4)]" />
+          <div className="h-2 w-32 md:w-48 bg-gradient-to-r from-primary to-success rounded-full shadow-[0_0_20px_rgba(var(--primary-rgb),0.4)]" />
         </header>
 
         {(article.formation || article.notes) && (
@@ -150,13 +150,13 @@ export default async function GrammarDetailPage({
                   <BookText size={120} />
                 </div>
                 <span className="text-[10px] font-black uppercase tracking-[0.2em] text-primary block mb-6 opacity-60">Struktur (Formation)</span>
-                <p className="text-2xl md:text-3xl font-black text-foreground font-japanese leading-relaxed tracking-tight drop-shadow-[0_0_15px_rgba(255,255,255,0.1)]">
+                <p className="text-2xl md:text-3xl font-black text-foreground font-japanese leading-relaxed tracking-tight drop-shadow-[0_0_15px_rgba(var(--foreground-rgb),0.1)]">
                   {article.formation}
                 </p>
               </Card>
             )}
             {article.notes && (
-              <Card className="p-8 md:p-10 bg-background/[0.02] backdrop-blur-xl border-white/5 rounded-[2.5rem] relative overflow-hidden group hover:border-white/20 transition-all duration-500">
+              <Card className="p-8 md:p-10 bg-background/[0.02] backdrop-blur-xl border-border rounded-[2.5rem] relative overflow-hidden group hover:border-border transition-all duration-500">
                  <div className="absolute top-0 right-0 p-6 opacity-[0.03] group-hover:opacity-[0.08] group-hover:scale-125 transition-all duration-700 pointer-events-none">
                   <Lightbulb size={120} />
                 </div>
@@ -173,7 +173,7 @@ export default async function GrammarDetailPage({
           {/* Decorative Side Track */}
           <div className="hidden lg:block absolute -left-28 top-0 h-full">
              <div className="sticky top-40 flex flex-col items-center gap-8">
-                <div className="w-12 h-12 rounded-2xl bg-primary/10 border border-primary/20 flex items-center justify-center shadow-[0_0_15px_rgba(0,238,255,0.1)]">
+                <div className="w-12 h-12 rounded-2xl bg-primary/10 border border-primary/20 flex items-center justify-center shadow-[0_0_15px_rgba(var(--primary-rgb),0.1)]">
                    <BookText size={20} className="text-primary" />
                 </div>
                 <div className="w-px h-64 bg-gradient-to-b from-primary/30 via-primary/5 to-transparent" />
@@ -184,14 +184,14 @@ export default async function GrammarDetailPage({
           </div>
         </section>
 
-        <footer className="pt-16 border-t border-white/5 flex flex-col md:flex-row items-center justify-between gap-8">
+        <footer className="pt-16 border-t border-border flex flex-col md:flex-row items-center justify-between gap-8">
           <Link href="/library/grammar" className="w-full md:w-auto">
-            <Button variant="ghost" className="w-full px-10 py-8 h-auto text-[11px] md:text-xs font-black uppercase tracking-[0.2em] rounded-2xl bg-background/[0.03] border border-white/5 hover:bg-background/10 hover:border-white/20 transition-all gap-4 group shadow-xl">
+            <Button variant="ghost" className="w-full px-10 py-8 h-auto text-[11px] md:text-xs font-black uppercase tracking-[0.2em] rounded-2xl bg-background/[0.03] border border-border hover:bg-background/10 hover:border-primary/30 transition-all gap-4 group shadow-xl">
               <ChevronLeft size={20} className="group-hover:-translate-x-2 transition-transform" /> Kembali ke Daftar Tata Bahasa
             </Button>
           </Link>
 
-          <Button className="w-full md:w-auto px-12 py-8 h-auto text-[11px] md:text-xs font-black uppercase tracking-[0.2em] rounded-2xl bg-primary text-primary-foreground hover:bg-primary/90 transition-all shadow-[0_0_30px_rgba(0,238,255,0.3)] hover:shadow-[0_0_50px_rgba(0,238,255,0.5)] active:scale-95">
+          <Button className="w-full md:w-auto px-12 py-8 h-auto text-[11px] md:text-xs font-black uppercase tracking-[0.2em] rounded-2xl bg-primary text-primary-foreground hover:bg-primary/90 transition-all shadow-[0_0_30px_rgba(var(--primary-rgb),0.3)] hover:shadow-[0_0_50px_rgba(var(--primary-rgb),0.5)] active:scale-95">
              Tandai Selesai & Lanjut
           </Button>
         </footer>

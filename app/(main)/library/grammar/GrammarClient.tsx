@@ -141,7 +141,7 @@ export default function GrammarClient({ initialArticles = [] }: GrammarClientPro
         <AnimatePresence>
           {loading ? (
             [...Array(6)].map((_, i) => (
-              <Card key={i} className="h-48 md:h-56 bg-card/40 backdrop-blur-xl border-white/5 rounded-[2rem] overflow-hidden p-6 relative">
+              <Card key={i} className="h-48 md:h-56 bg-card/40 backdrop-blur-xl border-border rounded-[2rem] overflow-hidden p-6 relative">
                 <div className="flex justify-between items-start mb-6">
                   <Skeleton className="w-10 h-10 rounded-2xl bg-background/5" />
                   <Skeleton className="w-16 h-6 rounded-xl bg-background/5" />

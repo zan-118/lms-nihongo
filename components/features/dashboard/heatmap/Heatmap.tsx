@@ -14,8 +14,8 @@ export default function Heatmap({ studyDays }: Props) {
   const { days } = useHeatmap();
 
   return (
-    <Card className="bg-card bg-card p-6 md:p-8 lg:p-10 rounded-[2.5rem] md:rounded-[3rem] border border-border dark:border-white/5 relative overflow-hidden neo-card shadow-lg transition-colors duration-300">
-      <div className="absolute inset-0 bg-[linear-gradient(rgba(0,238,255,0.01)_1px,transparent_1px)] bg-[size:100%_4px] opacity-20 dark:opacity-50 pointer-events-none" />
+    <Card className="bg-card p-6 md:p-8 lg:p-10 rounded-[2.5rem] md:rounded-[3rem] border border-border relative overflow-hidden neo-card shadow-lg transition-colors duration-300">
+      <div className="absolute inset-0 bg-[linear-gradient(rgba(var(--primary-rgb),0.01)_1px,transparent_1px)] bg-[size:100%_4px] opacity-20 dark:opacity-50 pointer-events-none" />
 
       <header className="flex items-center justify-between mb-8 md:mb-10 relative z-10">
         <div className="flex items-center gap-3 md:gap-4">
@@ -31,7 +31,7 @@ export default function Heatmap({ studyDays }: Props) {
         </div>
         <Badge
           variant="outline"
-          className="bg-muted dark:bg-[#121620] border border-border dark:border-white/5 text-muted-foreground px-3 py-1.5 md:px-4 md:py-2 rounded-xl text-xs md:text-xs font-bold tracking-widest uppercase neo-inset h-auto"
+          className="bg-muted border border-border text-muted-foreground px-3 py-1.5 md:px-4 md:py-2 rounded-xl text-xs md:text-xs font-bold tracking-widest uppercase neo-inset h-auto"
         >
           Log Aktif
         </Badge>
@@ -67,7 +67,7 @@ export default function Heatmap({ studyDays }: Props) {
           <div className="w-4 h-4 md:w-5 md:h-5 rounded-[6px] bg-primary/50 border border-primary/60 neo-card"></div>
           <div className="w-4 h-4 md:w-5 md:h-5 rounded-[6px] bg-primary border-border neo-card"></div>
         </div>
-        <span className="text-xs md:text-xs font-bold uppercase tracking-widest text-primary drop-shadow-sm dark:drop-shadow-[0_0_8px_rgba(0,238,255,0.5)]">
+        <span className="text-xs md:text-xs font-bold uppercase tracking-widest text-primary drop-shadow-sm dark:drop-shadow-[0_0_8px_rgba(var(--primary-rgb),0.5)]">
           Banyak
         </span>
       </div>

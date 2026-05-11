@@ -54,7 +54,7 @@ export default function CourseDetailError({
             <Button 
               onClick={() => reset()} 
               variant="default" 
-              className="rounded-2xl px-8 h-12 shadow-sm font-bold tracking-widest uppercase text-xs md:text-sm bg-destructive hover:bg-destructive/90 text-white"
+              className="rounded-2xl px-8 h-12 shadow-sm font-bold tracking-widest uppercase text-xs md:text-sm bg-destructive hover:bg-destructive/90 text-destructive-foreground"
             >
               <RefreshCcw size={16} className="mr-2" />
               Coba Lagi

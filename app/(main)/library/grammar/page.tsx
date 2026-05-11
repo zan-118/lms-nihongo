@@ -7,6 +7,12 @@
 import { sanityFetch } from "@/lib/sanity.fetch";
 import GrammarClient from "./GrammarClient";
 
+interface GrammarArticle {
+  _id: string;
+  title: string;
+  slug: string;
+}
+
 export const metadata = {
   title: "Tata Bahasa Jepang | NihongoRoute",
   description: "Katalog lengkap tata bahasa Jepang (Bunpou) untuk level N5 hingga N1. Penjelasan mendalam dengan contoh kalimat dan audio.",
@@ -16,7 +22,7 @@ export const metadata = {
 
 export default async function GrammarArticlesPage() {
   // Pre-fetch artikel di sisi server
-  const grammarData: any[] = await sanityFetch({
+  const grammarData: GrammarArticle[] = await sanityFetch<GrammarArticle[]>({
     query: `*[_type == "grammar_article" && (course_category->slug.current match "n5*" || course_category->slug.current match "jlpt-n5*")] | order(title asc) {
       _id,
       title,

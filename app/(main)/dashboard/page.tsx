@@ -2,6 +2,17 @@ import { sanityFetch } from "@/lib/sanity.fetch";
 import DashboardClient from "./DashboardClient";
 import type { Metadata } from "next";
 
+interface CourseMetadata {
+  _id: string;
+  title: string;
+  slug: string;
+  lessons: Array<{
+    _id: string;
+    title: string;
+    slug: string;
+  }>;
+}
+
 export const metadata: Metadata = {
   title: "Dashboard | NihongoRoute",
   description: "Pantau progres belajar bahasa Jepang Anda, kelola jadwal SRS, dan taklukkan quest harian.",
@@ -18,7 +29,7 @@ async function getCourseMetadata() {
       "slug": slug.current
     }
   }`;
-  return await sanityFetch<any[]>({
+  return await sanityFetch<CourseMetadata[]>({
     query,
     tags: ["course_category", "lesson"],
   });
@@ -30,7 +41,7 @@ export default async function DashboardPage() {
   return (
     <div className="w-full min-h-screen bg-background relative overflow-hidden pt-12 pb-24 px-4 md:px-8 transition-colors duration-300">
       {/* BACKGROUND EFFECTS */}
-      <div className="absolute top-0 left-1/2 -translate-x-1/2 w-full max-w-[1000px] h-[500px] bg-cyber-neon/5 dark:bg-cyber-neon/10 blur-[120px] rounded-[100%] pointer-events-none opacity-50" />
+      <div className="absolute top-0 left-1/2 -translate-x-1/2 w-full max-w-[1000px] h-[500px] bg-primary/5 dark:bg-primary/10 blur-[120px] rounded-[100%] pointer-events-none opacity-50" />
       <div className="absolute bottom-0 right-0 w-[600px] h-[600px] bg-primary/5 blur-[150px] rounded-full pointer-events-none" />
       <div className="neural-grid" />
 

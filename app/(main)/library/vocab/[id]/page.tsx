@@ -17,7 +17,8 @@ import {
   Sparkles, 
   Layers,
   ArrowRightLeft,
-  Link as LinkIcon
+  Link as LinkIcon,
+  Info
 } from "lucide-react";
 import { Card } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
@@ -26,13 +27,63 @@ import TTSReader from "@/components/features/tools/tts/TTSReader";
 import { SmartJapanese } from "@/components/ui/SmartJapanese";
 import { vocabDetailQuery } from "@/lib/queries";
 
+interface VocabRelatedKanji {
+  _id: string;
+  character: string;
+  meaning: string;
+  onyomi: string;
+  kunyomi: string;
+  slug: string;
+}
+
+interface VocabRelatedWord {
+  _id: string;
+  slug?: string;
+  word: string;
+  meaning: string;
+  furigana?: string;
+  romaji?: string;
+}
+
+interface VocabExample {
+  japanese: string;
+  indonesian: string;
+  furigana?: string;
+  romaji?: string;
+}
+
+interface VocabDetail {
+  _id: string;
+  slug: string;
+  word: string;
+  furigana?: string;
+  romaji?: string;
+  meaning: string;
+  hinshi?: string;
+  pitchAccent?: string;
+  mnemonic?: string;
+  showInFlashcard?: boolean;
+  jlptLevel?: string;
+  audioUrl?: string;
+  relatedKanji?: VocabRelatedKanji[];
+  synonyms?: VocabRelatedWord[];
+  antonyms?: VocabRelatedWord[];
+  examples?: VocabExample[];
+  usageNotes?: string;
+  negative?: string;
+  past?: string;
+  pastNegative?: string;
+  teForm?: string;
+  adverbial?: string;
+}
+
 export async function generateMetadata({
   params,
 }: {
   params: Promise<{ id: string }>;
 }): Promise<Metadata> {
   const { id } = await params;
-  const vocab: any = await sanityFetch({
+  const vocab = await sanityFetch<VocabDetail | null>({
     query: vocabDetailQuery,
     params: { id },
     tags: ["vocab"],
@@ -56,7 +107,7 @@ export default async function VocabDetailPage({
   params: Promise<{ id: string }>;
 }) {
   const { id } = await params;
-  const vocab: any = await sanityFetch({
+  const vocab = await sanityFetch<VocabDetail | null>({
     query: vocabDetailQuery,
     params: { id },
     tags: ["vocab"],
@@ -164,11 +215,18 @@ export default async function VocabDetailPage({
                 <h2 className="text-sm font-black uppercase tracking-[0.2em] text-foreground">Contoh Penggunaan</h2>
               </div>
               <div className="space-y-4">
-                {vocab.examples?.map((ex: { japanese: string; indonesian: string }, i: number) => (
+                {vocab.examples?.map((ex: { japanese: string; indonesian: string; furigana?: string; romaji?: string }, i: number) => (
                   <Card key={i} className="p-6 md:p-8 bg-[rgba(var(--card-rgb),0.2)] border-border rounded-[2rem] hover:bg-[rgba(var(--card-rgb),0.4)] transition-all group">
-                    <p className="text-xl md:text-2xl font-bold text-foreground font-japanese mb-4 leading-relaxed">
-                      {ex.japanese}
-                    </p>
+                    <div className="mb-4 flex flex-col gap-1">
+                      <p className="text-xl md:text-2xl font-bold text-foreground font-japanese leading-relaxed">
+                        <SmartJapanese word={ex.japanese} furigana={ex.furigana} />
+                      </p>
+                      {ex.romaji && (
+                        <span className="text-[10px] md:text-xs font-black text-muted-foreground uppercase tracking-[0.2em] font-sans opacity-60">
+                          {ex.romaji}
+                        </span>
+                      )}
+                    </div>
                     <div className="flex items-center gap-3 border-t border-border/50 pt-4">
                       <div className="w-1.5 h-1.5 rounded-full bg-primary/40" />
                       <p className="text-sm md:text-base font-medium text-muted-foreground italic">
@@ -186,6 +244,22 @@ export default async function VocabDetailPage({
 
           {/* RIGHT COLUMN: Sidebar Info */}
           <div className="lg:col-span-5 space-y-8">
+            {/* Usage Notes Card */}
+            {vocab.usageNotes && (
+              <Card className="p-8 bg-[rgba(var(--primary-rgb),0.05)] border-primary/20 rounded-[2.5rem] relative overflow-hidden group shadow-xl">
+                <div className="absolute -top-4 -right-4 p-8 opacity-[0.05] group-hover:scale-110 transition-transform duration-700 text-primary">
+                  <Info size={80} />
+                </div>
+                <div className="flex items-center gap-2 mb-6">
+                  <Info size={16} aria-hidden="true" className="text-primary" />
+                  <span className="text-[10px] font-black uppercase tracking-[0.2em] text-primary">Catatan Penggunaan</span>
+                </div>
+                <p className="text-sm md:text-base font-medium text-foreground leading-relaxed">
+                  {vocab.usageNotes}
+                </p>
+              </Card>
+            )}
+
             {/* Mnemonic Card */}
             {vocab.mnemonic && (
               <Card className="p-8 bg-warning/5 border-warning/20 rounded-[2.5rem] relative overflow-hidden group shadow-xl">

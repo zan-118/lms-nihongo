@@ -36,7 +36,7 @@ export default function RootError({
 
         <Button
           onClick={() => reset()}
-          className="bg-primary text-white dark:text-foreground hover:opacity-90 font-black uppercase tracking-widest px-10 py-4 rounded-xl transition-all shadow-lg border-none"
+          className="bg-primary text-primary-foreground hover:opacity-90 font-black uppercase tracking-widest px-10 py-4 rounded-xl transition-all shadow-lg border-none"
         >
           Coba Hubungkan Ulang
         </Button>

@@ -5,7 +5,7 @@ describe("useHeatmap - getBoxStyle", () => {
   it("mengembalikan style inactive untuk value 0", () => {
     const style = getBoxStyle(0);
     expect(style).toContain("opacity-30");
-    expect(style).toContain("bg-black/40");
+    expect(style).toContain("bg-background/40");
   });
 
   it("mengembalikan style inactive untuk value undefined/null", () => {
@@ -16,32 +16,32 @@ describe("useHeatmap - getBoxStyle", () => {
 
   it("mengembalikan style level rendah untuk value 1-9", () => {
     const style = getBoxStyle(5);
-    expect(style).toContain("bg-cyber-neon/20");
+    expect(style).toContain("bg-primary/20");
   });
 
   it("mengembalikan style level sedang untuk value 10-29", () => {
     const style = getBoxStyle(15);
-    expect(style).toContain("bg-cyber-neon/50");
+    expect(style).toContain("bg-primary/50");
   });
 
   it("mengembalikan style level tinggi untuk value >= 30", () => {
     const style = getBoxStyle(50);
-    expect(style).toContain("bg-cyber-neon");
-    expect(style).toContain("border-white");
+    expect(style).toContain("bg-primary");
+    expect(style).toContain("border-border");
   });
 
   it("mengembalikan style level rendah untuk value tepat 1", () => {
     const style = getBoxStyle(1);
-    expect(style).toContain("bg-cyber-neon/20");
+    expect(style).toContain("bg-primary/20");
   });
 
   it("mengembalikan style level sedang untuk value tepat 10", () => {
     const style = getBoxStyle(10);
-    expect(style).toContain("bg-cyber-neon/50");
+    expect(style).toContain("bg-primary/50");
   });
 
   it("mengembalikan style level tinggi untuk value tepat 30", () => {
     const style = getBoxStyle(30);
-    expect(style).toContain("bg-cyber-neon");
+    expect(style).toContain("bg-primary");
   });
 });

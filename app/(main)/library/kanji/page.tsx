@@ -3,13 +3,23 @@ import { kanjiListQuery } from "@/lib/queries";
 import KanjiListClient from "@/app/(main)/library/kanji/KanjiListClient";
 import type { Metadata } from "next";
 
+interface KanjiListItem {
+  _id: string;
+  character: string;
+  meaning: string;
+  onyomi: string[];
+  kunyomi: string[];
+  jlpt: string;
+  slug: string;
+}
+
 export const metadata: Metadata = {
   title: "Pustaka Kanji | NihongoRoute",
   description: "Kuasai ribuan kanji dengan visualisasi stroke order yang interaktif dan mudah diingat.",
 };
 
 export default async function KanjiListPage() {
-  const kanjis: any[] = await sanityFetch({
+  const kanjis: KanjiListItem[] = await sanityFetch<KanjiListItem[]>({
     query: kanjiListQuery,
     tags: ["kanji"],
   });

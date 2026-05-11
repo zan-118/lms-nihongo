@@ -53,7 +53,7 @@ export default function MainError({
         <div className="flex flex-col sm:flex-row gap-4 justify-center">
           <Button
             onClick={() => reset()}
-            className="bg-primary hover:bg-foreground text-white dark:text-foreground font-black uppercase tracking-widest h-auto py-4 px-8 rounded-xl text-xs transition-all shadow-lg border-none"
+            className="bg-primary hover:bg-foreground text-primary-foreground font-black uppercase tracking-widest h-auto py-4 px-8 rounded-xl text-xs transition-all shadow-lg border-none"
           >
             Segarkan Sesi
           </Button>

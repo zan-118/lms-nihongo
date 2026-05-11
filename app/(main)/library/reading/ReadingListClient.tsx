@@ -60,7 +60,7 @@ export default function ReadingListClient({ materials }: ReadingListClientProps)
               transition={{ delay: index * 0.1 }}
             >
               <Link href={`/library/reading/${material.slug}`}>
-                <div className="group h-full p-8 rounded-[2.5rem] bg-card/40 backdrop-blur-3xl border border-white/5 hover:border-primary/40 transition-all duration-500 relative overflow-hidden flex flex-col justify-between">
+                <div className="group h-full p-8 rounded-[2.5rem] bg-card/40 backdrop-blur-3xl border border-border hover:border-primary/40 transition-all duration-500 relative overflow-hidden flex flex-col justify-between">
                   {/* Hover Glow */}
                   <div className="absolute top-0 right-0 w-32 h-32 bg-primary/5 blur-[50px] rounded-full -mr-16 -mt-16 group-hover:bg-primary/10 transition-all" />
                   
@@ -69,7 +69,7 @@ export default function ReadingListClient({ materials }: ReadingListClientProps)
                       <Badge variant="outline" className="border-primary/30 text-primary bg-primary/5 uppercase font-black tracking-widest px-3 py-1">
                         {material.difficulty}
                       </Badge>
-                      <div className="p-2 rounded-xl bg-background/5 group-hover:bg-primary/10 border border-white/5 group-hover:border-primary/20 transition-all">
+                      <div className="p-2 rounded-xl bg-background/5 group-hover:bg-primary/10 border border-border group-hover:border-primary/20 transition-all">
                         <GraduationCap size={16} className="text-muted-foreground group-hover:text-primary transition-colors" />
                       </div>
                     </div>
@@ -100,7 +100,7 @@ export default function ReadingListClient({ materials }: ReadingListClientProps)
 
         {materials.length === 0 && (
           <div className="col-span-full py-20 text-center space-y-4">
-             <div className="w-20 h-20 rounded-full bg-background/5 border border-dashed border-white/10 flex items-center justify-center mx-auto">
+             <div className="w-20 h-20 rounded-full bg-background/5 border border-dashed border-border flex items-center justify-center mx-auto">
                 <BookOpen size={32} className="text-muted-foreground opacity-30" />
              </div>
              <p className="text-muted-foreground font-medium">Belum ada materi bacaan yang tersedia.</p>

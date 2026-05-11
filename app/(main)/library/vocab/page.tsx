@@ -10,6 +10,7 @@
 // ======================
 import { sanityFetch } from "@/lib/sanity.fetch";
 import VocabClient from "./VocabClient";
+import { VocabItem } from "@/components/features/library/vocab/types";
 
 // ======================
 // CONFIG / CONSTANTS
@@ -39,7 +40,7 @@ export default async function VocabLibraryPage() {
     "hinshi": coalesce(hinshi, "verb") 
   }`;
   
-  const initialData: any[] = await sanityFetch({
+  const initialData: VocabItem[] = await sanityFetch<VocabItem[]>({
     query: initialQuery,
     tags: ["vocab", "verb_dictionary", "course_category"],
   });

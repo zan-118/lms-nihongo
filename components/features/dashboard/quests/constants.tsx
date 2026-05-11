@@ -8,7 +8,7 @@ export const DAILY_QUESTS: Quest[] = [
     type: "review",
     target: 10,
     rewardXP: 20,
-    icon: <Brain size={18} className="text-cyber-neon" />,
+    icon: <Brain size={18} className="text-primary" />,
   },
   {
     id: "q_review_50",
@@ -16,7 +16,7 @@ export const DAILY_QUESTS: Quest[] = [
     type: "review",
     target: 50,
     rewardXP: 100,
-    icon: <Flame size={18} className="text-cyber-neon" />,
+    icon: <Flame size={18} className="text-primary" />,
   },
   {
     id: "q_xp_500",
@@ -24,6 +24,6 @@ export const DAILY_QUESTS: Quest[] = [
     type: "xp",
     target: 500,
     rewardXP: 150,
-    icon: <Zap size={18} className="text-cyber-neon" />,
+    icon: <Zap size={18} className="text-primary" />,
   },
 ];

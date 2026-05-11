@@ -124,8 +124,8 @@ export default function Topbar({ onMenuClick }: { onMenuClick: () => void }) {
                 exit={{ opacity: 0, x: -10 }}
                 className="flex items-center gap-2"
               >
-                <CloudUpload size={12} className="text-amber-500 drop-shadow-[0_0_8px_rgba(245,158,11,0.4)]" aria-hidden="true" />
-                <span className="text-amber-500/90 hidden md:inline">Tertunda</span>
+                <CloudUpload size={12} className="text-warning drop-shadow-[0_0_8px_rgba(var(--warning-rgb),0.4)]" aria-hidden="true" />
+                <span className="text-warning/90 hidden md:inline">Tertunda</span>
               </motion.div>
             ) : (
               <motion.div 
@@ -135,8 +135,8 @@ export default function Topbar({ onMenuClick }: { onMenuClick: () => void }) {
                 exit={{ opacity: 0, x: -10 }}
                 className="flex items-center gap-2"
               >
-                <Cloud size={12} className="text-emerald-500 drop-shadow-[0_0_8px_rgba(16,185,129,0.4)]" aria-hidden="true" />
-                <span className="text-emerald-500/70 hidden md:inline">Tersinkronisasi</span>
+                <Cloud size={12} className="text-success drop-shadow-[0_0_8px_rgba(var(--success-rgb),0.4)]" aria-hidden="true" />
+                <span className="text-success/70 hidden md:inline">Tersinkronisasi</span>
               </motion.div>
             )}
           </AnimatePresence>
