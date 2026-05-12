@@ -58,6 +58,7 @@ export const readingMaterialQuery = `*[_type == "readingMaterial" && slug.curren
   isTTSDisabled,
   body,
   hiragana,
+  romaji,
   translation
 }`;
 

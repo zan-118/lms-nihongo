@@ -6,7 +6,7 @@
  */
 
 import { defineField, defineType, type ValidationContext } from "sanity";
-import { KanaInput } from "../components/KanaInput";
+import { AutoFuriganaInput } from "../components/AutoFuriganaInput";
 import { AutoRomajiInput } from "../components/AutoRomajiInput";
 
 // ======================
@@ -110,9 +110,10 @@ export default defineType({
       type: "string",
       title: "Cara Baca (Furigana)",
       components: {
-        input: KanaInput,
+        input: AutoFuriganaInput,
       },
-      description: "Ketik romaji, akan otomatis diubah jadi Hiragana.",
+      options: { sourceField: "word" },
+      description: "Otomatis diisi dari field word menggunakan AI/Kuroshiro.",
     }),
     defineField({
       name: "romaji",
@@ -121,6 +122,7 @@ export default defineType({
       components: {
         input: AutoRomajiInput,
       },
+      options: { sourceField: "furigana" },
       description: "Terisi otomatis mengikuti Furigana. Bisa diedit manual jika perlu.",
       fieldset: "identity",
     }),

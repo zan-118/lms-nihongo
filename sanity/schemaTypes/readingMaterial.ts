@@ -1,7 +1,7 @@
 import { defineType, defineField } from "sanity";
 import { BookOpen } from "lucide-react";
 import { AutoSlugInput } from "../components/AutoSlugInput";
-import { KanaInput } from "../components/KanaInput";
+import { AutoFuriganaInput } from "../components/AutoFuriganaInput";
 import { AutoRomajiInput } from "../components/AutoRomajiInput";
 
 export default defineType({
@@ -103,7 +103,8 @@ export default defineType({
       title: "Full Hiragana",
       description: "Versi Hiragana lengkap dari teks di atas untuk pembentukan Furigana otomatis.",
       type: "text",
-      components: { input: KanaInput },
+      components: { input: AutoFuriganaInput },
+      options: { sourceField: "body" },
     }),
     defineField({
       name: "romaji",
@@ -111,7 +112,7 @@ export default defineType({
       description: "Versi Romaji lengkap dari teks di atas.",
       type: "text",
       components: { input: AutoRomajiInput },
-      options: { sourceField: "hiragana" } as any,
+      options: { sourceField: "hiragana" },
     }),
     defineField({
       name: "translation",

@@ -6,7 +6,7 @@
  */
 
 import { defineField, defineType } from "sanity";
-import { KanaInput } from "../components/KanaInput";
+import { AutoFuriganaInput } from "../components/AutoFuriganaInput";
 import { AutoRomajiInput } from "../components/AutoRomajiInput";
 
 // ======================
@@ -29,8 +29,9 @@ export default defineType({
       type: "string",
       title: "Cara Baca (Furigana)",
       components: {
-        input: KanaInput,
+        input: AutoFuriganaInput,
       },
+      options: { sourceField: "jp" },
     }),
     defineField({
       name: "romaji",
@@ -39,6 +40,7 @@ export default defineType({
       components: {
         input: AutoRomajiInput,
       },
+      options: { sourceField: "furigana" },
     }),
     defineField({
       name: "id",

@@ -7,7 +7,7 @@
 
 import { defineField, defineType } from "sanity";
 import { AutoSlugInput } from "../components/AutoSlugInput";
-import { KanaInput } from "../components/KanaInput";
+import { AutoFuriganaInput } from "../components/AutoFuriganaInput";
 import { AutoRomajiInput } from "../components/AutoRomajiInput";
 export default defineType({
   name: "cheatsheet",
@@ -70,15 +70,16 @@ export default defineType({
               name: "furigana",
               title: "Furigana",
               type: "string",
-              components: { input: KanaInput },
+              components: { input: AutoFuriganaInput },
+              options: { sourceField: "jp" },
               validation: (Rule: any) => Rule.required(),
             },
             {
               name: "romaji",
               title: "Romaji",
               type: "string",
-              options: { sourceField: "furigana" } as any,
               components: { input: AutoRomajiInput },
+              options: { sourceField: "furigana" },
               validation: (Rule: any) => Rule.required(),
             },
           ],

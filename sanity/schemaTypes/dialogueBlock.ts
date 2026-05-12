@@ -1,6 +1,6 @@
 import { defineType, defineField } from "sanity";
 import { MessageSquare } from "lucide-react";
-import { KanaInput } from "../components/KanaInput";
+import { AutoFuriganaInput } from "../components/AutoFuriganaInput";
 import { AutoRomajiInput } from "../components/AutoRomajiInput";
 
 export default defineType({
@@ -35,13 +35,15 @@ export default defineType({
               name: "furigana",
               type: "text",
               title: "Furigana (Plain)",
-              components: { input: KanaInput },
+              components: { input: AutoFuriganaInput },
+              options: { sourceField: "text" },
             }),
             defineField({
               name: "romaji",
               type: "text",
               title: "Romaji (Plain)",
               components: { input: AutoRomajiInput },
+              options: { sourceField: "furigana" },
             }),
           ],
         },

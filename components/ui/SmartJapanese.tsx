@@ -18,10 +18,7 @@ export function splitFurigana(word: string, reading: string) {
 
   const cleanReading = reading.replace(/\s+/g, "");
 
-  const isKanji = (char: string) => {
-    const code = char.charCodeAt(0);
-    return (code >= 0x4e00 && code <= 0x9faf) || char === "々";
-  };
+  const isKanji = (char: string) => wanakana.isKanji(char) || char === "々";
 
   // Helper to compare characters regardless of Katakana/Hiragana
   const areKanaEqual = (c1: string, c2: string) => {
@@ -88,10 +85,29 @@ export function splitFurigana(word: string, reading: string) {
 /**
  * Komponen untuk merender teks Jepang dengan Furigana yang hanya muncul di atas Kanji.
  */
-export function SmartJapanese({ word, furigana, className = "" }: { word: string; furigana?: string; className?: string }) {
+export function SmartJapanese({ 
+  word, 
+  furigana, 
+  className = "",
+  mode = "furigana"
+}: { 
+  word: string; 
+  furigana?: string; 
+  className?: string;
+  mode?: "furigana" | "kanji" | "hiragana" | "romaji";
+}) {
   if (!word) return <span className={className}>{furigana}</span>;
-  if (!furigana || word === furigana) {
+  
+  if (mode === "romaji") {
+    return <span className={className}>{wanakana.toRomaji(furigana || word)}</span>;
+  }
+
+  if (!furigana || word === furigana || mode === "kanji") {
     return <span className={className}>{word}</span>;
+  }
+
+  if (mode === "hiragana") {
+    return <span className={className}>{furigana}</span>;
   }
 
   const chunks = splitFurigana(word, furigana);

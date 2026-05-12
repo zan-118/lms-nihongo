@@ -3,7 +3,7 @@
  * @description Definisi tipe data untuk fitur Reading.
  */
 
-export type ReadingMode = "kanji" | "furigana" | "hiragana";
+export type ReadingMode = "kanji" | "furigana" | "hiragana" | "romaji";
 
 export interface ReadingState {
   mode: ReadingMode;
@@ -20,5 +20,6 @@ export interface ReadingData {
   isTTSDisabled?: boolean;
   body: any; // Can be string or PortableText array
   hiragana: any;
+  romaji?: any;
   translation: any; // Can be string or PortableText array
 }

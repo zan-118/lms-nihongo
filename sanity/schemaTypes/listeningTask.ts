@@ -1,7 +1,7 @@
 import { defineField, defineType } from "sanity";
 import { Headphones } from "lucide-react";
 import { AutoSlugInput } from "../components/AutoSlugInput";
-import { KanaInput } from "../components/KanaInput";
+import { AutoFuriganaInput } from "../components/AutoFuriganaInput";
 import { AutoRomajiInput } from "../components/AutoRomajiInput";
 
 export default defineType({
@@ -60,13 +60,15 @@ export default defineType({
               name: "furigana",
               title: "Furigana (Plain)",
               type: "text",
-              components: { input: KanaInput },
+              components: { input: AutoFuriganaInput },
+              options: { sourceField: "text" },
             },
             {
               name: "romaji",
               title: "Romaji (Plain)",
               type: "text",
               components: { input: AutoRomajiInput },
+              options: { sourceField: "furigana" },
             },
             {
               name: "translation",

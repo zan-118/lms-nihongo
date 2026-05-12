@@ -6,7 +6,7 @@
  */
 
 import { defineField, defineType } from "sanity";
-import { KanaInput } from "../components/KanaInput";
+import { AutoFuriganaInput } from "../components/AutoFuriganaInput";
 import { AutoRomajiInput } from "../components/AutoRomajiInput";
 
 // ======================
@@ -40,8 +40,9 @@ export default defineType({
       type: "string",
       description: "Cara baca dalam Hiragana murni.",
       components: {
-        input: KanaInput,
+        input: AutoFuriganaInput,
       },
+      options: { sourceField: "masu" },
       fieldset: "identity",
     }),
     defineField({
@@ -58,6 +59,7 @@ export default defineType({
       components: {
         input: AutoRomajiInput,
       },
+      options: { sourceField: "furigana" },
       description: "Terisi otomatis mengikuti Furigana. Bisa diedit manual jika perlu.",
       fieldset: "identity",
     }),

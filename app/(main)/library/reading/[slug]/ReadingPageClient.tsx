@@ -30,6 +30,7 @@ function ReadingPageContent({ data }: ReadingPageClientProps) {
     showTranslation,
     paragraphs,
     hiraganaParagraphs,
+    romajiParagraphs,
     translationParagraphs,
     modes,
     toggleTranslation,
@@ -204,6 +205,7 @@ function ReadingPageContent({ data }: ReadingPageClientProps) {
                   <FuriganaDisplay 
                     text={para} 
                     furigana={hiraganaParagraphs[idx] || ""} 
+                    romaji={romajiParagraphs[idx]}
                     mode={mode}
                     size="medium"
                     interactive={true}

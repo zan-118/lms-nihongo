@@ -1,6 +1,6 @@
 import { useEffect, useMemo, type ElementType } from "react";
 import { useUIStore } from "@/store/useUIStore";
-import { BookOpen, Eye, EyeOff } from "lucide-react";
+import { BookOpen, Eye, EyeOff, Type } from "lucide-react";
 import { ReadingData, ReadingMode } from "../types";
 
 export function useReadingLogic(data: ReadingData) {
@@ -34,19 +34,22 @@ export function useReadingLogic(data: ReadingData) {
   const content = useMemo(() => {
     const paragraphs = extractText(data.body);
     const hiraganaParagraphs = extractText(data.hiragana);
+    const romajiParagraphs = extractText(data.romaji);
     const translationParagraphs = extractText(data.translation);
     
     return {
       paragraphs,
       hiraganaParagraphs,
+      romajiParagraphs,
       translationParagraphs
     };
-  }, [data.body, data.hiragana, data.translation]);
+  }, [data.body, data.hiragana, data.romaji, data.translation]);
 
   const modes: { id: ReadingMode; label: string; icon: ElementType }[] = [
     { id: "kanji", label: "Kanji", icon: BookOpen },
     { id: "furigana", label: "Furigana", icon: Eye },
     { id: "hiragana", label: "Hiragana", icon: EyeOff },
+    { id: "romaji", label: "Romaji", icon: Type },
   ];
 
   const toggleTranslation = () => {
@@ -62,6 +65,7 @@ export function useReadingLogic(data: ReadingData) {
     showTranslation,
     paragraphs: content.paragraphs,
     hiraganaParagraphs: content.hiraganaParagraphs,
+    romajiParagraphs: content.romajiParagraphs,
     translationParagraphs: content.translationParagraphs,
     modes,
     toggleTranslation,

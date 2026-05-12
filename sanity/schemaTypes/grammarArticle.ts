@@ -1,6 +1,6 @@
 import { defineType, defineField } from "sanity";
 import { AutoSlugInput } from "../components/AutoSlugInput";
-import { KanaInput } from "../components/KanaInput";
+import { AutoFuriganaInput } from "../components/AutoFuriganaInput";
 import { AutoRomajiInput } from "../components/AutoRomajiInput";
 
 // ======================
@@ -73,13 +73,15 @@ export default defineType({
       name: "formationFurigana",
       title: "Rumus Furigana",
       type: "string",
-      components: { input: KanaInput },
+      components: { input: AutoFuriganaInput },
+      options: { sourceField: "formation" },
     }),
     defineField({
       name: "formationRomaji",
       title: "Rumus Romaji",
       type: "string",
       components: { input: AutoRomajiInput },
+      options: { sourceField: "formationFurigana" },
     }),
     defineField({
       name: "notes",

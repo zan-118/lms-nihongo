@@ -12,13 +12,15 @@ interface FuriganaDisplayProps {
   furigana: string;
   size?: "small" | "medium" | "large" | "xl";
   className?: string;
-  mode?: "kanji" | "furigana" | "hiragana";
+  mode?: "kanji" | "furigana" | "hiragana" | "romaji";
   interactive?: boolean;
+  romaji?: string;
 }
 
 export default function FuriganaDisplay({ 
   text, 
   furigana, 
+  romaji,
   size = "medium", 
   className = "",
   mode,
@@ -38,6 +40,14 @@ export default function FuriganaDisplay({
 
   const { furi: furiSize, kanji: kanjiSize } = sizeConfig[size];
 
+  if (currentMode === "romaji" && romaji) {
+    return (
+      <div className={`font-sans font-medium text-primary/80 tracking-tight ${kanjiSize} ${className}`}>
+        {romaji}
+      </div>
+    );
+  }
+
   const content = (
     <div 
       className={`font-noto-serif leading-[2.8] tracking-normal inline-block w-full text-justify ${className}`}
@@ -45,7 +55,11 @@ export default function FuriganaDisplay({
     >
       {parts.map((part, i) => (
         <React.Fragment key={i}>
-          {part.furi && (currentMode === "furigana" || currentMode === "hiragana") ? (
+          {currentMode === "romaji" ? (
+             <span className={`${kanjiSize} font-sans font-medium text-primary/80 tracking-tight`}>
+               {part.furi ? wanakana.toRomaji(part.furi) : wanakana.toRomaji(part.text)}
+             </span>
+          ) : part.furi && (currentMode === "furigana" || currentMode === "hiragana") ? (
             <ruby className="group">
               <span className={`${kanjiSize} font-medium transition-colors ${currentMode === "hiragana" ? "text-primary" : "text-foreground"}`}>
                 {currentMode === "hiragana" ? part.furi : part.text}
