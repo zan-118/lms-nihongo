@@ -3,8 +3,8 @@
   "version": "1.0.0",
   "private": true,
   "scripts": {
-    "dev": "next dev --webpack",
-    "build": "next build --webpack",
+    "dev": "next dev --turbo",
+    "build": "next build",
     "start": "next start",
     "lint": "node --max-old-space-size=4096 node_modules/eslint/bin/eslint.js .",
     "lint:fix": "node --max-old-space-size=4096 node_modules/eslint/bin/eslint.js . --fix",
@@ -14,7 +14,6 @@
     "prepare": "husky"
   },
   "dependencies": {
-    "@ducanh2912/next-pwa": "^10.2.9",
     "@google/generative-ai": "^0.24.1",
     "@portabletext/react": "^6.0.3",
     "@radix-ui/react-dialog": "^1.1.15",
@@ -27,7 +26,7 @@
     "@sanity/client": "^7.22.0",
     "@sanity/code-input": "^7.1.0",
     "@sanity/image-url": "^1.1.0",
-    "@sanity/vision": "latest",
+    "@sanity/vision": "^3.71.0",
     "@supabase/ssr": "^0.10.2",
     "@supabase/supabase-js": "^2.104.0",
     "@tanstack/react-query": "^5.100.8",
@@ -41,13 +40,12 @@
     "framer-motion": "^12.38.0",
     "idb-keyval": "^6.2.2",
     "lucide-react": "^0.454.0",
-    "next": "latest",
+    "next": "16.2.2",
     "next-sanity": "^12.4.5",
     "next-themes": "^0.4.6",
-    "react": "latest",
-    "react-dom": "latest",
+    "react": "19.0.0",
+    "react-dom": "19.0.0",
     "sonner": "^2.0.7",
-    "styled-components": "^6.4.1",
     "tailwind-merge": "^3.5.0",
     "tailwindcss-animate": "^1.0.7",
     "wanakana": "^5.3.1",
@@ -59,13 +57,12 @@
     "@testing-library/jest-dom": "^6.9.1",
     "@testing-library/react": "^16.3.2",
     "@types/canvas-confetti": "^1.9.0",
-    "@types/next-pwa": "^5.6.9",
     "@types/node": "^20.11.30",
-    "@types/react": "latest",
-    "@types/react-dom": "latest",
+    "@types/react": "19.0.0",
+    "@types/react-dom": "19.0.0",
     "autoprefixer": "^10.4.24",
-    "eslint": "^8.57.0",
-    "eslint-config-next": "15.0.4",
+    "eslint": "^9.16.0",
+    "eslint-config-next": "16.2.2",
     "husky": "^9.1.7",
     "jsdom": "^29.1.1",
     "lint-staged": "^16.4.0",
@@ -76,8 +73,10 @@
     "vitest": "^4.1.5"
   },
   "overrides": {
-    "react": "latest",
-    "react-dom": "latest"
+    "react": "19.0.0",
+    "react-dom": "19.0.0",
+    "@types/react": "19.0.0",
+    "@types/react-dom": "19.0.0"
   },
   "lint-staged": {
     "*.{js,jsx,ts,tsx}": "node --max-old-space-size=4096 node_modules/eslint/bin/eslint.js --fix"

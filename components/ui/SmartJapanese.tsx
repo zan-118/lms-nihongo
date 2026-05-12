@@ -16,12 +16,17 @@ export function splitFurigana(word: string, reading: string) {
   if (!word) return [];
   if (!reading || word === reading) return [{ text: word }];
 
-  // Clean the reading string from spaces for better anchor matching
   const cleanReading = reading.replace(/\s+/g, "");
 
   const isKanji = (char: string) => {
     const code = char.charCodeAt(0);
     return (code >= 0x4e00 && code <= 0x9faf) || char === "々";
+  };
+
+  // Helper to compare characters regardless of Katakana/Hiragana
+  const areKanaEqual = (c1: string, c2: string) => {
+    if (c1 === c2) return true;
+    return wanakana.toHiragana(c1) === wanakana.toHiragana(c2);
   };
 
   const chunks: { text: string; furi?: string }[] = [];
@@ -30,58 +35,42 @@ export function splitFurigana(word: string, reading: string) {
 
   while (wIdx < word.length) {
     if (!isKanji(word[wIdx])) {
-      // Non-kanji segment (Hiragana/Katakana/Punctuation/Spaces)
+      // Segment Non-kanji
       const start = wIdx;
       while (wIdx < word.length && !isKanji(word[wIdx])) {
+        // Advance rIdx if it matches current non-kanji char
+        if (rIdx < cleanReading.length && areKanaEqual(word[wIdx], cleanReading[rIdx])) {
+          rIdx++;
+        }
         wIdx++;
       }
-      const segment = word.substring(start, wIdx);
-      chunks.push({ text: segment });
-      
-      // Sync rIdx: skip identical characters and whitespace in reading
-      const cleanSegment = segment.replace(/\s+/g, "");
-      if (cleanSegment) {
-        const hiraSegment = wanakana.toHiragana(cleanSegment);
-        const rStart = cleanReading.indexOf(hiraSegment, rIdx);
-        if (rStart !== -1) {
-          rIdx = rStart + hiraSegment.length;
-        } else {
-          // Fallback if exactly matching fails (e.g. mixed scripts)
-          const kanaMatch = cleanReading.substring(rIdx).match(new RegExp(hiraSegment));
-          if (kanaMatch && kanaMatch.index !== undefined) {
-             rIdx = rIdx + kanaMatch.index + hiraSegment.length;
-          }
-        }
-      }
+      chunks.push({ text: word.substring(start, wIdx) });
     } else {
-      // Kanji segment
+      // Segment Kanji
       const start = wIdx;
       while (wIdx < word.length && isKanji(word[wIdx])) {
         wIdx++;
       }
       const kanjiSegment = word.substring(start, wIdx);
       
-      // Find next anchor in word to bound the reading
+      // Find the next non-kanji character to use as an anchor
       let nextAnchor = "";
-      let tempW = wIdx;
-      while (tempW < word.length && nextAnchor === "") {
-        const anchorStart = tempW;
-        while (tempW < word.length && !isKanji(word[tempW])) {
-          tempW++;
-        }
-        nextAnchor = word.substring(anchorStart, tempW).replace(/\s+/g, "");
+      if (wIdx < word.length) {
+        nextAnchor = word[wIdx];
       }
 
       let rEnd;
       if (nextAnchor) {
-        const hiraAnchor = wanakana.toHiragana(nextAnchor);
-        // Find the anchor, but ensure it's not too far if the kanji is short
-        const searchEnd = Math.min(cleanReading.length, rIdx + kanjiSegment.length * 10 + 10);
-        rEnd = cleanReading.indexOf(hiraAnchor, rIdx);
+        // Find the next occurrence of the anchor in reading
+        rEnd = cleanReading.indexOf(wanakana.toHiragana(nextAnchor), rIdx);
+        // Fallback for Katakana anchor
+        if (rEnd === -1) {
+           rEnd = cleanReading.indexOf(nextAnchor, rIdx);
+        }
         
-        // If anchor not found or suspiciously far, try to bound it by kanji count
-        if (rEnd === -1 || rEnd > searchEnd) {
-           rEnd = Math.min(cleanReading.length, rIdx + kanjiSegment.length * 3);
+        // Safety bound: furigana shouldn't be excessively long
+        if (rEnd === -1 || rEnd > rIdx + kanjiSegment.length * 5) {
+          rEnd = Math.min(cleanReading.length, rIdx + kanjiSegment.length * 3);
         }
       } else {
         rEnd = cleanReading.length;

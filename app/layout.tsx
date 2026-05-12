@@ -65,7 +65,6 @@ export const metadata: Metadata = {
     "flashcard",
     "nihongo",
   ],
-  manifest: "/manifest.json", 
   icons: {
     icon: "/logo-branding.svg",
     apple: "/logo-branding.png",
