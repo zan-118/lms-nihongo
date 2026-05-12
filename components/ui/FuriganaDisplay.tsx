@@ -27,9 +27,7 @@ export default function FuriganaDisplay({
   interactive = false
 }: FuriganaDisplayProps) {
   const globalShowFurigana = useUIStore((state) => state.settings.showFurigana);
-  
   const currentMode = mode || (globalShowFurigana ? "furigana" : "kanji");
-  const parts = splitFurigana(text, furigana);
 
   const sizeConfig = {
     small: { furi: "text-[10px]", kanji: "text-base" },
@@ -40,6 +38,15 @@ export default function FuriganaDisplay({
 
   const { furi: furiSize, kanji: kanjiSize } = sizeConfig[size];
 
+  // Hiragana Mode: Direct return of furigana prop to ensure 100% no Kanji and high performance
+  if (currentMode === "hiragana" && furigana) {
+    return (
+      <div className={`font-noto-serif leading-[2.8] tracking-normal inline-block w-full text-justify text-primary ${kanjiSize} ${className}`}>
+        {furigana}
+      </div>
+    );
+  }
+
   if (currentMode === "romaji" && romaji) {
     return (
       <div className={`font-sans font-medium text-primary/80 tracking-tight ${kanjiSize} ${className}`}>
@@ -47,6 +54,8 @@ export default function FuriganaDisplay({
       </div>
     );
   }
+
+  const parts = splitFurigana(text, furigana);
 
   const content = (
     <div 
@@ -59,16 +68,14 @@ export default function FuriganaDisplay({
              <span className={`${kanjiSize} font-sans font-medium text-primary/80 tracking-tight`}>
                {part.furi ? wanakana.toRomaji(part.furi) : wanakana.toRomaji(part.text)}
              </span>
-          ) : part.furi && (currentMode === "furigana" || currentMode === "hiragana") ? (
+          ) : part.furi && currentMode === "furigana" ? (
             <ruby className="group">
-              <span className={`${kanjiSize} font-medium transition-colors ${currentMode === "hiragana" ? "text-primary" : "text-foreground"}`}>
-                {currentMode === "hiragana" ? part.furi : part.text}
+              <span className={`${kanjiSize} font-medium transition-colors text-foreground`}>
+                {part.text}
               </span>
-              {currentMode === "furigana" && (
-                <rt className={`${furiSize} text-primary/60 font-medium tracking-normal select-none`}>
-                  {part.furi}
-                </rt>
-              )}
+              <rt className={`${furiSize} text-primary/60 font-medium tracking-normal select-none`}>
+                {part.furi}
+              </rt>
             </ruby>
           ) : (
             <span className={`${kanjiSize} font-medium transition-colors ${

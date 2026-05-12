@@ -16,36 +16,43 @@ export function splitFurigana(word: string, reading: string) {
   if (!word) return [];
   if (!reading || word === reading) return [{ text: word }];
 
-  const cleanReading = reading.replace(/\s+/g, "");
-
-  const isKanji = (char: string) => wanakana.isKanji(char) || char === "々";
-
-  // Helper to compare characters regardless of Katakana/Hiragana
-  const areKanaEqual = (c1: string, c2: string) => {
-    if (c1 === c2) return true;
-    return wanakana.toHiragana(c1) === wanakana.toHiragana(c2);
-  };
-
   const chunks: { text: string; furi?: string }[] = [];
   let wIdx = 0;
   let rIdx = 0;
 
   while (wIdx < word.length) {
-    if (!isKanji(word[wIdx])) {
-      // Segment Non-kanji
-      const start = wIdx;
-      while (wIdx < word.length && !isKanji(word[wIdx])) {
-        // Advance rIdx if it matches current non-kanji char
-        if (rIdx < cleanReading.length && areKanaEqual(word[wIdx], cleanReading[rIdx])) {
-          rIdx++;
+    const char = word[wIdx];
+    const isKanjiChar = wanakana.isKanji(char) || char === "々";
+
+    if (!isKanjiChar) {
+      // Segment Non-kanji (Hiragana, Katakana, Punctuation, Spaces)
+      let segment = "";
+      while (wIdx < word.length && !(wanakana.isKanji(word[wIdx]) || word[wIdx] === "々")) {
+        const wChar = word[wIdx];
+        segment += wChar;
+        
+        // Advanced rIdx if it matches (ignoring case/type)
+        if (rIdx < reading.length) {
+          const rChar = reading[rIdx];
+          // Match if exactly the same, or if they are both kana and equivalent
+          if (wChar === rChar || (wanakana.isKana(wChar) && wanakana.isKana(rChar) && wanakana.toHiragana(wChar) === wanakana.toHiragana(rChar))) {
+            rIdx++;
+          } else if (/\s/.test(wChar) && !/\s/.test(rChar)) {
+            // Space in word but not in reading: just skip word index (handled by outer loop)
+          } else if (!/\s/.test(wChar) && /\s/.test(rChar)) {
+            // Space in reading but not in word: skip reading index
+            rIdx++;
+            // Re-check current wChar with next rChar
+            continue;
+          }
         }
         wIdx++;
       }
-      chunks.push({ text: word.substring(start, wIdx) });
+      chunks.push({ text: segment });
     } else {
       // Segment Kanji
       const start = wIdx;
-      while (wIdx < word.length && isKanji(word[wIdx])) {
+      while (wIdx < word.length && (wanakana.isKanji(word[wIdx]) || word[wIdx] === "々")) {
         wIdx++;
       }
       const kanjiSegment = word.substring(start, wIdx);
@@ -58,22 +65,25 @@ export function splitFurigana(word: string, reading: string) {
 
       let rEnd;
       if (nextAnchor) {
-        // Find the next occurrence of the anchor in reading
-        rEnd = cleanReading.indexOf(wanakana.toHiragana(nextAnchor), rIdx);
-        // Fallback for Katakana anchor
-        if (rEnd === -1) {
-           rEnd = cleanReading.indexOf(nextAnchor, rIdx);
-        }
+        // Find the next occurrence of the anchor in reading, but don't look TOO far (max 10 chars per Kanji)
+        const searchLimit = rIdx + kanjiSegment.length * 10;
+        const searchArea = reading.substring(rIdx, searchLimit);
+        const anchorPos = searchArea.indexOf(wanakana.toHiragana(nextAnchor));
+        const anchorPosKatakana = searchArea.indexOf(nextAnchor);
         
-        // Safety bound: furigana shouldn't be excessively long
-        if (rEnd === -1 || rEnd > rIdx + kanjiSegment.length * 5) {
-          rEnd = Math.min(cleanReading.length, rIdx + kanjiSegment.length * 3);
+        const foundPos = anchorPos !== -1 ? anchorPos : (anchorPosKatakana !== -1 ? anchorPosKatakana : -1);
+
+        if (foundPos !== -1) {
+          rEnd = rIdx + foundPos;
+        } else {
+          // Fallback if anchor not found within reasonable distance
+          rEnd = Math.min(reading.length, rIdx + kanjiSegment.length * 3);
         }
       } else {
-        rEnd = cleanReading.length;
+        rEnd = reading.length;
       }
 
-      const readingSegment = cleanReading.substring(rIdx, rEnd);
+      const readingSegment = reading.substring(rIdx, rEnd);
       chunks.push({ text: kanjiSegment, furi: readingSegment });
       rIdx = rEnd;
     }
