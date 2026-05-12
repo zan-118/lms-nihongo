@@ -1,4 +1,5 @@
 import { NextResponse } from "next/server";
+import path from "path";
 // @ts-ignore
 import Kuroshiro from "kuroshiro";
 // @ts-ignore
@@ -17,7 +18,7 @@ async function getKuroshiro() {
   if (kuroshiro) return kuroshiro;
   
   if (isInitializing) {
-    // Tunggu inisialisasi selesai jika sedang berjalan
+    console.log("Kuroshiro is already initializing, waiting...");
     while (isInitializing) {
       await new Promise(resolve => setTimeout(resolve, 100));
     }
@@ -25,10 +26,20 @@ async function getKuroshiro() {
   }
 
   isInitializing = true;
+  console.log("Initializing Kuroshiro for the first time...");
   try {
-    const instance = new Kuroshiro();
-    await instance.init(new KuromojiAnalyzer());
+    // Handle potential CJS/ESM interop issues
+    const KConstructor = (Kuroshiro as any).default || Kuroshiro;
+    const AConstructor = (KuromojiAnalyzer as any).default || KuromojiAnalyzer;
+
+    const instance = new KConstructor();
+    console.log("Loading Kuromoji Analyzer with explicit dict path...");
+    // Menunjuk langsung ke folder dict di node_modules/kuromoji
+    const dictPath = path.join(process.cwd(), "node_modules", "kuromoji", "dict");
+    
+    await instance.init(new AConstructor({ dictPath }));
     kuroshiro = instance;
+    console.log("Kuroshiro Initialization Successful!");
     return kuroshiro;
   } catch (error) {
     console.error("Kuroshiro Init Error:", error);
