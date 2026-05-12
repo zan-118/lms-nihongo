@@ -29,7 +29,7 @@ export default function NotificationPopover({ isOpen, onClose }: { isOpen: boole
       {isOpen && (
         <>
           {/* Backdrop for mobile - Dimmed background to focus on notification */}
-          <div className="fixed inset-0 z-[100] md:hidden bg-black/40 backdrop-blur-sm" onClick={onClose} />
+          <div className="fixed inset-0 z-[100] md:hidden bg-background/40 backdrop-blur-sm" onClick={onClose} />
           
           {/* Main Popover Container */}
           <div className="fixed md:absolute top-20 md:top-full left-4 right-4 md:left-auto md:right-0 md:w-96 z-[110] flex justify-center md:justify-end">
@@ -101,7 +101,7 @@ export default function NotificationPopover({ isOpen, onClose }: { isOpen: boole
                         </div>
                         
                         {!n.read && (
-                          <div className="absolute top-4 right-4 w-1.5 h-1.5 bg-primary rounded-full shadow-[0_0_8px_rgba(0,238,255,1)]" />
+                          <div className="absolute top-4 right-4 w-1.5 h-1.5 bg-primary rounded-full shadow-[0_0_8px_rgba(var(--primary-rgb),1)]" />
                         )}
                       </div>
                     ))}

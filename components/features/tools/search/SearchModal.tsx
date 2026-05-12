@@ -149,7 +149,7 @@ export default function SearchModal({ isOpen, onClose }: { isOpen: boolean; onCl
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
             exit={{ opacity: 0 }}
-            className="fixed inset-0 bg-black/60 backdrop-blur-md"
+            className="fixed inset-0 bg-background/60 backdrop-blur-md"
             onClick={onClose}
           />
 
@@ -193,7 +193,7 @@ export default function SearchModal({ isOpen, onClose }: { isOpen: boolean; onCl
                         onClick={() => handleSelect(item.href)}
                         className={`flex items-center gap-4 p-4 rounded-2xl cursor-pointer transition-all duration-300 relative group ${
                           index === activeIndex 
-                            ? 'bg-primary/10 border border-primary/20 shadow-[0_0_20px_rgba(0,238,255,0.05)]' 
+                            ? 'bg-primary/10 border border-primary/20 shadow-[0_0_20px_rgba(var(--primary-rgb),0.05)]' 
                             : 'hover:bg-muted/50 border border-transparent'
                         }`}
                       >

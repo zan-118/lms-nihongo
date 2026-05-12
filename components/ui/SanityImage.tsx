@@ -45,7 +45,7 @@ export default function SanityImage({ value }: SanityImageProps) {
         sizes="(max-width: 768px) 100vw, 800px"
       />
       {value.alt && (
-        <div className="absolute bottom-0 left-0 right-0 p-4 bg-gradient-to-t from-black/60 to-transparent text-white opacity-0 group-hover:opacity-100 transition-opacity duration-300">
+        <div className="absolute bottom-0 left-0 right-0 p-4 bg-gradient-to-t from-background/80 to-transparent text-foreground opacity-0 group-hover:opacity-100 transition-opacity duration-300">
            <p className="text-xs font-medium italic">{value.alt}</p>
         </div>
       )}
