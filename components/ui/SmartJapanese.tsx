@@ -74,31 +74,53 @@ export function splitFurigana(word: string, reading: string) {
       if (nextAnchor) {
         const anchorHira = wanakana.toHiragana(nextAnchor);
         
-        // Cari posisi jangkar di teks pembacaan. 
-        // Penting: Kita harus mencari posisi yang logis, tidak boleh rIdx itu sendiri 
-        // jika itu bagian dari pembacaan Kanji (kasus '言いました' -> 'いいました').
-        let searchIdx = rIdx;
-        let matchCount = 0;
+        let bestREnd = rIdx + 1; 
+        let highestScore = -1000; // Mulai dengan nilai sangat rendah
         let found = false;
 
-        // Cari kemunculan ke-N dari jangkar di reading (sesuai posisi di word)
-        while (searchIdx < reading.length) {
+        // BATAS PENCARIAN: 
+        // Furigana untuk Kanji tidak mungkin lebih panjang dari 10-15 karakter.
+        // Kita batasi area pencarian agar tidak melompat ke kalimat/paragraf lain.
+        const maxSearch = Math.min(reading.length, rIdx + Math.max(10, kanjiSegment.length * 5));
+
+        for (let searchIdx = rIdx + 1; searchIdx < maxSearch; searchIdx++) {
           if (wanakana.toHiragana(reading[searchIdx]) === anchorHira) {
-            matchCount++;
-            // Jika kita menemukan jangkar yang posisinya "masuk akal" 
-            // (memberi ruang untuk pembacaan Kanji minimal 1 karakter)
-            if (searchIdx >= rIdx + 1) {
-               rEnd = searchIdx;
-               found = true;
-               break;
+            found = true;
+            
+            let score = 0;
+            for (let j = 1; j <= 3; j++) {
+              const nextW = word[wIdx + j];
+              const nextR = reading[searchIdx + j];
+              
+              if (!nextW) {
+                score += (nextR ? 5 : 30); 
+                break;
+              }
+              
+              if (nextR && wanakana.toHiragana(nextW) === wanakana.toHiragana(nextR)) {
+                score += 15; 
+              } else if (nextR && (wanakana.isKanji(nextW) || nextW === "々")) {
+                score += 8; 
+              }
+            }
+
+            // PENALTI JARAK: 
+            // Semakin jauh jangkar ditemukan, semakin rendah skornya. 
+            // Ini mencegah pemilihan jangkar yang sama di kalimat berikutnya.
+            score -= (searchIdx - rIdx) * 2;
+
+            if (score > highestScore) {
+              highestScore = score;
+              bestREnd = searchIdx;
             }
           }
-          searchIdx++;
         }
 
-        if (!found) {
-          // Fallback: Jika tidak ketemu, gunakan estimasi panjang (3 hiragana per kanji)
-          rEnd = Math.min(reading.length, rIdx + kanjiSegment.length * 3);
+        if (found) {
+          rEnd = bestREnd;
+        } else {
+          // Fallback: estimasi panjang moderat
+          rEnd = Math.min(reading.length, rIdx + Math.min(6, kanjiSegment.length * 2));
         }
       } else {
         rEnd = reading.length;
