@@ -49,12 +49,38 @@ async function getKuroshiro() {
   }
 }
 
+const ALLOWED_ORIGINS = [
+  "https://nihongo-route-cms.sanity.studio",
+  "http://localhost:3333",
+  "https://www.nihongoroute.my.id"
+];
+
+function getCorsHeaders(req: Request) {
+  const origin = req.headers.get("origin");
+  const allowOrigin = origin && ALLOWED_ORIGINS.includes(origin) ? origin : ALLOWED_ORIGINS[0];
+  
+  return {
+    "Access-Control-Allow-Origin": allowOrigin,
+    "Access-Control-Allow-Methods": "POST, OPTIONS",
+    "Access-Control-Allow-Headers": "Content-Type, Authorization",
+  };
+}
+
+export async function OPTIONS(req: Request) {
+  return new NextResponse(null, {
+    status: 204,
+    headers: getCorsHeaders(req),
+  });
+}
+
 export async function POST(req: Request) {
+  const corsHeaders = getCorsHeaders(req);
+  
   try {
     const { text } = await req.json();
 
     if (!text) {
-      return NextResponse.json({ hiragana: "" });
+      return NextResponse.json({ hiragana: "" }, { headers: corsHeaders });
     }
 
     const engine = await getKuroshiro();
@@ -63,12 +89,15 @@ export async function POST(req: Request) {
       mode: "normal"
     });
 
-    return NextResponse.json({ hiragana: result });
+    return NextResponse.json({ hiragana: result }, { headers: corsHeaders });
   } catch (error: any) {
     console.error("Furigana API Error:", error);
     return NextResponse.json(
       { error: "Gagal mengonversi teks ke Hiragana", details: error.message },
-      { status: 500 }
+      { 
+        status: 500,
+        headers: corsHeaders
+      }
     );
   }
 }
