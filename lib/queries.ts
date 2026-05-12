@@ -68,13 +68,13 @@ export const readingListQuery = `*[_type == "readingMaterial"] | order(_createdA
   "category": category->title
 }`;
 
-export const kanjiListQuery = `*[_type == "kanji"] | order(course_category->slug.current asc, character asc) {
+export const kanjiListQuery = `*[_type == "kanji"] | order(jlptLevel asc, character asc) {
   _id,
   character,
   meaning,
   onyomi,
   kunyomi,
-  "jlpt": course_category->slug.current,
+  "jlpt": jlptLevel,
   "slug": coalesce(slug.current, character)
 }`;
 
@@ -84,13 +84,13 @@ export const listeningListQuery = `*[_type == "listeningTask"] | order(_createdA
   "slug": slug.current
 }`;
 
-export const kanjiQuery = `*[_type == "kanji" && (slug.current == $slug || character == $slug || _id == $slug)][0] {
+export const kanjiQuery = `*[_type == "kanji" && (slug.current == $id || character == $id || _id == $id)][0] {
   _id,
   character,
   meaning,
   onyomi,
   kunyomi,
-  "jlpt": course_category->slug.current,
+  "jlpt": jlptLevel,
   examples,
   strokeOrderSvg,
   radicals,
@@ -98,7 +98,7 @@ export const kanjiQuery = `*[_type == "kanji" && (slug.current == $slug || chara
   "slug": coalesce(slug.current, character),
   "relatedVocab": *[(_type == "vocab" || _type == "verb_dictionary") && references(^._id)] {
     _id,
-    "slug": slug.current,
+    "slug": coalesce(slug.current, word, _id),
     word,
     furigana,
     romaji,
@@ -127,7 +127,7 @@ export const listeningTaskQuery = `*[_type == "listeningTask" && slug.current ==
   }
 }`;
 
-export const vocabDetailQuery = `*[(_type == "vocab" || _type == "verb_dictionary") && (slug.current == $id || romaji == $id || _id == $id)][0] {
+export const vocabDetailQuery = `*[(_type == "vocab" || _type == "verb_dictionary") && (slug.current == $id || word == $id || jisho == $id || romaji == $id || _id == $id)][0] {
   _id,
   "slug": slug.current,
   "word": coalesce(word, masu, jisho),
@@ -148,8 +148,8 @@ export const vocabDetailQuery = `*[(_type == "vocab" || _type == "verb_dictionar
     kunyomi,
     "slug": character 
   },
-  synonyms[]->{ _id, "slug": slug.current, word, meaning, furigana, romaji },
-  antonyms[]->{ _id, "slug": slug.current, word, meaning, furigana, romaji },
+  synonyms[]->{ _id, "slug": coalesce(slug.current, word, _id), word, meaning, furigana, romaji },
+  antonyms[]->{ _id, "slug": coalesce(slug.current, word, _id), word, meaning, furigana, romaji },
   examples[] { "japanese": coalesce(jp, japanese), "indonesian": coalesce(id, indonesian), furigana, romaji },
   usageNotes,
   negative,
@@ -159,9 +159,10 @@ export const vocabDetailQuery = `*[(_type == "vocab" || _type == "verb_dictionar
   adverbial
 }`;
 
-export const verbOnlyDetailQuery = `*[_type == "verb_dictionary" && (slug.current == $id || _id == $id)][0] {
+export const verbOnlyDetailQuery = `*[_type == "verb_dictionary" && (slug.current == $id || jisho == $id || _id == $id)][0] {
   _id,
   "slug": slug.current,
+  jlptLevel,
   group,
   jisho,
   meaning,

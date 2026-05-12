@@ -1,5 +1,7 @@
 export interface FlashcardProps {
   id: string;
+  docType?: string;
+  slug?: string;
   word: string;
   meaning: string;
   furigana?: string;

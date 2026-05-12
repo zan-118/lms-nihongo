@@ -25,7 +25,7 @@ export default async function VerbDictionaryPage() {
   // DATABASE OPERATIONS
   // ======================
   const query = `*[_type == "verb_dictionary" && showInFlashcard != false] | order(jisho asc) {
-    _id, group, jisho, meaning, masu, furigana, te, nai, ta, teiru, tai, nakereba, kanou, shieki, ukemi, katei, ikou, teshimau, meirei
+    _id, "slug": coalesce(slug.current, jisho, _id), group, jisho, meaning, masu, furigana, te, nai, ta, teiru, tai, nakereba, kanou, shieki, ukemi, katei, ikou, teshimau, meirei
   }`;
 
   const initialData: VerbData[] = await sanityFetch<VerbData[]>({

@@ -1,6 +1,8 @@
 import { defineType, defineField } from "sanity";
 import { BookOpen } from "lucide-react";
 import { AutoSlugInput } from "../components/AutoSlugInput";
+import { KanaInput } from "../components/KanaInput";
+import { AutoRomajiInput } from "../components/AutoRomajiInput";
 
 export default defineType({
   name: "readingMaterial",
@@ -101,7 +103,15 @@ export default defineType({
       title: "Full Hiragana",
       description: "Versi Hiragana lengkap dari teks di atas untuk pembentukan Furigana otomatis.",
       type: "text",
-      validation: (Rule) => Rule.required(),
+      components: { input: KanaInput },
+    }),
+    defineField({
+      name: "romaji",
+      title: "Full Romaji",
+      description: "Versi Romaji lengkap dari teks di atas.",
+      type: "text",
+      components: { input: AutoRomajiInput },
+      options: { sourceField: "hiragana" } as any,
     }),
     defineField({
       name: "translation",

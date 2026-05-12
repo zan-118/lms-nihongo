@@ -30,11 +30,11 @@ export function useVocabList(initialData: VocabItem[] = []) {
     setLoading(true);
     const start = (page - 1) * ITEMS_PER_PAGE;
     const end = start + ITEMS_PER_PAGE;
-    const baseLevel = level.toLowerCase();
+    const levelFilter = level.toUpperCase();
     const kanaSearch = wanakana.toHiragana(debouncedSearch.trim());
     const kataSearch = wanakana.toKatakana(debouncedSearch.trim());
 
-    let filterStr = `(_type == "vocab" || _type == "verb_dictionary") && (course_category->slug.current match $baseLevel + "*" || course_category->slug.current match "jlpt-" + $baseLevel + "*")`;
+    let filterStr = `(_type == "vocab" || _type == "verb_dictionary") && jlptLevel == $levelFilter`;
     if (debouncedSearch.trim() !== "") {
       filterStr += ` && (word match $search + "*" || jisho match $search + "*" || romaji match $search + "*" || meaning match $search + "*" || word match $kana + "*" || jisho match $kana + "*" || furigana match $kana + "*" || word match $kata + "*" || jisho match $kata + "*")`;
     }
@@ -64,7 +64,7 @@ export function useVocabList(initialData: VocabItem[] = []) {
 
     try {
       const { items, total } = await client.fetch(queryStr, {
-        baseLevel,
+        levelFilter,
         search: debouncedSearch.trim(),
         kana: kanaSearch,
         kata: kataSearch,
@@ -82,11 +82,11 @@ export function useVocabList(initialData: VocabItem[] = []) {
   }, [level, hinshi, debouncedSearch]);
 
   const fetchTotalCount = useCallback(async () => {
-    const baseLevel = level.toLowerCase();
+    const levelFilter = level.toUpperCase();
     const kanaSearch = wanakana.toHiragana(debouncedSearch.trim());
     const kataSearch = wanakana.toKatakana(debouncedSearch.trim());
 
-    let queryStr = `count(*[(_type == "vocab" || _type == "verb_dictionary") && (course_category->slug.current match $baseLevel + "*" || course_category->slug.current match "jlpt-" + $baseLevel + "*")`;
+    let queryStr = `count(*[(_type == "vocab" || _type == "verb_dictionary") && jlptLevel == $levelFilter`;
     if (debouncedSearch.trim() !== "") {
       queryStr += ` && (word match $search + "*" || jisho match $search + "*" || romaji match $search + "*" || meaning match $search + "*" || word match $kana + "*" || jisho match $kana + "*" || furigana match $kana + "*" || word match $kata + "*" || jisho match $kata + "*")`;
     }
@@ -101,7 +101,7 @@ export function useVocabList(initialData: VocabItem[] = []) {
 
     try {
       const count = await client.fetch(queryStr, {
-        baseLevel,
+        levelFilter,
         search: debouncedSearch.trim(),
         kana: kanaSearch,
         kata: kataSearch,

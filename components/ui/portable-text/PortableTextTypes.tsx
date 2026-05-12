@@ -1,5 +1,5 @@
 import React from "react";
-import { AlertTriangle, Lightbulb, FileText } from "lucide-react";
+import { AlertTriangle, Lightbulb, FileText, BookOpen } from "lucide-react";
 import TTSReader from "@/components/features/tools/tts/TTSReader";
 import SanityImage from "@/components/ui/SanityImage";
 import FuriganaDisplay from "@/components/ui/FuriganaDisplay";
@@ -27,11 +27,12 @@ interface SanityImageValue {
 }
 
 export const ptTypes = {
-  callout: ({ value }: { value: { type: "info" | "warning" | "tip"; text: string } }) => {
+  callout: ({ value }: { value: { type: "info" | "warning" | "tip" | "grammar"; text: string; title?: string } }) => {
     const config = {
       info: { icon: FileText, color: "text-primary", bg: "bg-primary/5", border: "border-primary/20" },
       warning: { icon: AlertTriangle, color: "text-warning", bg: "bg-warning/5", border: "border-warning/20" },
       tip: { icon: Lightbulb, color: "text-success", bg: "bg-success/5", border: "border-success/20" },
+      grammar: { icon: BookOpen, color: "text-secondary", bg: "bg-secondary/5", border: "border-secondary/20" },
     };
     const { icon: Icon, color, bg, border } = config[value.type] || config.info;
 
@@ -43,10 +44,17 @@ export const ptTypes = {
             <Icon size={28} aria-hidden="true" />
           </div>
           <div className="flex-1 pt-1">
-            <span className={`text-[10px] font-black uppercase tracking-[0.3em] ${color} mb-2 block`}>
-              Sistem Note: {value.type}
-            </span>
-            <p className="text-muted-foreground text-sm md:text-lg leading-relaxed font-bold">
+            <div className="mb-2">
+              <span className={`text-[10px] font-black uppercase tracking-[0.3em] ${color} mb-1 block`}>
+                {value.type === "grammar" ? "Tata Bahasa" : `Sistem Note: ${value.type}`}
+              </span>
+              {value.title && (
+                <h4 className="text-lg md:text-xl font-black uppercase tracking-tight text-foreground">
+                  {value.title}
+                </h4>
+              )}
+            </div>
+            <p className="text-muted-foreground text-sm md:text-lg leading-relaxed font-medium">
               {value.text}
             </p>
           </div>

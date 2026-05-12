@@ -1,5 +1,7 @@
 import { defineType, defineField } from "sanity";
 import { MessageSquare } from "lucide-react";
+import { KanaInput } from "../components/KanaInput";
+import { AutoRomajiInput } from "../components/AutoRomajiInput";
 
 export default defineType({
   name: "dialogueBlock",
@@ -24,10 +26,22 @@ export default defineType({
             defineField({
               name: "text",
               type: "array",
-              title: "Pesan/Teks",
+              title: "Pesan/Teks (Portable Text)",
               of: [{ type: "block" }],
               description: "Mendukung Portable Text (termasuk Furigana Annotation).",
               validation: (Rule) => Rule.required(),
+            }),
+            defineField({
+              name: "furigana",
+              type: "text",
+              title: "Furigana (Plain)",
+              components: { input: KanaInput },
+            }),
+            defineField({
+              name: "romaji",
+              type: "text",
+              title: "Romaji (Plain)",
+              components: { input: AutoRomajiInput },
             }),
           ],
         },

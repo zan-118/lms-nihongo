@@ -7,6 +7,8 @@
 
 import { defineField, defineType } from "sanity";
 import { AutoSlugInput } from "../components/AutoSlugInput";
+import { KanaInput } from "../components/KanaInput";
+import { AutoRomajiInput } from "../components/AutoRomajiInput";
 
 // ======================
 // SCHEMA DEFINITION
@@ -95,6 +97,19 @@ export default defineType({
                 "Kosongkan jika pertanyaan sepenuhnya ada di dalam Audio/Gambar. BISA MENGGUNAKAN TAG HTML seperti <u>kata</u> untuk garis bawah.",
             },
             {
+              name: "questionFurigana",
+              title: "Question Furigana",
+              type: "text",
+              components: { input: KanaInput },
+            },
+            {
+              name: "questionRomaji",
+              title: "Question Romaji",
+              type: "text",
+              components: { input: AutoRomajiInput },
+              options: { sourceField: "questionFurigana" },
+            },
+            {
               name: "image",
               title: "Gambar Soal (Opsional)",
               type: "image",
@@ -110,7 +125,16 @@ export default defineType({
               name: "options",
               title: "Pilihan Jawaban",
               type: "array",
-              of: [{ type: "string" }],
+              of: [
+                {
+                  type: "object",
+                  fields: [
+                    { name: "text", type: "string", title: "Teks Jawaban" },
+                    { name: "furigana", type: "string", title: "Furigana", components: { input: KanaInput } },
+                    { name: "romaji", type: "string", title: "Romaji", components: { input: AutoRomajiInput } },
+                  ],
+                },
+              ],
               validation: (Rule) => Rule.required().min(3).max(4),
             },
             {
@@ -130,6 +154,19 @@ export default defineType({
               title: "Teks Cerita / Passage (Khusus Dokkai)",
               type: "text",
               description: "Gunakan field ini pada soal PERTAMA dari sebuah teks bacaan Dokkai yang panjang.",
+            },
+            {
+              name: "passageFurigana",
+              title: "Passage Furigana",
+              type: "text",
+              components: { input: KanaInput },
+            },
+            {
+              name: "passageRomaji",
+              title: "Passage Romaji",
+              type: "text",
+              components: { input: AutoRomajiInput },
+              options: { sourceField: "passageFurigana" },
             },
           ],
           preview: {

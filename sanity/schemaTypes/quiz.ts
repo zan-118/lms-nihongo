@@ -6,6 +6,8 @@
  */
 
 import { defineField, defineType } from "sanity";
+import { KanaInput } from "../components/KanaInput";
+import { AutoRomajiInput } from "../components/AutoRomajiInput";
 
 // ======================
 // SCHEMA DEFINITION
@@ -18,9 +20,22 @@ export default defineType({
   fields: [
     defineField({
       name: "question",
-      title: "Question",
+      title: "Question (Japanese)",
       type: "string",
       validation: (rule) => rule.required(),
+    }),
+    defineField({
+      name: "questionFurigana",
+      title: "Question Furigana",
+      type: "string",
+      components: { input: KanaInput },
+    }),
+    defineField({
+      name: "questionRomaji",
+      title: "Question Romaji",
+      type: "string",
+      components: { input: AutoRomajiInput },
+      options: { sourceField: "questionFurigana" },
     }),
     defineField({
       name: "options",
@@ -30,7 +45,9 @@ export default defineType({
         {
           type: "object",
           fields: [
-            { name: "text", title: "Option Text", type: "string" },
+            { name: "text", title: "Option Text (JP)", type: "string" },
+            { name: "furigana", title: "Option Furigana", type: "string", components: { input: KanaInput } },
+            { name: "romaji", title: "Option Romaji", type: "string", components: { input: AutoRomajiInput } },
             {
               name: "isCorrect",
               title: "Is Correct?",

@@ -27,18 +27,18 @@ export async function getPaginatedKanji(
   const start = (page - 1) * limit;
   const end = start + limit;
   
-  const baseLevel = level ? level.toLowerCase() : "";
+  const exactLevel = level ? level.toUpperCase() : "";
   const searchFilter = search ? `&& (character match $searchQuery || meaning match $searchQuery || $search in onyomi || $search in kunyomi)` : "";
-  const levelFilter = level ? `&& (course_category->slug.current match $baseLevel + "*" || course_category->slug.current match "jlpt-" + $baseLevel + "*")` : "";
+  const levelFilter = level ? `&& jlptLevel == $exactLevel` : "";
 
   const query = `{
-    "data": *[_type == "kanji" ${searchFilter} ${levelFilter}] | order(course_category->slug.current asc, character asc) [$start...$end] {
+    "data": *[_type == "kanji" ${searchFilter} ${levelFilter}] | order(jlptLevel asc, character asc) [$start...$end] {
       _id,
       character,
       meaning,
       onyomi,
       kunyomi,
-      "jlpt": course_category->slug.current,
+      "jlpt": jlptLevel,
       "slug": coalesce(slug.current, character)
     },
     "total": count(*[_type == "kanji" ${searchFilter} ${levelFilter}])
@@ -51,7 +51,7 @@ export async function getPaginatedKanji(
       end, 
       searchQuery: `*${search}*`,
       search: search,
-      baseLevel: baseLevel
+      exactLevel: exactLevel
     },
     tags: ["kanji"],
   });
@@ -73,13 +73,13 @@ export async function getPaginatedVocab(
 ): Promise<PaginatedVocabResponse> {
   const start = (page - 1) * limit;
   const end = start + limit;
-  const baseLevel = level.toLowerCase();
+  const exactLevel = level.toUpperCase();
   
   const searchTrim = search.trim();
   const kanaSearch = wanakana.toHiragana(searchTrim);
   const kataSearch = wanakana.toKatakana(searchTrim);
 
-  let filterStr = `(_type == "vocab" || _type == "verb_dictionary") && (course_category->slug.current match $baseLevel + "*" || course_category->slug.current match "jlpt-" + $baseLevel + "*")`;
+  let filterStr = `(_type == "vocab" || _type == "verb_dictionary") && jlptLevel == $exactLevel`;
   if (searchTrim !== "") {
     filterStr += ` && (word match $searchQuery || jisho match $searchQuery || romaji match $searchQuery || meaning match $searchQuery || word match $kanaQuery || jisho match $kanaQuery || furigana match $kanaQuery || word match $kataQuery || jisho match $kataQuery)`;
   }
@@ -95,7 +95,7 @@ export async function getPaginatedVocab(
     "data": *[${filterStr}] | order(coalesce(romaji, "") asc) [$start...$end] { 
       _id, 
       _type,
-      "slug": coalesce(slug.current, romaji, _id),
+      "slug": coalesce(slug.current, word, jisho, _id),
       "word": coalesce(word, jisho), 
       furigana, 
       romaji, 
@@ -115,7 +115,7 @@ export async function getPaginatedVocab(
       searchQuery: `*${searchTrim}*`,
       kanaQuery: `*${kanaSearch}*`,
       kataQuery: `*${kataSearch}*`,
-      baseLevel,
+      exactLevel,
       hinshi
     },
     tags: ["vocab", "verb_dictionary"],

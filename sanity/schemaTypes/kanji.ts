@@ -83,6 +83,7 @@ export default defineType({
         layout: "radio",
       },
       initialValue: "N5",
+      validation: (Rule) => Rule.required(),
     }),
     defineField({
       name: "gradeLevel",
@@ -97,13 +98,7 @@ export default defineType({
       description: "Matikan (OFF) jika hanya untuk referensi UI materi.",
       initialValue: true,
     }),
-    defineField({
-      name: "course_category",
-      title: "Course Category",
-      type: "reference",
-      to: [{ type: "course_category" }],
-      validation: (Rule) => Rule.required(),
-    }),
+
     defineField({
       name: "strokeOrderSvg",
       title: "Stroke Order SVG Paths",
@@ -116,12 +111,7 @@ export default defineType({
       type: "array",
       of: [{ type: "string" }],
     }),
-    defineField({
-      name: "mnemonic",
-      title: "Mnemonic (Legacy Text)",
-      type: "text",
-      description: "Tuliskan cerita atau cara mudah untuk mengingat karakter ini.",
-    }),
+    
     defineField({
       name: "mnemonics",
       title: "Mnemonic (Rich Content)",

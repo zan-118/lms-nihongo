@@ -93,6 +93,8 @@ export default defineType({
         layout: "radio",
       },
       initialValue: "N5",
+      validation: (Rule) => Rule.required(),
+      fieldset: "identity",
     }),
     defineField({
       name: "showInFlashcard",
@@ -119,7 +121,7 @@ export default defineType({
         input: AutoRomajiInput,
       },
       description: "Terisi otomatis mengikuti Furigana. Bisa diedit manual jika perlu.",
-      validation: (Rule) => Rule.required(),
+      fieldset: "identity",
     }),
     defineField({
       name: "slug",
@@ -143,13 +145,7 @@ export default defineType({
       title: "Arti (Bahasa Indonesia)",
       validation: (Rule) => Rule.required(),
     }),
-    defineField({
-      name: "course_category",
-      title: "Course Category",
-      type: "reference",
-      to: [{ type: "course_category" }],
-      validation: (Rule) => Rule.required(),
-    }),
+
     defineField({
       name: "audio",
       type: "file",

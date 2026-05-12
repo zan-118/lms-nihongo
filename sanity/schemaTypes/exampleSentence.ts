@@ -6,6 +6,8 @@
  */
 
 import { defineField, defineType } from "sanity";
+import { KanaInput } from "../components/KanaInput";
+import { AutoRomajiInput } from "../components/AutoRomajiInput";
 
 // ======================
 // SCHEMA DEFINITION
@@ -26,11 +28,17 @@ export default defineType({
       name: "furigana",
       type: "string",
       title: "Cara Baca (Furigana)",
+      components: {
+        input: KanaInput,
+      },
     }),
     defineField({
       name: "romaji",
       type: "string",
       title: "Cara Baca (Romaji)",
+      components: {
+        input: AutoRomajiInput,
+      },
     }),
     defineField({
       name: "id",

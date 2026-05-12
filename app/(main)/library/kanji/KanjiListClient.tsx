@@ -112,7 +112,7 @@ export default function KanjiListClient({ initialData }: KanjiListClientProps) {
               exit={{ opacity: 0, scale: 0.9, y: 20 }}
               transition={{ delay: Math.min(idx * 0.02, 0.5), type: "spring", stiffness: 100, damping: 20 }}
             >
-              <Link href={`/library/kanji/${kanji.slug}`}>
+              <Link href={`/library/kanji/${kanji.character}`}>
                 <Card className="group relative aspect-square flex flex-col items-center justify-center p-4 bg-card/30 backdrop-blur-3xl border border-border hover:border-primary/50 transition-all duration-500 rounded-[2rem] overflow-hidden hover:shadow-[0_0_40px_rgba(var(--primary-rgb),0.15)] cursor-pointer">
                   {/* Hover Background Accent */}
                   <div className="absolute inset-0 bg-gradient-to-br from-primary/5 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500" />

@@ -89,21 +89,22 @@ function FlashcardsContent() {
 
       if (idOrSlug === "all") {
         if (mode === "kanji") {
-          query = `*[_type == "kanji" && showInFlashcard != false][0...50] { _id, "word": character, meaning, "details": { onyomi, kunyomi }, examples }`;
+          query = `*[_type == "kanji" && showInFlashcard != false][0...50] { _id, "_type": _type, "word": character, meaning, "details": { onyomi, kunyomi }, examples, "slug": coalesce(slug.current, character) }`;
         } else {
           query = `{
-            "vocab": *[_type == "vocab" && showInFlashcard != false][0...50] { _id, word, meaning, romaji, furigana },
-            "verbs": *[_type == "verb_dictionary" && showInFlashcard != false][0...50] { _id, "word": jisho, meaning, romaji, furigana }
+            "vocab": *[_type == "vocab" && showInFlashcard != false][0...50] { _id, "_type": _type, word, meaning, romaji, furigana, "slug": slug.current },
+            "verbs": *[_type == "verb_dictionary" && showInFlashcard != false][0...50] { _id, "_type": _type, "word": jisho, meaning, romaji, furigana, "slug": slug.current }
           }`;
         }
       } else {
-        params = { id: idOrSlug };
+        const exactLevel = idOrSlug ? idOrSlug.toUpperCase() : "";
+        params = { exactLevel };
         if (mode === "kanji") {
-          query = `*[_type == "kanji" && showInFlashcard != false && (course_category->_id == $id || course_category->slug.current == $id)] { _id, "word": character, meaning, "details": { onyomi, kunyomi }, examples }`;
+          query = `*[_type == "kanji" && showInFlashcard != false && jlptLevel == $exactLevel][0...50] { _id, "_type": _type, "word": character, meaning, "details": { onyomi, kunyomi }, examples, "slug": coalesce(slug.current, character) }`;
         } else {
           query = `{
-            "vocab": *[_type == "vocab" && showInFlashcard != false && (course_category->_id == $id || course_category->slug.current == $id)] { _id, word, meaning, romaji, furigana },
-            "verbs": *[_type == "verb_dictionary" && showInFlashcard != false && (course_category->_id == $id || course_category->slug.current == $id)] { _id, "word": jisho, meaning, romaji, furigana }
+            "vocab": *[_type == "vocab" && showInFlashcard != false && jlptLevel == $exactLevel][0...50] { _id, "_type": _type, word, meaning, romaji, furigana, "slug": slug.current },
+            "verbs": *[_type == "verb_dictionary" && showInFlashcard != false && jlptLevel == $exactLevel][0...50] { _id, "_type": _type, "word": jisho, meaning, romaji, furigana, "slug": slug.current }
           }`;
         }
       }

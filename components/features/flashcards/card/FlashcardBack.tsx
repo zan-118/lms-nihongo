@@ -10,6 +10,8 @@ import { splitFurigana } from "@/components/ui/SmartJapanese";
 
 interface FlashcardBackProps {
   id: string;
+  docType?: string;
+  slug?: string;
   word: string;
   meaning: string;
   furigana?: string;
@@ -32,6 +34,8 @@ interface FlashcardBackProps {
 
 export function FlashcardBack({
   id,
+  docType,
+  slug,
   word,
   meaning,
   furigana,
@@ -164,7 +168,13 @@ export function FlashcardBack({
                 variant="outline"
                 className="flex-1 h-7 bg-background border-border hover:bg-muted text-[8px] md:text-[10px] font-black uppercase tracking-widest rounded-lg px-2 shadow-none"
               >
-                <Link href={`/library/${isKanji ? 'kanji' : 'vocab'}/${romaji || id}`} aria-label="Lihat detail kata ini">
+                <Link 
+                  href={`/library/${
+                    docType === 'verb_dictionary' ? 'verbs' : 
+                    isKanji ? 'kanji' : 'vocab'
+                  }/${slug || romaji || id}`} 
+                  aria-label="Lihat detail kata ini"
+                >
                   <ExternalLink size={10} className="mr-1" aria-hidden="true" /> Detail
                 </Link>
               </Button>

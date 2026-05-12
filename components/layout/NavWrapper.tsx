@@ -75,7 +75,7 @@ export default function NavWrapper({ children }: NavWrapperProps) {
                         href={`/${pathSegments.slice(0, idx + 1).join('/')}`}
                         className={`hover:text-primary transition-colors ${idx === pathSegments.length - 1 ? 'text-primary pointer-events-none' : ''}`}
                       >
-                        {segment.replace(/-/g, ' ')}
+                        {decodeURIComponent(segment).replace(/-/g, ' ')}
                       </Link>
                     </div>
                   ))}

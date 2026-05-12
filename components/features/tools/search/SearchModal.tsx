@@ -70,7 +70,7 @@ export default function SearchModal({ isOpen, onClose }: { isOpen: boolean; onCl
           _type,
           "title": coalesce(word, title, character),
           "description": coalesce(meaning, "Materi bahasa Jepang"),
-          "slug": coalesce(slug.current, romaji, character),
+          "slug": coalesce(slug.current, word, character, _id),
           "category": _type
         }`;
 

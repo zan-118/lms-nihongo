@@ -7,11 +7,8 @@
 
 import { defineField, defineType } from "sanity";
 import { AutoSlugInput } from "../components/AutoSlugInput";
-
-// ======================
-// SCHEMA DEFINITION
-// ======================
-
+import { KanaInput } from "../components/KanaInput";
+import { AutoRomajiInput } from "../components/AutoRomajiInput";
 export default defineType({
   name: "cheatsheet",
   title: "Cheatsheet (Referensi Cepat)",
@@ -67,10 +64,23 @@ export default defineType({
         {
           type: "object",
           fields: [
-
-            { name: "label", title: "Konteks / Arti", type: "string" },
-            { name: "jp", title: "Bahasa Jepang / Rumus", type: "string" },
-            { name: "romaji", title: "Romaji", type: "string" },
+            { name: "label", title: "Konteks / Arti", type: "string", validation: (Rule: any) => Rule.required() },
+            { name: "jp", title: "Bahasa Jepang / Rumus", type: "string", validation: (Rule: any) => Rule.required() },
+            {
+              name: "furigana",
+              title: "Furigana",
+              type: "string",
+              components: { input: KanaInput },
+              validation: (Rule: any) => Rule.required(),
+            },
+            {
+              name: "romaji",
+              title: "Romaji",
+              type: "string",
+              options: { sourceField: "furigana" } as any,
+              components: { input: AutoRomajiInput },
+              validation: (Rule: any) => Rule.required(),
+            },
           ],
         },
       ],

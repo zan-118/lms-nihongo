@@ -67,7 +67,7 @@ export default function Topbar({ onMenuClick }: { onMenuClick: () => void }) {
 
         <div className="flex flex-col min-w-0">
           <h1 className="text-xs md:text-lg font-black text-foreground uppercase tracking-wider truncate leading-none">
-            {pathSegments.length > 0 ? pathSegments[pathSegments.length - 1].replace(/-/g, ' ') : "Dashboard"}
+            {pathSegments.length > 0 ? decodeURIComponent(pathSegments[pathSegments.length - 1]).replace(/-/g, ' ') : "Dashboard"}
           </h1>
         </div>
       </div>

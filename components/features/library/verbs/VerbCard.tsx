@@ -32,7 +32,7 @@ export function VerbCard({ verb, idx, showRomaji }: VerbCardProps) {
       transition={{ delay: (idx % 12) * 0.02 }}
       className="h-full"
     >
-      <Link href={`/library/verbs/${verb._id}`} className="h-full block outline-none">
+      <Link href={`/library/verbs/${verb.slug}`} className="h-full block outline-none">
         <Card
           className="h-full bg-card border border-border rounded-2xl cursor-pointer group hover:border-primary/40 hover:bg-primary/[0.03] transition-all duration-200 shadow-sm"
         >

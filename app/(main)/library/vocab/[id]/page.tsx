@@ -83,10 +83,12 @@ export async function generateMetadata({
   params: Promise<{ id: string }>;
 }): Promise<Metadata> {
   const { id } = await params;
+  const decodedId = decodeURIComponent(id);
+
   const vocab = await sanityFetch<VocabDetail | null>({
     query: vocabDetailQuery,
-    params: { id },
-    tags: ["vocab"],
+    params: { id: decodedId },
+    tags: ["vocab", "verb_dictionary"],
   });
 
   if (!vocab) {
@@ -96,8 +98,8 @@ export async function generateMetadata({
   }
 
   return {
-    title: `${vocab.word} (${vocab.meaning}) | NihongoRoute`,
-    description: `Pelajari cara baca, arti, dan contoh kalimat untuk kata ${vocab.word}.`,
+    title: `${vocab.word} (${vocab.meaning}) | NihongoRoute Kosakata`,
+    description: `Pelajari arti, cara baca, dan penggunaan kata ${vocab.word} (${vocab.romaji}) dalam bahasa Jepang.`,
   };
 }
 
@@ -107,10 +109,12 @@ export default async function VocabDetailPage({
   params: Promise<{ id: string }>;
 }) {
   const { id } = await params;
+  const decodedId = decodeURIComponent(id);
+
   const vocab = await sanityFetch<VocabDetail | null>({
     query: vocabDetailQuery,
-    params: { id },
-    tags: ["vocab"],
+    params: { id: decodedId },
+    tags: ["vocab", "verb_dictionary"],
   });
 
   if (!vocab) return notFound();
@@ -292,7 +296,7 @@ export default async function VocabDetailPage({
                 </div>
                 <div className="flex flex-wrap gap-3">
                   {vocab.relatedKanji.map((kanji: { _id: string; character: string; meaning: string; onyomi: string; kunyomi: string; slug: string }) => (
-                    <Link key={kanji._id} href={`/library/kanji/${kanji.slug}`}>
+                    <Link key={kanji._id} href={`/library/kanji/${kanji.character}`}>
                       <div className="p-2 pr-4 bg-[rgba(var(--muted-rgb),0.3)] border border-border rounded-xl flex items-center gap-3 hover:border-primary/40 transition-all group/kanji">
                         <div className="w-10 h-10 rounded-lg bg-background border border-border flex items-center justify-center text-xl font-japanese group-hover/kanji:text-primary transition-colors">
                           {kanji.character}
@@ -314,7 +318,7 @@ export default async function VocabDetailPage({
                 <span className="text-[10px] font-black uppercase tracking-[0.2em] text-muted-foreground block">Sinonim</span>
                 <div className="flex flex-wrap gap-2">
                   {vocab.synonyms.map((s: { _id: string; word: string; meaning: string; romaji?: string; slug?: string }) => (
-                    <Link key={s._id} href={`/library/vocab/${s.slug || s.romaji || s._id}`}>
+                    <Link key={s._id} href={`/library/vocab/${s.slug}`}>
                       <Badge variant="secondary" className="px-3 py-1.5 rounded-lg bg-muted border border-border hover:border-primary/40 transition-all cursor-pointer">
                         <span className="font-japanese mr-1.5">{s.word}</span>
                         <span className="text-[8px] opacity-60">({s.meaning})</span>
@@ -331,7 +335,7 @@ export default async function VocabDetailPage({
                 <span className="text-[10px] font-black uppercase tracking-[0.2em] text-muted-foreground block">Antonim</span>
                 <div className="flex flex-wrap gap-2">
                   {vocab.antonyms.map((a: { _id: string; word: string; meaning: string; romaji?: string; slug?: string }) => (
-                    <Link key={a._id} href={`/library/vocab/${a.slug || a.romaji || a._id}`}>
+                    <Link key={a._id} href={`/library/vocab/${a.slug}`}>
                       <Badge variant="secondary" className="px-3 py-1.5 rounded-lg bg-muted border border-border hover:border-destructive/40 transition-all cursor-pointer">
                         <span className="font-japanese mr-1.5">{a.word}</span>
                         <span className="text-[8px] opacity-60">({a.meaning})</span>

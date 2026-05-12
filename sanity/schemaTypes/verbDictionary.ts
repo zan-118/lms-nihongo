@@ -125,19 +125,9 @@ export default defineType({
         layout: "radio",
       },
       initialValue: "N5",
+      validation: (Rule) => Rule.required(),
     }),
-    defineField({
-      name: "lesson",
-      title: "Bab (Lesson)",
-      type: "string",
-    }),
-    defineField({
-      name: "course_category",
-      title: "Course Category (Level)",
-      type: "reference",
-      to: [{ type: "course_category" }],
-      description: "Pilih level untuk memunculkan kata kerja ini di Flashcard",
-    }),
+
     defineField({
       name: "showInFlashcard",
       type: "boolean",

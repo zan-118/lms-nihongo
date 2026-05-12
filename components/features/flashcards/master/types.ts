@@ -1,6 +1,9 @@
 export interface MasterCardData {
   _id?: string;
+  _type?: string;
   id?: string;
+  docType?: string;
+  slug?: string;
   word: string;
   meaning: string;
   furigana?: string;

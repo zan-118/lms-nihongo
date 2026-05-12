@@ -29,6 +29,7 @@ export default function WordPopover({ children, word, reading }: WordPopoverProp
     queryFn: async () => {
       const query = `*[_type == "vocab" && (word == $word || furigana == $word)][0] {
         _id,
+        "slug": coalesce(slug.current, word, _id),
         word,
         furigana,
         romaji,
@@ -99,7 +100,7 @@ export default function WordPopover({ children, word, reading }: WordPopoverProp
 
                     <div className="pt-4 border-t border-border/40 flex items-center justify-between gap-2">
                        <Link 
-                        href={`/library/vocab/${vocab.romaji || vocab._id}`}
+                        href={`/library/vocab/${vocab.slug}`}
                         className="flex-1"
                        >
                          <button className="w-full flex items-center justify-center gap-2 py-2.5 rounded-xl bg-primary/10 text-primary text-[10px] font-black uppercase tracking-widest hover:bg-primary/20 transition-all">

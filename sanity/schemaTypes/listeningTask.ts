@@ -1,8 +1,10 @@
 import { defineField, defineType } from "sanity";
 import { Headphones } from "lucide-react";
 import { AutoSlugInput } from "../components/AutoSlugInput";
+import { KanaInput } from "../components/KanaInput";
+import { AutoRomajiInput } from "../components/AutoRomajiInput";
 
-export const listeningTask = defineType({
+export default defineType({
   name: "listeningTask",
   title: "Listening Task",
   type: "document",
@@ -43,34 +45,46 @@ export const listeningTask = defineType({
         {
           type: "object",
           fields: [
-            defineField({
+            {
               name: "speaker",
               title: "Speaker",
               type: "string",
-            }),
-            defineField({
+            },
+            {
               name: "text",
-              title: "Japanese Text",
-              type: "array", // Portable text to support VocabTrigger
+              title: "Japanese Text (Portable Text)",
+              type: "array",
               of: [{ type: "block" }],
-            }),
-            defineField({
+            },
+            {
+              name: "furigana",
+              title: "Furigana (Plain)",
+              type: "text",
+              components: { input: KanaInput },
+            },
+            {
+              name: "romaji",
+              title: "Romaji (Plain)",
+              type: "text",
+              components: { input: AutoRomajiInput },
+            },
+            {
               name: "translation",
               title: "Translation (Indonesian)",
               type: "string",
-            }),
-            defineField({
+            },
+            {
               name: "startTime",
               title: "Start Time (Seconds)",
               type: "number",
-              validation: (Rule) => Rule.required().min(0),
-            }),
-            defineField({
+              validation: (Rule: any) => Rule.required().min(0),
+            },
+            {
               name: "endTime",
               title: "End Time (Seconds)",
               type: "number",
-              validation: (Rule) => Rule.required().min(0),
-            }),
+              validation: (Rule: any) => Rule.required().min(0),
+            },
           ],
           preview: {
             select: {
@@ -95,4 +109,3 @@ export const listeningTask = defineType({
     }),
   ],
 });
-export default listeningTask;

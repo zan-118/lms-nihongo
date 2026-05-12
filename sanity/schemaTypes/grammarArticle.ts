@@ -1,12 +1,7 @@
-/**
- * @file grammarArticle.ts
- * @description Definisi skema Sanity untuk dokumen 'grammar_article' (artikel tata bahasa).
- * Menyediakan struktur konten berbasis blok (Portable Text) untuk penjelasan tata bahasa yang mendalam.
- * @module sanity/schemaTypes/grammarArticle
- */
-
 import { defineType, defineField } from "sanity";
 import { AutoSlugInput } from "../components/AutoSlugInput";
+import { KanaInput } from "../components/KanaInput";
+import { AutoRomajiInput } from "../components/AutoRomajiInput";
 
 // ======================
 // SCHEMA DEFINITION
@@ -17,7 +12,6 @@ export default defineType({
   title: "Grammar Article",
   type: "document",
   fields: [
-
     defineField({ name: "title", title: "Title", type: "string" }),
     defineField({
       name: "slug",
@@ -74,6 +68,18 @@ export default defineType({
       title: "Rumus (Formation)",
       type: "string",
       description: "Contoh: V-ta / N-no + あげく",
+    }),
+    defineField({
+      name: "formationFurigana",
+      title: "Rumus Furigana",
+      type: "string",
+      components: { input: KanaInput },
+    }),
+    defineField({
+      name: "formationRomaji",
+      title: "Rumus Romaji",
+      type: "string",
+      components: { input: AutoRomajiInput },
     }),
     defineField({
       name: "notes",

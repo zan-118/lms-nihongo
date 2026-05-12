@@ -8,7 +8,7 @@ const CARDS_QUERY = `*[_id in $ids] {
   meaning,
   romaji,
   furigana,
-  category,
+  jlptLevel,
   kanjiDetails
 }`;
 

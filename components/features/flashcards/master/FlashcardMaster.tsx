@@ -148,6 +148,8 @@ export default function FlashcardMaster({
                 }
               }}
               type={type}
+              docType={card._type}
+              slug={card.slug}
               srsState={srsState}
               isShaking={isShaking}
               studyMode={studyMode}

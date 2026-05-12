@@ -9,6 +9,8 @@ import { WritingPracticeModal } from "./WritingPracticeModal";
 
 export default function Flashcard({
   id,
+  docType,
+  slug,
   word,
   meaning,
   furigana,
@@ -69,6 +71,8 @@ export default function Flashcard({
 
           <FlashcardBack
             id={id}
+            docType={docType}
+            slug={slug}
             word={word}
             meaning={meaning}
             furigana={furigana}

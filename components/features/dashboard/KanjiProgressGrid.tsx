@@ -23,7 +23,7 @@ export default function KanjiProgressGrid() {
   useEffect(() => {
     const fetchKanjis = async () => {
       try {
-        const query = `*[_type == "kanji" && (level->code == "N5" || level == "N5")] | order(_id asc) {
+        const query = `*[_type == "kanji" && jlptLevel == "N5"] | order(_id asc) {
           _id,
           kanji,
           meaning

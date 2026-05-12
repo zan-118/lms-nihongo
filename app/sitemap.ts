@@ -42,17 +42,17 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
     { url: `${baseUrl}/courses`, lastModified: new Date() },
   );
 
-  // Ambil Data Level dari Sanity
-  const levelsQuery = `*[_type == "level"] { code }`;
-  const levels: SitemapLevel[] = await sanityFetch<SitemapLevel[]>({
-    query: levelsQuery,
-    tags: ["level"],
+  // Ambil Data Kategori dari Sanity
+  const categoriesQuery = `*[_type == "course_category"] { "code": slug.current }`;
+  const categories: SitemapLevel[] = await sanityFetch<SitemapLevel[]>({
+    query: categoriesQuery,
+    tags: ["course_category"],
   });
 
-  if (levels) {
-    for (const level of levels) {
+  if (categories) {
+    for (const category of categories) {
       urls.push({
-        url: `${baseUrl}/courses/${level.code}`,
+        url: `${baseUrl}/courses/${category.code}`,
         lastModified: new Date(),
       });
     }
@@ -61,12 +61,12 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
   // Ambil Data Lesson dari Sanity
   const lessonsQuery = `*[_type == "lesson" && is_published == true] {
     "slug": slug.current,
-    "level_code": level->code,
+    "level_code": course_category->slug.current,
     _updatedAt
   }`;
   const lessons: SitemapLesson[] = await sanityFetch<SitemapLesson[]>({
     query: lessonsQuery,
-    tags: ["lesson", "level"],
+    tags: ["lesson", "course_category"],
   });
 
   if (lessons) {

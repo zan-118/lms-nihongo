@@ -1,4 +1,6 @@
 import { defineField, defineType } from "sanity";
+import { KanaInput } from "../components/KanaInput";
+import { AutoRomajiInput } from "../components/AutoRomajiInput";
 
 /**
  * @file callout.ts
@@ -36,6 +38,18 @@ export default defineType({
       title: "Isi Konten",
       type: "text",
       validation: (Rule) => Rule.required(),
+    }),
+    defineField({
+      name: "furigana",
+      title: "Furigana",
+      type: "text",
+      components: { input: KanaInput },
+    }),
+    defineField({
+      name: "romaji",
+      title: "Romaji",
+      type: "text",
+      components: { input: AutoRomajiInput },
     }),
   ],
 });

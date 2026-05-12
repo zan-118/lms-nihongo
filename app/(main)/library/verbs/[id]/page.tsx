@@ -15,6 +15,9 @@ import {
   Layers,
   ArrowRightLeft,
   Link as LinkIcon,
+  Home,
+  Library,
+  Activity
 } from "lucide-react";
 import { Card } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
@@ -74,9 +77,11 @@ export async function generateMetadata({
   params: Promise<{ id: string }>;
 }): Promise<Metadata> {
   const { id } = await params;
+  const decodedId = decodeURIComponent(id);
+  
   const verb = await sanityFetch<VerbDetail | null>({
     query: verbOnlyDetailQuery,
-    params: { id },
+    params: { id: decodedId },
     tags: ["verb_dictionary"],
   });
 
@@ -98,9 +103,11 @@ export default async function VerbDetailPage({
   params: Promise<{ id: string }>;
 }) {
   const { id } = await params;
+  const decodedId = decodeURIComponent(id);
+  
   const verb = await sanityFetch<VerbDetail | null>({
     query: verbOnlyDetailQuery,
-    params: { id },
+    params: { id: decodedId },
     tags: ["verb_dictionary"],
   });
 
@@ -131,6 +138,28 @@ export default async function VerbDetailPage({
       <div className="absolute inset-0 bg-[linear-gradient(rgba(var(--foreground-rgb),0.01)_1px,transparent_1px),linear-gradient(90deg,rgba(var(--foreground-rgb),0.01)_1px,transparent_1px)] bg-[size:60px_60px] pointer-events-none z-0" />
 
       <div className="max-w-5xl mx-auto w-full relative z-10 pt-8 md:pt-16">
+        {/* Breadcrumbs */}
+        <nav className="mb-10 md:mb-16 flex flex-wrap items-center gap-2 md:gap-4 text-[10px] md:text-xs font-black text-muted-foreground uppercase tracking-[0.2em]">
+          <Link href="/dashboard" className="hover:text-primary transition-all flex items-center gap-1.5 md:gap-2 group">
+            <Home size={14} aria-hidden="true" className="group-hover:scale-110 transition-transform" /> 
+            <span className="hidden sm:inline">Beranda</span>
+          </Link>
+          <span className="opacity-20">/</span>
+          <Link href="/library" className="hover:text-primary transition-all flex items-center gap-1.5 md:gap-2 group">
+            <Library size={14} aria-hidden="true" className="group-hover:scale-110 transition-transform" /> 
+            <span className="hidden sm:inline">Pustaka</span>
+          </Link>
+          <span className="opacity-20">/</span>
+          <Link href="/library/verbs" className="hover:text-primary transition-all flex items-center gap-1.5 md:gap-2 group">
+            <Activity size={14} aria-hidden="true" className="group-hover:scale-110 transition-transform" /> 
+            <span className="hidden sm:inline">Kata Kerja</span>
+          </Link>
+          <span className="opacity-20">/</span>
+          <span className="text-primary flex items-center gap-1.5 md:gap-2 drop-shadow-[0_0_10px_rgba(var(--primary-rgb),0.3)]">
+            {verb.jisho}
+          </span>
+        </nav>
+
         <div className="grid grid-cols-1 md:grid-cols-3 lg:grid-cols-4 gap-4 md:gap-6 auto-rows-[minmax(0,auto)] animate-in fade-in slide-in-from-bottom-8 duration-1000 ease-out">
           {/* 1. Hero Bento (Informasi Utama) */}
           <Card className="p-8 md:p-12 bg-card/40 backdrop-blur-xl border-border rounded-[2rem] hover:border-primary/40 transition-all group overflow-hidden relative md:col-span-2 lg:col-span-2 md:row-span-2 flex flex-col items-center justify-center text-center shadow-2xl glass">
@@ -288,7 +317,7 @@ export default async function VerbDetailPage({
                 </div>
                 <div className="flex flex-wrap gap-3">
                   {verb.relatedKanji?.map((kanji: VerbRelatedKanji) => (
-                    <Link key={kanji._id} href={`/library/kanji/${kanji.slug}`}>
+                    <Link key={kanji._id} href={`/library/kanji/${kanji.character}`}>
                       <div className="p-2 pr-4 bg-[rgba(var(--muted-rgb),0.3)] border border-border rounded-xl flex items-center gap-3 hover:border-primary/40 transition-all group/kanji">
                         <div className="w-10 h-10 rounded-lg bg-background border border-border flex items-center justify-center text-xl font-japanese group-hover/kanji:text-primary transition-colors">
                           {kanji.character}

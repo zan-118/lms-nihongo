@@ -14,7 +14,10 @@ import {
   ChevronLeft, 
   Sparkles, 
   Link as LinkIcon,
-  Play
+  Play,
+  Home,
+  Library,
+  Languages
 } from "lucide-react";
 import { Card } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
@@ -26,12 +29,13 @@ import { PortableText } from "@portabletext/react";
 export async function generateMetadata({
   params,
 }: {
-  params: Promise<{ slug: string }>;
+  params: Promise<{ id: string }>;
 }): Promise<Metadata> {
-  const { slug } = await params;
+  const { id } = await params;
+  const decodedId = decodeURIComponent(id);
   const kanji = await sanityFetch<any>({
     query: kanjiQuery,
-    params: { slug },
+    params: { id: decodedId },
     tags: ["kanji"],
   });
 
@@ -50,12 +54,13 @@ export async function generateMetadata({
 export default async function KanjiDetailPage({
   params,
 }: {
-  params: Promise<{ slug: string }>;
+  params: Promise<{ id: string }>;
 }) {
-  const { slug } = await params;
+  const { id } = await params;
+  const decodedId = decodeURIComponent(id);
   const kanji = await sanityFetch<any>({
     query: kanjiQuery,
-    params: { slug },
+    params: { id: decodedId },
     tags: ["kanji"],
   });
 
@@ -71,6 +76,28 @@ export default async function KanjiDetailPage({
       <div className="absolute inset-0 bg-[linear-gradient(rgba(0,0,0,0.01)_1px,transparent_1px),linear-gradient(90deg,rgba(0,0,0,0.01)_1px,transparent_1px)] dark:bg-[linear-gradient(rgba(255,255,255,0.01)_1px,transparent_1px),linear-gradient(90deg,rgba(255,255,255,0.01)_1px,transparent_1px)] bg-[size:60px_60px] pointer-events-none z-0" />
 
       <div className="max-w-6xl mx-auto w-full relative z-10 pt-8 md:pt-16">
+        {/* Breadcrumbs */}
+        <nav className="mb-10 md:mb-16 flex flex-wrap items-center gap-2 md:gap-4 text-[10px] md:text-xs font-black text-muted-foreground uppercase tracking-[0.2em]">
+          <Link href="/dashboard" className="hover:text-primary transition-all flex items-center gap-1.5 md:gap-2 group">
+            <Home size={14} aria-hidden="true" className="group-hover:scale-110 transition-transform" /> 
+            <span className="hidden sm:inline">Beranda</span>
+          </Link>
+          <span className="opacity-20">/</span>
+          <Link href="/library" className="hover:text-primary transition-all flex items-center gap-1.5 md:gap-2 group">
+            <Library size={14} aria-hidden="true" className="group-hover:scale-110 transition-transform" /> 
+            <span className="hidden sm:inline">Pustaka</span>
+          </Link>
+          <span className="opacity-20">/</span>
+          <Link href="/library/kanji" className="hover:text-primary transition-all flex items-center gap-1.5 md:gap-2 group">
+            <Languages size={14} aria-hidden="true" className="group-hover:scale-110 transition-transform" /> 
+            <span className="hidden sm:inline">Kanji</span>
+          </Link>
+          <span className="opacity-20">/</span>
+          <span className="text-primary flex items-center gap-1.5 md:gap-2 drop-shadow-[0_0_10px_rgba(var(--primary-rgb),0.3)]">
+            {kanji.character}
+          </span>
+        </nav>
+
         <div className="grid grid-cols-1 md:grid-cols-3 lg:grid-cols-4 gap-6 auto-rows-[minmax(0,auto)] animate-in fade-in slide-in-from-bottom-8 duration-1000 ease-out">
           {/* 1. Stroke & Visual Bento (Fokus Utama) */}
           <Card className="p-8 md:p-12 bg-card/20 backdrop-blur-xl border-border rounded-[2.5rem] hover:border-primary/40 transition-all flex flex-col items-center justify-center group relative overflow-hidden md:col-span-2 lg:col-span-2 md:row-span-2">
@@ -156,7 +183,7 @@ export default async function KanjiDetailPage({
             {kanji.relatedVocab && kanji.relatedVocab.length > 0 ? (
               <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
                 {kanji.relatedVocab.map((vocab: { _id: string; word: string; furigana: string; meaning: string; romaji?: string; slug?: string }) => (
-                  <Link key={vocab._id} href={`/library/vocab/${vocab.slug || vocab.romaji || vocab._id}`}>
+                  <Link key={vocab._id} href={`/library/vocab/${vocab.slug}`}>
                     <Card className="p-6 bg-card/20 border-border rounded-2xl flex items-center gap-4 hover:bg-card/40 hover:border-primary/30 transition-all group cursor-pointer shadow-none">
                       <div className="flex-1 min-w-0">
                         <div className="text-xl font-bold text-foreground font-japanese group-hover:text-primary transition-colors">
