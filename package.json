@@ -6,8 +6,8 @@
     "dev": "next dev --turbo",
     "build": "next build",
     "start": "next start",
-    "lint": "node --max-old-space-size=4096 node_modules/eslint/bin/eslint.js .",
-    "lint:fix": "node --max-old-space-size=4096 node_modules/eslint/bin/eslint.js . --fix",
+    "lint": "eslint .",
+    "lint:fix": "eslint . --fix",
     "test": "vitest run",
     "test:watch": "vitest",
     "test:e2e": "playwright test",
@@ -52,6 +52,7 @@
     "zustand": "^5.0.12"
   },
   "devDependencies": {
+    "@eslint/eslintrc": "^3.3.5",
     "@playwright/test": "^1.59.1",
     "@sanity/cli": "^6.3.1",
     "@testing-library/jest-dom": "^6.9.1",

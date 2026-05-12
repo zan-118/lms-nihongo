@@ -16,13 +16,14 @@ export function useReviewSession(loading: boolean) {
   const [isFetching, setIsFetching] = useState(false);
   const [isFinished, setIsFinished] = useState(false);
 
+  const [now] = useState(() => Date.now());
+
   // Hitung jumlah kartu yang jatuh tempo (due)
   const dueItemIds = useMemo(() => {
-    const now = Date.now();
     return Object.entries(srs || {})
       .filter(([, state]) => state.nextReview <= now)
       .map(([id]) => id);
-  }, [srs]);
+  }, [srs, now]);
 
   const allItemIds = useMemo(() => Object.keys(srs || {}), [srs]);
 

@@ -40,13 +40,6 @@ export default function AudioController({
     }
   }, [externalSeek]);
 
-  // Stop everything on unmount
-  useEffect(() => {
-    return () => {
-      stopAll();
-    };
-  }, []);
-
   const cleanTextForTTS = (text: string) => {
     if (!text) return "";
     return text
@@ -68,6 +61,13 @@ export default function AudioController({
     setIsTTS(false);
     setCurrentTime(0);
   };
+
+  // Stop everything on unmount
+  useEffect(() => {
+    return () => {
+      stopAll();
+    };
+  }, []);
 
   const toggleNativeAudio = () => {
     if (!audioRef.current) return;

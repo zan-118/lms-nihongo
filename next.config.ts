@@ -17,6 +17,11 @@ const nextConfig: NextConfig = {
     position: 'top-right',
   },
   transpilePackages: ["@react-pdf/renderer"],
+  logging: {
+    fetches: {
+      fullUrl: true,
+    },
+  },
 };
 
 export default nextConfig;

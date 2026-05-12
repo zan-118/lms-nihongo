@@ -28,6 +28,27 @@ export default function DictionaryPopup() {
   const [loading, setLoading] = useState(false);
   const popupRef = useRef<HTMLDivElement>(null);
 
+  const lookupWord = async (text: string) => {
+    setLoading(true);
+    try {
+      if (text === "猫") {
+        setResult({ word: "猫", furigana: "ねこ", meaning: "Kucing", romaji: "Neko" });
+      } else if (text === "日本語") {
+        setResult({ word: "日本語", furigana: "にほんご", meaning: "Bahasa Jepang", romaji: "Nihongo" });
+      } else {
+        setResult({ 
+          word: text, 
+          meaning: "Tunggu sebentar ya...", 
+          furigana: "???" 
+        });
+      }
+    } catch (err) {
+      console.error(err);
+    } finally {
+      setLoading(false);
+    }
+  };
+
   useEffect(() => {
     const handleMouseUp = () => {
       const selected = window.getSelection();
@@ -62,27 +83,6 @@ export default function DictionaryPopup() {
       document.removeEventListener("mousedown", handleMouseDown);
     };
   }, []);
-
-  const lookupWord = async (text: string) => {
-    setLoading(true);
-    try {
-      if (text === "猫") {
-        setResult({ word: "猫", furigana: "ねこ", meaning: "Kucing", romaji: "Neko" });
-      } else if (text === "日本語") {
-        setResult({ word: "日本語", furigana: "にほんご", meaning: "Bahasa Jepang", romaji: "Nihongo" });
-      } else {
-        setResult({ 
-          word: text, 
-          meaning: "Tunggu sebentar ya...", 
-          furigana: "???" 
-        });
-      }
-    } catch (err) {
-      console.error(err);
-    } finally {
-      setLoading(false);
-    }
-  };
 
   return (
     <AnimatePresence>
