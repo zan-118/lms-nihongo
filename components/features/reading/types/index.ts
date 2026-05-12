@@ -13,13 +13,30 @@ export interface ReadingState {
   isTTSDisabled?: boolean;
 }
 
+export interface PortableTextChild {
+  _key: string;
+  _type: string;
+  text: string;
+  marks?: string[];
+}
+
+export interface PortableTextBlock {
+  _key: string;
+  _type: "block";
+  children: PortableTextChild[];
+  style?: string;
+  list?: string;
+}
+
+export type PortableTextContent = string | PortableTextBlock[];
+
 export interface ReadingData {
   title: string;
   difficulty: string;
   audioUrl?: string;
   isTTSDisabled?: boolean;
-  body: any; // Can be string or PortableText array
-  hiragana: any;
-  romaji?: any;
-  translation: any; // Can be string or PortableText array
+  body: PortableTextContent;
+  hiragana: PortableTextContent;
+  romaji?: PortableTextContent;
+  translation: PortableTextContent;
 }

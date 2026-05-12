@@ -1,7 +1,7 @@
 import { useEffect, useMemo, type ElementType } from "react";
 import { useUIStore } from "@/store/useUIStore";
 import { BookOpen, Eye, EyeOff, Type } from "lucide-react";
-import { ReadingData, ReadingMode } from "../types";
+import { ReadingData, ReadingMode, PortableTextContent, PortableTextBlock } from "../types";
 
 export function useReadingLogic(data: ReadingData) {
   const readingState = useUIStore((state) => state.readingState);
@@ -12,19 +12,19 @@ export function useReadingLogic(data: ReadingData) {
   useEffect(() => {
     setReadingState({
       audioUrl: data.audioUrl,
-      textToSpeak: data.body,
+      textToSpeak: typeof data.body === 'string' ? data.body : undefined,
       isTTSDisabled: data.isTTSDisabled,
     });
   }, [data, setReadingState]);
 
   // Helper to extract text from either string or PortableText blocks
-  const extractText = (content: any): string[] => {
+  const extractText = (content: PortableTextContent | undefined): string[] => {
     if (!content) return [];
     if (typeof content === "string") return content.split(/\n+/).filter(p => p.trim());
     if (Array.isArray(content)) {
       return content
-        .filter((block: any) => block._type === "block" && block.children)
-        .map((block: any) => block.children.map((child: any) => child.text).join(""))
+        .filter((block: PortableTextBlock) => block._type === "block" && block.children)
+        .map((block: PortableTextBlock) => block.children.map((child) => child.text).join(""))
         .filter((text: string) => text.trim().length > 0);
     }
     return [];

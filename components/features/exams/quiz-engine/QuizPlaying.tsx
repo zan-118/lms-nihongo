@@ -133,7 +133,7 @@ export function QuizPlaying({
               className="mt-6 md:mt-10 flex flex-col gap-6"
             >
               {currentQ.explanation && (
-                <Card className="bg-destructive/5 border-l-4 border-l-red-500 p-5 md:p-8 rounded-[1.5rem] md:rounded-[2rem] border border-border neo-inset shadow-none">
+                <Card className="bg-destructive/5 border-l-4 border-l-destructive p-5 md:p-8 rounded-[1.5rem] md:rounded-[2rem] border border-border neo-inset shadow-none">
                   <div className="flex items-center gap-2 md:gap-3 mb-2 md:mb-4">
                      <AlertCircle size={16} className="text-destructive md:w-5 md:h-5" />
                      <span className="text-[10px] md:text-xs text-destructive text-destructive font-bold uppercase tracking-widest">Kenapa Jawabannya Ini?</span>

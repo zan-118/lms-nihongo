@@ -90,7 +90,7 @@ export default function LibraryPage() {
               <Library size={28} className="text-primary md:w-8 md:h-8" />
             </Card>
             <div className="flex flex-col">
-              <span className="text-xs md:text-xs font-bold uppercase tracking-widest text-primary/50">Pusat Sumber Belajar</span>
+              <span className="text-xs md:text-xs font-bold uppercase tracking-widest text-[rgba(var(--primary-rgb),0.5)]">Pusat Sumber Belajar</span>
               <div className="flex items-center gap-2 mt-1">
                  <Activity size={12} className="text-primary animate-pulse" />
                  <span className="text-xs font-bold text-muted-foreground uppercase tracking-widest leading-none">Status: Siap Belajar</span>

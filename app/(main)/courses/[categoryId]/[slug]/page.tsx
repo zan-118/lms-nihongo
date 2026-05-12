@@ -34,7 +34,7 @@ import DownloadPdfButton from "@/components/features/pdf/actions/DownloadPdfButt
 import { renderSmartText } from "@/components/features/global/SmartText";
 import { sharedPtComponents } from "@/components/ui/portable-text/SharedPortableText";
 import * as wanakana from "wanakana";
-import { splitFurigana } from "@/components/ui/SmartJapanese";
+import { SmartJapanese } from "@/components/ui/SmartJapanese";
 
 // ======================
 // CONFIG / CONSTANTS
@@ -248,18 +248,7 @@ export default async function LessonPage({ params }: Props) {
                         </div>
                         <h4 className="group-hover:text-primary dark:group-hover:text-primary transition-colors tracking-tight mb-2">
                            <div className="text-3xl font-black text-foreground">
-                              {splitFurigana(v.word || "", v.furigana || "").map((chunk, i) => (
-                                chunk.furi ? (
-                                  <ruby key={i}>
-                                    {chunk.text}
-                                    <rt className="text-primary/80 font-bold tracking-widest not-italic" style={{ fontSize: '0.55em' }}>
-                                      {chunk.furi}
-                                    </rt>
-                                  </ruby>
-                                ) : (
-                                  <span key={i}>{chunk.text}</span>
-                                )
-                              ))}
+                              <SmartJapanese word={v.word || ""} furigana={v.furigana} />
                            </div>
                         </h4>
                         
