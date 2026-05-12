@@ -41,6 +41,7 @@ export default defineType({
   title: "Perpustakaan Kosakata Global",
   type: "document",
   fieldsets: [
+    { name: "identity", title: "Identitas Utama", options: { columns: 2 } },
     { name: "adjectiveConjugation", title: "Konjugasi Kata Sifat (Khusus Keiyoushi)" },
   ],
   fields: [
