@@ -54,7 +54,7 @@ function ReadingPageContent({ data }: ReadingPageClientProps) {
       <div className="fixed inset-0 pointer-events-none overflow-hidden z-0">
         <div className="absolute top-[-20%] left-[-10%] w-[60%] h-[60%] bg-primary/5 blur-[150px] rounded-full animate-pulse" />
         <div className="absolute bottom-[-20%] right-[-10%] w-[60%] h-[60%] bg-success/5 blur-[150px] rounded-full animate-pulse delay-1000" />
-        <div className="absolute inset-0 bg-[linear-gradient(rgba(0,0,0,0.01)_1px,transparent_1px),linear-gradient(90deg,rgba(0,0,0,0.01)_1px,transparent_1px)] dark:bg-[linear-gradient(rgba(255,255,255,0.01)_1px,transparent_1px),linear-gradient(90deg,rgba(255,255,255,0.01)_1px,transparent_1px)] bg-[size:100px_100px] pointer-events-none opacity-20" />
+        <div className="absolute inset-0 bg-[linear-gradient(rgba(var(--foreground-rgb),0.01)_1px,transparent_1px),linear-gradient(90deg,rgba(var(--foreground-rgb),0.01)_1px,transparent_1px)] bg-[size:100px_100px] pointer-events-none opacity-20" />
       </div>
 
       {/* Top Navbar - Glassmorphic */}
@@ -176,7 +176,7 @@ function ReadingPageContent({ data }: ReadingPageClientProps) {
                   <Button 
                     variant={showTranslation ? "default" : "ghost"} 
                     size="icon" 
-                    className={cn("rounded-xl transition-all", showTranslation && "text-white shadow-lg")}
+                    className={cn("rounded-xl transition-all", showTranslation && "text-primary-foreground shadow-lg")}
                     onClick={toggleTranslation}
                     aria-label="Toggle Terjemahan"
                   >
@@ -193,7 +193,7 @@ function ReadingPageContent({ data }: ReadingPageClientProps) {
               "p-8 md:p-16 lg:p-24 rounded-[3rem] transition-all duration-700 relative",
               isZenMode 
                 ? "bg-transparent shadow-none border-none" 
-                : "bg-card/10 backdrop-blur-3xl border border-border/40 shadow-[0_40px_100px_-20px_rgba(0,0,0,0.2)]"
+                : "bg-card/10 backdrop-blur-3xl border border-border/40 shadow-[0_40px_100px_-20px_rgba(var(--background-rgb),0.2)]"
             )}
           >
             <div className="absolute top-0 left-0 w-full h-1.5 bg-gradient-to-r from-transparent via-primary/20 to-transparent opacity-50" />
@@ -237,7 +237,7 @@ function ReadingPageContent({ data }: ReadingPageClientProps) {
                     <Sparkles size={20} className="text-warning animate-pulse" />
                     <span className="text-[10px] font-black uppercase tracking-[0.3em] text-muted-foreground">Selesaikan Bacaan Untuk XP</span>
                  </div>
-                 <Button className="px-16 py-8 h-auto rounded-2xl text-xs font-black uppercase tracking-[0.3em] bg-primary text-primary-foreground shadow-[0_20px_50px_-10px_rgba(0,238,255,0.4)] hover:shadow-[0_20px_70px_-10px_rgba(0,238,255,0.6)] hover:scale-105 active:scale-95 transition-all">
+                 <Button className="px-16 py-8 h-auto rounded-2xl text-xs font-black uppercase tracking-[0.3em] bg-primary text-primary-foreground shadow-[0_20px_50px_-10px_rgba(var(--primary-rgb),0.4)] hover:shadow-[0_20px_70px_-10px_rgba(var(--primary-rgb),0.6)] hover:scale-105 active:scale-95 transition-all">
                    Tandai Selesai
                  </Button>
               </div>
@@ -255,7 +255,7 @@ function ReadingPageContent({ data }: ReadingPageClientProps) {
             exit={{ y: 100 }}
             className="fixed bottom-8 inset-x-6 z-50 xl:hidden"
           >
-            <Card className="p-3 bg-card/60 backdrop-blur-2xl border-border/60 rounded-[2rem] shadow-[0_20px_60px_-15px_rgba(0,0,0,0.3)] flex items-center justify-between gap-2 max-w-md mx-auto">
+            <Card className="p-3 bg-card/60 backdrop-blur-2xl border-border/60 rounded-[2rem] shadow-[0_20px_60px_-15px_rgba(var(--background-rgb),0.3)] flex items-center justify-between gap-2 max-w-md mx-auto">
               <AudioController 
                 audioUrl={data.audioUrl} 
                 textToSpeak={data.body} 

@@ -129,7 +129,7 @@ export default function CheatsheetClient({
                 >
                   <Link href={`/library/cheatsheet/${sheet.slug || sheet._id}`}>
                     <Card 
-                      className="group relative h-full bg-card hover:bg-primary/[0.02] border border-border/50 hover:border-primary/40 rounded-[2.5rem] p-8 cursor-pointer transition-all duration-500 shadow-sm hover:shadow-[0_20px_50px_rgba(0,0,0,0.1)] dark:hover:shadow-[0_20px_50px_rgba(0,0,0,0.3)] flex flex-col gap-6 overflow-hidden"
+                      className="group relative h-full bg-card hover:bg-primary/[0.02] border border-border/50 hover:border-primary/40 rounded-[2.5rem] p-8 cursor-pointer transition-all duration-500 shadow-sm hover:shadow-[0_20px_50px_rgba(var(--background-rgb),0.1)] dark:hover:shadow-[0_20px_50px_rgba(var(--background-rgb),0.3)] flex flex-col gap-6 overflow-hidden"
                     >
                       {/* Background decoration */}
                       <div className="absolute -bottom-6 -right-6 text-[8rem] font-black text-foreground/[0.03] group-hover:text-primary/[0.05] transition-colors pointer-events-none italic">

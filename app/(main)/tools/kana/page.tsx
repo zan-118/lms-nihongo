@@ -418,8 +418,8 @@ export default function KanaPage() {
                   <div className="w-full flex-1 flex flex-col justify-center min-h-[300px] mb-2 bg-background rounded-xl border border-border overflow-hidden">
                     <WritingCanvas 
                       character={selectedChar!.char} 
-                      strokeColor={isHira ? "#06b6d4" : "#a855f7"}
-                      guideColor={isHira ? "#06b6d4" : "#a855f7"}
+                      strokeColor={isHira ? "rgb(var(--primary-rgb))" : "rgb(var(--secondary-rgb))"}
+                      guideColor={isHira ? "rgb(var(--primary-rgb))" : "rgb(var(--secondary-rgb))"}
                     />
                   </div>
 
@@ -493,9 +493,9 @@ export default function KanaPage() {
                           
                           if (quizFeedback) {
                             if (isCorrect) {
-                              btnClass = "bg-success border-success text-white shadow-lg";
+                              btnClass = "bg-success border-success text-success-foreground shadow-lg";
                             } else if (isClicked && !isCorrect) {
-                              btnClass = "bg-destructive border-destructive text-white shadow-lg";
+                              btnClass = "bg-destructive border-destructive text-destructive-foreground shadow-lg";
                             } else {
                               btnClass = "bg-muted/50 border-border text-muted-foreground/20 opacity-50";
                             }

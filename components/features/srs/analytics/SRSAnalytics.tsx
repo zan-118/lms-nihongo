@@ -21,19 +21,19 @@ export default function SRSAnalytics() {
 
   return (
     <Card className="bg-card p-8 rounded-[3rem] border-border relative overflow-hidden neo-card shadow-none flex flex-col h-full">
-      <div className="absolute inset-0 bg-[radial-gradient(circle_at_top_right,rgba(0,238,255,0.05),transparent_50%)]" />
+      <div className="absolute inset-0 bg-[radial-gradient(circle_at_top_right,rgba(var(--primary-rgb),0.05),transparent_50%)]" />
       
       <header className="flex items-center justify-between mb-10 relative z-10">
         <div className="flex items-center gap-4">
-          <Card className="w-12 h-12 rounded-xl bg-purple-500/10 border-purple-500/20 flex items-center justify-center neo-inset shadow-none">
-            <LineChart size={24} className="text-purple-500 dark:text-purple-400" />
+          <Card className="w-12 h-12 rounded-xl bg-primary/10 border-primary/20 flex items-center justify-center neo-inset shadow-none">
+            <LineChart size={24} className="text-primary" />
           </Card>
           <div>
             <h3 className="text-foreground font-black uppercase tracking-widest text-sm">Kekuatan Ingatan</h3>
             <span className="block text-xs text-muted-foreground font-bold uppercase tracking-widest mt-1">Stabilitas Memori (Ease Factor)</span>
           </div>
         </div>
-        <Badge variant="outline" className="bg-purple-500/5 border-purple-500/20 text-purple-500 dark:text-purple-400 px-4 py-2 rounded-xl text-xs font-black uppercase tracking-widest">
+        <Badge variant="outline" className="bg-primary/5 border-primary/20 text-primary px-4 py-2 rounded-xl text-xs font-black uppercase tracking-widest">
           Kecerdasan Memori
         </Badge>
       </header>

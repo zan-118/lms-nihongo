@@ -73,7 +73,7 @@ export default async function KanjiDetailPage({
       <div className="absolute bottom-[20%] -right-[15%] w-[35%] h-[35%] bg-primary/5 blur-[130px] rounded-full pointer-events-none z-0" />
       
       {/* Background Grid Overlay */}
-      <div className="absolute inset-0 bg-[linear-gradient(rgba(0,0,0,0.01)_1px,transparent_1px),linear-gradient(90deg,rgba(0,0,0,0.01)_1px,transparent_1px)] dark:bg-[linear-gradient(rgba(255,255,255,0.01)_1px,transparent_1px),linear-gradient(90deg,rgba(255,255,255,0.01)_1px,transparent_1px)] bg-[size:60px_60px] pointer-events-none z-0" />
+      <div className="absolute inset-0 bg-[linear-gradient(rgba(var(--foreground-rgb),0.01)_1px,transparent_1px),linear-gradient(90deg,rgba(var(--foreground-rgb),0.01)_1px,transparent_1px)] bg-[size:60px_60px] pointer-events-none z-0" />
 
       <div className="max-w-6xl mx-auto w-full relative z-10 pt-8 md:pt-16">
         {/* Breadcrumbs */}

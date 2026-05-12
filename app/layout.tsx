@@ -146,10 +146,10 @@ export default function RootLayout({
             position="top-center"
             toastOptions={{
               style: {
-                background: 'rgba(10, 12, 16, 0.9)',
-                border: '1px solid rgba(255, 255, 255, 0.1)',
+                background: 'rgba(var(--background-rgb), 0.9)',
+                border: '1px solid rgba(var(--foreground-rgb), 0.1)',
                 backdropFilter: 'blur(16px)',
-                color: '#ffffff',
+                color: 'var(--foreground)',
                 borderRadius: '16px',
               },
               classNames: {

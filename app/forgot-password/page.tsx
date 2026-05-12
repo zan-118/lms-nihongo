@@ -58,7 +58,7 @@ export default function ForgotPasswordPage() {
         </Link>
 
         <div className="text-center mb-6">
-          <div className="w-16 h-16 bg-destructive/10 rounded-2xl flex items-center justify-center mx-auto mb-4 border border-destructive/20 shadow-[0_0_15px_rgba(239,68,68,0.1)]">
+          <div className="w-16 h-16 bg-destructive/10 rounded-2xl flex items-center justify-center mx-auto mb-4 border border-destructive/20 shadow-[0_0_15px_rgba(var(--destructive-rgb),0.1)]">
             <KeyRound className="text-destructive" size={32} />
           </div>
           <h1 className="text-2xl font-bold text-foreground mb-2">
@@ -87,7 +87,7 @@ export default function ForgotPasswordPage() {
           <button
             type="submit"
             disabled={loading || !email}
-            className="w-full py-3 px-4 bg-destructive hover:bg-destructive/90 text-destructive-foreground rounded-xl font-bold transition-colors disabled:opacity-50 disabled:hover:bg-destructive shadow-[0_0_15px_rgba(239,68,68,0.2)]"
+            className="w-full py-3 px-4 bg-destructive hover:bg-destructive/90 text-destructive-foreground rounded-xl font-bold transition-colors disabled:opacity-50 disabled:hover:bg-destructive shadow-[0_0_15px_rgba(var(--destructive-rgb),0.2)]"
           >
             {loading ? "Lagi dikirim..." : "Kirim Link Pemulihan"}
           </button>

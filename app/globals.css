@@ -107,7 +107,7 @@
   }
   
   .dark .neo-card {
-    @apply bg-card border-border shadow-[8px_8px_16px_rgba(0,0,0,0.6),-4px_-4px_10px_rgba(255,255,255,0.01)];
+    @apply bg-card border-border shadow-[8px_8px_16px_rgba(var(--background-rgb),0.6),-4px_-4px_10px_rgba(var(--foreground-rgb),0.01)];
   }
 
   .neo-inset {
@@ -115,7 +115,7 @@
   }
   
   .dark .neo-inset {
-    @apply bg-background/50 border-border shadow-[inset_4px_4px_10px_rgba(0,0,0,0.6),inset_-2px_-2px_8px_rgba(255,255,255,0.01)];
+    @apply bg-background/50 border-border shadow-[inset_4px_4px_10px_rgba(var(--background-rgb),0.6),inset_-2px_-2px_8px_rgba(var(--foreground-rgb),0.01)];
   }
 
   .btn-cyber {
@@ -138,14 +138,14 @@
   }
 
   .dark .glass {
-    @apply bg-background/40 border-border shadow-[0_8px_32px_0_rgba(0,0,0,0.8)];
+    @apply bg-background/40 border-border shadow-[0_8px_32px_0_rgba(var(--background-rgb),0.8)];
   }
 
   .neural-grid {
     @apply absolute inset-0 pointer-events-none opacity-30 z-0;
     background-image: 
-      linear-gradient(rgba(0,0,0,0.05) 1px, transparent 1px),
-      linear-gradient(90deg, rgba(0,0,0,0.05) 1px, transparent 1px);
+      linear-gradient(rgba(var(--foreground-rgb),0.05) 1px, transparent 1px),
+      linear-gradient(90deg, rgba(var(--foreground-rgb),0.05) 1px, transparent 1px);
     background-size: 60px 60px;
     will-change: transform;
     backface-visibility: hidden;
@@ -154,8 +154,8 @@
   .dark .neural-grid {
     @apply opacity-50;
     background-image: 
-      linear-gradient(rgba(255,255,255,0.01) 1px, transparent 1px),
-      linear-gradient(90deg, rgba(255,255,255,0.01) 1px, transparent 1px);
+      linear-gradient(rgba(var(--foreground-rgb),0.01) 1px, transparent 1px),
+      linear-gradient(90deg, rgba(var(--foreground-rgb),0.01) 1px, transparent 1px);
   }
 }
 

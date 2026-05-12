@@ -163,7 +163,7 @@ export default function DashboardStats({
                       viewport={{ once: true }}
                       className={`h-full rounded-full ${
                         percentage === 100 
-                          ? 'bg-success shadow-[0_0_10px_rgba(16,185,129,0.5)]' 
+                          ? 'bg-success shadow-[0_0_10px_rgba(var(--success-rgb),0.5)]' 
                           : 'bg-gradient-to-r from-primary to-blue-500 shadow-[0_0_10px_rgba(var(--primary-rgb),0.4)]'
                       }`}
                     />

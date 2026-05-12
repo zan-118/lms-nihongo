@@ -36,6 +36,7 @@ interface PageProps {
  */
 export default async function StandaloneExamSessionPage({ params }: PageProps) {
   const { id } = await params;
+  const decodedId = decodeURIComponent(id);
 
   // ======================
   // DATABASE OPERATIONS
@@ -54,7 +55,7 @@ export default async function StandaloneExamSessionPage({ params }: PageProps) {
 
   const examData = await sanityFetch<any>({
     query,
-    params: { id },
+    params: { id: decodedId },
     tags: ["mockExam"],
   });
   const backLink = examData?.categorySlug

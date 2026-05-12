@@ -27,7 +27,7 @@ export default function MobileNav() {
                   {isActive && (
                     <motion.div
                       layoutId="mobile-nav-pill"
-                      className="absolute inset-x-1 inset-y-1 bg-primary/10 border border-primary/20 rounded-2xl z-0 shadow-[0_0_20px_rgba(0,238,255,0.05)]"
+                      className="absolute inset-x-1 inset-y-1 bg-primary/10 border border-primary/20 rounded-2xl z-0 shadow-[0_0_20px_rgba(var(--primary-rgb),0.05)]"
                       transition={{ type: "spring", stiffness: 380, damping: 30 }}
                     />
                   )}
@@ -47,7 +47,7 @@ export default function MobileNav() {
                     <item.icon 
                       size={18} 
                       strokeWidth={isActive ? 2.5 : 2} 
-                      className={isActive ? "drop-shadow-[0_0_8px_rgba(0,238,255,0.6)]" : ""} 
+                      className={isActive ? "drop-shadow-[0_0_8px_rgba(var(--primary-rgb),0.6)]" : ""} 
                     />
                   </motion.div>
                   

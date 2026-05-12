@@ -85,7 +85,7 @@ export default function UpdatePasswordPage() {
 
       <div className="w-full max-w-md bg-card/80 backdrop-blur-xl border border-border rounded-3xl p-8 z-10 shadow-2xl animate-in fade-in slide-in-from-bottom-4 duration-500">
         <div className="text-center mb-6">
-          <div className="w-16 h-16 bg-success/10 rounded-2xl flex items-center justify-center mx-auto mb-4 border border-success/20 shadow-[0_0_15px_rgba(16,185,129,0.1)]">
+          <div className="w-16 h-16 bg-success/10 rounded-2xl flex items-center justify-center mx-auto mb-4 border border-success/20 shadow-[0_0_15px_rgba(var(--success-rgb),0.1)]">
             {isSuccess ? <CheckCircle className="text-success" size={32} /> : <KeyRound className="text-success" size={32} />}
           </div>
           <h1 className="text-2xl font-bold text-foreground mb-2">
@@ -129,7 +129,7 @@ export default function UpdatePasswordPage() {
             <button
               type="submit"
               disabled={loading}
-              className="w-full py-3 px-4 bg-success hover:bg-success/90 text-success-foreground rounded-xl font-bold transition-colors disabled:opacity-50 disabled:hover:bg-success shadow-[0_0_15px_rgba(16,185,129,0.2)]"
+              className="w-full py-3 px-4 bg-success hover:bg-success/90 text-success-foreground rounded-xl font-bold transition-colors disabled:opacity-50 disabled:hover:bg-success shadow-[0_0_15px_rgba(var(--success-rgb),0.2)]"
             >
               {loading ? "Lagi disimpan..." : "Aktifkan Sandi Baru"}
             </button>

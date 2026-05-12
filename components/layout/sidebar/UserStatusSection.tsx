@@ -63,7 +63,7 @@ export function UserStatusSection({
               {userFullName || "Pelajar"}
             </span>
             <div className="flex items-center gap-1.5 mt-0.5">
-              <div className="w-1 h-1 rounded-full bg-emerald-500 animate-pulse" />
+              <div className="w-1 h-1 rounded-full bg-success animate-pulse" />
               <span className="text-[8px] font-black text-muted-foreground uppercase tracking-widest">
                 Sinkronisasi Aktif
               </span>

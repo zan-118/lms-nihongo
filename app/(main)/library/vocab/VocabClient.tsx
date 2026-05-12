@@ -126,7 +126,7 @@ export default function VocabClient({
              <Button
                onClick={() => setIsFlashcardMode(true)}
                disabled={vocabList.length === 0}
-               className="h-auto py-4 px-6 md:py-5 md:px-8 rounded-xl md:rounded-2xl bg-primary hover:bg-foreground text-white dark:text-foreground font-bold uppercase tracking-widest transition-all shadow-lg border-none text-xs md:text-sm disabled:opacity-50"
+               className="h-auto py-4 px-6 md:py-5 md:px-8 rounded-xl md:rounded-2xl bg-primary hover:bg-foreground text-primary-foreground font-bold uppercase tracking-widest transition-all shadow-lg border-none text-xs md:text-sm disabled:opacity-50"
              >
                Latih Halaman Ini
              </Button>

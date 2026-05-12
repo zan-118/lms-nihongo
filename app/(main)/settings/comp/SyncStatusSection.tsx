@@ -31,7 +31,7 @@ export default function SyncStatusSection({
               {dirtySrsCount > 0 ? (
                 <Cloud size={32} className="animate-pulse" />
               ) : (
-                <CheckCircle size={32} className="drop-shadow-[0_0_8px_rgba(16,185,129,0.4)]" />
+                <CheckCircle size={32} className="drop-shadow-[0_0_8px_rgba(var(--success-rgb),0.4)]" />
               )}
             </div>
             <div>

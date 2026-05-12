@@ -6,10 +6,12 @@ import { ReadingData } from "@/components/features/reading/types";
 
 export default async function ReadingPage({ params }: { params: Promise<{ slug: string }> }) {
   const { slug } = await params;
+  const decodedSlug = decodeURIComponent(slug);
+
   const data = await sanityFetch<ReadingData | null>({
     query: readingMaterialQuery,
-    params: { slug },
-    tags: ["reading_material"],
+    params: { slug: decodedSlug },
+    tags: ["readingMaterial"],
   });
 
   if (!data) {

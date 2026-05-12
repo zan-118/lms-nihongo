@@ -3,7 +3,7 @@ import React from "react";
 export const ptBlock = {
   h2: ({ children }: { children?: React.ReactNode }) => (
     <h2 className="text-3xl md:text-5xl font-black text-foreground mt-16 md:mt-24 mb-8 md:mb-10 uppercase tracking-tighter flex items-center gap-4 group">
-      <span className="w-2 h-10 md:h-12 bg-gradient-to-b from-primary to-emerald-500 rounded-full shadow-[0_0_15px_rgba(0,238,255,0.4)]" />
+      <span className="w-2 h-10 md:h-12 bg-gradient-to-b from-primary to-emerald-500 rounded-full shadow-[0_0_15px_rgba(var(--primary-rgb),0.4)]" />
       {children}
     </h2>
   ),
@@ -36,7 +36,7 @@ export const ptList = {
 export const ptListItem = {
   bullet: ({ children }: { children?: React.ReactNode }) => (
     <li className="flex items-start gap-4 md:gap-5 group">
-      <div className="mt-2.5 w-1.5 md:w-2 h-1.5 md:h-2 rounded-full bg-primary/30 group-hover:bg-primary group-hover:scale-125 transition-all shadow-[0_0_10px_rgba(0,238,255,0)] group-hover:shadow-[0_0_10px_rgba(0,238,255,0.5)]" />
+      <div className="mt-2.5 w-1.5 md:w-2 h-1.5 md:h-2 rounded-full bg-primary/30 group-hover:bg-primary group-hover:scale-125 transition-all shadow-[0_0_10px_rgba(var(--primary-rgb),0)] group-hover:shadow-[0_0_10px_rgba(var(--primary-rgb),0.5)]" />
       <div className="flex-1 text-muted-foreground text-sm md:text-lg leading-relaxed font-medium group-hover:text-foreground transition-colors">
         {children}
       </div>

@@ -35,7 +35,7 @@ export default async function GrammarArticlesPage() {
     <main className="w-full relative overflow-hidden flex flex-1 flex-col pb-24 px-4 md:px-8 lg:px-12 bg-background text-foreground transition-colors duration-300">
       {/* Background Neural Overlays */}
       <div className="neural-grid" />
-      <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_top,rgba(0,238,255,0.05)_0%,transparent_70%)] pointer-events-none z-0" />
+      <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_top,rgba(var(--primary-rgb),0.05)_0%,transparent_70%)] pointer-events-none z-0" />
 
       <GrammarClient initialArticles={grammarData} />
     </main>

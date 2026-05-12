@@ -26,9 +26,12 @@ export async function POST(req: NextRequest) {
     }
 
     // Revalidate by document type tag
-    console.log(`Revalidating tag: ${body._type}`);
-    // @ts-ignore
-    revalidateTag(body._type);
+    console.log(`[Webhook] Revalidating tag: ${body._type} (ID: ${body._id || "unknown"})`);
+    
+    // Trigger revalidation
+    revalidateTag(body._type, "max");
+    
+    console.log(`[Webhook] Successfully triggered revalidation for tag: ${body._type}`);
 
     return NextResponse.json({ 
       revalidated: true, 

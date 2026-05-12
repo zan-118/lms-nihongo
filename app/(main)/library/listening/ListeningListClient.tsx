@@ -64,7 +64,7 @@ export default function ListeningListClient({ initialData }: ListeningListClient
           <Search className="absolute left-4 top-1/2 -translate-y-1/2 text-muted-foreground w-5 h-5" />
           <Input 
             placeholder="Cari materi listening..." 
-            className="pl-12 h-14 bg-card/40 backdrop-blur-xl border-white/5 rounded-2xl text-lg shadow-2xl focus:ring-primary/20"
+            className="pl-12 h-14 bg-card/40 backdrop-blur-xl border-border/40 rounded-2xl text-lg shadow-2xl focus:ring-primary/20"
             value={search}
             onChange={(e) => setSearch(e.target.value)}
           />
@@ -89,7 +89,7 @@ export default function ListeningListClient({ initialData }: ListeningListClient
               transition={{ delay: idx * 0.05 }}
             >
               <Link href={`/library/listening/${task.slug}`}>
-                <Card className="group relative flex items-center gap-6 p-6 bg-card/30 backdrop-blur-3xl border-white/5 hover:border-primary/50 transition-all duration-500 rounded-3xl overflow-hidden hover:shadow-[0_0_40px_rgba(0,238,255,0.1)] cursor-pointer">
+                <Card className="group relative flex items-center gap-6 p-6 bg-card/30 backdrop-blur-3xl border-border/40 hover:border-primary/50 transition-all duration-500 rounded-3xl overflow-hidden hover:shadow-[0_0_40px_rgba(var(--primary-rgb),0.1)] cursor-pointer">
                   {/* Play Button Background */}
                   <div className="w-12 h-12 md:w-16 md:h-16 rounded-2xl bg-primary/10 flex items-center justify-center text-primary group-hover:bg-primary group-hover:text-primary-foreground transition-all duration-500 shrink-0 shadow-inner">
                     <Play size={24} className="ml-1" />

@@ -60,7 +60,8 @@ export async function generateMetadata({
   params,
 }: PageProps): Promise<Metadata> {
   const { categoryId } = await params;
-  const data = await getCourseData(categoryId);
+  const decodedCategoryId = decodeURIComponent(categoryId);
+  const data = await getCourseData(decodedCategoryId);
 
   if (!data.category)
     return { title: "Kategori Tidak Ditemukan | NihongoRoute" };
@@ -84,10 +85,11 @@ export async function generateMetadata({
  */
 export default async function CourseCategoryPage({ params }: PageProps) {
   const { categoryId } = await params;
-  const data = await getCourseData(categoryId);
+  const decodedCategoryId = decodeURIComponent(categoryId);
+  const data = await getCourseData(decodedCategoryId);
 
   if (!data.category) return notFound();
 
-  return <CourseCategoryClient data={data} categoryId={categoryId} />;
+  return <CourseCategoryClient data={data} categoryId={decodedCategoryId} />;
 }
 

@@ -28,7 +28,7 @@ export default function TTSReader({ text, minimal = false }: Props) {
           : "px-6 py-2.5 rounded-xl w-max text-xs"
       } ${
         isPlaying
-          ? "bg-destructive/10 border-destructive/40 text-destructive shadow-[0_0_20px_rgba(239,68,68,0.2)] neo-card shadow-none"
+          ? "bg-destructive/10 border-destructive/40 text-destructive shadow-[0_0_20px_rgba(var(--destructive-rgb),0.2)] neo-card shadow-none"
           : "bg-muted/50 border-border text-muted-foreground hover:text-destructive hover:border-destructive/30 neo-inset shadow-none"
       }`}
       title="Vocal_Synthesis_Execution"

@@ -138,7 +138,7 @@ export function ExamResult({
                            <motion.div 
                              initial={{ width: 0 }}
                              animate={{ width: `${percentage}%` }}
-                             className={`h-full ${color} shadow-[0_0_10px_rgba(0,0,0,0.1)]`}
+                             className={`h-full ${color} shadow-[0_0_10px_rgba(var(--background-rgb),0.1)]`}
                            />
                         </div>
                       </div>

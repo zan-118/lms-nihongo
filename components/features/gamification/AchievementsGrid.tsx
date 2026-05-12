@@ -114,7 +114,7 @@ export default function AchievementsGrid() {
             key={ach.id}
             className={`p-6 rounded-2xl border transition-all duration-500 relative overflow-hidden group ${
               isUnlocked 
-                ? 'bg-primary/5 border-primary/30 shadow-[0_0_20px_rgba(0,238,255,0.05)]' 
+                ? 'bg-primary/5 border-primary/30 shadow-[0_0_20px_rgba(var(--primary-rgb),0.05)]' 
                 : 'bg-muted/30 border-border/50 grayscale opacity-70'
             }`}
           >

@@ -121,7 +121,10 @@ async function getLessonData(categoryId: string, slug: string) {
 // ======================
 export async function generateMetadata({ params }: Props): Promise<Metadata> {
   const { categoryId, slug } = await params;
-  const data = await getLessonData(categoryId, slug);
+  const decodedCategoryId = decodeURIComponent(categoryId);
+  const decodedSlug = decodeURIComponent(slug);
+
+  const data = await getLessonData(decodedCategoryId, decodedSlug);
   const lesson = data?.lesson;
   if (!lesson) return { title: "Pelajaran Tidak Ditemukan | NihongoRoute" };
   return {
@@ -138,7 +141,10 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
 
 export default async function LessonPage({ params }: Props) {
   const { categoryId, slug } = await params;
-  const data = await getLessonData(categoryId, slug);
+  const decodedCategoryId = decodeURIComponent(categoryId);
+  const decodedSlug = decodeURIComponent(slug);
+
+  const data = await getLessonData(decodedCategoryId, decodedSlug);
   const lesson = data?.lesson;
   const nav = data?.nav || [];
 

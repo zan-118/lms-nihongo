@@ -43,7 +43,7 @@ export default function MemoryStats() {
 
   return (
     <Card className="bg-card p-6 md:p-8 lg:p-10 rounded-[2.5rem] md:rounded-[3rem] border-border relative overflow-hidden h-full flex flex-col neo-card shadow-none">
-      <div className="absolute inset-0 bg-[linear-gradient(rgba(0,238,255,0.02)_1px,transparent_1px),linear-gradient(90deg,rgba(0,238,255,0.02)_1px,transparent_1px)] bg-[size:20px_20px] pointer-events-none opacity-50" />
+      <div className="absolute inset-0 bg-[linear-gradient(rgba(var(--primary-rgb),0.02)_1px,transparent_1px),linear-gradient(90deg,rgba(var(--primary-rgb),0.02)_1px,transparent_1px)] bg-[size:20px_20px] pointer-events-none opacity-50" />
 
       <header className="flex items-center justify-between mb-8 md:mb-10 relative z-10">
         <div className="flex items-center gap-3 md:gap-4">

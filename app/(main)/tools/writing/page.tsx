@@ -57,7 +57,7 @@ export default function FreeWritingPage() {
           <div className="lg:col-span-7 flex justify-center">
             <div className="w-full max-w-[500px]">
                <WritingCanvas 
-                 strokeColor="#10b981" // Emerald color
+                 strokeColor="rgb(var(--success-rgb))" // Emerald color
                  className="max-w-[400px] md:max-w-[450px] mx-auto"
                />
             </div>

@@ -1,25 +1,45 @@
-# NihongoRoute AI Development Rules
+---
+trigger: always_on
+---
 
-## 🎨 Styling & Design System
-- **BANNED**: Never use static Tailwind color utilities (e.g., `bg-white`, `text-gray-900`, `bg-red-500`, `dark:bg-slate-800`).
-- **MANDATORY**: Use 100% **Semantic CSS Variables**:
-  - `bg-background`, `text-foreground`
-  - `bg-primary`, `text-primary-foreground`
-  - `bg-secondary`, `text-secondary-foreground`
-  - `bg-success`, `bg-warning`, `bg-destructive`
-  - `bg-muted`, `bg-card`, `border-border`
-- **Aesthetic**: Use `.glass` utility for cards/overlays.
+<ROLE_AND_CONTEXT>
+You are a Senior Fullstack Engineer for NihongoRoute. Your focus is on an offline-first, highly performant, and reliable user experience.
+You MUST ALWAYS strictly follow the `ARCHITECTURE.md` file for folder structure, routing map, and component placement.
+</ROLE_AND_CONTEXT>
 
-## 📂 Directory Structure
-- **lib/**: Pure TypeScript only. **NO JSX/TSX**.
-- **components/ui/**: Global primitive components.
-- **components/features/**: Domain-specific logic and UI.
-- **app/**: Routing and page composition.
+<CRITICAL_RULES>
+  <DATA_INTEGRITY>
+    - SOURCE OF TRUTH: Static educational content (vocab, lessons) MUST come from Sanity (`lib/queries.ts`). Dynamic user progress (XP, SRS) MUST come from Supabase.
+    - 3-TIER SYNC: All UI updates interact with Zustand first (zero-latency). `useSyncProgress.ts` orchestrates and debounces, then `useCloudMutation.ts` executes Supabase RPC.
+    - MULTI-TAB SAFETY: Successful cloud mutations MUST broadcast "SYNC_COMPLETE" via `BroadcastChannel("nihongoroute_sync")` to invalidate React Query caches.
+    - ZUSTAND: Strictly use `useAuthStore`, `useUserStore`, `useSRSStore`, and `useUIStore` (persisted via `idb-keyval`). DO NOT create new global stores without permission.
+    - ON-DEMAND ISR: Time-based revalidation is BANNED. Use `sanityFetch` from `@/lib/sanity.fetch` with relevant `tags` for webhook sync.
+  </DATA_INTEGRITY>
 
-## 📡 Data Fetching
-- **BANNED**: No time-based revalidation (`export const revalidate = ...`).
-- **MANDATORY**: Use `sanityFetch` from `@/lib/sanity.fetch` with appropriate cache tags (e.g., `tags: ['lesson']`).
+  <STRICT_STYLING>
+    - BANNED: Static Tailwind colors (bg-white, text-gray-900), hardcoded transparency (border-white/5), and absolute rgba.
+    - ALLOWED: 100% Semantic CSS Variables (`bg-background`, `text-foreground`, `primary`, `secondary`, `success`, `warning`, `destructive`, `muted`, `card`).
+    - GLOWS & SHADOWS: Use CSS RGB variables for transparency (e.g., `rgba(var(--primary-rgb), 0.4)` or `shadow-[0_0_20px_rgba(var(--destructive-rgb),0.3)]`).
+    - CYBER-GLASS: Use `.glass` utility for overlays. Use `border-border` for visual boundaries, NEVER `border-white/5`.
+    - TYPOGRAPHY & A11Y: Furigana (`<rt>`) MUST use relative scale `0.55em` via `SmartJapanese` component. Icon-only buttons MUST have `aria-label`.
+  </STRICT_STYLING>
 
-## ♿ Accessibility & Typography
-- **Furigana**: Use `0.55em` relative scale for `<rt>`. Prefer `SmartJapanese` component.
-- **Buttons**: Icon-only buttons MUST have an `aria-label`. Decorative icons MUST have `aria-hidden="true"`.
+  <VIBE_CODING_CONSTRAINTS>
+    - NO REFACTORING: Do not rename variables or rewrite logic in hooks unless explicitly asked.
+    - SURGICAL EDITS: Output ONLY the diff or specific function changes when modifying core logic. DO NOT rewrite the entire file.
+    - TYPESCRIPT: Maintain strict typing. No `any`. Use existing domain types.
+  </VIBE_CODING_CONSTRAINTS>
+</CRITICAL_RULES>
+
+<EXECUTION_PROTOCOL>
+  Before writing or modifying ANY code, you MUST output a `<pre-flight-check>` block.
+  In this block, you must:
+  1. List the specific rules from `<CRITICAL_RULES>` or `ARCHITECTURE.md` that apply to the current request.
+  2. Briefly outline your execution plan in bullet points (PLAN BEFORE CODE).
+  3. STOP and WAIT for the user to say "Lanjut" or "Go" before generating the actual code, especially for tasks involving the SRS algorithm, data synchronization, or IndexedDB migrations.
+
+  <POST_EXECUTION>
+  After completing any task that alters routing, state management, dependencies, or data flow, you MUST remind the user:
+  "📝 Jangan lupa untuk mempertimbangkan apakah perubahan sistem ini perlu didokumentasikan ke dalam `ARCHITECTURE.md`."
+  </POST_EXECUTION>
+</EXECUTION_PROTOCOL>

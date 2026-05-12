@@ -44,7 +44,7 @@ export function QuizPlaying({
               </div>
           </div>
           <div className="flex items-center gap-2 md:gap-3 font-black text-sm italic">
-            <span className="text-destructive text-destructive text-xl md:text-2xl drop-shadow-[0_0_8px_rgba(239,68,68,0.5)]">{currentIndex + 1}</span>
+            <span className="text-destructive text-destructive text-xl md:text-2xl drop-shadow-[0_0_8px_rgba(var(--destructive-rgb),0.5)]">{currentIndex + 1}</span>
             <span className="text-muted-foreground/10 text-lg md:text-xl">/</span>
             <span className="text-muted-foreground/40">{totalQuestions}</span>
           </div>
@@ -54,7 +54,7 @@ export function QuizPlaying({
           current={currentIndex + 1}
           total={totalQuestions}
           color="bg-destructive"
-          indicatorClassName="shadow-[0_0_15px_rgba(239,68,68,0.8)]"
+          indicatorClassName="shadow-[0_0_15px_rgba(var(--destructive-rgb),0.8)]"
         />
         <div className="mb-8 md:mb-12" />
 
@@ -83,10 +83,10 @@ export function QuizPlaying({
 
               if (isAnswered) {
                 if (isCorrect) {
-                  buttonStyle = "bg-success/10 border-success/50 text-success text-success shadow-[0_0_30px_rgba(16,185,129,0.2)] neo-card scale-105 z-10";
+                  buttonStyle = "bg-success/10 border-success/50 text-success text-success shadow-[0_0_30px_rgba(var(--success-rgb),0.2)] neo-card scale-105 z-10";
                   statusIcon = "✓";
                 } else if (isSelected && !isCorrect) {
-                  buttonStyle = "bg-destructive/10 border-destructive/50 text-destructive text-destructive shadow-[0_0_30px_rgba(239,68,68,0.2)] neo-card z-10";
+                  buttonStyle = "bg-destructive/10 border-destructive/50 text-destructive text-destructive shadow-[0_0_30px_rgba(var(--destructive-rgb),0.2)] neo-card z-10";
                   statusIcon = "✗";
                 } else {
                   buttonStyle = "bg-muted/20 border-transparent text-muted-foreground/20 scale-95 opacity-40 neo-card grayscale";

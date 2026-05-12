@@ -182,7 +182,7 @@ export default function SRSReviewEngine({ cards }: { cards: FlashcardType[] }) {
             <Button
               variant="ghost"
               onClick={() => engine.handleAnswer(2)}
-              className="relative h-auto py-8 bg-success/5 border border-success/20 rounded-[2.5rem] text-success font-black uppercase tracking-[0.2em] text-xs md:text-xs neo-card hover:bg-success hover:text-success-foreground transition-all group shadow-sm dark:shadow-[0_0_20px_rgba(16,185,129,0.1)] overflow-hidden"
+              className="relative h-auto py-8 bg-success/5 border border-success/20 rounded-[2.5rem] text-success font-black uppercase tracking-[0.2em] text-xs md:text-xs neo-card hover:bg-success hover:text-success-foreground transition-all group shadow-sm dark:shadow-[0_0_20px_rgba(var(--success-rgb),0.1)] overflow-hidden"
             >
               <div className="relative z-10 flex items-center gap-2">
                 <Check

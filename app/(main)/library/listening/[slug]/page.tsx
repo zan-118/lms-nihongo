@@ -6,10 +6,12 @@ import { ListeningTaskData } from "@/components/features/listening/types";
 
 export default async function ListeningPage({ params }: { params: Promise<{ slug: string }> }) {
   const { slug } = await params;
+  const decodedSlug = decodeURIComponent(slug);
+
   const data = await sanityFetch<ListeningTaskData | null>({
     query: listeningTaskQuery,
-    params: { slug },
-    tags: ["listening_task"],
+    params: { slug: decodedSlug },
+    tags: ["listeningTask"],
   });
 
   if (!data) {

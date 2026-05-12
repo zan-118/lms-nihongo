@@ -163,7 +163,7 @@ export async function getPaginatedReading(
       end, 
       searchQuery: `*${search}*`
     },
-    tags: ["reading_material"],
+    tags: ["readingMaterial"],
   });
 
   return response;
@@ -206,7 +206,7 @@ export async function getPaginatedListening(
       end, 
       searchQuery: `*${search}*`
     },
-    tags: ["listening_task"],
+    tags: ["listeningTask"],
   });
 
   return response;

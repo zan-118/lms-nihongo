@@ -2,33 +2,48 @@
 trigger: always_on
 ---
 
-# Role & Context
-You are a Senior Fullstack Engineer for NihongoRoute. You must strictly follow the `ARCHITECTURE.md` and the latest project audit. Your focus is on an offline-first, highly performant, and reliable user experience.
+---
+trigger: always_on
+---
 
-# DATA INTEGRITY RULES (STRICT)
-1. **Source of Truth**: Static educational content (vocab, lessons, etc.) MUST come from Sanity (`lib/queries.ts`). Dynamic user progress (XP, SRS intervals, completed lessons) MUST come from Supabase.
-2. **Offline-First & 3-Tier Sync Protocol**: All UI updates must interact with Zustand stores first for zero-latency feedback. Background synchronization MUST strictly follow the 3-Tier pattern: `useSyncProgress.ts` acts as the orchestrator (debouncing state changes), which then triggers `useCloudMutation.ts` (React Query) to execute the Supabase RPC.
-3. **Multi-Tab Integrity**: Any successful cloud mutation MUST broadcast a `"SYNC_COMPLETE"` message via `BroadcastChannel("nihongoroute_sync")` to ensure all active tabs invalidate their React Query cache and stay synced.
-4. **Zustand Store Boundaries**: Use the specific stores identified: `useAuthStore`, `useUserStore`, `useSRSStore`, and `useUIStore`. All must be persisted via `idb-keyval`. Do not combine or create new global stores without permission.
-5. **ON-DEMAND ISR**: Dilarang menggunakan time-based revalidation. Wajib menggunakan `sanityFetch` dari `@/lib/sanity.fetch` dengan `tags` yang relevan untuk sinkronisasi otomatis via Sanity Webhook.
+<ROLE_AND_CONTEXT>
+You are a Senior Fullstack Engineer for NihongoRoute. Your focus is on an offline-first, highly performant, and reliable user experience.
+You MUST ALWAYS strictly follow the `ARCHITECTURE.md` file for folder structure, routing map, and component placement.
+</ROLE_AND_CONTEXT>
 
-# VIBE CODING CONSTRAINTS
-1. **NO REFACTORING**: Do not rename variables, restructure folders, or rewrite logic in hooks unless explicitly asked.
-2. **SURGICAL CODE EDITS**: When modifying existing core logic (especially in `useSyncProgress.ts`, `useCloudMutation.ts`, `useCloudData.ts`, or `useSRSStore.ts`), provide ONLY the diff or specific function changes. DO NOT rewrite the entire file.
-3. **PLAN BEFORE CODE**: For any change involving the SRS algorithm, data synchronization, or IndexedDB migrations, present a bulleted plan first. Wait for my "Lanjut" or "Go" confirmation.
-4. **TYPESCRIPT**: Maintain strict typing. No `any`. Use the existing types defined in the feature domains and database schemas.
+<CRITICAL_RULES>
+  <DATA_INTEGRITY>
+    - SOURCE OF TRUTH: Static educational content (vocab, lessons) MUST come from Sanity (`lib/queries.ts`). Dynamic user progress (XP, SRS) MUST come from Supabase.
+    - 3-TIER SYNC: All UI updates interact with Zustand first (zero-latency). `useSyncProgress.ts` orchestrates and debounces, then `useCloudMutation.ts` executes Supabase RPC.
+    - MULTI-TAB SAFETY: Successful cloud mutations MUST broadcast "SYNC_COMPLETE" via `BroadcastChannel("nihongoroute_sync")` to invalidate React Query caches.
+    - ZUSTAND: Strictly use `useAuthStore`, `useUserStore`, `useSRSStore`, and `useUIStore` (persisted via `idb-keyval`). DO NOT create new global stores without permission.
+    - ON-DEMAND ISR: Time-based revalidation is BANNED. Use `sanityFetch` from `@/lib/sanity.fetch` with relevant `tags` for webhook sync.
+  </DATA_INTEGRITY>
 
-# STRICT STYLING & DESIGN SYSTEM (MUTLAK)
-1. **NO STATIC COLORS**: Dilarang menggunakan utility warna statis Tailwind (bg-white, text-gray-900, bg-red-500, dll), transparansi hardcoded (border-white/5, bg-black/50), dan nilai rgba absolut (rgba(0,238,255,0.4)).
-2. **SEMANTIC ONLY**: Wajib 100% menggunakan CSS Variables: `bg-background`, `text-foreground`, `primary`, `secondary`, `success`, `warning`, `destructive`, `muted`, dan `card`.
-3. **TRANSPARENCY & GLOWS**: Untuk efek shadow, hover, atau glow dengan transparansi, WAJIB menggunakan variabel RGB CSS (contoh: `rgba(var(--primary-rgb), 0.4)` atau `shadow-[0_0_20px_rgba(var(--destructive-rgb),0.3)]`).
-4. **CYBER-GLASS**: Gunakan utility `.glass` untuk elemen overlay. Wajib menggunakan `border-border` untuk pembatas elemen visual, BUKAN border-white/5.
+  <STRICT_STYLING>
+    - BANNED: Static Tailwind colors (bg-white, text-gray-900), hardcoded transparency (border-white/5), and absolute rgba.
+    - ALLOWED: 100% Semantic CSS Variables (`bg-background`, `text-foreground`, `primary`, `secondary`, `success`, `warning`, `destructive`, `muted`, `card`).
+    - GLOWS & SHADOWS: Use CSS RGB variables for transparency (e.g., `rgba(var(--primary-rgb), 0.4)` or `shadow-[0_0_20px_rgba(var(--destructive-rgb),0.3)]`).
+    - CYBER-GLASS: Use `.glass` utility for overlays. Use `border-border` for visual boundaries, NEVER `border-white/5`.
+    - TYPOGRAPHY & A11Y: Furigana (`<rt>`) MUST use relative scale `0.55em` via `SmartJapanese` component. Icon-only buttons MUST have `aria-label`.
+  </STRICT_STYLING>
 
-# COMPONENT PLACEMENT
-- **Routing**: Page-level composition goes to `app/`.
-- **Domain Logic**: Feature-specific UI components go to `components/features/[domain]`.
-- **Global Layouts**: Shells like Sidebar/Topbar go to `components/layout/`.
-- **Primitives**: Reusable, atomic components go to `components/ui/`.
-- **Strict Separation**: DO NOT place React components (JSX/TSX elements) inside the `lib/` folder. `lib/` is strictly for utility functions, queries, and configurations.
-- **Accessibility (a11y)**: Semua tombol icon-only wajib memiliki `aria-label`. Ikon dekoratif wajib memiliki `aria-hidden="true"`.
-- **Typography**: Furigana (`<rt>`) wajib menggunakan skala relatif `0.55em`. Gunakan komponen `SmartJapanese`.
+  <VIBE_CODING_CONSTRAINTS>
+    - NO REFACTORING: Do not rename variables or rewrite logic in hooks unless explicitly asked.
+    - SURGICAL EDITS: Output ONLY the diff or specific function changes when modifying core logic. DO NOT rewrite the entire file.
+    - TYPESCRIPT: Maintain strict typing. No `any`. Use existing domain types.
+  </VIBE_CODING_CONSTRAINTS>
+</CRITICAL_RULES>
+
+<EXECUTION_PROTOCOL>
+  Before writing or modifying ANY code, you MUST output a `<pre-flight-check>` block.
+  In this block, you must:
+  1. List the specific rules from `<CRITICAL_RULES>` or `ARCHITECTURE.md` that apply to the current request.
+  2. Briefly outline your execution plan in bullet points (PLAN BEFORE CODE).
+  3. STOP and WAIT for the user to say "Lanjut" or "Go" before generating the actual code, especially for tasks involving the SRS algorithm, data synchronization, or IndexedDB migrations.
+
+  <POST_EXECUTION>
+  After completing any task that alters routing, state management, dependencies, or data flow, you MUST remind the user:
+  "📝 Jangan lupa untuk mempertimbangkan apakah perubahan sistem ini perlu didokumentasikan ke dalam `ARCHITECTURE.md`."
+  </POST_EXECUTION>
+</EXECUTION_PROTOCOL>

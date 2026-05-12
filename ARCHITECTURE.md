@@ -1,151 +1,180 @@
-# 🌀 NihongoRoute Architecture Overview
+```markdown
+# 🌀 Ringkasan Arsitektur NihongoRoute
 
-This document provides a comprehensive structural audit of the NihongoRoute project, detailing the technology stack, the relationships between different application layers, and the data flow architecture. It serves as the primary technical reference for developers.
-
----
-
-## 1. Primary Tech Stack
-
-NihongoRoute is built using a modern, scalable Frontend-heavy architecture, with a focus on an offline-first, client-driven experience backed by cloud synchronization.
-
-- **Framework:** Next.js 15 (App Router)
-- **Language:** TypeScript (Strict typing for robustness)
-- **Styling:** Tailwind CSS & Radix UI (Cyber-Glass Aesthetic: `backdrop-blur`, `glassmorphism`, and neon accents)
-- **State Management:** Zustand (Segmented stores with IndexedDB persistence via `idb-keyval`)
-- **Server State:** React Query (@tanstack/react-query) for intelligent caching and cloud sync orchestration.
-- **Backend & Auth:** Supabase (PostgreSQL, Edge Functions/RPCs, Authentication)
-- **Content Management:** Sanity CMS (Source of truth for static lessons, grammar, and vocabulary)
-- **Animations:** Framer Motion (Spring-based, "buttery smooth" transitions)
-- **Cross-Tab Sync:** BroadcastChannel API (Ensures state consistency across multiple browser tabs)
+Dokumen ini menyajikan audit struktural yang komprehensif dari proyek NihongoRoute, merinci tumpukan teknologi, hubungan antar lapisan aplikasi, serta arsitektur alur data. File ini berfungsi sebagai rujukan teknis utama bagi para pengembang.
 
 ---
 
-## 2. Peta Routing & Layout (`app/`)
+## 1. Tumpukan Teknologi Utama
 
-Sistem routing menggunakan Next.js 15 App Router dengan pemisahan antara area aplikasi utama dan area terisolasi.
+NihongoRoute dibangun menggunakan arsitektur modern yang berfokus pada sisi antarmuka (*frontend-heavy*) dan mudah diskalakan. Fokus utamanya adalah memberikan pengalaman yang dikendalikan oleh klien dengan kemampuan penggunaan luring (*offline-first*), didukung oleh sinkronisasi awan (*cloud*).
 
-### Tree Struktur Rute
+- **Kerangka Kerja (Framework):** Next.js 15 (App Router)
+- **Bahasa Pemrograman:** TypeScript (Pengetikan ketat untuk keandalan)
+- **Gaya Visual (Styling):** Tailwind CSS & Radix UI (Estetika *Cyber-Glass*: `backdrop-blur`, *glassmorphism*, dan aksen neon)
+- **Manajemen Status (State Management):** Zustand (Penyimpanan tersegmentasi dengan persistensi IndexedDB melalui `idb-keyval`)
+- **Status Server:** React Query (`@tanstack/react-query`) untuk pencadangan cerdas (*caching*) dan orkestrasi sinkronisasi awan.
+- **Sisi Server & Autentikasi:** Supabase (PostgreSQL, Fungsi Tepi/RPC, Autentikasi)
+- **Manajemen Konten:** Sanity CMS (Sumber kebenaran utama untuk materi pelajaran statis, tata bahasa, dan kosakata)
+- **Animasi:** Framer Motion (Transisi berbasis pegas yang sangat mulus)
+- **Sinkronisasi Antar-Tab:** BroadcastChannel API (Memastikan konsistensi data di berbagai tab peramban)
+
+---
+
+## 2. Peta Rute & Tata Letak (`app/`)
+
+Sistem perutean menggunakan App Router dari Next.js 15 dengan pemisahan tegas antara area utama aplikasi dan area yang terisolasi.
+
+### Struktur Pohon Rute
 ```text
 app/
-├── (main)/                 # Route Group: Memerlukan Sidebar & Topbar
-│   ├── courses/            # Katalog materi & detail lesson
-│   ├── dashboard/          # Statistik user & progress overview
+├── (main)/                 # Grup Rute: Memerlukan Navigasi Samping & Atas
+│   ├── courses/            # Katalog materi & detail pelajaran
+│   ├── dashboard/          # Statistik pengguna & ringkasan kemajuan
 │   ├── exams/              # Simulasi ujian JLPT
-│   ├── library/            # Referensi grammar & kamus mandiskri
-│   ├── review/             # Engine utama SRS (Spaced Repetition)
-│   ├── settings/           # Pengaturan profil & preferensi UI
-│   ├── share/              # Halaman publik untuk sharing progress
-│   ├── social/             # Fitur pertemanan & leaderboard
-│   ├── support/            # Help center & FAQ
+│   ├── library/            # Referensi tata bahasa & kamus
+│   ├── review/             # Mesin utama pengulangan berkala (SRS)
+│   ├── settings/           # Pengaturan profil & preferensi antarmuka
+│   ├── share/              # Halaman publik untuk membagikan kemajuan
+│   ├── social/             # Fitur sosial & papan peringkat
+│   ├── support/            # Pusat bantuan & pertanyaan umum (FAQ)
 │   └── tools/              # Alat bantu belajar tambahan
-│       ├── flashcards/     # Flashcard engine dinamis
+│       ├── flashcards/     # Mesin kartu pengingat dinamis
 │       ├── kana/           # Latihan Hiragana & Katakana
-│       └── writing/        # Engine latihan menulis Kanji
-├── auth/                   # Flow login, signup, & callback
-├── onboarding/             # Intro multi-step (Terisolasi dari Main Layout)
+│       └── writing/        # Mesin latihan menulis Kanji
+├── auth/                   # Alur masuk, daftar, & panggilan balik
+├── onboarding/             # Pengenalan bertahap (Terisolasi dari Tata Letak Utama)
 ├── studio/                 # Integrasi Sanity Studio (CMS)
-├── globals.css             # Root styles (Tailwind + Cyber-Glass tokens)
-├── layout.tsx              # Root Provider (Auth, Query, Theme)
-└── page.tsx                # Landing Page (Marketing)
+├── globals.css             # Gaya dasar (Tailwind + Token Cyber-Glass)
+├── layout.tsx              # Penyedia Utama (Autentikasi, Kueri, Tema)
+└── page.tsx                # Halaman Utama (Pemasaran)
+
 ```
 
-### Tujuan Layout Khusus
-- **`app/layout.tsx`**: Membungkus seluruh aplikasi dengan `ThemeProvider`, `QueryClientProvider`, dan `AuthProvider`.
-- **`app/(main)/layout.tsx`**: Menyediakan shell navigasi (`Sidebar`, `Topbar`) yang konsisten untuk pengalaman belajar.
-- **`app/onboarding/`**: Menggunakan layout kosong (full-screen) untuk meminimalkan distraksi saat user pertama kali setup.
+### Tujuan Tata Letak Khusus
+
+* **`app/layout.tsx`**: Membungkus seluruh aplikasi dengan penyedia tema (`ThemeProvider`), kueri (`QueryClientProvider`), dan autentikasi (`AuthProvider`).
+* **`app/(main)/layout.tsx`**: Menyediakan kerangka navigasi (Navigasi Samping, Navigasi Atas) yang seragam untuk pengalaman belajar.
+* **`app/onboarding/`**: Menggunakan tata letak kosong (layar penuh) untuk meminimalkan gangguan saat pengguna pertama kali mengatur akun.
 
 ---
 
 ## 3. Anatomi Komponen & Fitur Domain (`components/`)
 
-Folder `components/features/` diatur berdasarkan domain fungsional untuk menghindari ketergantungan yang berantakan.
+Folder `components/features/` dikelompokkan berdasarkan area fungsional untuk menghindari ketergantungan yang rumit.
 
-| Folder Fitur | Tanggung Jawab (Responsibility) |
-| :--- | :--- |
-| `course` | Menangani render halaman materi pelajaran dan navigasi antar bab. |
-| `dashboard` | Widget statistik, XP chart, dan progress ring untuk ringkasan belajar. |
-| `exams` | Logika timer ujian, navigasi soal, dan grading otomatis untuk JLPT. |
-| `gamification` | Komponen visual untuk XP bar, badge level-up, dan animasi streak. |
-| `grammar` | Display struktur tata bahasa dengan contoh kalimat dan penjelasan. |
-| `kanji` | Visualisasi urutan coretan (Stroke Order), radikal, dan mnemonik. |
-| `listening` | Player audio yang sinkron dengan transkrip interaktif. |
-| `reading` | Mode membaca side-by-side (Jepang-Indo) dengan integrasi TTS. |
-| `review` | Summary session setelah selesai melakukan sesi SRS. |
-| `srs` | Tombol evaluasi (Hard/Easy) dan kalkulasi interval waktu. |
+| Folder Fitur | Tanggung Jawab |
+| --- | --- |
+| `course` | Menangani tampilan halaman materi pelajaran dan navigasi antar bab. |
+| `dashboard` | Ekstensi statistik, grafik pengalaman (XP), dan cincin kemajuan untuk ringkasan belajar. |
+| `exams` | Logika pengatur waktu ujian, navigasi soal, dan penilaian otomatis JLPT. |
+| `gamification` | Komponen visual untuk bilah pengalaman (XP), lencana naik level, dan animasi rekor berturut-turut (*streak*). |
+| `grammar` | Menampilkan struktur tata bahasa beserta contoh kalimat dan penjelasan. |
+| `kanji` | Visualisasi urutan coretan, radikal, dan mnemonik. |
+| `listening` | Pemutar audio yang tersinkronisasi dengan transkrip interaktif. |
+| `pdf` | Pembuatan dan pengunduhan dokumen PDF (Sertifikat, *Cheatsheet*, Materi Pelajaran). |
+| `reading` | Mode membaca berdampingan (Jepang-Indonesia) dengan integrasi teks-ke-suara (TTS). |
+| `review` | Ringkasan sesi setelah menyelesaikan latihan pengulangan berkala (SRS). |
+| `srs` | Tombol evaluasi (Sulit/Mudah) dan perhitungan jeda waktu. |
 
-### Global Shell Components (`components/layout/`)
-- **`Sidebar.tsx`**: Navigasi utama (Desktop) dengan integrasi link legal di bagian bawah.
-- **`Topbar.tsx`**: Pusat kontrol user (XP, Level, Streak) dan profil menu.
-- **`MobileNav.tsx`**: Navigasi bawah (Tab bar) untuk perangkat seluler.
+### Komponen Kerangka Global (`components/layout/`)
+
+* **`Sidebar.tsx`**: Navigasi utama (Desktop) dengan integrasi tautan legal di bagian bawah.
+* **`Topbar.tsx`**: Pusat kendali pengguna (XP, Level, Rekor) dan menu profil.
+* **`MobileNav.tsx`**: Navigasi bawah (Bilah tab) untuk perangkat seluler.
 
 ---
 
-## 4. Bedah State Management (`store/`)
+## 4. Analisis Manajemen Status (`store/`)
 
-NihongoRoute menggunakan Zustand dengan persistensi IndexedDB untuk memastikan performa tinggi dan dukungan offline.
+NihongoRoute menggunakan Zustand yang dipadukan dengan persistensi IndexedDB untuk menjamin performa tinggi dan fungsionalitas luring (*offline*).
 
-### Store Utama & Logic
-1. **`useAuthStore`**: Mengelola status `isAuthenticated` dan session user.
-2. **`useUserStore`**: Mengelola data gamification (XP, Streak), level, `inventory`, serta daftar `completedLessons` dan `dirtyLessons` (penanda belum sinkron).
-3. **`useSRSStore`**: Mengelola database kartu SRS (`srs`) dan set `dirtySrs` untuk pelacakan perubahan lokal.
-4. **`useUIStore`**: Mengelola state ephemeral seperti `loading`, `isSyncing`, `notifications`, serta setting (Furigana, Goal).
+### Penyimpanan Utama & Logika
+
+1. **`useAuthStore`**: Mengelola status autentikasi dan sesi pengguna.
+2. **`useUserStore`**: Mengelola data gamifikasi (XP, Rekor), level, inventaris, serta daftar pelajaran yang diselesaikan dan yang belum tersinkronisasi (*dirty*).
+3. **`useSRSStore`**: Mengelola basis data kartu pengulangan berkala (*srs*) dan melacak perubahan lokal yang belum tersinkronisasi (*dirtySrs*).
+4. **`useUIStore`**: Mengelola status sementara seperti proses memuat, status sinkronisasi, notifikasi, serta pengaturan visual (Furigana, Target harian).
 
 ### Persistensi IndexedDB (`idb-keyval`)
-Aplikasi menyimpan state ke browser secara asinkron menggunakan key berikut:
-- `nihongoroute_user_data`: Data profil dan histori belajar.
-- `nihongoroute_srs_data`: Seluruh database SRS lokal.
-- `nihongoroute_ui_data`: Pengaturan tema, furigana, dan state UI sesi.
+
+Aplikasi menyimpan status ke peramban secara asinkron menggunakan kunci berikut:
+
+* `nihongoroute_user_data`: Data profil dan riwayat belajar.
+* `nihongoroute_srs_data`: Seluruh basis data pengulangan berkala (SRS) lokal.
+* `nihongoroute_ui_data`: Pengaturan tema, furigana, dan status antarmuka sesi.
 
 ---
 
-## 5. Aliran Data & Sinkronisasi Cloud
+## 5. Alur Data & Sinkronisasi Awan
 
-Sistem menggunakan pendekatan hibrida untuk menggabungkan konten statis (Sanity) dengan progres dinamis (Supabase).
+Sistem menggunakan metode campuran untuk menggabungkan konten statis dari Sanity dengan data kemajuan dinamis dari Supabase.
 
-### Step 1: Content Retrieval (Sanity CMS)
-Data edukasi statis diambil menggunakan GROQ queries (`lib/queries.ts`) untuk tipe dokumen: `vocab`, `lesson`, `readingMaterial`, `kanji`, dan `listeningTask`.
+### Langkah 1: Pengambilan Konten (Sanity CMS)
 
-### Step 2: Cloud-to-Local Sync (Supabase → Zustand)
-1. On mount, `useCloudData` mengambil snapshot dari Supabase (`profiles`, `user_srs`, `user_lessons`).
-2. Data digabung ke Zustand menggunakan strategi **Offline-First**. Conflict resolution berbasis timestamp terbaru dilakukan di level kartu/lesson.
+Data edukasi statis diambil menggunakan kueri GROQ (`lib/queries.ts`) untuk jenis dokumen seperti: kosakata, pelajaran, materi membaca, kanji, dan tugas mendengarkan.
 
-### Step 3: Local Interaction & Dirty Marking
-Setiap interaksi user langsung memperbarui state lokal dan menandai ID sebagai `dirty`. Ini menjamin UI responsif (Zero Latency) tanpa menunggu koneksi internet.
+### Langkah 2: Sinkronisasi Awan ke Lokal (Supabase → Zustand)
 
-### Step 4: Background Commit (Zustand → Supabase)
-1. `useSyncProgress` mengamati perubahan store dengan debounce 2000ms.
-2. `useCloudMutation` memicu RPC `sync_user_progress` yang secara atomik mengupdate XP, SRS, dan Lesson di cloud.
-3. Setelah sukses, marker `dirty` dihapus dan pesan `"SYNC_COMPLETE"` dikirim via **BroadcastChannel** untuk memberi tahu tab lain agar melakukan refetch data.
+1. Saat aplikasi dimuat, `useCloudData` mengambil salinan data dari Supabase (profil, data SRS, pelajaran).
+2. Data digabungkan ke Zustand menggunakan strategi yang memprioritaskan data luring (*Offline-First*). Penyelesaian konflik data didasarkan pada stempel waktu terbaru.
 
----
+### Langkah 3: Interaksi Lokal & Penandaan Belum Sinkron (*Dirty Marking*)
 
-## 6. Architectural Guardrails
+Setiap interaksi pengguna akan langsung memperbarui status lokal dan menandai ID tersebut sebagai belum tersinkronisasi (*dirty*). Hal ini memastikan antarmuka tetap responsif tanpa harus menunggu koneksi internet (Nir-Jeda).
 
-1. **Guest-First Design:** Aplikasi menginisialisasi profile "Guest" secara default agar seluruh fitur lokal tetap berfungsi tanpa login.
-2. **Atomic Selectors:** Komponen WAJIB berlangganan ke irisan state yang granular (misal: `useUserStore(s => s.xp)`) untuk mencegah re-render massal.
-3. **Multi-Tab Safety:** Inkonsistensi data antar tab dicegah melalui invalidasi Query Cache yang dipicu oleh BroadcastChannel API.
-4. **Offline Resilience:** Semua store utama dipersistensi ke IndexedDB, memungkinkan user belajar di lingkungan tanpa sinyal dan melakukan sinkronisasi otomatis saat kembali online.
+### Langkah 4: Penyimpanan Latar Belakang (Zustand → Supabase)
+
+1. `useSyncProgress` mengamati perubahan penyimpanan dengan penundaan (*debounce*) 2000 milidetik.
+2. `useCloudMutation` memicu prosedur RPC `sync_user_progress` yang secara otomatis memperbarui XP, SRS, dan Pelajaran di awan.
+3. Jika berhasil, penanda *dirty* dihapus dan pesan penyelesaian sinkronisasi dikirim melalui **BroadcastChannel** agar tab lain memperbarui datanya.
 
 ---
 
-## 7. Technical Standards (Development Rules)
+## 6. Batasan Arsitektur
 
-### 🎨 Strict Styling & Design System
-- **BANNED**: Dilarang keras menggunakan utility warna statis Tailwind (misal: `bg-white`, `text-gray-900`, `bg-red-500`, `text-blue-400`, `dark:bg-slate-800`), transparansi hardcoded (misal: `border-white/5`, `bg-black/50`), dan nilai `rgba` absolut (misal: `rgba(0,238,255,0.4)`).
-- **ALLOWED**: Wajib 100% menggunakan **Semantic CSS Variables**: `bg-background`, `text-foreground`, `primary`, `secondary`, `success` (hijau), `warning` (kuning/oranye), `destructive` (merah), `muted`, dan `card`.
-- **TRANSPARENCY & GLOWS**: Untuk efek shadow, hover, atau glow dengan transparansi, WAJIB menggunakan variabel RGB CSS (misal: `rgba(var(--primary-rgb), 0.4)` atau `shadow-[0_0_20px_rgba(var(--destructive-rgb),0.3)]`).
-- **Cyber-Glass Aesthetic**: Gunakan utility `.glass` untuk elemen overlay/card. Pastikan `border-border` selalu digunakan untuk membatasi elemen visual, BUKAN `border-white/5`.
+1. **Desain Berprioritas Tamu:** Aplikasi secara otomatis membuat profil "Tamu" agar semua fitur lokal dapat digunakan tanpa harus masuk (*login*).
+2. **Pemilihan Terperinci (*Atomic Selectors*):** Komponen WAJIB mengambil bagian data secara spesifik (contoh: `useUserStore(s => s.xp)`) untuk mencegah pemuatan ulang (*re-render*) yang tidak perlu.
+3. **Keamanan Multi-Tab:** Ketidakkonsistenan data antar-tab dicegah dengan membatalkan memori sementara kueri (*Query Cache*) yang dipicu oleh BroadcastChannel API.
+4. **Ketahanan Luring:** Semua penyimpanan utama dipertahankan di IndexedDB, memungkinkan pengguna belajar di area tanpa sinyal dan tersinkronisasi otomatis saat terhubung kembali.
 
-### 📂 Directory Rules (Strict Placement)
-- **lib/**: **HARAM** berisi file `.jsx` atau `.tsx`. Folder ini murni untuk utilitas TypeScript, fetcher, dan konfigurasi.
-- **UI Components**: Harus masuk ke `components/ui/` (global/primitif) atau `components/features/` (domain-specific).
-- **Pages**: Page-level composition hanya boleh ada di direktori `app/`.
+---
 
-### 📡 Data Fetching (On-Demand ISR)
-- **BANNED**: Dilarang menggunakan time-based revalidation (misal: `export const revalidate = 3600;`).
-- **ALLOWED**: Wajib menggunakan `sanityFetch` dari `@/lib/sanity.fetch` dan mengirimkan `tags` yang relevan (contoh: `tags: ['lesson', 'vocab']`) agar sinkron dengan Sanity Webhook.
+## 7. Standar Teknis (Aturan Pengembangan)
 
-### ♿ Accessibility & Typography
-- **Furigana (<rt>)**: Wajib menggunakan skala relatif (`0.55em`) agar proporsional di semua browser. Gunakan komponen `SmartJapanese`.
-- **Aria Labels**: Semua tombol icon-only WAJIB memiliki `aria-label` yang deskriptif. Ikon dekoratif wajib memiliki `aria-hidden="true"`.
+### 🎨 Desain Sistem & Gaya Ketat
 
+* **DILARANG**: Penggunaan warna statis bawaan Tailwind secara mutlak (contoh: `bg-white`, `text-gray-900`), nilai transparansi tetap (`border-white/5`), dan nilai `rgba` absolut.
+* **DIWAJIBKAN**: 100% menggunakan **Variabel CSS Semantik**: `bg-background`, `text-foreground`, `primary`, `secondary`, `success` (hijau), `warning` (kuning/oranye), `destructive` (merah), `muted`, dan `card`.
+* **Transparansi & Pendaran**: Untuk efek bayangan atau pendaran, WAJIB menggunakan variabel RGB CSS (contoh: `rgba(var(--primary-rgb), 0.4)`).
+* **Estetika Cyber-Glass**: Gunakan kelas `.glass` untuk elemen melayang/kartu. Pembatas visual harus selalu menggunakan `border-border`, BUKAN `border-white/5`.
+
+### 📂 Aturan Direktori
+
+* **lib/**: **DILARANG KERAS** menyimpan file `.jsx` atau `.tsx`. Direktori ini murni untuk fungsi pembantu, kueri data, dan konfigurasi TypeScript.
+* **Komponen Antarmuka**: Harus ditempatkan di `components/ui/` (primitif) atau `components/features/` (spesifik domain).
+* **Halaman**: Penyusunan tingkat halaman hanya diizinkan di dalam direktori `app/`.
+
+### 📡 Pengambilan Data (ISR Sesuai Permintaan)
+
+* **DILARANG**: Penggunaan pembaruan berbasis waktu (contoh: `export const revalidate = 3600;`).
+* **DIWAJIBKAN**: Menggunakan fungsi `sanityFetch` dari `@/lib/sanity.fetch` dengan mengirimkan `tags` yang relevan agar sinkron dengan Webhook Sanity.
+
+### ♿ Aksesibilitas & Tipografi
+
+* **Furigana ()**: Wajib menggunakan ukuran relatif (`0.55em`) agar seimbang di berbagai peramban melalui komponen `SmartJapanese`.
+* **Label Aksesibilitas**: Semua tombol yang hanya berupa ikon WAJIB memiliki `aria-label`. Ikon dekorasi wajib memiliki atribut `aria-hidden="true"`.
+
+---
+
+## 8. Infrastruktur Pengujian & Alat Pengembangan
+
+Repositori ini menerapkan standar pengujian yang menyeluruh untuk memastikan stabilitas fitur.
+
+* **Pengujian Unit & Integrasi (Vitest):** Digunakan secara luas pada direktori `__tests__/` untuk menguji logika fungsional (*hooks*) seperti `useAddToSRS` dan `useDailyQuests`, serta fungsi utilitas lainnya.
+* **Pengujian Ujung-ke-Ujung / E2E (Playwright):** Terletak di folder `e2e/`, digunakan untuk mensimulasikan perjalanan pengguna secara utuh (seperti alur dasbor, perjalanan belajar, dan ujian).
+* **Pengecekan Kualitas Kode (Linting & Pre-commit):** Proyek ini menggunakan **Husky** untuk mengamankan proses sebelum melakukan *commit* dan memiliki konfigurasi **ESLint** yang ketat (`.eslintrc.json`) untuk menjaga kebersihan dan standar kode.
+
+```
+
+```

@@ -103,7 +103,7 @@ export default function VerbListClient({
              </div>
              <Button
                onClick={() => setIsFlashcardMode(true)}
-               className="h-auto py-4 px-6 md:py-5 md:px-8 rounded-xl md:rounded-2xl bg-primary hover:bg-foreground text-white dark:text-foreground font-bold uppercase tracking-widest transition-all shadow-lg border-none text-xs md:text-sm"
+               className="h-auto py-4 px-6 md:py-5 md:px-8 rounded-xl md:rounded-2xl bg-primary hover:bg-foreground text-primary-foreground font-bold uppercase tracking-widest transition-all shadow-lg border-none text-xs md:text-sm"
              >
                Mulai Latihan
              </Button>

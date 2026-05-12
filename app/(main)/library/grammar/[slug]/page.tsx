@@ -49,9 +49,11 @@ export async function generateMetadata({
   params: Promise<{ slug: string }>;
 }): Promise<Metadata> {
   const { slug } = await params;
+  const decodedSlug = decodeURIComponent(slug);
+  
   const article = await sanityFetch<any>({
     query: articleQuery,
-    params: { slug },
+    params: { slug: decodedSlug },
     tags: ["grammar_article"],
   });
 
@@ -85,13 +87,14 @@ export default async function GrammarDetailPage({
   params: Promise<{ slug: string }>;
 }) {
   const { slug } = await params;
+  const decodedSlug = decodeURIComponent(slug);
 
   // ======================
   // DATABASE OPERATIONS
   // ======================
   const article = await sanityFetch<any>({
     query: articleQuery,
-    params: { slug },
+    params: { slug: decodedSlug },
     tags: ["grammar_article"],
   });
   if (!article) notFound();
@@ -106,7 +109,7 @@ export default async function GrammarDetailPage({
       <div className="absolute bottom-[10%] -right-[10%] w-[30%] h-[30%] bg-success/5 blur-[120px] rounded-full pointer-events-none z-0" />
       
       {/* Background Neural Overlays */}
-      <div className="absolute inset-0 bg-[linear-gradient(rgba(0,0,0,0.01)_1px,transparent_1px),linear-gradient(90deg,rgba(0,0,0,0.01)_1px,transparent_1px)] dark:bg-[linear-gradient(rgba(255,255,255,0.01)_1px,transparent_1px),linear-gradient(90deg,rgba(255,255,255,0.01)_1px,transparent_1px)] bg-[size:60px_60px] pointer-events-none z-0" />
+      <div className="absolute inset-0 bg-[linear-gradient(rgba(var(--foreground-rgb),0.01)_1px,transparent_1px),linear-gradient(90deg,rgba(var(--foreground-rgb),0.01)_1px,transparent_1px)] bg-[size:60px_60px] pointer-events-none z-0" />
 
       <div className="max-w-4xl mx-auto w-full relative z-10 pt-8 md:pt-16">
         <nav className="mb-10 md:mb-16 flex flex-wrap items-center gap-2 md:gap-4 text-[10px] md:text-xs font-black text-muted-foreground uppercase tracking-[0.2em]">

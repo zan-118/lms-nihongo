@@ -73,7 +73,7 @@ export default function WordPopover({ children, word, reading }: WordPopoverProp
               exit={{ opacity: 0, y: 10, scale: 0.95 }}
               className="absolute bottom-full left-1/2 -translate-x-1/2 mb-4 w-72 z-[70] pointer-events-auto"
             >
-              <div className="p-5 rounded-3xl glass border border-border/60 shadow-[0_20px_50px_-15px_rgba(0,0,0,0.3)] bg-card/80 backdrop-blur-2xl">
+              <div className="p-5 rounded-3xl glass border border-border/60 shadow-[0_20px_50px_-15px_rgba(var(--background-rgb),0.3)] bg-card/80 backdrop-blur-2xl">
                 {isLoading ? (
                   <div className="flex items-center justify-center py-8">
                     <Loader2 size={24} className="animate-spin text-primary" />

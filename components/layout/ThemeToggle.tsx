@@ -43,7 +43,7 @@ export function ThemeToggle() {
       {theme === "dark" ? (
         <Moon size={18} className="text-primary text-primary" />
       ) : theme === "light" ? (
-        <Sun size={18} className="text-amber-500" />
+        <Sun size={18} className="text-warning" />
       ) : (
         <Monitor size={18} className="text-muted-foreground" />
       )}

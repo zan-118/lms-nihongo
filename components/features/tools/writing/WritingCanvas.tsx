@@ -42,7 +42,7 @@ export default function WritingCanvas({
         className="relative w-full aspect-square bg-muted/50 dark:bg-card/40 border border-border rounded-2xl overflow-hidden group touch-none shadow-none"
         style={{ touchAction: 'none' }}
       >
-        <div className="absolute inset-0 bg-[linear-gradient(rgba(0,0,0,0.01)_1px,transparent_1px),linear-gradient(90deg,rgba(0,0,0,0.01)_1px,transparent_1px)] dark:bg-[linear-gradient(rgba(255,255,255,0.01)_1px,transparent_1px),linear-gradient(90deg,rgba(255,255,255,0.01)_1px,transparent_1px)] bg-[size:25%_25%] opacity-40 pointer-events-none" />
+        <div className="absolute inset-0 bg-[linear-gradient(rgba(var(--foreground-rgb),0.01)_1px,transparent_1px),linear-gradient(90deg,rgba(var(--foreground-rgb),0.01)_1px,transparent_1px)] bg-[size:25%_25%] opacity-40 pointer-events-none" />
         
         <div className="absolute inset-0 pointer-events-none opacity-10">
           <div className="absolute top-1/2 left-0 right-0 h-[1px] bg-destructive/30 border-dashed" />

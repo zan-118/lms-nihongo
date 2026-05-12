@@ -32,13 +32,14 @@ export default async function CheatsheetDetailPage({
   params: Promise<{ id: string }>;
 }) {
   const { id } = await params;
+  const decodedId = decodeURIComponent(id);
   
   const sheet: Cheatsheet = await sanityFetch({
     query: `*[_type == "cheatsheet" && (_id == $id || _id == "drafts." + $id || slug.current == $id)][0] {
       _id, title, category, items,
       linkedVocab[]->{ "jp": word, "label": meaning, "romaji": coalesce(romaji, furigana) }
     }`,
-    params: { id },
+    params: { id: decodedId },
     tags: ["cheatsheet"],
   });
 
@@ -53,7 +54,7 @@ export default async function CheatsheetDetailPage({
     <main className="w-full bg-background min-h-screen pb-24 relative overflow-hidden">
       {/* Background decoration */}
       <div className="neural-grid" />
-      <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_top,rgba(239,68,68,0.03)_0%,transparent_70%)] pointer-events-none" />
+      <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_top,rgba(var(--destructive-rgb),0.03)_0%,transparent_70%)] pointer-events-none" />
 
       <div className="max-w-[1400px] mx-auto px-6 md:px-12 relative z-10 pt-10">
         {/* Navigation */}
