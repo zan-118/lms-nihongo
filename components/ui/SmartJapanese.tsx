@@ -5,6 +5,7 @@
  */
 
 import React from "react";
+import * as wanakana from "wanakana";
 
 /**
  * Membedah kata menjadi potongan-potongan (chunks) yang memisahkan Kanji dan Hiragana.
@@ -40,9 +41,16 @@ export function splitFurigana(word: string, reading: string) {
       // Sync rIdx: skip identical characters and whitespace in reading
       const cleanSegment = segment.replace(/\s+/g, "");
       if (cleanSegment) {
-        const rStart = cleanReading.indexOf(cleanSegment, rIdx);
+        const hiraSegment = wanakana.toHiragana(cleanSegment);
+        const rStart = cleanReading.indexOf(hiraSegment, rIdx);
         if (rStart !== -1) {
-          rIdx = rStart + cleanSegment.length;
+          rIdx = rStart + hiraSegment.length;
+        } else {
+          // Fallback if exactly matching fails (e.g. mixed scripts)
+          const kanaMatch = cleanReading.substring(rIdx).match(new RegExp(hiraSegment));
+          if (kanaMatch && kanaMatch.index !== undefined) {
+             rIdx = rIdx + kanaMatch.index + hiraSegment.length;
+          }
         }
       }
     } else {
@@ -66,9 +74,10 @@ export function splitFurigana(word: string, reading: string) {
 
       let rEnd;
       if (nextAnchor) {
+        const hiraAnchor = wanakana.toHiragana(nextAnchor);
         // Find the anchor, but ensure it's not too far if the kanji is short
         const searchEnd = Math.min(cleanReading.length, rIdx + kanjiSegment.length * 10 + 10);
-        rEnd = cleanReading.indexOf(nextAnchor, rIdx);
+        rEnd = cleanReading.indexOf(hiraAnchor, rIdx);
         
         // If anchor not found or suspiciously far, try to bound it by kanji count
         if (rEnd === -1 || rEnd > searchEnd) {
@@ -99,12 +108,15 @@ export function SmartJapanese({ word, furigana, className = "" }: { word: string
   const chunks = splitFurigana(word, furigana);
 
   return (
-    <span className={className}>
+    <span 
+      className={className} 
+      style={{ rubyPosition: 'over', rubyAlign: 'space-around' } as React.CSSProperties}
+    >
       {chunks.map((chunk, i) => (
         chunk.furi ? (
           <ruby key={i} className="font-japanese">
             {chunk.text}
-            <rt className="text-[0.55em] font-bold leading-none mb-1 select-none opacity-90 tracking-normal">
+            <rt className="text-[0.55em] font-bold leading-none select-none opacity-90 tracking-normal text-muted-foreground">
               {chunk.furi}
             </rt>
           </ruby>
