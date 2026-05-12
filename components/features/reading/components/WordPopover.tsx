@@ -114,11 +114,8 @@ export default function WordPopover({ children, word, reading }: WordPopoverProp
                   </div>
                 ) : (
                   <div className="text-center py-6 space-y-3">
-                    <p className="text-xs text-muted-foreground font-medium">Kosakata tidak ditemukan di database NihongoRoute.</p>
-                    <div className="flex flex-col gap-1 items-center">
-                       <span className="text-lg font-black font-japanese">{word}</span>
-                       {reading && <span className="text-xs text-primary/60">{reading}</span>}
-                    </div>
+                    <p className="text-xs text-muted-foreground font-medium italic">Kosakata tidak ditemukan di database NihongoRoute.</p>
+                    <div className="flex flex-col gap-1 items-center" />
                   </div>
                 )}
                 

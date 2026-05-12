@@ -30,10 +30,10 @@ export default function FuriganaDisplay({
   const currentMode = mode || (globalShowFurigana ? "furigana" : "kanji");
 
   const sizeConfig = {
-    small: { furi: "text-[10px]", kanji: "text-base" },
-    medium: { furi: "text-[12px] md:text-[14px]", kanji: "text-xl md:text-2xl" },
-    large: { furi: "text-sm md:text-lg", kanji: "text-2xl md:text-4xl" },
-    xl: { furi: "text-base md:text-xl", kanji: "text-4xl md:text-6xl" },
+    small: { furi: "text-[9px]", kanji: "text-sm" },
+    medium: { furi: "text-[10px] md:text-[12px]", kanji: "text-base md:text-lg" },
+    large: { furi: "text-xs md:text-sm", kanji: "text-xl md:text-2xl" },
+    xl: { furi: "text-sm md:text-lg", kanji: "text-2xl md:text-4xl" },
   };
 
   const { furi: furiSize, kanji: kanjiSize } = sizeConfig[size];
@@ -41,16 +41,8 @@ export default function FuriganaDisplay({
   // Hiragana Mode: Direct return of furigana prop to ensure 100% no Kanji and high performance
   if (currentMode === "hiragana" && furigana) {
     return (
-      <div className={`font-noto-serif leading-[2.8] tracking-normal inline-block w-full text-primary ${kanjiSize} ${className}`}>
+      <div className={`font-noto-serif leading-relaxed tracking-normal inline-block w-full text-foreground ${kanjiSize} ${className}`}>
         {furigana}
-      </div>
-    );
-  }
-
-  if (currentMode === "romaji" && romaji) {
-    return (
-      <div className={`font-sans font-medium text-primary/80 tracking-tight ${kanjiSize} ${className}`}>
-        {romaji}
       </div>
     );
   }
@@ -59,16 +51,12 @@ export default function FuriganaDisplay({
 
   const content = (
     <div 
-      className={`font-noto-serif leading-[2.8] tracking-normal inline-block w-full ${className}`}
+      className={`font-noto-serif leading-relaxed tracking-normal inline-block w-full ${className}`}
       style={{ rubyPosition: 'over', rubyAlign: 'center' } as React.CSSProperties}
     >
       {parts.map((part, i) => (
         <React.Fragment key={i}>
-          {currentMode === "romaji" ? (
-             <span className={`${kanjiSize} font-sans font-medium text-primary/80 tracking-tight`}>
-               {part.furi ? wanakana.toRomaji(part.furi) : wanakana.toRomaji(part.text)}
-             </span>
-          ) : part.furi && currentMode === "furigana" ? (
+          {part.furi && currentMode === "furigana" ? (
             <ruby className="group">
               <span className={`${kanjiSize} font-medium transition-colors text-foreground`}>
                 {part.text}

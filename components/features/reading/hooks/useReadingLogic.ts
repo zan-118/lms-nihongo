@@ -49,7 +49,6 @@ export function useReadingLogic(data: ReadingData) {
     { id: "kanji", label: "Kanji", icon: BookOpen },
     { id: "furigana", label: "Furigana", icon: Eye },
     { id: "hiragana", label: "Hiragana", icon: EyeOff },
-    { id: "romaji", label: "Romaji", icon: Type },
   ];
 
   const toggleTranslation = () => {
