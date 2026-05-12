@@ -25,24 +25,24 @@ export function splitFurigana(word: string, reading: string) {
     const isKanjiChar = wanakana.isKanji(char) || char === "々";
 
     if (!isKanjiChar) {
-      // Segment Non-kanji (Hiragana, Katakana, Punctuation, Spaces)
+      // 1. Tangani Segmen Non-Kanji (Hiragana, Katakana, Simbol, Spasi)
       let segment = "";
-      while (wIdx < word.length && !(wanakana.isKanji(word[wIdx]) || word[wIdx] === "々")) {
+      while (wIdx < word.length && !wanakana.isKanji(word[wIdx]) && word[wIdx] !== "々") {
         const wChar = word[wIdx];
         segment += wChar;
-        
-        // Advanced rIdx if it matches (ignoring case/type)
+
+        // Sinkronisasi rIdx: Majukan rIdx hanya jika karakternya cocok
         if (rIdx < reading.length) {
           const rChar = reading[rIdx];
-          // Match if exactly the same, or if they are both kana and equivalent
-          if (wChar === rChar || (wanakana.isKana(wChar) && wanakana.isKana(rChar) && wanakana.toHiragana(wChar) === wanakana.toHiragana(rChar))) {
+          const wHira = wanakana.toHiragana(wChar);
+          const rHira = wanakana.toHiragana(rChar);
+          
+          if (wHira === rHira || wChar === rChar) {
             rIdx++;
-          } else if (/\s/.test(wChar) && !/\s/.test(rChar)) {
-            // Space in word but not in reading: just skip word index (handled by outer loop)
-          } else if (!/\s/.test(wChar) && /\s/.test(rChar)) {
-            // Space in reading but not in word: skip reading index
+          } else if (/\s/.test(rChar)) {
+            // Jika ada spasi di reading tapi tidak di word, lewati rIdx saja
             rIdx++;
-            // Re-check current wChar with next rChar
+            // Coba lagi cocokkan wChar dengan rChar berikutnya
             continue;
           }
         }
@@ -50,33 +50,54 @@ export function splitFurigana(word: string, reading: string) {
       }
       chunks.push({ text: segment });
     } else {
-      // Segment Kanji
-      const start = wIdx;
+      // 2. Tangani Segmen Kanji
+      const kanjiStart = wIdx;
       while (wIdx < word.length && (wanakana.isKanji(word[wIdx]) || word[wIdx] === "々")) {
         wIdx++;
       }
-      const kanjiSegment = word.substring(start, wIdx);
-      
-      // Find the next non-kanji character to use as an anchor
+      const kanjiSegment = word.substring(kanjiStart, wIdx);
+
+      // Cari "Jangkar" berikutnya: karakter non-kanji pertama setelah blok Kanji ini
       let nextAnchor = "";
+      let anchorOccurrencesInWord = 0;
       if (wIdx < word.length) {
         nextAnchor = word[wIdx];
+        // Hitung berapa kali jangkar ini muncul berurutan (misal: 'いい' di '言いました')
+        let tempIdx = wIdx;
+        while (tempIdx < word.length && word[tempIdx] === nextAnchor) {
+          anchorOccurrencesInWord++;
+          tempIdx++;
+        }
       }
 
-      let rEnd;
+      let rEnd = rIdx;
       if (nextAnchor) {
-        // Find the next occurrence of the anchor in reading, but don't look TOO far (max 10 chars per Kanji)
-        const searchLimit = rIdx + kanjiSegment.length * 10;
-        const searchArea = reading.substring(rIdx, searchLimit);
-        const anchorPos = searchArea.indexOf(wanakana.toHiragana(nextAnchor));
-        const anchorPosKatakana = searchArea.indexOf(nextAnchor);
+        const anchorHira = wanakana.toHiragana(nextAnchor);
         
-        const foundPos = anchorPos !== -1 ? anchorPos : (anchorPosKatakana !== -1 ? anchorPosKatakana : -1);
+        // Cari posisi jangkar di teks pembacaan. 
+        // Penting: Kita harus mencari posisi yang logis, tidak boleh rIdx itu sendiri 
+        // jika itu bagian dari pembacaan Kanji (kasus '言いました' -> 'いいました').
+        let searchIdx = rIdx;
+        let matchCount = 0;
+        let found = false;
 
-        if (foundPos !== -1) {
-          rEnd = rIdx + foundPos;
-        } else {
-          // Fallback if anchor not found within reasonable distance
+        // Cari kemunculan ke-N dari jangkar di reading (sesuai posisi di word)
+        while (searchIdx < reading.length) {
+          if (wanakana.toHiragana(reading[searchIdx]) === anchorHira) {
+            matchCount++;
+            // Jika kita menemukan jangkar yang posisinya "masuk akal" 
+            // (memberi ruang untuk pembacaan Kanji minimal 1 karakter)
+            if (searchIdx >= rIdx + 1) {
+               rEnd = searchIdx;
+               found = true;
+               break;
+            }
+          }
+          searchIdx++;
+        }
+
+        if (!found) {
+          // Fallback: Jika tidak ketemu, gunakan estimasi panjang (3 hiragana per kanji)
           rEnd = Math.min(reading.length, rIdx + kanjiSegment.length * 3);
         }
       } else {

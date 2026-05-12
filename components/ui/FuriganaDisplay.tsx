@@ -41,7 +41,7 @@ export default function FuriganaDisplay({
   // Hiragana Mode: Direct return of furigana prop to ensure 100% no Kanji and high performance
   if (currentMode === "hiragana" && furigana) {
     return (
-      <div className={`font-noto-serif leading-[2.8] tracking-normal inline-block w-full text-justify text-primary ${kanjiSize} ${className}`}>
+      <div className={`font-noto-serif leading-[2.8] tracking-normal inline-block w-full text-primary ${kanjiSize} ${className}`}>
         {furigana}
       </div>
     );
@@ -59,8 +59,8 @@ export default function FuriganaDisplay({
 
   const content = (
     <div 
-      className={`font-noto-serif leading-[2.8] tracking-normal inline-block w-full text-justify ${className}`}
-      style={{ rubyPosition: 'over', rubyAlign: 'space-around' } as React.CSSProperties}
+      className={`font-noto-serif leading-[2.8] tracking-normal inline-block w-full ${className}`}
+      style={{ rubyPosition: 'over', rubyAlign: 'center' } as React.CSSProperties}
     >
       {parts.map((part, i) => (
         <React.Fragment key={i}>
