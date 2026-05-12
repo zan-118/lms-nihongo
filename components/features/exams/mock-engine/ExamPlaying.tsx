@@ -215,7 +215,7 @@ export function ExamPlaying({
 
                     <div 
                       className="text-lg md:text-xl font-medium leading-relaxed mb-8 text-foreground"
-                      dangerouslySetInnerHTML={{ __html: activeQuestion.questionText }}
+                      dangerouslySetInnerHTML={{ __html: activeQuestion.questionText || "" }}
                     />
 
                   <div className="grid grid-cols-1 gap-3">

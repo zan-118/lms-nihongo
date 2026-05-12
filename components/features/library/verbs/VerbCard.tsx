@@ -14,13 +14,14 @@ interface VerbCardProps {
   verb: VerbData;
   idx: number;
   showRomaji: boolean;
-  onClick: () => void;
 }
+
+import Link from "next/link";
 
 /**
  * Komponen kartu kata kerja untuk grid daftar.
  */
-export function VerbCard({ verb, idx, showRomaji, onClick }: VerbCardProps) {
+export function VerbCard({ verb, idx, showRomaji }: VerbCardProps) {
   const badgeColor = getBadgeColor(verb.group);
 
   return (
@@ -31,10 +32,10 @@ export function VerbCard({ verb, idx, showRomaji, onClick }: VerbCardProps) {
       transition={{ delay: (idx % 12) * 0.02 }}
       className="h-full"
     >
-      <Card
-        onClick={onClick}
-        className="h-full bg-card border border-border rounded-2xl cursor-pointer group hover:border-primary/40 hover:bg-primary/[0.03] transition-all duration-200 shadow-sm"
-      >
+      <Link href={`/library/verbs/${verb._id}`} className="h-full block outline-none">
+        <Card
+          className="h-full bg-card border border-border rounded-2xl cursor-pointer group hover:border-primary/40 hover:bg-primary/[0.03] transition-all duration-200 shadow-sm"
+        >
         <div className="p-5 md:p-6 flex flex-col gap-4 h-full">
           <div className="flex justify-between items-center">
             <div className="flex items-center gap-2">
@@ -113,6 +114,7 @@ export function VerbCard({ verb, idx, showRomaji, onClick }: VerbCardProps) {
           </div>
         </div>
       </Card>
+      </Link>
     </motion.div>
   );
 }

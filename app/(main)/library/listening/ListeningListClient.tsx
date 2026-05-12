@@ -1,42 +1,43 @@
 "use client";
 
 import React, { useState, useEffect } from "react";
-import { Search, Headphones, Play, ArrowRight, Clock, ChevronLeft, ChevronRight, ChevronsLeft, ChevronsRight } from "lucide-react";
+import { Search, Headphones, Play, ArrowRight, Clock, ChevronLeft, ChevronRight, ChevronsLeft, ChevronsRight, Loader2 } from "lucide-react";
 import { Input } from "@/components/ui/input";
 import { Card } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { motion, AnimatePresence } from "framer-motion";
 import Link from "next/link";
-
-interface ListeningTask {
-  _id: string;
-  title: string;
-  slug: string;
-}
+import { useQuery, keepPreviousData } from "@tanstack/react-query";
+import { getPaginatedListening, PaginatedListeningResponse, ListeningTaskItem } from "@/app/actions/library.actions";
 
 interface ListeningListClientProps {
-  tasks: ListeningTask[];
+  initialData: PaginatedListeningResponse;
 }
 
 const ITEMS_PER_PAGE = 10;
 
-export default function ListeningListClient({ tasks }: ListeningListClientProps) {
+export default function ListeningListClient({ initialData }: ListeningListClientProps) {
   const [search, setSearch] = useState("");
+  const [debouncedSearch, setDebouncedSearch] = useState("");
   const [currentPage, setCurrentPage] = useState(1);
 
-  const filteredTasks = tasks.filter(t => 
-    t.title.toLowerCase().includes(search.toLowerCase())
-  );
-
-  const totalPages = Math.ceil(filteredTasks.length / ITEMS_PER_PAGE);
-  const paginatedTasks = filteredTasks.slice(
-    (currentPage - 1) * ITEMS_PER_PAGE,
-    currentPage * ITEMS_PER_PAGE
-  );
-
   useEffect(() => {
-    setCurrentPage(1);
+    const handler = setTimeout(() => {
+      setDebouncedSearch(search);
+      setCurrentPage(1);
+    }, 500);
+    return () => clearTimeout(handler);
   }, [search]);
+
+  const { data, isFetching } = useQuery({
+    queryKey: ["listening", currentPage, debouncedSearch],
+    queryFn: () => getPaginatedListening(currentPage, ITEMS_PER_PAGE, debouncedSearch),
+    placeholderData: keepPreviousData,
+    initialData: currentPage === 1 && debouncedSearch === "" ? initialData : undefined,
+  });
+
+  const tasks = data?.data || [];
+  const totalPages = data?.total ? Math.ceil(data.total / ITEMS_PER_PAGE) : 0;
 
   const handlePageChange = (page: number) => {
     setCurrentPage(page);
@@ -71,9 +72,15 @@ export default function ListeningListClient({ tasks }: ListeningListClientProps)
       </div>
 
       {/* List */}
-      <div className="grid grid-cols-1 gap-4">
-        <AnimatePresence mode="popLayout">
-          {paginatedTasks.map((task, idx) => (
+      <div className="relative">
+        {isFetching && (
+          <div className="absolute inset-0 z-50 flex items-center justify-center bg-background/50 backdrop-blur-sm rounded-[2rem]">
+            <Loader2 className="w-10 h-10 animate-spin text-primary" />
+          </div>
+        )}
+        <div className="grid grid-cols-1 gap-4 min-h-[300px]">
+          <AnimatePresence mode="popLayout">
+            {tasks.map((task: ListeningTaskItem, idx: number) => (
             <motion.div
               key={task._id}
               initial={{ opacity: 0, x: -20 }}
@@ -114,6 +121,7 @@ export default function ListeningListClient({ tasks }: ListeningListClientProps)
             </motion.div>
           ))}
         </AnimatePresence>
+        </div>
       </div>
 
       {/* Pagination Controls */}
@@ -194,7 +202,7 @@ export default function ListeningListClient({ tasks }: ListeningListClientProps)
         </div>
       )}
 
-      {filteredTasks.length === 0 && (
+      {tasks.length === 0 && !isFetching && (
         <div className="flex flex-col items-center justify-center py-24 text-center">
           <div className="w-20 h-20 rounded-full bg-muted/20 flex items-center justify-center mb-6">
              <Headphones size={32} className="text-muted-foreground/50" />

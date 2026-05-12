@@ -1,33 +1,44 @@
 "use client";
 
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import Link from "next/link";
-import { BookOpen, ChevronRight, GraduationCap, ChevronLeft, ChevronsLeft, ChevronsRight } from "lucide-react";
+import { BookOpen, ChevronRight, GraduationCap, ChevronLeft, ChevronsLeft, ChevronsRight, Search, Loader2 } from "lucide-react";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
-
-interface Material {
-  title: string;
-  difficulty: string;
-  slug: string;
-  category?: string;
-}
+import { Input } from "@/components/ui/input";
+import { useQuery, keepPreviousData } from "@tanstack/react-query";
+import { getPaginatedReading, PaginatedReadingResponse } from "@/app/actions/library.actions";
 
 interface ReadingListClientProps {
-  materials: Material[];
+  initialData: PaginatedReadingResponse;
 }
 
 const ITEMS_PER_PAGE = 9;
 
-export default function ReadingListClient({ materials }: ReadingListClientProps) {
+export default function ReadingListClient({ initialData }: ReadingListClientProps) {
+  const [search, setSearch] = useState("");
+  const [debouncedSearch, setDebouncedSearch] = useState("");
   const [currentPage, setCurrentPage] = useState(1);
 
-  const totalPages = Math.ceil((materials?.length || 0) / ITEMS_PER_PAGE);
-  const paginatedMaterials = (materials || []).slice(
-    (currentPage - 1) * ITEMS_PER_PAGE,
-    currentPage * ITEMS_PER_PAGE
-  );
+  // Debounce search input
+  useEffect(() => {
+    const handler = setTimeout(() => {
+      setDebouncedSearch(search);
+      setCurrentPage(1); // Reset page on new search
+    }, 500);
+    return () => clearTimeout(handler);
+  }, [search]);
+
+  const { data, isFetching } = useQuery({
+    queryKey: ["reading", currentPage, debouncedSearch],
+    queryFn: () => getPaginatedReading(currentPage, ITEMS_PER_PAGE, debouncedSearch),
+    placeholderData: keepPreviousData,
+    initialData: currentPage === 1 && debouncedSearch === "" ? initialData : undefined,
+  });
+
+  const materials = data?.data || [];
+  const totalPages = data?.total ? Math.ceil(data.total / ITEMS_PER_PAGE) : 0;
 
   const handlePageChange = (page: number) => {
     setCurrentPage(page);
@@ -36,22 +47,40 @@ export default function ReadingListClient({ materials }: ReadingListClientProps)
 
   return (
     <div className="space-y-12">
-      <div className="space-y-4">
-        <div className="flex items-center gap-3 text-primary">
-          <BookOpen size={24} />
-          <span className="text-[10px] font-black uppercase tracking-[0.4em]">Perpustakaan Digital</span>
+      <div className="space-y-6">
+        <div className="space-y-4">
+          <div className="flex items-center gap-3 text-primary">
+            <BookOpen size={24} />
+            <span className="text-[10px] font-black uppercase tracking-[0.4em]">Perpustakaan Digital</span>
+          </div>
+          <h1 className="text-4xl md:text-6xl font-black text-foreground tracking-tighter">
+            Graded Reading
+          </h1>
+          <p className="text-muted-foreground text-lg max-w-2xl font-medium">
+            Pilih bacaan yang sesuai dengan level Anda. Klik pada kata yang sulit untuk melihat arti dan mendengarkan pengucapannya.
+          </p>
         </div>
-        <h1 className="text-4xl md:text-6xl font-black text-foreground tracking-tighter">
-          Graded Reading
-        </h1>
-        <p className="text-muted-foreground text-lg max-w-2xl font-medium">
-          Pilih bacaan yang sesuai dengan level Anda. Klik pada kata yang sulit untuk melihat arti dan mendengarkan pengucapannya.
-        </p>
+
+        <div className="relative max-w-2xl">
+          <Search className="absolute left-4 top-1/2 -translate-y-1/2 text-muted-foreground w-5 h-5" aria-hidden="true" />
+          <Input 
+            placeholder="Cari judul atau kategori bacaan..." 
+            className="pl-12 h-14 bg-card/40 backdrop-blur-xl border border-border rounded-2xl text-lg shadow-2xl focus:ring-primary/20"
+            value={search}
+            onChange={(e) => setSearch(e.target.value)}
+          />
+        </div>
       </div>
 
-      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-        <AnimatePresence mode="popLayout">
-          {paginatedMaterials.map((material, index) => (
+      <div className="relative">
+        {isFetching && (
+          <div className="absolute inset-0 z-50 flex items-center justify-center bg-background/50 backdrop-blur-sm rounded-[2rem]">
+            <Loader2 className="w-10 h-10 animate-spin text-primary" />
+          </div>
+        )}
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 min-h-[300px]">
+          <AnimatePresence mode="popLayout">
+            {materials.map((material, index) => (
             <motion.div
               key={material.slug}
               initial={{ opacity: 0, y: 20 }}
@@ -98,14 +127,15 @@ export default function ReadingListClient({ materials }: ReadingListClientProps)
           ))}
         </AnimatePresence>
 
-        {materials.length === 0 && (
+        {materials.length === 0 && !isFetching && (
           <div className="col-span-full py-20 text-center space-y-4">
              <div className="w-20 h-20 rounded-full bg-background/5 border border-dashed border-border flex items-center justify-center mx-auto">
                 <BookOpen size={32} className="text-muted-foreground opacity-30" />
              </div>
-             <p className="text-muted-foreground font-medium">Belum ada materi bacaan yang tersedia.</p>
+             <p className="text-muted-foreground font-medium">Materi bacaan tidak ditemukan.</p>
           </div>
         )}
+      </div>
       </div>
 
       {/* Pagination Controls */}

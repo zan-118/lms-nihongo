@@ -23,7 +23,7 @@ import QuizEngine from "@/components/features/exams/quiz-engine/QuizEngine";
 import TTSReader from "@/components/features/tools/tts/TTSReader";
 import AddToSRSButton from "@/components/features/srs/actions/AddToSRSButton";
 import DownloadPdfButton from "@/components/features/pdf/actions/DownloadPdfButton";
-import AppBreadcrumbs from "@/components/layout/AppBreadcrumbs";
+
 import { renderSmartText } from "@/components/features/global/SmartText";
 import { sharedPtComponents } from "@/components/ui/portable-text/SharedPortableText";
 import * as wanakana from "wanakana";
@@ -159,13 +159,7 @@ export default async function LessonPage({ params }: Props) {
       <div className="absolute bottom-0 left-0 w-[400px] h-[400px] bg-secondary/5 blur-[120px] rounded-full pointer-events-none" />
 
       <article className="max-w-4xl mx-auto w-full relative z-10 flex-1">
-        <AppBreadcrumbs 
-          items={[
-            { label: "Pusat Belajar", href: "/courses" },
-            { label: lesson.levelTitle || "Materi", href: `/courses/${lesson.levelCode || categoryId}` },
-            { label: lesson.title, active: true }
-          ]} 
-        />
+
 
         <header className="mb-20">
           <h1

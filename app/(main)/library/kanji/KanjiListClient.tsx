@@ -1,51 +1,45 @@
 "use client";
 
-import React, { useState } from "react";
-import { Search, ArrowRight, ChevronLeft, ChevronRight, ChevronsLeft, ChevronsRight } from "lucide-react";
+import React, { useState, useEffect } from "react";
+import { Search, ArrowRight, ChevronLeft, ChevronRight, ChevronsLeft, ChevronsRight, Loader2 } from "lucide-react";
 import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
 import { Card } from "@/components/ui/card";
 import { motion, AnimatePresence } from "framer-motion";
 import Link from "next/link";
-
-interface Kanji {
-  _id: string;
-  character: string;
-  meaning: string;
-  onyomi: string[];
-  kunyomi: string[];
-  jlpt: string;
-  slug: string;
-}
+import { useQuery, keepPreviousData } from "@tanstack/react-query";
+import { getPaginatedKanji, PaginatedKanjiResponse } from "@/app/actions/library.actions";
 
 interface KanjiListClientProps {
-  kanjis: Kanji[];
+  initialData: PaginatedKanjiResponse;
 }
 
 const ITEMS_PER_PAGE = 24;
 
-export default function KanjiListClient({ kanjis }: KanjiListClientProps) {
+export default function KanjiListClient({ initialData }: KanjiListClientProps) {
   const [search, setSearch] = useState("");
+  const [debouncedSearch, setDebouncedSearch] = useState("");
   const [levelFilter, setLevelFilter] = useState<string | null>(null);
   const [currentPage, setCurrentPage] = useState(1);
 
-  const filteredKanjis = kanjis.filter(k => {
-    const matchesSearch = 
-      k.character.includes(search) || 
-      k.meaning.toLowerCase().includes(search.toLowerCase()) ||
-      k.onyomi?.some(o => o.includes(search)) ||
-      k.kunyomi?.some(k => k.includes(search));
-    
-    const matchesFilter = !levelFilter || k.jlpt?.toUpperCase() === levelFilter?.toUpperCase();
-    
-    return matchesSearch && matchesFilter;
+  // Debounce search input
+  useEffect(() => {
+    const handler = setTimeout(() => {
+      setDebouncedSearch(search);
+      setCurrentPage(1); // Reset page on new search
+    }, 500);
+    return () => clearTimeout(handler);
+  }, [search]);
+
+  const { data, isFetching } = useQuery({
+    queryKey: ["kanji", currentPage, debouncedSearch, levelFilter],
+    queryFn: () => getPaginatedKanji(currentPage, ITEMS_PER_PAGE, debouncedSearch, levelFilter || ""),
+    placeholderData: keepPreviousData,
+    initialData: currentPage === 1 && debouncedSearch === "" && levelFilter === null ? initialData : undefined,
   });
 
-  const totalPages = Math.ceil(filteredKanjis.length / ITEMS_PER_PAGE);
-  const paginatedKanjis = filteredKanjis.slice(
-    (currentPage - 1) * ITEMS_PER_PAGE,
-    currentPage * ITEMS_PER_PAGE
-  );
+  const kanjis = data?.data || [];
+  const totalPages = data?.total ? Math.ceil(data.total / ITEMS_PER_PAGE) : 0;
 
   const handlePageChange = (page: number) => {
     setCurrentPage(page);
@@ -53,9 +47,9 @@ export default function KanjiListClient({ kanjis }: KanjiListClientProps) {
   };
 
   // Reset page when filter changes
-  React.useEffect(() => {
+  useEffect(() => {
     setCurrentPage(1);
-  }, [search, levelFilter]);
+  }, [levelFilter]);
 
   const levels = ["N5", "N4", "N3", "N2", "N1"];
 
@@ -102,9 +96,15 @@ export default function KanjiListClient({ kanjis }: KanjiListClientProps) {
       </div>
 
       {/* Grid */}
-      <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-6 gap-4">
-        <AnimatePresence mode="popLayout">
-          {paginatedKanjis.map((kanji, idx) => (
+      <div className="relative">
+        {isFetching && (
+          <div className="absolute inset-0 z-50 flex items-center justify-center bg-background/50 backdrop-blur-sm rounded-[2rem]">
+            <Loader2 className="w-10 h-10 animate-spin text-primary" />
+          </div>
+        )}
+        <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-6 gap-4 min-h-[400px]">
+          <AnimatePresence mode="popLayout">
+            {kanjis.map((kanji, idx) => (
             <motion.div
               key={kanji._id}
               initial={{ opacity: 0, scale: 0.9, y: 20 }}
@@ -138,6 +138,7 @@ export default function KanjiListClient({ kanjis }: KanjiListClientProps) {
             </motion.div>
           ))}
         </AnimatePresence>
+        </div>
       </div>
 
       {/* Pagination Controls */}
@@ -218,7 +219,7 @@ export default function KanjiListClient({ kanjis }: KanjiListClientProps) {
         </div>
       )}
 
-      {filteredKanjis.length === 0 && (
+      {kanjis.length === 0 && !isFetching && (
         <div className="flex flex-col items-center justify-center py-24 text-center">
           <div className="w-20 h-20 rounded-full bg-muted/20 flex items-center justify-center mb-6">
              <Search size={32} className="text-muted-foreground/50" aria-hidden="true" />

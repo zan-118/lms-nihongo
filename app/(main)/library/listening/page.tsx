@@ -1,13 +1,6 @@
-import { sanityFetch } from "@/lib/sanity.fetch";
-import { listeningListQuery } from "@/lib/queries";
+import { getPaginatedListening } from "@/app/actions/library.actions";
 import ListeningListClient from "@/app/(main)/library/listening/ListeningListClient";
 import type { Metadata } from "next";
-
-interface ListeningTaskItem {
-  _id: string;
-  title: string;
-  slug: string;
-}
 
 export const metadata: Metadata = {
   title: "Latihan Menyimak | NihongoRoute",
@@ -15,10 +8,7 @@ export const metadata: Metadata = {
 };
 
 export default async function ListeningListPage() {
-  const tasks: ListeningTaskItem[] = await sanityFetch<ListeningTaskItem[]>({
-    query: listeningListQuery,
-    tags: ["listening_task"],
-  });
+  const initialData = await getPaginatedListening(1, 10, "");
 
   return (
     <div className="w-full min-h-screen bg-background relative overflow-hidden pt-12 pb-24 px-4 md:px-8">
@@ -27,7 +17,7 @@ export default async function ListeningListPage() {
       <div className="neural-grid" />
 
       <div className="max-w-5xl mx-auto relative z-10">
-        <ListeningListClient tasks={tasks} />
+        <ListeningListClient initialData={initialData} />
       </div>
     </div>
   );

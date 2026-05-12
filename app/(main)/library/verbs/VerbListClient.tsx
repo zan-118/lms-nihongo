@@ -29,7 +29,6 @@ import { Switch } from "@/components/ui/switch";
 import { VerbData } from "@/components/features/library/verbs/types";
 import { useVerbFilter } from "@/components/features/library/verbs/useVerbFilter";
 import { VerbCard } from "@/components/features/library/verbs/VerbCard";
-import { VerbDetailModal } from "@/components/features/library/verbs/VerbDetailModal";
 import { VerbFlashcardView } from "@/components/features/library/verbs/VerbFlashcardView";
 
 export default function VerbListClient({
@@ -37,7 +36,6 @@ export default function VerbListClient({
 }: {
   initialVerbs: VerbData[];
 }) {
-  const [selectedVerb, setSelectedVerb] = useState<VerbData | null>(null);
   const [isFlashcardMode, setIsFlashcardMode] = useState(false);
   const [drillMode, setDrillMode] = useState<"meaning" | "masu" | "te" | "nai" | "ta">("meaning");
   const [showRomaji, setShowRomaji] = useState(true);
@@ -185,7 +183,6 @@ export default function VerbListClient({
                 verb={verb}
                 idx={idx}
                 showRomaji={showRomaji}
-                onClick={() => setSelectedVerb(verb)}
               />
             ))
           )}
@@ -293,11 +290,6 @@ export default function VerbListClient({
         </div>
       )}
 
-      {/* Conjugation Detail Modal */}
-      <VerbDetailModal
-        selectedVerb={selectedVerb}
-        onClose={() => setSelectedVerb(null)}
-      />
 
       <footer className="mt-16 md:mt-24 pt-10 md:pt-16 border-t border-border flex flex-col sm:flex-row justify-between items-center gap-6">
          <div className="flex items-center gap-3">

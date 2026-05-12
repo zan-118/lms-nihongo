@@ -1,8 +1,8 @@
 "use client";
 
 import { useState, useEffect } from "react";
-import Link from "next/link";
-import { Search, Bell, Menu, ChevronRight, Cloud, RefreshCw, CloudOff, CloudUpload, ChevronLeft } from "lucide-react";
+
+import { Search, Bell, Menu, Cloud, RefreshCw, CloudOff, CloudUpload, ChevronLeft } from "lucide-react";
 import { motion, AnimatePresence } from "framer-motion";
 import { useRouter } from "next/navigation";
 import { useUIStore } from "@/store/useUIStore";
@@ -66,20 +66,6 @@ export default function Topbar({ onMenuClick }: { onMenuClick: () => void }) {
         </div>
 
         <div className="flex flex-col min-w-0">
-          <nav className="hidden md:flex items-center gap-2 text-[10px] font-black uppercase tracking-[0.2em] text-muted-foreground/50 mb-1.5">
-            <Link href="/dashboard" className="hover:text-primary transition-colors">Route</Link>
-            {pathSegments.map((segment, idx) => (
-              <div key={idx} className="flex items-center gap-2">
-                <ChevronRight size={10} className="opacity-20" />
-                <Link 
-                  href={`/${pathSegments.slice(0, idx + 1).join('/')}`}
-                  className={`hover:text-primary transition-colors ${idx === pathSegments.length - 1 ? 'text-primary/70 pointer-events-none' : ''}`}
-                >
-                  {segment.replace(/-/g, ' ')}
-                </Link>
-              </div>
-            ))}
-          </nav>
           <h1 className="text-xs md:text-lg font-black text-foreground uppercase tracking-wider truncate leading-none">
             {pathSegments.length > 0 ? pathSegments[pathSegments.length - 1].replace(/-/g, ' ') : "Dashboard"}
           </h1>

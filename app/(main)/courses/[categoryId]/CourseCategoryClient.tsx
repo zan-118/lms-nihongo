@@ -24,7 +24,7 @@ import {
 } from "lucide-react";
 import { Card } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
-import AppBreadcrumbs from "@/components/layout/AppBreadcrumbs";
+
 import { LessonCard } from "@/components/features/course/LessonCard";
 import { useUserStore } from "@/store/useUserStore";
 import { useState } from "react";
@@ -113,12 +113,6 @@ export default function CourseCategoryClient({
           <div className="flex flex-col lg:flex-row lg:items-end justify-between gap-[34px] mb-[21px]">
             <div className="max-w-3xl">
               <div className="flex items-center gap-[13px] mb-8">
-                <AppBreadcrumbs 
-                  items={[
-                    { label: "Courses", href: "/courses" },
-                    { label: data.category.title, active: true }
-                  ]} 
-                />
               </div>
 
               <motion.div
@@ -154,17 +148,7 @@ export default function CourseCategoryClient({
               )}
             </div>
 
-            <motion.div variants={itemVariants} className="hidden lg:block pb-2">
-              <Button
-                variant="ghost"
-                asChild
-                className="h-[55px] px-8 rounded-2xl border border-border bg-card/50 backdrop-blur-sm text-muted-foreground hover:text-foreground hover:bg-card hover:border-border/80 transition-all text-xs font-bold uppercase tracking-widest"
-              >
-                <Link href="/courses">
-                  <ChevronLeft className="mr-2" size={16} /> Kembali ke Kursus
-                </Link>
-              </Button>
-            </motion.div>
+
           </div>
         </header>
 

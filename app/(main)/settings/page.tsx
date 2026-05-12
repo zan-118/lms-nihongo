@@ -104,9 +104,9 @@ export default function SettingsPage() {
       const file = target.files?.[0];
       if (!file) return;
       const reader = new FileReader();
-      reader.onload = (event: ProgressEvent<FileReader>) => {
+      reader.onload = async (event: ProgressEvent<FileReader>) => {
         const result = event.target?.result as string;
-        if (importData(result)) window.location.reload();
+        if (await importData(result)) window.location.reload();
         else alert("Format file data tidak valid atau rusak!");
       };
       reader.readAsText(file);

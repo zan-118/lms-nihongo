@@ -8,9 +8,8 @@
 // ======================
 // IMPORTS
 // ======================
-import { sanityFetch } from "@/lib/sanity.fetch";
 import VocabClient from "./VocabClient";
-import { VocabItem } from "@/components/features/library/vocab/types";
+import { getPaginatedVocab } from "@/app/actions/library.actions";
 
 // ======================
 // CONFIG / CONSTANTS
@@ -25,25 +24,7 @@ export const metadata = {
 // ======================
 
 export default async function VocabLibraryPage() {
-  // Pre-fetch 50 item pertama untuk N5 (default view) di sisi server
-  // Menggabungkan vocab dan verb_dictionary
-  const initialQuery = `*[
-    (_type == "vocab" || _type == "verb_dictionary") && 
-    (course_category->slug.current in ["n5", "jlpt-n5"])
-  ] | order(coalesce(romaji, "") asc) [0...50] { 
-    _id, 
-    _type,
-    "word": coalesce(word, jisho), 
-    furigana, 
-    romaji, 
-    meaning, 
-    "hinshi": coalesce(hinshi, "verb") 
-  }`;
-  
-  const initialData: VocabItem[] = await sanityFetch<VocabItem[]>({
-    query: initialQuery,
-    tags: ["vocab", "verb_dictionary", "course_category"],
-  });
+  const initialData = await getPaginatedVocab(1, 50, "", "N5", "all");
 
   return (
     <main className="w-full bg-background px-6 md:px-12 relative overflow-hidden flex flex-col justify-start min-h-screen pt-24 pb-20 transition-colors duration-300">
@@ -52,7 +33,7 @@ export default async function VocabLibraryPage() {
       <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_top,rgba(239,68,68,0.05)_0%,transparent_70%)] pointer-events-none z-0" />
 
       <div className="max-w-7xl mx-auto w-full relative z-10 flex flex-col pt-10">
-        <VocabClient initialVocab={initialData} />
+        <VocabClient initialData={initialData} />
       </div>
     </main>
   );

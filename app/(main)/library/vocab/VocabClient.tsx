@@ -6,13 +6,11 @@
 
 "use client";
 
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import Link from "next/link";
 import {
   Search,
-  Home,
-  Library,
   Book,
   ChevronLeft,
   ChevronRight,
@@ -23,35 +21,71 @@ import {
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Switch } from "@/components/ui/switch";
+import { useQuery, keepPreviousData } from "@tanstack/react-query";
+import { getPaginatedVocab, PaginatedVocabResponse } from "@/app/actions/library.actions";
 
 // Domain Components & Hooks
-import { VocabItem, LEVELS, HINSHI } from "@/components/features/library/vocab/types";
-import { useVocabList } from "@/components/features/library/vocab/useVocabList";
+import { LEVELS, HINSHI } from "@/components/features/library/vocab/types";
 import { VocabCard } from "@/components/features/library/vocab/VocabCard";
 import { VocabFlashcardView } from "@/components/features/library/vocab/VocabFlashcardView";
 
 export default function VocabClient({
-  initialVocab,
+  initialData,
 }: {
-  initialVocab: VocabItem[];
+  initialData: PaginatedVocabResponse;
 }) {
   const [isFlashcardMode, setIsFlashcardMode] = useState(false);
   const [showRomaji, setShowRomaji] = useState(true);
 
-  const {
-    level,
-    setLevel,
-    hinshi,
-    setHinshi,
-    search,
-    setSearch,
-    vocabList,
-    totalItems,
-    loading,
-    currentPage,
-    totalPages,
-    handlePageChange,
-  } = useVocabList(initialVocab);
+  const [level, setLevel] = useState<string>("N5");
+  const [hinshi, setHinshi] = useState<string>("all");
+  const [search, setSearch] = useState("");
+  const [debouncedSearch, setDebouncedSearch] = useState("");
+  const [currentPage, setCurrentPage] = useState(1);
+  const limit = 50;
+
+  useEffect(() => {
+    const handler = setTimeout(() => {
+      setDebouncedSearch(search);
+      setCurrentPage(1);
+    }, 500);
+    return () => clearTimeout(handler);
+  }, [search]);
+
+  useEffect(() => {
+    setCurrentPage(1);
+  }, [level, hinshi]);
+
+  const { data, isFetching: loading } = useQuery({
+    queryKey: ["vocab", currentPage, debouncedSearch, level, hinshi],
+    queryFn: () => getPaginatedVocab(currentPage, limit, debouncedSearch, level, hinshi),
+    placeholderData: keepPreviousData,
+    initialData: currentPage === 1 && debouncedSearch === "" && level === "N5" && hinshi === "all" ? initialData : undefined,
+  });
+
+  const vocabListRaw = data?.data || [];
+  
+  // De-duplikasi Konten: Prioritaskan verb_dictionary jika ada kata yang sama
+  const uniqueVocab = Object.values(
+    vocabListRaw.reduce((acc: Record<string, any>, item: any) => {
+      const key = item.word; // Kunci unik berdasarkan Kanji/Kana
+      
+      if (!acc[key]) {
+        acc[key] = item;
+      } else {
+        // LOGIKA PRIORITAS: Jika item baru adalah verb_dictionary, 
+        // timpa data lama agar slug n5-verb-ageru yang digunakan.
+        if (item._type === "verb_dictionary") {
+          acc[key] = item;
+        }
+      }
+      return acc;
+    }, {})
+  ) as any[];
+
+  const vocabList = uniqueVocab;
+  const totalItems = data?.total || 0;
+  const totalPages = Math.ceil(totalItems / limit);
 
   // Practice Mode View
   if (isFlashcardMode && vocabList.length > 0) {
@@ -63,23 +97,13 @@ export default function VocabClient({
     );
   }
 
+  const handlePageChange = (page: number) => {
+    setCurrentPage(page);
+    window.scrollTo({ top: 0, behavior: 'smooth' });
+  };
+
   return (
     <div className="w-full flex flex-col flex-1 pb-24 px-4 md:px-8 lg:px-12 pt-4 sm:pt-0">
-      {/* Breadcrumb Navigation */}
-      <nav className="mb-8 md:mb-12 flex flex-wrap items-center gap-2 md:gap-4 text-xs md:text-xs font-bold text-muted-foreground uppercase tracking-widest">
-        <Link href="/dashboard" className="hover:text-primary transition-colors flex items-center gap-1">
-          <Home size={14} aria-hidden="true" /> <span className="hidden sm:inline">Beranda</span>
-        </Link>
-        <span className="text-muted-foreground/20">/</span>
-        <Link href="/library" className="hover:text-primary transition-colors flex items-center gap-1">
-          <Library size={14} aria-hidden="true" /> <span className="hidden sm:inline">Pustaka</span>
-        </Link>
-        <span className="text-muted-foreground/20">/</span>
-        <span className="text-primary flex items-center gap-1">
-          <Book size={14} aria-hidden="true" /> <span className="hidden sm:inline">Kosakata</span>
-        </span>
-      </nav>
-
       {/* Header Section */}
       <header className="mb-10 md:mb-16">
         <div className="flex flex-col md:flex-row md:items-end justify-between gap-6 md:gap-10 border-b border-border pb-6 md:pb-12">

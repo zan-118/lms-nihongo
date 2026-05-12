@@ -34,7 +34,7 @@ export function VocabCard({ item, idx, showRomaji }: VocabCardProps) {
         willChange: 'transform'
       }}
     >
-      <Link href={`/library/vocab/${item.slug || item.romaji || item._id}`} className="block">
+      <Link href={`/library/${item._type === "verb_dictionary" ? "verbs" : "vocab"}/${item._type === "verb_dictionary" ? item._id : (item.slug || item.romaji || item._id)}`} className="block">
         <Card className="p-5 md:p-6 bg-card border border-border rounded-2xl hover:border-primary/40 transition-all duration-300 group shadow-sm flex flex-col gap-4 relative overflow-hidden h-full">
           {/* Subtle Hover Indicator */}
           <div className="absolute top-0 right-0 w-12 h-12 bg-primary/5 rounded-bl-[2rem] flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity translate-x-4 translate-y-4 group-hover:translate-x-0 group-hover:translate-y-0 duration-500">

@@ -158,3 +158,38 @@ export const vocabDetailQuery = `*[(_type == "vocab" || _type == "verb_dictionar
   teForm,
   adverbial
 }`;
+
+export const verbOnlyDetailQuery = `*[_type == "verb_dictionary" && (slug.current == $id || _id == $id)][0] {
+  _id,
+  "slug": slug.current,
+  group,
+  jisho,
+  meaning,
+  masu,
+  furigana,
+  te,
+  nai,
+  ta,
+  teiru,
+  tai,
+  nakereba,
+  kanou,
+  shieki,
+  ukemi,
+  katei,
+  ikou,
+  teshimau,
+  meirei,
+  transitivity,
+  mnemonic,
+  "audioUrl": audio.asset->url,
+  relatedKanji[]->{ 
+    _id, 
+    character, 
+    meaning, 
+    onyomi, 
+    kunyomi,
+    "slug": character 
+  },
+  examples[] { "japanese": coalesce(jp, japanese), "indonesian": coalesce(id, indonesian), furigana, romaji }
+}`;

@@ -1,17 +1,6 @@
-import { sanityFetch } from "@/lib/sanity.fetch";
-import { kanjiListQuery } from "@/lib/queries";
+import { getPaginatedKanji } from "@/app/actions/library.actions";
 import KanjiListClient from "@/app/(main)/library/kanji/KanjiListClient";
 import type { Metadata } from "next";
-
-interface KanjiListItem {
-  _id: string;
-  character: string;
-  meaning: string;
-  onyomi: string[];
-  kunyomi: string[];
-  jlpt: string;
-  slug: string;
-}
 
 export const metadata: Metadata = {
   title: "Pustaka Kanji | NihongoRoute",
@@ -19,10 +8,7 @@ export const metadata: Metadata = {
 };
 
 export default async function KanjiListPage() {
-  const kanjis: KanjiListItem[] = await sanityFetch<KanjiListItem[]>({
-    query: kanjiListQuery,
-    tags: ["kanji"],
-  });
+  const initialData = await getPaginatedKanji(1, 24, "", "");
 
   return (
     <div className="w-full min-h-screen bg-background relative overflow-hidden pt-12 pb-24 px-4 md:px-8">
@@ -31,7 +17,7 @@ export default async function KanjiListPage() {
       <div className="neural-grid" />
 
       <div className="max-w-6xl mx-auto relative z-10">
-        <KanjiListClient kanjis={kanjis} />
+        <KanjiListClient initialData={initialData} />
       </div>
     </div>
   );
