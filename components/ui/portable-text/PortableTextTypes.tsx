@@ -73,7 +73,7 @@ export const ptTypes = {
                 <span className="text-[10px] font-black uppercase tracking-[0.4em] text-primary mb-6 block opacity-70">
                   Target Kosakata
                 </span>
-                <FuriganaDisplay text={value.jp} furigana={value.furigana} size="large" />
+                <FuriganaDisplay text={value.jp} furigana={value.furigana} size="large" interactive={true} />
               </div>
 
              <div className="flex flex-col items-end gap-4">
@@ -96,7 +96,7 @@ export const ptTypes = {
             <span className="text-[10px] font-black uppercase tracking-[0.4em] text-primary mb-4 block opacity-60">
               Contoh Kalimat
             </span>
-            <FuriganaDisplay text={value.jp} furigana={value.furigana} size="medium" />
+            <FuriganaDisplay text={value.jp} furigana={value.furigana} size="medium" interactive={true} />
           </div>
 
           <div className="flex items-start gap-4 py-4 px-6 rounded-2xl bg-background/[0.03] border-l-4 border-primary/40">

@@ -43,7 +43,8 @@ export function useFlashcardMaster({
   const router = useRouter();
 
   useEffect(() => {
-    setIsClient(true);
+    const frame = requestAnimationFrame(() => setIsClient(true));
+    return () => cancelAnimationFrame(frame);
   }, []);
 
   const isProcessing = useRef(false);

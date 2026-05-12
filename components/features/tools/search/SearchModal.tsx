@@ -42,9 +42,11 @@ export default function SearchModal({ isOpen, onClose }: { isOpen: boolean; onCl
     if (!isOpen) return;
     
     if (query.trim() === "") {
-      setResults(SEARCH_ITEMS.filter(item => item.category === "Aksi Cepat"));
-      setIsSearching(false);
-      return;
+      const frame = requestAnimationFrame(() => {
+        setResults(SEARCH_ITEMS.filter(item => item.category === "Aksi Cepat"));
+        setIsSearching(false);
+      });
+      return () => cancelAnimationFrame(frame);
     }
 
     const timer = setTimeout(async () => {
@@ -138,7 +140,8 @@ export default function SearchModal({ isOpen, onClose }: { isOpen: boolean; onCl
   }, [isOpen, onClose, results, activeIndex, handleSelect]);
 
   useEffect(() => {
-    setActiveIndex(0);
+    const frame = requestAnimationFrame(() => setActiveIndex(0));
+    return () => cancelAnimationFrame(frame);
   }, [query]);
 
   return (

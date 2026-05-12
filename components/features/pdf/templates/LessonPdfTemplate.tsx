@@ -303,7 +303,7 @@ const styles = StyleSheet.create({
 /**
  * Komponen LessonPdfTemplate: Menyusun struktur visual PDF untuk satu materi pelajaran.
  */
-// eslint-disable-next-line @typescript-eslint/no-explicit-any
+ 
 export const LessonPdfTemplate = ({ lessonData }: { lessonData: any }) => {
   const combinedVocabList = lessonData.vocabList || [];
 
@@ -311,14 +311,14 @@ export const LessonPdfTemplate = ({ lessonData }: { lessonData: any }) => {
   // HELPER FUNCTIONS
   // ======================
 
-  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+   
   const renderRichText = (blocks: any[]) => {
     if (!blocks || !Array.isArray(blocks)) return null;
-    // eslint-disable-next-line @typescript-eslint/no-explicit-any
+     
     return blocks.map((block: any, index: number) => {
       if (block._type === "block") {
         const textContent =
-          // eslint-disable-next-line @typescript-eslint/no-explicit-any
+           
           block.children?.map((c: any) => c.text).join("") || "";
         if (block.style === "h2")
           return (
@@ -366,7 +366,7 @@ export const LessonPdfTemplate = ({ lessonData }: { lessonData: any }) => {
         {/* HEADER SECTION */}
         <View style={styles.header} fixed>
           <View style={styles.logoSection}>
-            {/* eslint-disable-next-line jsx-a11y/alt-text */}
+            { }
             <Image src="/logo-branding.png" style={styles.logoImage} />
             <View style={styles.brandText}>
               <Text style={styles.brandName}>NIHONGO ROUTE</Text>
@@ -415,7 +415,7 @@ export const LessonPdfTemplate = ({ lessonData }: { lessonData: any }) => {
                   <Text style={styles.headerText}>Arti / Makna</Text>
                 </View>
               </View>
-              {/* eslint-disable-next-line @typescript-eslint/no-explicit-any */}
+              { }
               {combinedVocabList.map((item: any, idx: number) => (
                 <View
                   key={idx}
@@ -455,7 +455,7 @@ export const LessonPdfTemplate = ({ lessonData }: { lessonData: any }) => {
         {lessonData.quizzes && lessonData.quizzes.length > 0 && (
           <View>
             <Text style={styles.sectionTitle}>Latihan Pemahaman</Text>
-            {/* eslint-disable-next-line @typescript-eslint/no-explicit-any */}
+            { }
             {lessonData.quizzes.map((quiz: any, qIdx: number) => {
               const alphabet = ["A", "B", "C", "D"];
               return (
@@ -463,7 +463,7 @@ export const LessonPdfTemplate = ({ lessonData }: { lessonData: any }) => {
                   <Text style={styles.quizQuestion}>
                     {qIdx + 1}. {quiz.question}
                   </Text>
-                  {/* eslint-disable-next-line @typescript-eslint/no-explicit-any */}
+                  { }
                   {quiz.options?.map((opt: any, oIdx: number) => (
                     <Text
                       key={oIdx}

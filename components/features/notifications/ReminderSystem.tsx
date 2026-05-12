@@ -36,14 +36,14 @@ export default function ReminderSystem() {
 
         if ("serviceWorker" in navigator) {
           navigator.serviceWorker.ready.then((registration) => {
-            // eslint-disable-next-line @typescript-eslint/no-explicit-any
+             
             registration.showNotification(title, options as any);
           }).catch(() => {
-            // eslint-disable-next-line @typescript-eslint/no-explicit-any
+             
             new Notification(title, options as any);
           });
         } else {
-          // eslint-disable-next-line @typescript-eslint/no-explicit-any
+           
           new Notification(title, options as any);
         }
         

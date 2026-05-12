@@ -140,6 +140,33 @@ Setiap interaksi pengguna akan langsung memperbarui status lokal dan menandai ID
 
 ---
 
+## 9. Jalur Rendering Furigana & Interaksi
+
+NihongoRoute menerapkan sistem rendering teks Jepang yang canggih dengan kontrol global dan interaksi kata yang cerdas.
+
+### 9.1 Kontrol Mode Global (`useUIStore`)
+Status pembacaan dikendalikan secara terpusat melalui `readingState`:
+- **Kanji**: Hanya menampilkan Kanji asli.
+- **Furigana**: Menampilkan Kanji dengan anotasi Ruby di atasnya.
+- **Hiragana**: Mengonversi seluruh teks Jepang menjadi Hiragana.
+
+### 9.2 Komponen Rendering Cerdas
+- **`SmartJapanese`**: Komponen utama yang mendeteksi teks Jepang dan membungkusnya dengan logika interaksi.
+- **`FuriganaDisplay`**: Mengelola tampilan visual (Ruby) berdasarkan mode yang aktif. Menggunakan `0.55em` untuk proporsi yang optimal.
+- **`WordPopover`**: Muncul saat teks diklik, melakukan pencarian kosakata secara dinamis di Sanity/IDB untuk memberikan definisi, contoh, dan audio TTS.
+
+---
+
+## 10. Protokol Sinkronisasi 3-Tingkat (3-Tier Sync)
+
+Untuk menjamin performa luring (*offline-first*) yang tangguh, NihongoRoute mengikuti protokol sinkronisasi tiga lapis:
+
+1.  **Lapis UI (Zustand)**: Interaksi pengguna langsung memperbarui Zustand store (`useUserStore`, `useSRSStore`) untuk umpan balik instan (< 16ms).
+2.  **Lapis Orkestrasi (`useSyncProgress`)**: Hook ini memantau perubahan store, melakukan *debouncing*, dan menyiapkan paket data untuk dikirim ke awan.
+3.  **Lapis Persistensi Awan (`useCloudMutation`)**: Menggunakan React Query untuk mengeksekusi mutasi ke Supabase RPC. Jika sukses, ia akan menyiarkan `"SYNC_COMPLETE"` melalui `BroadcastChannel` untuk sinkronisasi antar-tab.
+
+---
+
 ## 7. Standar Teknis (Aturan Pengembangan)
 
 ### 🎨 Desain Sistem & Gaya Ketat

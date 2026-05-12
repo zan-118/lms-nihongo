@@ -15,7 +15,10 @@ export function useTTSReader(text: string) {
 
   useEffect(() => {
     const jpRegex = /[\u3040-\u309F\u30A0-\u30FF\u4E00-\u9FAF]/;
-    setHasJapanese(jpRegex.test(text));
+    const frame = requestAnimationFrame(() => {
+      setHasJapanese(jpRegex.test(text));
+    });
+    return () => cancelAnimationFrame(frame);
   }, [text]);
 
   useEffect(() => {
@@ -23,7 +26,9 @@ export function useTTSReader(text: string) {
 
     const loadVoices = () => {
       const availableVoices = window.speechSynthesis.getVoices();
-      setVoices(availableVoices);
+      requestAnimationFrame(() => {
+        setVoices(availableVoices);
+      });
     };
 
     loadVoices();

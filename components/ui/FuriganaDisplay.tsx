@@ -26,8 +26,8 @@ export default function FuriganaDisplay({
   mode,
   interactive = false
 }: FuriganaDisplayProps) {
-  const globalShowFurigana = useUIStore((state) => state.settings.showFurigana);
-  const currentMode = mode || (globalShowFurigana ? "furigana" : "kanji");
+  const globalMode = useUIStore((state) => state.readingState.mode);
+  const currentMode = mode || globalMode || "kanji";
 
   const sizeConfig = {
     small: { furi: "text-[9px]", kanji: "text-sm" },

@@ -12,7 +12,10 @@ export function useHasMounted() {
   const [hasMounted, setHasMounted] = useState(false);
 
   useEffect(() => {
-    setHasMounted(true);
+    const frame = requestAnimationFrame(() => {
+      setHasMounted(true);
+    });
+    return () => cancelAnimationFrame(frame);
   }, []);
 
   return hasMounted;

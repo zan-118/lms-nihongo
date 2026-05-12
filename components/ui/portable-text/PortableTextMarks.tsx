@@ -5,13 +5,12 @@ import FuriganaDisplay from "@/components/ui/FuriganaDisplay";
 import { useReading } from "@/components/features/reading/components/ReadingContext";
 
 const FuriganaWrapper = ({ children, reading }: { children: React.ReactNode; reading: string }) => {
-  const { mode } = useReading();
   return (
     <FuriganaDisplay 
       text={String(children)} 
       furigana={reading} 
       size="medium" 
-      mode={mode}
+      interactive={true}
       className="inline-flex !gap-x-0 !gap-y-0"
     />
   );

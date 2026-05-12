@@ -31,7 +31,7 @@ const PDFDownloadLink = dynamic(
 export type TemplateType = "lesson" | "vocab" | "certificate" | "cheatsheet";
 
 interface PdfGeneratorProps {
-  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+   
   data: any;
   type: TemplateType;
   title?: string;
@@ -48,7 +48,7 @@ export default function PdfGenerator({
 }: PdfGeneratorProps) {
   const { isClient, getFileName } = usePdfGenerator({ type, title, level });
 
-  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+   
   const getDocument = (): any => {
     if (type === "lesson") return <LessonPdfTemplate lessonData={data} />;
     if (type === "vocab")

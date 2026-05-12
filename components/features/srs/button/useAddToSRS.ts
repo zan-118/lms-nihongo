@@ -16,15 +16,18 @@ export function useAddToSRS(wordId: string) {
   const srs = useSRSStore((state) => state.srs);
   const notifications = useUIStore((state) => state.notifications);
   const settings = useUIStore((state) => state.settings);
-    const progress = { name, xp, level, streak, todayReviewCount, lastStudyDate, studyDays, inventory, srs, notifications, settings };
+  const progress = { name, xp, level, streak, todayReviewCount, lastStudyDate, studyDays, inventory, srs, notifications, settings };
   const [isAdded, setIsAdded] = useState(false);
   const [isLoaded, setIsLoaded] = useState(false);
 
   useEffect(() => {
-    setIsLoaded(true);
-    if (progress.srs && progress.srs[wordId]) {
-      setIsAdded(true);
-    }
+    const frame = requestAnimationFrame(() => {
+      setIsLoaded(true);
+      if (progress.srs && progress.srs[wordId]) {
+        setIsAdded(true);
+      }
+    });
+    return () => cancelAnimationFrame(frame);
   }, [progress.srs, wordId]);
 
   const handleAdd = useCallback(() => {

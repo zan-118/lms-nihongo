@@ -11,7 +11,8 @@ export function usePdfGenerator({ type, title, level }: UsePdfGeneratorProps) {
   const [isClient, setIsClient] = useState(false);
 
   useEffect(() => {
-    setIsClient(true);
+    const frame = requestAnimationFrame(() => setIsClient(true));
+    return () => cancelAnimationFrame(frame);
   }, []);
 
   const getFileName = () => {

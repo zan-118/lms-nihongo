@@ -29,7 +29,7 @@ export function VerbFlashcardView({
     let targetFurigana = verb.furigana || verb.jisho;
 
     if (drillMode !== "meaning") {
-      // eslint-disable-next-line @typescript-eslint/no-explicit-any
+       
       const targetValue = (verb as any)[drillMode];
       if (targetValue) {
         displayWord = `${verb.jisho} (${drillMode.toUpperCase()})`;
@@ -45,9 +45,9 @@ export function VerbFlashcardView({
       furigana: targetFurigana,
       romaji: wanakana.toRomaji(targetFurigana),
       level: { code: "library" },
-      // eslint-disable-next-line @typescript-eslint/no-explicit-any
+       
       mnemonic: (verb as any).mnemonic,
-      // eslint-disable-next-line @typescript-eslint/no-explicit-any
+       
       relatedKanji: (verb as any).relatedKanji,
     };
   });

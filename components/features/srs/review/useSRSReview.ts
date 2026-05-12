@@ -32,7 +32,8 @@ export function useSRSReview(cards: FlashcardType[]) {
     if (cards && cards.length > 0) {
       setShuffledCards(shuffleArray(cards));
     }
-    setIsClient(true);
+    const frame = requestAnimationFrame(() => setIsClient(true));
+    return () => cancelAnimationFrame(frame);
   }, [cards]);
 
   const currentCard = shuffledCards[currentIndex];

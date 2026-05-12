@@ -26,7 +26,9 @@ export function AutoSlugInput(props: ObjectInputProps) {
       const generatedSlug = generateSlug(titleValue);
       // Slug di Sanity adalah object dengan property 'current'
       onChange(set({ _type: 'slug', current: generatedSlug }));
-      setLastGeneratedFrom(titleValue);
+      queueMicrotask(() => {
+        setLastGeneratedFrom(titleValue);
+      });
     }
   }, [titleValue, lastGeneratedFrom, onChange]);
 

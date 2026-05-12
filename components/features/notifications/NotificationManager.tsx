@@ -51,7 +51,7 @@ export default function NotificationManager() {
               icon: "/logo-branding.png",
               badge: "/logo-branding.png",
               vibrate: [100, 50, 100],
-              // eslint-disable-next-line @typescript-eslint/no-explicit-any
+               
           } as any);
           }).catch(() => {
             new Notification("NihongoRoute", {

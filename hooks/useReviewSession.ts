@@ -76,7 +76,11 @@ export function useReviewSession(loading: boolean) {
 
   useEffect(() => {
     if (initialMode && (initialMode === "srs" || initialMode === "quick") && !mode && !loading) {
-      startSession(initialMode);
+      // Defer execution to avoid synchronous setState in effect
+      const trigger = async () => {
+        await startSession(initialMode);
+      };
+      void trigger();
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [initialMode, loading]);

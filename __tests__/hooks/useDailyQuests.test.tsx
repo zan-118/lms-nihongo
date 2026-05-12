@@ -50,7 +50,7 @@ describe("useDailyQuests", () => {
 
   it("getCurrentProgress mengembalikan 0 untuk tipe yang tidak dikenal", () => {
     const { result } = renderHook(() => useDailyQuests());
-    // eslint-disable-next-line @typescript-eslint/no-explicit-any
+     
     expect(result.current.getCurrentProgress("unknown" as any)).toBe(0);
   });
 

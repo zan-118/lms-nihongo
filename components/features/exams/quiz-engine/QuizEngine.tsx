@@ -11,7 +11,8 @@ export default function QuizEngine({ questions, lessonId }: QuizProps) {
   const engine = useQuizEngine(questions, lessonId);
 
   useEffect(() => {
-    setIsClient(true);
+    const frame = requestAnimationFrame(() => setIsClient(true));
+    return () => cancelAnimationFrame(frame);
   }, []);
 
   if (!isClient || !questions || questions.length === 0) return null;

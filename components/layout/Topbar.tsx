@@ -2,7 +2,7 @@
 
 import { useState, useEffect } from "react";
 
-import { Search, Bell, Menu, Cloud, RefreshCw, CloudOff, CloudUpload, ChevronLeft } from "lucide-react";
+import { Search, Bell, Menu, Cloud, RefreshCw, CloudOff, CloudUpload, ChevronLeft, BookOpen, Eye, EyeOff } from "lucide-react";
 import { motion, AnimatePresence } from "framer-motion";
 import { useRouter } from "next/navigation";
 import { useUIStore } from "@/store/useUIStore";
@@ -38,6 +38,8 @@ export default function Topbar({ onMenuClick }: { onMenuClick: () => void }) {
     return () => document.removeEventListener("keydown", down);
   }, []);
   
+  const readingMode = useUIStore((s) => s.readingState.mode);
+
   return (
     <>
     <header className="sticky top-0 z-40 w-full bg-background/60 backdrop-blur-xl border-b border-border/50 px-4 md:px-10 py-4 flex items-center justify-between transition-all">
@@ -150,7 +152,31 @@ export default function Topbar({ onMenuClick }: { onMenuClick: () => void }) {
           <Search size={18} />
         </button>
 
-        <div className="flex items-center gap-1 sm:gap-1.5 md:gap-2 sm:border-l sm:border-border/50 sm:pl-2 md:pl-5">
+        <div className="flex items-center gap-1 sm:gap-2 md:gap-4 sm:border-l sm:border-border/50 sm:pl-2 md:pl-5">
+          {/* Japanese Display Mode Switcher */}
+          <div className="hidden sm:flex items-center gap-1 p-1 rounded-xl bg-muted/30 border border-border/50">
+            {[
+              { id: "kanji", icon: BookOpen, label: "Kanji" },
+              { id: "furigana", icon: Eye, label: "Furi" },
+              { id: "hiragana", icon: EyeOff, label: "Hira" },
+            ].map((m) => (
+              <motion.button
+                key={m.id}
+                whileTap={{ scale: 0.9 }}
+                onClick={() => useUIStore.getState().setReadingState({ mode: m.id as any })}
+                className={`w-7 h-7 md:w-8 md:h-8 flex items-center justify-center rounded-lg transition-all ${
+                  readingMode === m.id
+                    ? "bg-primary text-primary-foreground shadow-lg shadow-primary/20"
+                    : "text-muted-foreground hover:bg-primary/10 hover:text-primary"
+                }`}
+                aria-label={`Mode ${m.label}`}
+                title={`Tampilkan ${m.label}`}
+              >
+                <m.icon size={14} />
+              </motion.button>
+            ))}
+          </div>
+
           <div className="hidden sm:flex">
             <ThemeToggle />
           </div>
