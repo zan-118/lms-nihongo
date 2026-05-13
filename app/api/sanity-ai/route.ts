@@ -1,5 +1,16 @@
 import { NextResponse } from "next/server";
 
+// CORS Headers helper
+const corsHeaders = {
+  "Access-Control-Allow-Origin": "*", // In production, consider limiting to specific domains
+  "Access-Control-Allow-Methods": "POST, OPTIONS",
+  "Access-Control-Allow-Headers": "Content-Type, Authorization",
+};
+
+export async function OPTIONS() {
+  return NextResponse.json({}, { headers: corsHeaders });
+}
+
 export async function POST(req: Request) {
   try {
     const { word, type } = await req.json();
@@ -86,10 +97,10 @@ export async function POST(req: Request) {
       }))
     };
 
-    return NextResponse.json(validatedData);
+    return NextResponse.json(validatedData, { headers: corsHeaders });
   } catch (error: unknown) {
     const errorMessage = error instanceof Error ? error.message : "Internal Server Error";
     console.error("AI Error:", errorMessage);
-    return NextResponse.json({ error: errorMessage }, { status: 500 });
+    return NextResponse.json({ error: errorMessage }, { status: 500, headers: corsHeaders });
   }
 }

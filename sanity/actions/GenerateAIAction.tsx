@@ -20,7 +20,9 @@ export const GenerateAIAction = (props: DocumentActionProps) => {
         return;
       }
 
-      const response = await fetch("/api/sanity-ai", {
+      const apiEndpoint = process.env.SANITY_STUDIO_AI_API_URL || "/api/sanity-ai";
+      
+      const response = await fetch(apiEndpoint, {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({ word, type: props.type }),
