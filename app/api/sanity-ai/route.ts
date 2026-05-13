@@ -16,12 +16,38 @@ export async function POST(req: Request) {
     const { word, type } = await req.json();
 
     if (!word) {
-      return NextResponse.json({ error: "Word is required" }, { status: 400 });
+      return NextResponse.json({ error: "Word is required" }, { status: 400, headers: corsHeaders });
     }
 
-    const baseUrl = process.env.AI_BASE_URL || "http://localhost:20128/v1";
-    const apiKey = process.env.AI_API_KEY || "sk-9router";
-    const model = process.env.AI_MODEL || "cc/gemini-2-flash";
+    const AI_BASE_URL = process.env.AI_BASE_URL || "http://localhost:20128/v1";
+    const AI_API_KEY = process.env.AI_API_KEY || "sk-9router";
+    const AI_MODEL = process.env.AI_MODEL || "cc/gemini-2-flash";
+    const GEMINI_API_KEY = process.env.GEMINI_API_KEY;
+    
+    const isProduction = process.env.NODE_ENV === "production";
+    const isLocalhost = AI_BASE_URL.includes("localhost") || AI_BASE_URL.includes("127.0.0.1");
+
+    // Determine target provider
+    let targetUrl = `${AI_BASE_URL}/chat/completions`;
+    let targetKey = AI_API_KEY;
+    let targetModel = AI_MODEL;
+    let isFallback = false;
+
+    // If we are in production and pointed to localhost, we MUST use Gemini fallback if available
+    if (isProduction && isLocalhost) {
+      if (GEMINI_API_KEY) {
+        console.log("Production detected with localhost proxy: Forcing Gemini fallback.");
+        targetUrl = "https://generativelanguage.googleapis.com/v1beta/openai/chat/completions";
+        targetKey = GEMINI_API_KEY;
+        targetModel = "gemini-1.5-flash";
+        isFallback = true;
+      } else {
+        return NextResponse.json(
+          { error: "Configuration Error: AI_BASE_URL points to localhost in production, but GEMINI_API_KEY is missing." },
+          { status: 500, headers: corsHeaders }
+        );
+      }
+    }
 
     const prompt = `
       Anda adalah asisten pakar bahasa Jepang untuk platform NihongoRoute.
@@ -47,14 +73,14 @@ export async function POST(req: Request) {
 
     let response;
     try {
-      response = await fetch(`${baseUrl}/chat/completions`, {
+      response = await fetch(targetUrl, {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
-          Authorization: `Bearer ${apiKey}`,
+          Authorization: `Bearer ${targetKey}`,
         },
         body: JSON.stringify({
-          model: model,
+          model: targetModel,
           messages: [
             { role: "system", content: "You are a Japanese language expert." },
             { role: "user", content: prompt },
@@ -62,15 +88,15 @@ export async function POST(req: Request) {
           response_format: { type: "json_object" },
         }),
       });
-    } catch (err: any) {
-      // PROACTIVE FALLBACK: If localhost fails (common in production), use GEMINI_API_KEY directly
-      if (baseUrl.includes("localhost") && process.env.GEMINI_API_KEY) {
-        console.warn("9router (localhost) unreachable. Falling back to direct Gemini API...");
+    } catch (fetchError: any) {
+      // If primary fetch failed and we haven't tried fallback yet, try it now
+      if (!isFallback && GEMINI_API_KEY) {
+        console.warn("Primary AI provider failed, trying Gemini fallback...", fetchError.message);
         response = await fetch("https://generativelanguage.googleapis.com/v1beta/openai/chat/completions", {
           method: "POST",
           headers: {
             "Content-Type": "application/json",
-            Authorization: `Bearer ${process.env.GEMINI_API_KEY}`,
+            Authorization: `Bearer ${GEMINI_API_KEY}`,
           },
           body: JSON.stringify({
             model: "gemini-1.5-flash",
@@ -82,24 +108,35 @@ export async function POST(req: Request) {
           }),
         });
       } else {
-        throw err;
+        throw fetchError;
       }
     }
 
     if (!response.ok) {
       const errorText = await response.text();
-      let errorDetail = "AI request failed";
+      let errorMsg = "AI provider returned an error";
+      
       try {
         const errorJson = JSON.parse(errorText);
-        errorDetail = errorJson.error?.message || errorDetail;
+        // Handle standard OpenAI-compatible error format or Google-specific format
+        errorMsg = errorJson.error?.message || errorJson.message || errorText || errorMsg;
       } catch (e) {
-        errorDetail = errorText || errorDetail;
+        errorMsg = errorText || errorMsg;
       }
-      throw new Error(`AI Provider Error: ${errorDetail}`);
+      
+      console.error(`AI Provider Error (${response.status}):`, errorMsg);
+      return NextResponse.json(
+        { error: `AI Provider Error: ${errorMsg}` },
+        { status: response.status, headers: corsHeaders }
+      );
     }
 
     const result = await response.json();
-    const content = result.choices[0].message.content;
+    const content = result.choices?.[0]?.message?.content;
+    
+    if (!content) {
+      throw new Error("AI returned an empty or invalid response");
+    }
     
     // Parse the JSON content from the assistant
     let data;
@@ -113,7 +150,6 @@ export async function POST(req: Request) {
     }
 
     // STRICT VALIDATION
-    // Ensure examples is always an array and filter out any null/undefined/invalid items
     const rawExamples = Array.isArray(data.examples) ? data.examples : [];
     const cleanExamples = rawExamples.filter((ex: any) => 
       ex && typeof ex === 'object' && ex.jp && ex.id
@@ -132,7 +168,7 @@ export async function POST(req: Request) {
     return NextResponse.json(validatedData, { headers: corsHeaders });
   } catch (error: unknown) {
     const errorMessage = error instanceof Error ? error.message : "Internal Server Error";
-    console.error("AI Error:", errorMessage);
+    console.error("Sanity AI Route Error:", errorMessage);
     return NextResponse.json({ error: errorMessage }, { status: 500, headers: corsHeaders });
   }
 }
