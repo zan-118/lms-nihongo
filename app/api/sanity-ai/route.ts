@@ -45,25 +45,57 @@ export async function POST(req: Request) {
       }
     `;
 
-    const response = await fetch(`${baseUrl}/chat/completions`, {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-        Authorization: `Bearer ${apiKey}`,
-      },
-      body: JSON.stringify({
-        model: model,
-        messages: [
-          { role: "system", content: "You are a Japanese language expert." },
-          { role: "user", content: prompt },
-        ],
-        response_format: { type: "json_object" },
-      }),
-    });
+    let response;
+    try {
+      response = await fetch(`${baseUrl}/chat/completions`, {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: `Bearer ${apiKey}`,
+        },
+        body: JSON.stringify({
+          model: model,
+          messages: [
+            { role: "system", content: "You are a Japanese language expert." },
+            { role: "user", content: prompt },
+          ],
+          response_format: { type: "json_object" },
+        }),
+      });
+    } catch (err: any) {
+      // PROACTIVE FALLBACK: If localhost fails (common in production), use GEMINI_API_KEY directly
+      if (baseUrl.includes("localhost") && process.env.GEMINI_API_KEY) {
+        console.warn("9router (localhost) unreachable. Falling back to direct Gemini API...");
+        response = await fetch("https://generativelanguage.googleapis.com/v1beta/openai/chat/completions", {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+            Authorization: `Bearer ${process.env.GEMINI_API_KEY}`,
+          },
+          body: JSON.stringify({
+            model: "gemini-1.5-flash",
+            messages: [
+              { role: "system", content: "You are a Japanese language expert." },
+              { role: "user", content: prompt },
+            ],
+            response_format: { type: "json_object" },
+          }),
+        });
+      } else {
+        throw err;
+      }
+    }
 
     if (!response.ok) {
-      const errorData = await response.json();
-      throw new Error(errorData.error?.message || "9router request failed");
+      const errorText = await response.text();
+      let errorDetail = "AI request failed";
+      try {
+        const errorJson = JSON.parse(errorText);
+        errorDetail = errorJson.error?.message || errorDetail;
+      } catch (e) {
+        errorDetail = errorText || errorDetail;
+      }
+      throw new Error(`AI Provider Error: ${errorDetail}`);
     }
 
     const result = await response.json();
