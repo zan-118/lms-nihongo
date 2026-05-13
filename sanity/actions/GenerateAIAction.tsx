@@ -27,8 +27,13 @@ export const GenerateAIAction = (props: DocumentActionProps) => {
         "/api/sanity-ai";
 
       // Auto-fallback for production if no env var is set and we are on Sanity's hosted domain
-      if (apiEndpoint === "/api/sanity-ai" && typeof window !== "undefined" && window.location.hostname.includes("sanity.studio")) {
+      if (apiEndpoint === "/api/sanity-ai" && typeof window !== "undefined" && (window.location.hostname.includes("sanity.studio") || window.location.hostname.includes("sanity.io"))) {
         apiEndpoint = "https://www.nihongoroute.my.id/api/sanity-ai";
+      }
+
+      // Force HTTPS for production domain to prevent Mixed Content errors
+      if (apiEndpoint.includes("nihongoroute.my.id") && !apiEndpoint.includes("localhost")) {
+        apiEndpoint = apiEndpoint.replace(/^http:/, "https:");
       }
       
       const response = await fetch(apiEndpoint, {
