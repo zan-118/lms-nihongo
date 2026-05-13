@@ -1,5 +1,4 @@
 import { NextResponse } from "next/server";
-import { GoogleGenerativeAI } from "@google/generative-ai";
 
 // CORS Headers helper
 const corsHeaders = {
@@ -10,6 +9,36 @@ const corsHeaders = {
 
 export async function OPTIONS() {
   return NextResponse.json({}, { headers: corsHeaders });
+}
+
+async function callGeminiDirect(prompt: string, apiKey: string) {
+  const url = `https://generativelanguage.googleapis.com/v1beta/models/gemini-1.5-flash:generateContent?key=${apiKey}`;
+  
+  const response = await fetch(url, {
+    method: "POST",
+    headers: { "Content-Type": "application/json" },
+    body: JSON.stringify({
+      contents: [{ 
+        role: "user",
+        parts: [{ text: prompt }] 
+      }],
+      systemInstruction: {
+        parts: [{ text: "You are a Japanese language expert. Respond only in pure JSON." }]
+      },
+      generationConfig: {
+        responseMimeType: "application/json",
+        temperature: 0.7,
+      }
+    }),
+  });
+
+  if (!response.ok) {
+    const errorBody = await response.text();
+    throw new Error(`Gemini API Error (${response.status}): ${errorBody}`);
+  }
+
+  const result = await response.json();
+  return result.candidates?.[0]?.content?.parts?.[0]?.text || "";
 }
 
 export async function POST(req: Request) {
@@ -29,22 +58,22 @@ export async function POST(req: Request) {
     const isLocalhost = AI_BASE_URL.includes("localhost") || AI_BASE_URL.includes("127.0.0.1");
 
     const prompt = `
-      Anda adalah asisten pakar bahasa Jepang untuk platform NihongoRoute.
       Hasilkan konten untuk kata: "${word}" (Tipe: ${type}).
-      
-      Berikan respon dalam format JSON murni tanpa markdown:
+      Berikan respon dalam format JSON murni:
       {
-        "mnemonic": "Mnemonic pendek dan kreatif dalam Bahasa Indonesia untuk mengingat kata ini.",
+        "mnemonic": "Mnemonic pendek dan kreatif dalam Bahasa Indonesia.",
         "examples": [
           {
-            "jp": "Contoh kalimat 1 dalam Bahasa Jepang (Kanji + Furigana jika perlu)",
+            "jp": "Contoh kalimat 1 (Kanji/Kana)",
+            "furigana": "Cara baca kalimat 1 menggunakan format furigana standar [kanji](furigana) atau kana saja.",
             "romaji": "Romaji kalimat 1",
-            "id": "Terjemahan kalimat 1 dalam Bahasa Indonesia"
+            "id": "Terjemahan Bahasa Indonesia"
           },
           {
-            "jp": "Contoh kalimat 2 dalam Bahasa Jepang",
+            "jp": "Contoh kalimat 2",
+            "furigana": "Cara baca kalimat 2",
             "romaji": "Romaji kalimat 2",
-            "id": "Terjemahan kalimat 2 dalam Bahasa Indonesia"
+            "id": "Terjemahan Bahasa Indonesia"
           }
         ]
       }
@@ -52,24 +81,15 @@ export async function POST(req: Request) {
 
     let content = "";
 
-    // CASE 1: Production Fallback to Native Gemini SDK
+    // CASE 1: Production Bypass (Avoid calling localhost proxy from Vercel)
     if (isProduction && isLocalhost && GEMINI_API_KEY) {
-      console.log("Production detected with localhost proxy: Using Native Google Gemini SDK.");
-      const genAI = new GoogleGenerativeAI(GEMINI_API_KEY);
-      const model = genAI.getGenerativeModel({ 
-        model: "gemini-1.5-flash",
-        systemInstruction: "You are a Japanese language expert.",
-        generationConfig: { responseMimeType: "application/json" }
-      });
-      
-      const result = await model.generateContent(prompt);
-      content = result.response.text();
+      console.log("Production bypass: Calling Gemini REST API directly.");
+      content = await callGeminiDirect(prompt, GEMINI_API_KEY);
     } 
-    // CASE 2: Use Configured Provider (9router or local proxy)
+    // CASE 2: Normal Flow (9router or local proxy)
     else {
-      let response;
       try {
-        response = await fetch(`${AI_BASE_URL}/chat/completions`, {
+        const response = await fetch(`${AI_BASE_URL}/chat/completions`, {
           method: "POST",
           headers: {
             "Content-Type": "application/json",
@@ -78,7 +98,7 @@ export async function POST(req: Request) {
           body: JSON.stringify({
             model: AI_MODEL,
             messages: [
-              { role: "system", content: "You are a Japanese language expert." },
+              { role: "system", content: "You are a Japanese language expert. Provide detailed furigana and romaji." },
               { role: "user", content: prompt },
             ],
             response_format: { type: "json_object" },
@@ -87,48 +107,25 @@ export async function POST(req: Request) {
 
         if (!response.ok) {
           const errorText = await response.text();
-          let errorMsg = "AI provider returned an error";
-          
-          try {
-            const errorJson = JSON.parse(errorText);
-            const actualError = Array.isArray(errorJson) ? errorJson[0] : errorJson;
-            errorMsg = actualError.error?.message || actualError.message || errorText || errorMsg;
-          } catch (e) {
-            errorMsg = errorText || errorMsg;
-          }
-          
-          // If primary fails and we have a Gemini key, try fallback to SDK
+          // Fallback if primary fails
           if (GEMINI_API_KEY) {
-            console.warn(`Primary provider failed (${response.status}): ${errorMsg}. Falling back to SDK...`);
-            const genAI = new GoogleGenerativeAI(GEMINI_API_KEY);
-            const model = genAI.getGenerativeModel({ 
-              model: "gemini-1.5-flash",
-              systemInstruction: "You are a Japanese language expert.",
-              generationConfig: { responseMimeType: "application/json" }
-            });
-            const result = await model.generateContent(prompt);
-            content = result.response.text();
+            console.warn(`Primary provider failed (${response.status}). Trying Gemini fallback...`);
+            content = await callGeminiDirect(prompt, GEMINI_API_KEY);
           } else {
             return NextResponse.json(
-              { error: `AI Provider Error: ${errorMsg}` },
+              { error: `AI Provider Error: ${errorText}` },
               { status: response.status, headers: corsHeaders }
             );
           }
         } else {
           const result = await response.json();
-          content = result.choices?.[0]?.message?.content;
+          content = result.choices?.[0]?.message?.content || "";
         }
       } catch (fetchError: any) {
+        // Fallback on network error
         if (GEMINI_API_KEY) {
-          console.warn("Network error to primary provider, falling back to SDK...", fetchError.message);
-          const genAI = new GoogleGenerativeAI(GEMINI_API_KEY);
-          const model = genAI.getGenerativeModel({ 
-            model: "gemini-1.5-flash",
-            systemInstruction: "You are a Japanese language expert.",
-            generationConfig: { responseMimeType: "application/json" }
-          });
-          const result = await model.generateContent(prompt);
-          content = result.response.text();
+          console.warn("Network error to primary provider, falling back to Gemini REST API...");
+          content = await callGeminiDirect(prompt, GEMINI_API_KEY);
         } else {
           throw fetchError;
         }
@@ -136,36 +133,36 @@ export async function POST(req: Request) {
     }
 
     if (!content) {
-      throw new Error("AI returned an empty or invalid response");
+      throw new Error("AI returned an empty response");
     }
     
-    // Parse the JSON content
+    // Clean and Parse JSON
     let data;
     try {
       const cleanJson = content.replace(/```json|```/g, "").trim();
       data = JSON.parse(cleanJson);
     } catch (e) {
-      console.error("JSON Parse Error:", content);
+      console.error("JSON Parse Error. Content received:", content);
       throw new Error("AI returned invalid JSON format");
     }
 
-    // STRICT VALIDATION
+    // STRICT VALIDATION & MAPPING
     const rawExamples = Array.isArray(data.examples) ? data.examples : [];
-    const cleanExamples = rawExamples.filter((ex: any) => 
-      ex && typeof ex === 'object' && (ex.jp || ex.japanese) && (ex.id || ex.indonesian || ex.en)
-    );
-
-    const validatedData = {
-      mnemonic: typeof data.mnemonic === 'string' ? data.mnemonic : "",
-      examples: cleanExamples.map((ex: any) => ({
-        jp: String(ex.jp || ex.japanese),
-        id: String(ex.id || ex.indonesian || ex.en),
+    const cleanExamples = rawExamples
+      .filter((ex: any) => ex && typeof ex === 'object')
+      .map((ex: any) => ({
+        jp: String(ex.jp || ex.japanese || ""),
+        id: String(ex.id || ex.indonesian || ex.en || ""),
+        furigana: ex.furigana ? String(ex.furigana) : undefined,
         romaji: ex.romaji ? String(ex.romaji) : undefined,
-        furigana: ex.furigana ? String(ex.furigana) : undefined
       }))
-    };
+      .filter(ex => ex.jp && ex.id);
 
-    return NextResponse.json(validatedData, { headers: corsHeaders });
+    return NextResponse.json({
+      mnemonic: String(data.mnemonic || ""),
+      examples: cleanExamples
+    }, { headers: corsHeaders });
+
   } catch (error: unknown) {
     const errorMessage = error instanceof Error ? error.message : "Internal Server Error";
     console.error("Sanity AI Route Error:", errorMessage);
