@@ -59,9 +59,34 @@ export async function POST(req: Request) {
     const content = result.choices[0].message.content;
     
     // Parse the JSON content from the assistant
-    const data = JSON.parse(content);
+    let data;
+    try {
+      // Clean potential markdown formatting if the model ignored response_format
+      const cleanJson = content.replace(/```json|```/g, "").trim();
+      data = JSON.parse(cleanJson);
+    } catch (e) {
+      console.error("JSON Parse Error:", content);
+      throw new Error("AI returned invalid JSON format");
+    }
 
-    return NextResponse.json(data);
+    // STRICT VALIDATION
+    // Ensure examples is always an array and filter out any null/undefined/invalid items
+    const rawExamples = Array.isArray(data.examples) ? data.examples : [];
+    const cleanExamples = rawExamples.filter((ex: any) => 
+      ex && typeof ex === 'object' && ex.jp && ex.id
+    );
+
+    const validatedData = {
+      mnemonic: typeof data.mnemonic === 'string' ? data.mnemonic : "",
+      examples: cleanExamples.map((ex: any) => ({
+        jp: String(ex.jp),
+        id: String(ex.id),
+        romaji: ex.romaji ? String(ex.romaji) : undefined,
+        furigana: ex.furigana ? String(ex.furigana) : undefined
+      }))
+    };
+
+    return NextResponse.json(validatedData);
   } catch (error: unknown) {
     const errorMessage = error instanceof Error ? error.message : "Internal Server Error";
     console.error("AI Error:", errorMessage);

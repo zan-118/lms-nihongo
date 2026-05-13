@@ -29,17 +29,22 @@ export const GenerateAIAction = (props: DocumentActionProps) => {
       const data = await response.json();
 
       if (data.error) throw new Error(data.error);
+      if (!data.mnemonic && (!data.examples || data.examples.length === 0)) {
+        throw new Error("AI tidak mengembalikan konten yang valid.");
+      }
 
       // Patch data ke dokumen
      patch.execute([
-        { set: { mnemonic: data.mnemonic } },
+        { set: { mnemonic: data.mnemonic || "" } },
         { 
           set: { 
-            examples: data.examples.map((ex: { jp: string; id: string; furigana?: string; romaji?: string }) => ({
-              ...ex,
-              _type: "exampleSentence", // Harus sesuai dengan nama skema objekmu
-              _key: Math.random().toString(36).substring(2, 10) // Buat random ID
-            })) 
+            examples: (data.examples || [])
+              .filter((ex: any) => ex && typeof ex === 'object' && ex.jp)
+              .map((ex: { jp: string; id: string; furigana?: string; romaji?: string }) => ({
+                ...ex,
+                _type: "exampleSentence", // Harus sesuai dengan nama skema objekmu
+                _key: Math.random().toString(36).substring(2, 10) // Buat random ID
+              })) 
           } 
         },
       ]);
