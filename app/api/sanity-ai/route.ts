@@ -1,4 +1,3 @@
-import { GoogleGenerativeAI } from "@google/generative-ai";
 import { NextResponse } from "next/server";
 
 export async function POST(req: Request) {
@@ -9,13 +8,9 @@ export async function POST(req: Request) {
       return NextResponse.json({ error: "Word is required" }, { status: 400 });
     }
 
-    const apiKey = process.env.GEMINI_API_KEY;
-    if (!apiKey) {
-      return NextResponse.json({ error: "Gemini API Key not configured" }, { status: 500 });
-    }
-
-    const genAI = new GoogleGenerativeAI(apiKey);
-    const model = genAI.getGenerativeModel({ model: "gemini-1.5-flash" });
+    const baseUrl = process.env.AI_BASE_URL || "http://localhost:20128/v1";
+    const apiKey = process.env.AI_API_KEY || "sk-9router";
+    const model = process.env.AI_MODEL || "cc/gemini-2-flash";
 
     const prompt = `
       Anda adalah asisten pakar bahasa Jepang untuk platform NihongoRoute.
@@ -39,17 +34,37 @@ export async function POST(req: Request) {
       }
     `;
 
-    const result = await model.generateContent(prompt);
-    const responseText = result.response.text();
+    const response = await fetch(`${baseUrl}/chat/completions`, {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+        Authorization: `Bearer ${apiKey}`,
+      },
+      body: JSON.stringify({
+        model: model,
+        messages: [
+          { role: "system", content: "You are a Japanese language expert." },
+          { role: "user", content: prompt },
+        ],
+        response_format: { type: "json_object" },
+      }),
+    });
+
+    if (!response.ok) {
+      const errorData = await response.json();
+      throw new Error(errorData.error?.message || "9router request failed");
+    }
+
+    const result = await response.json();
+    const content = result.choices[0].message.content;
     
-    // Bersihkan output jika Gemini membungkusnya dalam ```json
-    const cleanJson = responseText.replace(/```json|```/g, "").trim();
-    const data = JSON.parse(cleanJson);
+    // Parse the JSON content from the assistant
+    const data = JSON.parse(content);
 
     return NextResponse.json(data);
   } catch (error: unknown) {
     const errorMessage = error instanceof Error ? error.message : "Internal Server Error";
-    console.error("Gemini AI Error:", errorMessage);
+    console.error("AI Error:", errorMessage);
     return NextResponse.json({ error: errorMessage }, { status: 500 });
   }
 }

@@ -2,8 +2,6 @@ import { defineConfig } from "sanity";
 import { structureTool } from "sanity/structure";
 import { visionTool } from "@sanity/vision";
 import { codeInput } from "@sanity/code-input";
-import { media } from "sanity-plugin-media";
-import { iconPicker } from "sanity-plugin-icon-picker";
 import { schema } from "./sanity/schemaTypes";
 import { structure } from "./sanity/structure";
 import { GenerateAIAction } from "./sanity/actions/GenerateAIAction";
@@ -22,8 +20,7 @@ export default defineConfig({
     }),
     visionTool(),
     codeInput(),
-    media(),
-    iconPicker(),
+ 
   ],
 
   schema: {
