@@ -1,8 +1,9 @@
 import { NextResponse } from "next/server";
+import { GoogleGenerativeAI } from "@google/generative-ai";
 
 // CORS Headers helper
 const corsHeaders = {
-  "Access-Control-Allow-Origin": "*", // In production, consider limiting to specific domains
+  "Access-Control-Allow-Origin": "*",
   "Access-Control-Allow-Methods": "POST, OPTIONS",
   "Access-Control-Allow-Headers": "Content-Type, Authorization",
 };
@@ -27,28 +28,6 @@ export async function POST(req: Request) {
     const isProduction = process.env.NODE_ENV === "production";
     const isLocalhost = AI_BASE_URL.includes("localhost") || AI_BASE_URL.includes("127.0.0.1");
 
-    // Determine target provider
-    let targetUrl = `${AI_BASE_URL}/chat/completions`;
-    let targetKey = AI_API_KEY;
-    let targetModel = AI_MODEL;
-    let isFallback = false;
-
-    // If we are in production and pointed to localhost, we MUST use Gemini fallback if available
-    if (isProduction && isLocalhost) {
-      if (GEMINI_API_KEY) {
-        console.log("Production detected with localhost proxy: Forcing Gemini fallback.");
-        targetUrl = "https://generativelanguage.googleapis.com/v1beta/openai/chat/completions";
-        targetKey = GEMINI_API_KEY;
-        targetModel = "gemini-1.5-flash";
-        isFallback = true;
-      } else {
-        return NextResponse.json(
-          { error: "Configuration Error: AI_BASE_URL points to localhost in production, but GEMINI_API_KEY is missing." },
-          { status: 500, headers: corsHeaders }
-        );
-      }
-    }
-
     const prompt = `
       Anda adalah asisten pakar bahasa Jepang untuk platform NihongoRoute.
       Hasilkan konten untuk kata: "${word}" (Tipe: ${type}).
@@ -71,35 +50,33 @@ export async function POST(req: Request) {
       }
     `;
 
-    let response;
-    try {
-      response = await fetch(targetUrl, {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-          Authorization: `Bearer ${targetKey}`,
-        },
-        body: JSON.stringify({
-          model: targetModel,
-          messages: [
-            { role: "system", content: "You are a Japanese language expert." },
-            { role: "user", content: prompt },
-          ],
-          response_format: { type: "json_object" },
-        }),
+    let content = "";
+
+    // CASE 1: Production Fallback to Native Gemini SDK
+    if (isProduction && isLocalhost && GEMINI_API_KEY) {
+      console.log("Production detected with localhost proxy: Using Native Google Gemini SDK.");
+      const genAI = new GoogleGenerativeAI(GEMINI_API_KEY);
+      const model = genAI.getGenerativeModel({ 
+        model: "gemini-1.5-flash",
+        systemInstruction: "You are a Japanese language expert.",
+        generationConfig: { responseMimeType: "application/json" }
       });
-    } catch (fetchError: any) {
-      // If primary fetch failed and we haven't tried fallback yet, try it now
-      if (!isFallback && GEMINI_API_KEY) {
-        console.warn("Primary AI provider failed, trying Gemini fallback...", fetchError.message);
-        response = await fetch("https://generativelanguage.googleapis.com/v1beta/openai/chat/completions", {
+      
+      const result = await model.generateContent(prompt);
+      content = result.response.text();
+    } 
+    // CASE 2: Use Configured Provider (9router or local proxy)
+    else {
+      let response;
+      try {
+        response = await fetch(`${AI_BASE_URL}/chat/completions`, {
           method: "POST",
           headers: {
             "Content-Type": "application/json",
-            Authorization: `Bearer ${GEMINI_API_KEY}`,
+            Authorization: `Bearer ${AI_API_KEY}`,
           },
           body: JSON.stringify({
-            model: "gemini-1.5-flash",
+            model: AI_MODEL,
             messages: [
               { role: "system", content: "You are a Japanese language expert." },
               { role: "user", content: prompt },
@@ -107,41 +84,64 @@ export async function POST(req: Request) {
             response_format: { type: "json_object" },
           }),
         });
-      } else {
-        throw fetchError;
+
+        if (!response.ok) {
+          const errorText = await response.text();
+          let errorMsg = "AI provider returned an error";
+          
+          try {
+            const errorJson = JSON.parse(errorText);
+            const actualError = Array.isArray(errorJson) ? errorJson[0] : errorJson;
+            errorMsg = actualError.error?.message || actualError.message || errorText || errorMsg;
+          } catch (e) {
+            errorMsg = errorText || errorMsg;
+          }
+          
+          // If primary fails and we have a Gemini key, try fallback to SDK
+          if (GEMINI_API_KEY) {
+            console.warn(`Primary provider failed (${response.status}): ${errorMsg}. Falling back to SDK...`);
+            const genAI = new GoogleGenerativeAI(GEMINI_API_KEY);
+            const model = genAI.getGenerativeModel({ 
+              model: "gemini-1.5-flash",
+              systemInstruction: "You are a Japanese language expert.",
+              generationConfig: { responseMimeType: "application/json" }
+            });
+            const result = await model.generateContent(prompt);
+            content = result.response.text();
+          } else {
+            return NextResponse.json(
+              { error: `AI Provider Error: ${errorMsg}` },
+              { status: response.status, headers: corsHeaders }
+            );
+          }
+        } else {
+          const result = await response.json();
+          content = result.choices?.[0]?.message?.content;
+        }
+      } catch (fetchError: any) {
+        if (GEMINI_API_KEY) {
+          console.warn("Network error to primary provider, falling back to SDK...", fetchError.message);
+          const genAI = new GoogleGenerativeAI(GEMINI_API_KEY);
+          const model = genAI.getGenerativeModel({ 
+            model: "gemini-1.5-flash",
+            systemInstruction: "You are a Japanese language expert.",
+            generationConfig: { responseMimeType: "application/json" }
+          });
+          const result = await model.generateContent(prompt);
+          content = result.response.text();
+        } else {
+          throw fetchError;
+        }
       }
     }
 
-    if (!response.ok) {
-      const errorText = await response.text();
-      let errorMsg = "AI provider returned an error";
-      
-      try {
-        const errorJson = JSON.parse(errorText);
-        // Handle standard OpenAI-compatible error format or Google-specific format
-        errorMsg = errorJson.error?.message || errorJson.message || errorText || errorMsg;
-      } catch (e) {
-        errorMsg = errorText || errorMsg;
-      }
-      
-      console.error(`AI Provider Error (${response.status}):`, errorMsg);
-      return NextResponse.json(
-        { error: `AI Provider Error: ${errorMsg}` },
-        { status: response.status, headers: corsHeaders }
-      );
-    }
-
-    const result = await response.json();
-    const content = result.choices?.[0]?.message?.content;
-    
     if (!content) {
       throw new Error("AI returned an empty or invalid response");
     }
     
-    // Parse the JSON content from the assistant
+    // Parse the JSON content
     let data;
     try {
-      // Clean potential markdown formatting if the model ignored response_format
       const cleanJson = content.replace(/```json|```/g, "").trim();
       data = JSON.parse(cleanJson);
     } catch (e) {
@@ -152,14 +152,14 @@ export async function POST(req: Request) {
     // STRICT VALIDATION
     const rawExamples = Array.isArray(data.examples) ? data.examples : [];
     const cleanExamples = rawExamples.filter((ex: any) => 
-      ex && typeof ex === 'object' && ex.jp && ex.id
+      ex && typeof ex === 'object' && (ex.jp || ex.japanese) && (ex.id || ex.indonesian || ex.en)
     );
 
     const validatedData = {
       mnemonic: typeof data.mnemonic === 'string' ? data.mnemonic : "",
       examples: cleanExamples.map((ex: any) => ({
-        jp: String(ex.jp),
-        id: String(ex.id),
+        jp: String(ex.jp || ex.japanese),
+        id: String(ex.id || ex.indonesian || ex.en),
         romaji: ex.romaji ? String(ex.romaji) : undefined,
         furigana: ex.furigana ? String(ex.furigana) : undefined
       }))
