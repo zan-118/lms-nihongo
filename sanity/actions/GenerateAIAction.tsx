@@ -20,13 +20,27 @@ export const GenerateAIAction = (props: DocumentActionProps) => {
         return;
       }
 
-      const apiEndpoint = process.env.SANITY_STUDIO_AI_API_URL || "/api/sanity-ai";
+      // Robust detection for Vite (Studio v3) and process.env
+      let apiEndpoint = 
+        (import.meta as any).env?.SANITY_STUDIO_AI_API_URL || 
+        (typeof process !== 'undefined' ? process.env.SANITY_STUDIO_AI_API_URL : null) || 
+        "/api/sanity-ai";
+
+      // Auto-fallback for production if no env var is set and we are on Sanity's hosted domain
+      if (apiEndpoint === "/api/sanity-ai" && typeof window !== "undefined" && window.location.hostname.includes("sanity.studio")) {
+        apiEndpoint = "https://www.nihongoroute.my.id/api/sanity-ai";
+      }
       
       const response = await fetch(apiEndpoint, {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({ word, type: props.type }),
       });
+
+      if (!response.ok) {
+        const errorText = await response.text();
+        throw new Error(`API Error (${response.status}): ${errorText.substring(0, 100)}...`);
+      }
 
       const data = await response.json();
 
