@@ -123,30 +123,30 @@ export default function DashboardHero({
                 : "Hebat! Semua ingatanmu masih segar. Siap lanjut ke materi baru?"}
             </p>
 
-            {/* QUICK STATS INSIDE HERO */}
-            <div className="grid grid-cols-3 gap-[21px] mb-[55px] w-full max-w-sm">
-              <div className="flex flex-col items-center gap-2">
-                <div className="flex items-center gap-1.5 text-warning">
-                  <Flame size={14} className="fill-current" />
-                  <span className="text-base font-bold">
+            {/* QUICK STATS INSIDE HERO - Space Optimized for Mobile */}
+            <div className="grid grid-cols-3 gap-2 md:gap-[21px] mb-[34px] md:mb-[55px] w-full max-w-sm">
+              <div className="flex flex-col items-center gap-1 md:gap-2">
+                <div className="flex items-center gap-1 md:gap-1.5 text-warning">
+                  <Flame size={12} className="fill-current md:w-3.5 md:h-3.5" />
+                  <span className="text-sm md:text-base font-bold">
                     <AnimatedCounter value={streak} />
                   </span>
                 </div>
-                <span className="text-[10px] font-bold uppercase tracking-widest text-muted-foreground/60">Streak</span>
+                <span className="text-[8px] md:text-[10px] font-bold uppercase tracking-[0.15em] md:tracking-widest text-muted-foreground/60">Streak</span>
               </div>
-              <div className="flex flex-col items-center gap-2 border-x border-border/60">
-                <div className="flex items-center gap-1.5 text-primary">
-                  <Star size={14} className="fill-current" />
-                  <span className="text-base font-bold">Lvl {level}</span>
+              <div className="flex flex-col items-center gap-1 md:gap-2 border-x border-border/60">
+                <div className="flex items-center gap-1 md:gap-1.5 text-primary">
+                  <Star size={12} className="fill-current md:w-3.5 md:h-3.5" />
+                  <span className="text-sm md:text-base font-bold">Lvl {level}</span>
                 </div>
-                <span className="text-[10px] font-bold uppercase tracking-widest text-muted-foreground/60">Level</span>
+                <span className="text-[8px] md:text-[10px] font-bold uppercase tracking-[0.15em] md:tracking-widest text-muted-foreground/60">Level</span>
               </div>
-              <div className="flex flex-col items-center gap-2">
-                <div className="flex items-center gap-1.5 text-primary">
-                  <Target size={14} />
-                  <span className="text-base font-bold">{Math.floor(xpProgress)}%</span>
+              <div className="flex flex-col items-center gap-1 md:gap-2">
+                <div className="flex items-center gap-1 md:gap-1.5 text-primary">
+                  <Target size={12} className="md:w-3.5 md:h-3.5" />
+                  <span className="text-sm md:text-base font-bold">{Math.floor(xpProgress)}%</span>
                 </div>
-                <span className="text-[10px] font-bold uppercase tracking-widest text-muted-foreground/60">Progres</span>
+                <span className="text-[8px] md:text-[10px] font-bold uppercase tracking-[0.15em] md:tracking-widest text-muted-foreground/60">Progres</span>
               </div>
             </div>
 

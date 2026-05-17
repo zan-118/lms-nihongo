@@ -140,9 +140,9 @@ export function ReviewClient() {
         </header>
 
         <FlashcardMaster
-          key={cards[0]?._id}
+          key={cards[0]?.id}
           cards={cards}
-          type={cards[0]?.category === "kanji" ? "kanji" : "vocab"}
+          type={cards[0]?.docType === "kanji" ? "kanji" : "vocab"}
           mode="ujian"
           isFixedMode={true}
           onFinish={() => setIsFinished(true)}

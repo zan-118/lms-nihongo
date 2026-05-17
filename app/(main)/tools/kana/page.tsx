@@ -6,136 +6,16 @@
 
 "use client";
 
-import React, { useState, useEffect } from "react";
-import { motion, AnimatePresence } from "framer-motion";
-import { PenTool, ChevronLeft, LayoutGrid, Sparkles, Swords, Heart, Trophy } from "lucide-react";
+import React, { useState, useEffect, useCallback } from "react";
 import { useSearchParams } from "next/navigation";
-import Link from "next/link";
-import WritingCanvas from "@/components/features/tools/writing/WritingCanvas";
-import { Button } from "@/components/ui/button";
-import { Card } from "@/components/ui/card";
-import {
-  Dialog,
-  DialogContent,
-  DialogHeader,
-  DialogTitle,
-  DialogDescription,
-} from "@/components/ui/dialog";
 
-/* ====================================================
-    DATA KANA LENGKAP (Statis)
-==================================================== */
-const kanaData = {
-  seion: {
-    hiragana: [
-      ["あ", "い", "う", "え", "お"],
-      ["か", "き", "く", "け", "こ"],
-      ["さ", "し", "す", "せ", "そ"],
-      ["た", "ち", "つ", "te", "と"],
-      ["な", "に", "ぬ", "ね", "の"],
-      ["は", "ひ", "ふ", "へ", "ほ"],
-      ["ま", "み", "む", "め", "も"],
-      ["や", "", "ゆ", "", "よ"],
-      ["ら", "り", "る", "れ", "ろ"],
-      ["わ", "", "", "", "を"],
-      ["ん", "", "", "", ""],
-    ],
-    katakana: [
-      ["ア", "イ", "ウ", "エ", "オ"],
-      ["カ", "キ", "ク", "ケ", "コ"],
-      ["サ", "シ", "ス", "セ", "ソ"],
-      ["タ", "チ", "ツ", "テ", "ト"],
-      ["ナ", "ニ", "ヌ", "ネ", "ノ"],
-      ["ハ", "ヒ", "フ", "ヘ", "ホ"],
-      ["マ", "ミ", "ム", "メ", "モ"],
-      ["ヤ", "", "ユ", "", "よ"],
-      ["ラ", "リ", "ル", "レ", "ロ"],
-      ["ワ", "", "", "", "ヲ"],
-      ["ン", "", "", "", ""],
-    ],
-    romaji: [
-      ["a", "i", "u", "e", "o"],
-      ["ka", "ki", "ku", "ke", "ko"],
-      ["sa", "shi", "su", "se", "so"],
-      ["ta", "chi", "tsu", "te", "to"],
-      ["na", "ni", "nu", "ne", "no"],
-      ["ha", "hi", "fu", "he", "ho"],
-      ["ma", "mi", "mu", "me", "mo"],
-      ["ya", "", "yu", "", "yo"],
-      ["ra", "ri", "ru", "re", "ro"],
-      ["wa", "", "", "", "wo"],
-      ["n", "", "", "", ""],
-    ],
-  },
-  dakuon: {
-    hiragana: [
-      ["が", "ぎ", "ぐ", "げ", "ご"],
-      ["ざ", "じ", "ず", "ぜ", "ぞ"],
-      ["だ", "ぢ", "づ", "で", "ど"],
-      ["ば", "び", "ぶ", "べ", "ぼ"],
-      ["ぱ", "ぴ", "ぷ", "ぺ", "ぽ"],
-    ],
-    katakana: [
-      ["ガ", "ギ", "グ", "ゲ", "ゴ"],
-      ["ザ", "ジ", "ズ", "ゼ", "ゾ"],
-      ["ダ", "ヂ", "ヅ", "デ", "ド"],
-      ["バ", "ビ", "ブ", "ベ", "ボ"],
-      ["パ", "ピ", "プ", "ペ", "ポ"],
-    ],
-    romaji: [
-      ["ga", "gi", "gu", "ge", "go"],
-      ["za", "ji", "zu", "ze", "zo"],
-      ["da", "ji", "zu", "de", "do"],
-      ["ba", "bi", "bu", "be", "bo"],
-      ["pa", "pi", "pu", "pe", "po"],
-    ],
-  },
-  yoon: {
-    hiragana: [
-      ["きゃ", "きゅ", "きょ"],
-      ["しゃ", "しゅ", "しょ"],
-      ["ちゃ", "ちゅ", "ちょ"],
-      ["にゃ", "にゅ", "にょ"],
-      ["ひゃ", "ひゅ", "ひょ"],
-      ["みゃ", "みゅ", "みょ"],
-      ["りゃ", "りゅ", "りょ"],
-      ["ぎゃ", "ぎゅ", "ぎょ"],
-      ["じゃ", "じゅ", "じょ"],
-      ["びゃ", "びゅ", "びょ"],
-      ["ぴゃ", "ぴゅ", "ぴょ"],
-    ],
-    katakana: [
-      ["キャ", "キュ", "キョ"],
-      ["シャ", "シュ", "ショ"],
-      ["チャ", "チュ", "チョ"],
-      ["ニャ", "ニュ", "ニョ"],
-      ["ヒャ", "ヒュ", "ヒョ"],
-      ["ミャ", "ミュ", "ミョ"],
-      ["リャ", "リュ", "リョ"],
-      ["ギャ", "ギュ", "ギョ"],
-      ["ジャ", "ジュ", "ジョ"],
-      ["ビャ", "ビュ", "ビョ"],
-      ["ピャ", "ピュ", "ピョ"],
-    ],
-    romaji: [
-      ["kya", "kyu", "kyo"],
-      ["sha", "shu", "sho"],
-      ["cha", "chu", "cho"],
-      ["nya", "nyu", "nyo"],
-      ["hya", "hyu", "hyo"],
-      ["mya", "myu", "myo"],
-      ["rya", "ryu", "ryo"],
-      ["gya", "gyu", "gyo"],
-      ["ja", "ju", "jo"],
-      ["bya", "byu", "byo"],
-      ["pya", "pyu", "pyo"],
-    ],
-  },
-};
-
-type KanaType = "hiragana" | "katakana";
-type KanaCategory = "seion" | "dakuon" | "yoon";
-
+// Feature Components & Data
+import { KANA_DATA, KanaType, KanaCategory } from "@/components/features/tools/kana/kana-data";
+import { KanaHeader } from "@/components/features/tools/kana/KanaHeader";
+import { KanaControls } from "@/components/features/tools/kana/KanaControls";
+import { KanaMatrix } from "@/components/features/tools/kana/KanaMatrix";
+import { KanaWritingDialog } from "@/components/features/tools/kana/KanaWritingDialog";
+import { KanaQuizDialog } from "@/components/features/tools/kana/KanaQuizDialog";
 
 export default function KanaPage() {
   const searchParams = useSearchParams();
@@ -150,7 +30,9 @@ export default function KanaPage() {
   useEffect(() => {
     const mode = searchParams.get("mode");
     if (mode === "writing" && !selectedChar) {
-      setSelectedChar({ char: "あ", romaji: "a" });
+      requestAnimationFrame(() => {
+        setSelectedChar({ char: "あ", romaji: "a" });
+      });
     }
   }, [searchParams, selectedChar]);
 
@@ -163,11 +45,11 @@ export default function KanaPage() {
   const [quizFeedback, setQuizFeedback] = useState<"correct" | "incorrect" | null>(null);
   const [gameOver, setGameOver] = useState(false);
 
-  const getAllKanaForType = (currentType: KanaType) => {
+  const getAllKanaForType = useCallback((currentType: KanaType) => {
     const pairs: { char: string; romaji: string }[] = [];
     const categories: KanaCategory[] = ["seion", "dakuon", "yoon"];
     categories.forEach((cat) => {
-      const data = kanaData[cat];
+      const data = KANA_DATA[cat];
       data[currentType].forEach((row, rowIndex) => {
         row.forEach((char, colIndex) => {
           if (char !== "") {
@@ -180,9 +62,9 @@ export default function KanaPage() {
       });
     });
     return pairs;
-  };
+  }, []);
 
-  const nextQuizQuestion = (currentType: KanaType = type) => {
+  const nextQuizQuestion = useCallback((currentType: KanaType = type) => {
     const pairs = getAllKanaForType(currentType);
     const randomPair = pairs[Math.floor(Math.random() * pairs.length)];
     
@@ -199,7 +81,7 @@ export default function KanaPage() {
     setQuizOptions(shuffledOptions);
     setQuizInput("");
     setQuizFeedback(null);
-  };
+  }, [type, getAllKanaForType]);
 
   const startQuiz = () => {
     setQuizScore(0);
@@ -232,9 +114,7 @@ export default function KanaPage() {
     }
   };
 
-  const currentData = kanaData[category];
   const isHira = type === "hiragana";
-
   const themeColor = isHira ? "text-primary" : "text-secondary";
   const themeBorder = isHira ? "border-primary/30" : "border-secondary/30";
   const themeBgHover = isHira ? "hover:bg-primary/10" : "hover:bg-secondary/10";
@@ -245,303 +125,55 @@ export default function KanaPage() {
       <div className="neural-grid" />
 
       <div className="max-w-4xl mx-auto w-full relative z-10 flex flex-col h-full">
-        <header className="mb-8">
-          <nav className="mb-4">
-            <Button
-              variant="outline"
-              asChild
-              className="px-4 py-2 rounded-xl text-xs font-bold uppercase tracking-widest bg-muted border-border"
-            >
-              <Link href="/tools">
-                <ChevronLeft size={14} className="mr-2" /> Kembali ke Peralatan
-              </Link>
-            </Button>
-          </nav>
+        <KanaHeader themeColor={themeColor} />
 
-          <div className="flex flex-col md:flex-row justify-between items-start md:items-end gap-4">
-            <div>
-              <h1 className="text-4xl md:text-5xl font-black text-foreground uppercase tracking-tight">
-                Master <span className={themeColor}>Kana</span>
-              </h1>
-              <p className="text-muted-foreground text-xs mt-2 max-w-md font-medium leading-relaxed">
-                Kunci utama untuk bisa membaca teks Jepang. Kuasai Hiragana & 
-                Katakana di sini sebelum mulai belajar kalimat dan tata bahasa.
-              </p>
-            </div>
-            <div
-              className={`hidden md:flex items-center gap-2 px-3 py-1.5 rounded-xl bg-muted border border-border text-xs font-bold uppercase tracking-widest ${themeColor}`}
-            >
-              <LayoutGrid size={12} /> Tampilan Penuh
-            </div>
-          </div>
-        </header>
+        <KanaControls 
+          type={type}
+          setType={setType}
+          category={category}
+          setCategory={setCategory}
+          startQuiz={startQuiz}
+          themeColor={themeColor}
+          themeBorder={themeBorder}
+          themeAccent={themeAccent}
+        />
 
-        <div className="mb-8 space-y-6">
-          <div className="bg-muted p-1.5 rounded-2xl border border-border flex gap-2 shadow-inner relative max-w-sm">
-            <Button
-              variant={isHira ? "default" : "ghost"}
-              onClick={() => setType("hiragana")}
-              className={`relative z-10 flex-1 py-6 rounded-xl font-bold uppercase tracking-widest text-xs md:text-xs transition-all duration-500 h-10 ${isHira ? "bg-primary text-foreground hover:bg-primary shadow-lg" : "text-muted-foreground hover:text-foreground"}`}
-            >
-              Hiragana
-            </Button>
-            <Button
-              variant={!isHira ? "default" : "ghost"}
-              onClick={() => setType("katakana")}
-              className={`relative z-10 flex-1 py-6 rounded-xl font-bold uppercase tracking-widest text-xs md:text-xs transition-all duration-500 h-10 ${!isHira ? "bg-secondary text-foreground hover:bg-secondary/90 shadow-lg" : "text-muted-foreground hover:text-foreground"}`}
-            >
-              Katakana
-            </Button>
-          </div>
-
-          <div className="flex flex-wrap items-center justify-between gap-4">
-            <div className="flex flex-wrap gap-2 md:gap-3">
-              {[
-                { id: "seion", label: "Huruf Utama" },
-                { id: "dakuon", label: "Bunyi Turunan" },
-                { id: "yoon", label: "Bunyi Gabungan" },
-              ].map((cat) => (
-                <Button
-                  key={cat.id}
-                  variant={category === cat.id ? "default" : "outline"}
-                  onClick={() => setCategory(cat.id as KanaCategory)}
-                  className={`px-5 py-2.5 h-auto rounded-xl text-xs font-bold uppercase tracking-widest transition-all duration-300 ${
-                    category === cat.id
-                      ? `bg-muted ${themeColor} ${themeBorder} border-opacity-50`
-                      : "bg-transparent text-muted-foreground border-border hover:bg-muted/50 hover:text-foreground"
-                  }`}
-                >
-                  {cat.label}
-                </Button>
-              ))}
-            </div>
-
-            <Button 
-              onClick={startQuiz}
-              className={`px-6 py-3 h-auto rounded-xl text-xs md:text-xs font-bold uppercase tracking-widest transition-all duration-300 ${themeAccent} text-foreground shadow-lg hover:opacity-90 border-none`}
-            >
-              <Swords size={16} className="mr-2" /> Latihan
-            </Button>
-          </div>
-        </div>
-
-        <Card className="p-6 md:p-8 rounded-2xl border border-border bg-card shadow-2xl relative flex-1 min-h-[450px] overflow-hidden">
-          <div
-            className={`relative z-10 grid gap-3 md:gap-4 mx-auto ${category === "yoon" ? "grid-cols-3 max-w-lg" : "grid-cols-5 max-w-2xl"}`}
-          >
-            <AnimatePresence mode="wait">
-              {currentData[type].map((row, rowIndex) => (
-                <React.Fragment key={`${category}-${type}-${rowIndex}`}>
-                  {row.map((char, colIndex) =>
-                    char !== "" ? (
-                        <div
-                          key={`${category}-${type}-${rowIndex}-${colIndex}`}
-                          onClick={() =>
-                            setSelectedChar({
-                              char,
-                              romaji: currentData.romaji[rowIndex][colIndex],
-                            })
-                          }
-                          className={`relative aspect-square bg-muted/30 border border-border rounded-xl flex flex-col items-center justify-center cursor-pointer transition-all duration-300 ${themeBgHover} hover:border-current group active:scale-95 shadow-sm`}
-                        >
-                          <span className="text-3xl md:text-4xl font-black text-foreground group-hover:scale-105 transition-transform font-japanese drop-shadow-sm">
-                            {char}
-                          </span>
-                          <span className="text-xs md:text-xs font-bold font-mono text-muted-foreground uppercase tracking-widest mt-2 group-hover:text-foreground transition-colors">
-                            {currentData.romaji[rowIndex][colIndex]}
-                          </span>
-                        </div>
-                    ) : (
-                      <div
-                        key={`empty-${rowIndex}-${colIndex}`}
-                        className="aspect-square opacity-0 pointer-events-none"
-                      />
-                    ),
-                  )}
-                </React.Fragment>
-              ))}
-            </AnimatePresence>
-          </div>
-        </Card>
+        <KanaMatrix 
+          type={type}
+          category={category}
+          onSelectChar={(char, romaji) => setSelectedChar({ char, romaji })}
+          themeBgHover={themeBgHover}
+        />
       </div>
 
-      <Dialog
-        open={!!selectedChar}
-        onOpenChange={(open) => !open && setSelectedChar(null)}
-      >
-        <DialogContent className="max-w-md p-0 border-none bg-transparent shadow-none">
-          <AnimatePresence>
-            {selectedChar && (
-              <motion.div
-                initial={{ scale: 0.95, opacity: 0, y: 20 }}
-                animate={{ scale: 1, opacity: 1, y: 0 }}
-                exit={{ scale: 0.95, opacity: 0, y: 20 }}
-                className={`relative bg-card p-6 md:p-8 rounded-2xl border ${themeBorder} shadow-2xl max-w-md w-full max-h-[90vh] flex flex-col overflow-y-auto custom-scrollbar`}
-              >
-                <div className="relative z-10 flex flex-col h-full">
-                  <header className="flex items-center gap-3 mb-5 sm:mb-6 pr-10 shrink-0">
-                    <div
-                      className={`w-10 h-10 shrink-0 rounded-xl ${isHira ? "bg-primary/10" : "bg-secondary/10"} border ${themeBorder} flex items-center justify-center shadow-sm`}
-                    >
-                      <PenTool size={18} className={themeColor} />
-                    </div>
-                    <DialogHeader className="p-0">
-                      <span
-                        className={`font-mono uppercase tracking-[0.2em] text-xs sm:text-xs font-black ${themeColor} block leading-none mb-1.5 text-left`}
-                      >
-                        Latihan Menulis
-                      </span>
-                      <DialogTitle className="text-foreground text-lg sm:text-xl font-black uppercase tracking-tight leading-none text-left">
-                        Cara Menulis
-                      </DialogTitle>
-                    </DialogHeader>
-                  </header>
+      <KanaWritingDialog 
+        selectedChar={selectedChar}
+        setSelectedChar={setSelectedChar}
+        type={type}
+        themeColor={themeColor}
+        themeBorder={themeBorder}
+      />
 
-                  <div className="bg-muted p-4 sm:p-5 rounded-xl border border-border flex justify-between items-center mb-6 shrink-0">
-                    <div className="flex items-center gap-4">
-                      <p className="text-4xl sm:text-5xl font-black text-foreground font-japanese leading-none">
-                        {selectedChar!.char}
-                      </p>
-                      <p
-                        className={`font-mono uppercase tracking-widest text-xs sm:text-sm font-bold ${themeColor}`}
-                      >
-                        &quot;{selectedChar!.romaji}&quot;
-                      </p>
-                    </div>
-                    <div
-                      className={`px-3 py-1.5 rounded-lg bg-background border border-border text-[8px] sm:text-xs font-bold uppercase tracking-widest ${themeColor}`}
-                    >
-                      Sistem {type}
-                    </div>
-                  </div>
-
-                  <div className="w-full flex-1 flex flex-col justify-center min-h-[300px] mb-2 bg-background rounded-xl border border-border overflow-hidden">
-                    <WritingCanvas 
-                      character={selectedChar!.char} 
-                      strokeColor={isHira ? "rgb(var(--primary-rgb))" : "rgb(var(--secondary-rgb))"}
-                      guideColor={isHira ? "rgb(var(--primary-rgb))" : "rgb(var(--secondary-rgb))"}
-                    />
-                  </div>
-
-                  <p className="text-center text-xs text-muted-foreground font-bold uppercase tracking-[0.2em] mt-4 shrink-0">
-                    <Sparkles size={10} className="inline mr-1 text-primary" />{" "}
-                    Yuk, coba tulis huruf ini di kanvas!
-                  </p>
-                </div>
-              </motion.div>
-            )}
-          </AnimatePresence>
-        </DialogContent>
-      </Dialog>
-
-      <Dialog
-        open={isQuizActive}
-        onOpenChange={(open) => {
+      <KanaQuizDialog 
+        isActive={isQuizActive}
+        onClose={(open) => {
           setIsQuizActive(open);
           if (!open) setGameOver(false);
         }}
-      >
-        <DialogContent className="max-w-md p-0 border-none bg-transparent shadow-none">
-          <DialogTitle className="sr-only">Latihan Kana</DialogTitle>
-          <DialogDescription className="sr-only">Latihan membaca huruf kana.</DialogDescription>
-          <AnimatePresence>
-            {isQuizActive && (
-              <motion.div
-                initial={{ scale: 0.9, opacity: 0, y: 40 }}
-                animate={{ scale: 1, opacity: 1, y: 0 }}
-                exit={{ scale: 0.9, opacity: 0, y: 40 }}
-                className={`relative bg-card p-6 sm:p-8 rounded-2xl border ${themeBorder} shadow-2xl max-w-md w-full max-h-[90vh] flex flex-col`}
-              >
-                <div className="relative z-10 flex flex-col h-full">
-                  <header className="flex justify-between items-center mb-6">
-                    <div className="flex items-center gap-2">
-                      <div className={`flex items-center gap-1.5 px-3 py-1.5 rounded-lg bg-destructive/10 border border-destructive/20 text-destructive font-black text-sm`}>
-                        <Heart size={16} className={quizLives > 0 ? "fill-current" : ""} />
-                        {quizLives}
-                      </div>
-                      <div className={`flex items-center gap-1.5 px-3 py-1.5 rounded-lg bg-warning/10 border border-warning/20 text-warning font-black text-sm`}>
-                        <Trophy size={16} className="fill-current" />
-                        {quizScore}
-                      </div>
-                    </div>
-                    <div className={`px-3 py-1.5 rounded-lg bg-muted border border-border text-xs font-bold uppercase tracking-widest ${themeColor}`}>
-                      {isHira ? "Hiragana" : "Katakana"} Quiz
-                    </div>
-                  </header>
-
-                  {!gameOver ? (
-                    <div className="flex flex-col items-center">
-                      <div className={`w-full aspect-video bg-background rounded-2xl border ${quizFeedback === 'correct' ? 'border-success shadow-lg' : quizFeedback === 'incorrect' ? 'border-destructive shadow-lg' : 'border-border shadow-inner'} flex items-center justify-center mb-8 transition-all duration-300`}>
-                        <AnimatePresence mode="wait">
-                          <motion.span
-                            key={quizChar?.char}
-                            initial={{ opacity: 0, scale: 0.5 }}
-                            animate={{ opacity: 1, scale: 1 }}
-                            exit={{ opacity: 0, scale: 0.5 }}
-                            className="text-6xl sm:text-7xl font-black text-foreground font-japanese"
-                          >
-                            {quizChar?.char}
-                          </motion.span>
-                        </AnimatePresence>
-                      </div>
-
-                      <div className="grid grid-cols-2 gap-3 w-full">
-                        {quizOptions.map((option, i) => {
-                          const isCorrect = option === quizChar?.romaji;
-                          const isClicked = option === quizInput;
-                          let btnClass = "bg-muted border-border text-muted-foreground hover:bg-background hover:text-foreground";
-                          
-                          if (quizFeedback) {
-                            if (isCorrect) {
-                              btnClass = "bg-success border-success text-success-foreground shadow-lg";
-                            } else if (isClicked && !isCorrect) {
-                              btnClass = "bg-destructive border-destructive text-destructive-foreground shadow-lg";
-                            } else {
-                              btnClass = "bg-muted/50 border-border text-muted-foreground/20 opacity-50";
-                            }
-                          } else {
-                            btnClass = `bg-muted border-border text-muted-foreground hover:border-current focus-visible:ring-1 focus-visible:ring-current hover:${themeColor}`;
-                          }
-
-                          return (
-                            <Button
-                              key={i}
-                              type="button"
-                              onClick={() => handleOptionClick(option)}
-                              disabled={!!quizFeedback}
-                              variant="outline"
-                              className={`h-14 rounded-xl text-lg font-black uppercase tracking-widest transition-all duration-300 ${btnClass}`}
-                            >
-                              {option}
-                            </Button>
-                          );
-                        })}
-                      </div>
-                    </div>
-                  ) : (
-                    <Card className="bg-muted/20 p-8 md:p-10 rounded-2xl border border-border text-center w-full relative overflow-hidden shadow-2xl">
-                      <div className="w-16 h-16 bg-destructive/10 rounded-xl flex items-center justify-center mx-auto mb-6 border border-destructive/20">
-                        <Heart size={32} className="text-destructive" />
-                      </div>
-                      <h2 className="text-2xl font-black text-foreground uppercase tracking-tight mb-2">Game Over!</h2>
-                      <p className="text-muted-foreground text-xs font-bold uppercase tracking-widest mb-6">Skor akhir kamu:</p>
-                      <div className="text-6xl font-black text-warning mb-8 drop-shadow-md">
-                        {quizScore}
-                      </div>
-                      <Button
-                        onClick={() => startQuiz()}
-                        className={`w-full h-auto py-4 rounded-xl font-black uppercase tracking-widest ${themeAccent} text-foreground text-xs transition-all shadow-lg border-none`}
-                      >
-                        Main Lagi
-                      </Button>
-                    </Card>
-                  )}
-                </div>
-              </motion.div>
-            )}
-          </AnimatePresence>
-        </DialogContent>
-      </Dialog>
+        lives={quizLives}
+        score={quizScore}
+        char={quizChar}
+        options={quizOptions}
+        input={quizInput}
+        feedback={quizFeedback}
+        gameOver={gameOver}
+        onOptionClick={handleOptionClick}
+        startQuiz={startQuiz}
+        type={type}
+        themeColor={themeColor}
+        themeBorder={themeBorder}
+        themeAccent={themeAccent}
+      />
     </div>
   );
 }

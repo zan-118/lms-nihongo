@@ -9,36 +9,12 @@
 // IMPORTS
 // ======================
 import { Metadata } from "next";
-import { sanityFetch } from "@/lib/sanity.fetch";
-import { PortableText } from "@portabletext/react";
+import { getLibraryItemBySlug } from "@/app/actions/library.actions";
 import Link from "next/link";
 import { notFound } from "next/navigation";
 import { ChevronLeft, Home, Library, BookOpen, BookText, Lightbulb } from "lucide-react";
 import { Card } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
-import { sharedPtComponents } from "@/components/ui/portable-text/SharedPortableText";
-
-// ======================
-// CONFIG / CONSTANTS
-// ======================
-const articleQuery = `*[_type == "grammar_article" && slug.current == $slug][0] { 
-  title, 
-  formation,
-  notes,
-  content[] {
-    ...,
-    _type == "image" => {
-      ...,
-      asset-> {
-        _id,
-        metadata {
-          lqip,
-          dimensions
-        }
-      }
-    }
-  } 
-}`;
 
 // ======================
 // METADATA
@@ -51,11 +27,7 @@ export async function generateMetadata({
   const { slug } = await params;
   const decodedSlug = decodeURIComponent(slug);
   
-  const article = await sanityFetch<any>({
-    query: articleQuery,
-    params: { slug: decodedSlug },
-    tags: ["grammar_article"],
-  });
+  const article = await getLibraryItemBySlug("grammar", decodedSlug);
 
   if (!article) {
     return {
@@ -92,12 +64,9 @@ export default async function GrammarDetailPage({
   // ======================
   // DATABASE OPERATIONS
   // ======================
-  const article = await sanityFetch<any>({
-    query: articleQuery,
-    params: { slug: decodedSlug },
-    tags: ["grammar_article"],
-  });
+  const article = await getLibraryItemBySlug("grammar", decodedSlug);
   if (!article) notFound();
+
 
   // ======================
   // RENDER
@@ -183,7 +152,25 @@ export default async function GrammarDetailPage({
              </div>
           </div>
           <div className="space-y-12 md:space-y-16">
-            <PortableText value={article.content} components={sharedPtComponents} />
+            {/* Grammar examples rendered as plain text */}
+            {article.examples && article.examples.length > 0 && (
+              <div className="space-y-6">
+                {article.examples.map((ex: any, i: number) => (
+                  <div key={i} className="border border-border rounded-2xl p-6 space-y-2">
+                    <p className="text-xl font-japanese font-bold text-foreground">{ex.jp}</p>
+                    {ex.furigana && <p className="text-sm text-muted-foreground">{ex.furigana}</p>}
+                    <p className="text-sm text-muted-foreground italic">{ex.id}</p>
+                  </div>
+                ))}
+              </div>
+            )}
+            {article.notes && (
+              <div className="prose prose-slate dark:prose-invert max-w-none">
+                {article.notes.split("\n").filter(Boolean).map((line: string, i: number) => (
+                  <p key={i} className="text-base leading-relaxed text-foreground/80">{line}</p>
+                ))}
+              </div>
+            )}
           </div>
         </section>
 

@@ -5,7 +5,7 @@ import { motion } from "framer-motion";
 /**
  * @file loading.tsx
  * @description State loading global untuk Route Group (main).
- * Memberikan feedback visual premium saat transisi antar halaman atau fetching data Sanity/Supabase.
+ * Memberikan feedback visual premium saat transisi antar halaman atau fetching data dari Supabase.
  */
 
 export default function MainLoading() {

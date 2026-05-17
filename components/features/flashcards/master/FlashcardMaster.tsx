@@ -65,7 +65,7 @@ export default function FlashcardMaster({
   if (!isClient || !cards || cards.length === 0) return null;
 
   const card = cards[currentIndex];
-  const cardId = card._id || card.id || "";
+  const cardId = card.id || "";
   const srsState = srs[cardId];
   const isKanji = type === "kanji";
   const themeColor = isKanji ? "text-secondary" : "text-primary";
@@ -112,7 +112,7 @@ export default function FlashcardMaster({
       <div className="relative w-full mb-8 md:mb-10">
         <AnimatePresence initial={false} mode="wait">
           <motion.div
-            key={currentCards[currentIndex]?._id || currentIndex}
+            key={currentCards[currentIndex]?.id || currentIndex}
             initial={{
               x: direction === 1 ? 200 : direction === -1 ? -200 : 0,
               opacity: 0,
@@ -132,12 +132,11 @@ export default function FlashcardMaster({
               meaning={currentCards[currentIndex]?.meaning}
               furigana={currentCards[currentIndex]?.furigana}
               romaji={currentCards[currentIndex]?.romaji}
-              kanjiDetails={currentCards[currentIndex]?.kanjiDetails || currentCards[currentIndex]?.details}
+              kanjiDetails={currentCards[currentIndex]?.kanjiDetails}
               isFlipped={isFlipped}
               onFlip={() => {
                 if ((studyMode === "ujian" || studyMode === "tantangan") && isFlipped) return;
                 if (studyMode === "tantangan" && !isFlipped) {
-                  // Disable flip in challenge mode until answered correctly
                   return;
                 }
                 sounds?.playPop();
@@ -148,7 +147,7 @@ export default function FlashcardMaster({
                 }
               }}
               type={type}
-              docType={card._type}
+              docType={card.docType}
               slug={card.slug}
               srsState={srsState}
               isShaking={isShaking}
@@ -158,7 +157,10 @@ export default function FlashcardMaster({
               isAnswerChecked={isAnswerChecked}
               inputResult={inputResult}
               mnemonic={card.mnemonic}
-              relatedKanji={card.relatedKanji}
+              pitch_accent={card.pitch_accent}
+              hinshi={card.hinshi}
+              examples={card.examples}
+              related_kanji={card.related_kanji}
             />
           </motion.div>
         </AnimatePresence>

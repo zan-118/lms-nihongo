@@ -1,197 +1,143 @@
 /**
  * @file queries.ts
- * @description Koleksi query GROQ (Graph Relational Object Queries) untuk pengambilan data dari Sanity CMS.
- * Mengatur struktur proyeksi data yang dikirimkan ke frontend.
- * @module lib/queries
+ * @description Kueri GROQ universal untuk mengambil konten edukasi statis dari Sanity.
+ * @module SanityQueries
  */
 
-// ======================
-// CONTENT QUERIES
-// ======================
+import { sanityClient } from "./sanity.client";
 
 /**
- * Mengambil dataset kosakata spesifik berdasarkan daftar ID.
- * Digunakan terutama oleh sistem SRS (Spaced Repetition System).
+ * Mengambil satu dokumen pelajaran (lesson) dari Sanity berdasarkan slug.
+ * @param slug - Slug unik pelajaran.
  */
-export const vocabByIdsQuery = `*[_type == "vocab" && _id in $ids] {
-  _id,
-  word,
-  furigana,
-  romaji,
-  meaning,
-  hinshi,
-  pitchAccent,
-  mnemonic,
-  examples,
-  "audioUrl": audio.asset->url
-}`;
-
-/**
- * Query detail materi (Lesson) mencakup daftar kosakata dan kuis.
- */
-export const lessonQuery = `*[_type == "lesson" && slug.current == $slug][0] {
-  title,
-  summary,
-  orderNumber,
-  vocabList[]->{ 
-    _id, word, furigana, romaji, meaning, hinshi, examples 
-  },
-  referenceWords[]->{ 
-    _id, word, furigana, romaji, meaning, hinshi, examples 
-  },
-  patterns,
-  examples,
-  conversation,
-  grammar,
-  quizzes[] {
-    question,
-    "options": options[].text,
-    "answer": options[isCorrect == true][0].text,
-    explanation
-  }
-}`;
-
-export const readingMaterialQuery = `*[_type == "readingMaterial" && slug.current == $slug][0] {
-  title,
-  difficulty,
-  "audioUrl": audioFile.asset->url,
-  isTTSDisabled,
-  body,
-  hiragana,
-  romaji,
-  translation
-}`;
-
-export const readingListQuery = `*[_type == "readingMaterial"] | order(_createdAt desc) {
-  title,
-  difficulty,
-  "slug": slug.current,
-  "category": category->title
-}`;
-
-export const kanjiListQuery = `*[_type == "kanji"] | order(jlptLevel asc, character asc) {
-  _id,
-  character,
-  meaning,
-  onyomi,
-  kunyomi,
-  "jlpt": jlptLevel,
-  "slug": coalesce(slug.current, character)
-}`;
-
-export const listeningListQuery = `*[_type == "listeningTask"] | order(_createdAt desc) {
-  _id,
-  title,
-  "slug": slug.current
-}`;
-
-export const kanjiQuery = `*[_type == "kanji" && (slug.current == $id || character == $id || _id == $id)][0] {
-  _id,
-  character,
-  meaning,
-  onyomi,
-  kunyomi,
-  "jlpt": jlptLevel,
-  examples,
-  strokeOrderSvg,
-  radicals,
-  mnemonics,
-  "slug": coalesce(slug.current, character),
-  "relatedVocab": *[(_type == "vocab" || _type == "verb_dictionary") && references(^._id)] {
+export async function getSanityLessonBySlug(slug: string) {
+  const query = `*[_type == "lesson" && slug.current == $slug][0] {
     _id,
-    "slug": coalesce(slug.current, word, _id),
-    word,
-    furigana,
-    romaji,
-    meaning
-  }
-}`;
+    title,
+    "slug": slug.current,
+    order_number,
+    category_id,
+    summary,
+    estimated_minutes,
+    is_premium,
+    is_published,
+    content_blocks,
+    quizzes,
+    vocab_list,
+    kanji_list,
+    grammar_list,
+    reading_list,
+    listening_list,
+    seo
+  }`;
 
-export const listeningTaskQuery = `*[_type == "listeningTask" && slug.current == $slug][0] {
-  title,
-  "audioUrl": audioFile.asset->url,
-  transcript[] {
-    speaker,
-    text,
+  try {
+    return await sanityClient.fetch(query, { slug });
+  } catch (error) {
+    console.error(`[getSanityLessonBySlug] Error fetching lesson from Sanity:`, error);
+    return null;
+  }
+}
+
+/**
+ * Mengambil daftar seluruh pelajaran dari Sanity berdasarkan ID/Slug kategori.
+ * @param categoryIdOrSlug - Slug kategori (misal: 'n5')
+ * @param categoryIdUuid - UUID kategori dari Supabase
+ */
+export async function getSanityLessonsByCategory(categoryIdOrSlug: string, categoryIdUuid?: string) {
+  const query = `*[_type == "lesson" && (category_id == $idOrSlug || category_id == $idUuid)] | order(order_number asc) {
+    _id,
+    title,
+    "slug": slug.current,
+    summary,
+    order_number
+  }`;
+
+  try {
+    return await sanityClient.fetch(query, {
+      idOrSlug: categoryIdOrSlug,
+      idUuid: categoryIdUuid || categoryIdOrSlug
+    });
+  } catch (error) {
+    console.error(`[getSanityLessonsByCategory] Error fetching lessons from Sanity:`, error);
+    return [];
+  }
+}
+
+/**
+ * Mengambil satu materi bacaan dari Sanity berdasarkan slug.
+ */
+export async function getSanityReadingBySlug(slug: string) {
+  const query = `*[_type == "readingMaterial" && slug.current == $slug][0] {
+    _id,
+    title,
+    "slug": slug.current,
+    jlpt_level,
+    difficulty,
+    estimated_minutes,
+    body,
+    hiragana,
     translation,
-    startTime,
-    endTime
-  },
-  "quiz": quiz[]-> {
-    _id,
-    question,
-    options[] {
-      text,
-      isCorrect
-    },
-    explanation
+    audio_url,
+    image_url,
+    video_url,
+    quizzes,
+    seo
+  }`;
+  try {
+    return await sanityClient.fetch(query, { slug });
+  } catch (error) {
+    console.error(`[getSanityReadingBySlug] Error fetching reading from Sanity:`, error);
+    return null;
   }
-}`;
+}
 
-export const vocabDetailQuery = `*[(_type == "vocab" || _type == "verb_dictionary") && (slug.current == $id || word == $id || jisho == $id || romaji == $id || _id == $id)][0] {
-  _id,
-  "slug": slug.current,
-  "word": coalesce(word, masu, jisho),
-  furigana,
-  romaji,
-  meaning,
-  hinshi,
-  pitchAccent,
-  mnemonic,
-  showInFlashcard,
-  jlptLevel,
-  "audioUrl": audio.asset->url,
-  relatedKanji[]->{ 
-    _id, 
-    character, 
-    meaning, 
-    onyomi, 
-    kunyomi,
-    "slug": character 
-  },
-  synonyms[]->{ _id, "slug": coalesce(slug.current, word, _id), word, meaning, furigana, romaji },
-  antonyms[]->{ _id, "slug": coalesce(slug.current, word, _id), word, meaning, furigana, romaji },
-  examples[] { "japanese": coalesce(jp, japanese), "indonesian": coalesce(id, indonesian), furigana, romaji },
-  usageNotes,
-  negative,
-  past,
-  pastNegative,
-  teForm,
-  adverbial
-}`;
+/**
+ * Mengambil satu materi menyimak dari Sanity berdasarkan slug.
+ */
+export async function getSanityListeningBySlug(slug: string) {
+  const query = `*[_type == "listeningMaterial" && slug.current == $slug][0] {
+    _id,
+    title,
+    "slug": slug.current,
+    jlpt_level,
+    difficulty,
+    body,
+    hiragana,
+    translation,
+    audio_url,
+    image_url,
+    video_url,
+    quizzes,
+    seo
+  }`;
+  try {
+    return await sanityClient.fetch(query, { slug });
+  } catch (error) {
+    console.error(`[getSanityListeningBySlug] Error fetching listening from Sanity:`, error);
+    return null;
+  }
+}
 
-export const verbOnlyDetailQuery = `*[_type == "verb_dictionary" && (slug.current == $id || jisho == $id || _id == $id)][0] {
-  _id,
-  "slug": slug.current,
-  jlptLevel,
-  group,
-  jisho,
-  meaning,
-  masu,
-  furigana,
-  te,
-  nai,
-  ta,
-  teiru,
-  tai,
-  nakereba,
-  kanou,
-  shieki,
-  ukemi,
-  katei,
-  ikou,
-  teshimau,
-  meirei,
-  transitivity,
-  mnemonic,
-  "audioUrl": audio.asset->url,
-  relatedKanji[]->{ 
-    _id, 
-    character, 
-    meaning, 
-    onyomi, 
-    kunyomi,
-    "slug": character 
-  },
-  examples[] { "japanese": coalesce(jp, japanese), "indonesian": coalesce(id, indonesian), furigana, romaji }
-}`;
+/**
+ * Mengambil satu ujian (exam) dari Sanity berdasarkan slug.
+ */
+export async function getSanityExamBySlug(slug: string) {
+  const query = `*[_type == "mockExam" && slug.current == $slug][0] {
+    _id,
+    title,
+    "slug": slug.current,
+    description,
+    time_limit,
+    passing_score,
+    is_published,
+    questions
+  }`;
+  try {
+    return await sanityClient.fetch(query, { slug });
+  } catch (error) {
+    console.error(`[getSanityExamBySlug] Error fetching exam from Sanity:`, error);
+    return null;
+  }
+}
+

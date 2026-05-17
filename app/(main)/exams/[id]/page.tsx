@@ -1,66 +1,31 @@
 /**
  * @file page.tsx
  * @description Halaman Sesi Ujian Dinamis (Standalone Exam Session). 
- * Bertanggung jawab meresolusi ID rute URL dan menarik struktur soal dari Sanity CMS.
+ * Bertanggung jawab meresolusi ID rute URL dan menarik struktur soal dari Supabase.
  * @module StandaloneExamSessionPage
  */
 
 // ======================
 // IMPORTS
 // ======================
-import { sanityFetch } from "@/lib/sanity.fetch";
 import MockExamEngine from "@/components/features/exams/mock-engine/MockExamEngine";
 import Link from "next/link";
 import { Card } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
-
-// ======================
-// TYPES
-// ======================
+import { getExamByIdOrSlug } from "@/app/actions/library.actions";
 interface PageProps {
   params: Promise<{ id: string }>;
 }
 
-// ======================
-// CONFIG / CONSTANTS
-// ======================
-
-// ======================
-// MAIN EXECUTION
-// ======================
-
-/**
- * Komponen StandaloneExamSessionPage: Melakukan pengecekan validitas ketersediaan data ujian.
- * 
- * @returns {JSX.Element} Merender layar Error/Kosong, atau mesin interaktif ujian JLPT.
- */
 export default async function StandaloneExamSessionPage({ params }: PageProps) {
   const { id } = await params;
   const decodedId = decodeURIComponent(id);
+  const examData = await getExamByIdOrSlug(decodedId);
 
-  // ======================
-  // DATABASE OPERATIONS
-  // ======================
-  const query = `*[_type == "mockExam" && (_id == $id || slug.current == $id)][0] {
-    _id, title, timeLimit, passingScore,
-    "categorySlug": course_category->slug.current, 
-    "levelCode": level,
-    "choukaiAudioUrl": choukaiAudio.asset->url,
-    questions[] {
-      _key, section, questionText,
-      "imageUrl": image.asset->url, "audioUrl": audio.asset->url,
-      options, correctAnswer
-    }
-  }`;
-
-  const examData = await sanityFetch<any>({
-    query,
-    params: { id: decodedId },
-    tags: ["mockExam"],
-  });
   const backLink = examData?.categorySlug
     ? `/courses/${examData.categorySlug}`
     : "/courses";
+
 
   // ======================
   // RENDER (Error Handling & Engine)

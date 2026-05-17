@@ -2,7 +2,7 @@
 
 import React, { useState } from "react";
 import { motion, AnimatePresence } from "framer-motion";
-import { client } from "@/sanity/lib/client";
+import { createClient } from "@/lib/supabase/client";
 import { useQuery } from "@tanstack/react-query";
 import { Badge } from "@/components/ui/badge";
 import { SmartJapanese } from "@/components/ui/SmartJapanese";
@@ -18,7 +18,7 @@ interface WordPopoverProps {
 
 /**
  * WordPopover: Menampilkan popup informasi kosakata saat teks diklik.
- * Mengambil data secara real-time dari Sanity.
+ * Mengambil data secara real-time dari Supabase.
  */
 export default function WordPopover({ children, word, reading }: WordPopoverProps) {
   const [isOpen, setIsOpen] = useState(false);
@@ -27,17 +27,27 @@ export default function WordPopover({ children, word, reading }: WordPopoverProp
   const { data: vocab, isLoading } = useQuery({
     queryKey: ["vocab-lookup", word, reading],
     queryFn: async () => {
-      const query = `*[_type == "vocab" && (word == $word || furigana == $word)][0] {
-        _id,
-        "slug": coalesce(slug.current, word, _id),
-        word,
-        furigana,
-        romaji,
-        meaning,
-        "jlpt": jlptLevel,
-        hinshi
-      }`;
-      return client.fetch(query, { word });
+      const supabase = createClient();
+      const { data, error } = await supabase
+        .from("vocab")
+        .select("id, slug, word, furigana, romaji, meaning_id, jlpt_level, hinshi")
+        .or(`word.eq.${word},furigana.eq.${word}`)
+        .limit(1)
+        .single();
+
+      if (error && error.code !== "PGRST116") throw error;
+      if (!data) return null;
+
+      return {
+        _id: data.id,
+        slug: data.slug || data.word || data.id,
+        word: data.word,
+        furigana: data.furigana,
+        romaji: data.romaji,
+        meaning: data.meaning_id,
+        jlpt: data.jlpt_level,
+        hinshi: Array.isArray(data.hinshi) ? data.hinshi[0] : data.hinshi,
+      };
     },
     enabled: isOpen,
     staleTime: 1000 * 60 * 5, // 5 minutes

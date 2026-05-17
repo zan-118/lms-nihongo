@@ -4,6 +4,8 @@ import React from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import { Card } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
+import { ExternalLink, Bookmark } from "lucide-react";
+import { ROUTES } from "@/lib/routes";
 import TTSReader from "@/components/features/tools/tts/TTSReader";
 import { SmartJapanese } from "@/components/ui/SmartJapanese";
 import { VocabItem } from "./types";
@@ -15,7 +17,6 @@ interface VocabCardProps {
 }
 
 import Link from "next/link";
-import { ExternalLink } from "lucide-react";
 
 /**
  * Komponen kartu kosakata individual.
@@ -34,7 +35,7 @@ export function VocabCard({ item, idx, showRomaji }: VocabCardProps) {
         willChange: 'transform'
       }}
     >
-      <Link href={`/library/${item._type === "verb_dictionary" ? "verbs" : "vocab"}/${item.slug}`} className="block">
+      <Link href={ROUTES.LIBRARY.VOCAB(item.slug)} className="block">
         <Card className="p-5 md:p-6 bg-card border border-border rounded-2xl hover:border-primary/40 transition-all duration-300 group shadow-sm flex flex-col gap-4 relative overflow-hidden h-full">
           {/* Subtle Hover Indicator */}
           <div className="absolute top-0 right-0 w-12 h-12 bg-primary/5 rounded-bl-[2rem] flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity translate-x-4 translate-y-4 group-hover:translate-x-0 group-hover:translate-y-0 duration-500">
@@ -44,7 +45,7 @@ export function VocabCard({ item, idx, showRomaji }: VocabCardProps) {
           <div className="flex justify-between items-start">
             <div className="flex flex-wrap gap-2">
               <Badge variant="outline" className="px-2 py-0.5 text-[10px] font-black uppercase tracking-widest rounded-lg border h-auto bg-muted text-muted-foreground">
-                {item.hinshi || (item._type === "verb_dictionary" ? "verb" : "-")}
+                {item.hinshi?.[0] || "vocab"}
               </Badge>
             </div>
             <div onClick={(e) => e.preventDefault()} className="relative z-10">
@@ -54,7 +55,7 @@ export function VocabCard({ item, idx, showRomaji }: VocabCardProps) {
 
           <div className="space-y-1.5 flex-1">
             <div className="text-2xl md:text-3xl font-black text-foreground font-japanese leading-tight tracking-tight group-hover:text-primary transition-colors">
-              <SmartJapanese word={item.word} furigana={item.furigana} />
+              <SmartJapanese word={item.word} furigana={item.furigana || undefined} />
             </div>
             
             <AnimatePresence>
@@ -75,11 +76,11 @@ export function VocabCard({ item, idx, showRomaji }: VocabCardProps) {
             </p>
           </div>
 
-          {(item.mnemonic || (item.relatedKanji && item.relatedKanji.length > 0)) && (
+          {(item.mnemonic || (item.related_kanji && item.related_kanji.length > 0)) && (
             <div className="pt-3 border-t border-border flex flex-col gap-2">
-              {item.relatedKanji && item.relatedKanji.length > 0 && (
+              {item.related_kanji && item.related_kanji.length > 0 && (
                 <div className="flex flex-wrap gap-1">
-                  {item.relatedKanji.map((kanji, kIdx) => (
+                  {item.related_kanji.map((kanji: { character: string; meaning: string }, kIdx: number) => (
                     <span key={kIdx} className="text-[10px] px-1.5 py-0.5 rounded-md bg-muted text-muted-foreground border border-border font-japanese" title={kanji.meaning}>
                       {kanji.character}
                     </span>

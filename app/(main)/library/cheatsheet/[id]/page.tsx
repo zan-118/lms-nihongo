@@ -1,4 +1,3 @@
-import { sanityFetch } from "@/lib/sanity.fetch";
 import { notFound } from "next/navigation";
 import Link from "next/link";
 import { 
@@ -10,21 +9,7 @@ import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
 import { CheatsheetTable } from "./CheatsheetTable";
 import PdfGenerator from "@/components/features/pdf/PdfGenerator";
-
-
-interface SheetItem {
-  label: string;
-  jp: string;
-  romaji: string;
-}
-
-interface Cheatsheet {
-  _id: string;
-  title: string;
-  category: string;
-  items?: SheetItem[];
-  linkedVocab?: SheetItem[];
-}
+import { getCheatsheetByIdOrSlug } from "@/app/actions/library.actions";
 
 export default async function CheatsheetDetailPage({
   params,
@@ -34,14 +19,8 @@ export default async function CheatsheetDetailPage({
   const { id } = await params;
   const decodedId = decodeURIComponent(id);
   
-  const sheet: Cheatsheet = await sanityFetch({
-    query: `*[_type == "cheatsheet" && (_id == $id || _id == "drafts." + $id || slug.current == $id)][0] {
-      _id, title, category, items,
-      linkedVocab[]->{ "jp": word, "label": meaning, "romaji": coalesce(romaji, furigana) }
-    }`,
-    params: { id: decodedId },
-    tags: ["cheatsheet"],
-  });
+  const sheet = await getCheatsheetByIdOrSlug(decodedId);
+
 
   if (!sheet) notFound();
 

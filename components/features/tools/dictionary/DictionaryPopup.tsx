@@ -7,6 +7,7 @@ import { X } from "lucide-react";
 import { Badge } from "@/components/ui/badge";
 import TTSReader from "@/components/features/tools/tts/TTSReader";
 import AddToSRSButton from "@/components/features/srs/actions/AddToSRSButton";
+import { createClient } from "@/lib/supabase/client";
 
 /**
  * @file DictionaryPopup.tsx
@@ -31,19 +32,54 @@ export default function DictionaryPopup() {
   const lookupWord = async (text: string) => {
     setLoading(true);
     try {
-      if (text === "猫") {
-        setResult({ word: "猫", furigana: "ねこ", meaning: "Kucing", romaji: "Neko" });
-      } else if (text === "日本語") {
-        setResult({ word: "日本語", furigana: "にほんご", meaning: "Bahasa Jepang", romaji: "Nihongo" });
+      const supabase = createClient();
+      
+      // 1. Cari kecocokan eksak pada word atau furigana
+      let { data, error } = await supabase
+        .from("vocab")
+        .select("id, word, furigana, romaji, meaning_id")
+        .or(`word.eq.${text},furigana.eq.${text}`)
+        .limit(1)
+        .maybeSingle();
+
+      if (error) throw error;
+
+      // 2. Jika tidak ditemukan, coba cari substring (ilike)
+      if (!data) {
+        const { data: list, error: listError } = await supabase
+          .from("vocab")
+          .select("id, word, furigana, romaji, meaning_id")
+          .or(`word.ilike.%${text}%,furigana.ilike.%${text}%`)
+          .limit(1);
+          
+        if (listError) throw listError;
+        if (list && list.length > 0) {
+          data = list[0];
+        }
+      }
+
+      if (data) {
+        setResult({
+          id: data.id,
+          word: data.word,
+          furigana: data.furigana || undefined,
+          meaning: data.meaning_id || "",
+          romaji: data.romaji || undefined,
+        });
       } else {
-        setResult({ 
-          word: text, 
-          meaning: "Tunggu sebentar ya...", 
-          furigana: "???" 
+        setResult({
+          word: text,
+          meaning: "Kosakata belum tersedia di database kami.",
+          furigana: "???"
         });
       }
     } catch (err) {
-      console.error(err);
+      console.error("Lookup error:", err);
+      setResult({
+        word: text,
+        meaning: "Gagal memuat arti kata.",
+        furigana: "???"
+      });
     } finally {
       setLoading(false);
     }
@@ -93,9 +129,9 @@ export default function DictionaryPopup() {
           animate={{ opacity: 1, scale: 1, y: 0 }}
           exit={{ opacity: 0, scale: 0.9, y: 10 }}
           style={{
-            position: "absolute",
-            left: selection.x,
-            top: selection.y,
+            position: "fixed", // Changed to fixed for easier boundary clamping
+            left: Math.max(140, Math.min(selection.x - window.scrollX, typeof window !== 'undefined' ? window.innerWidth - 140 : 1000)),
+            top: Math.max(200, selection.y - window.scrollY),
             transform: "translateX(-50%) translateY(-100%)",
             zIndex: 1000,
           }}
@@ -134,9 +170,11 @@ export default function DictionaryPopup() {
                   <div className="flex-1">
                      <TTSReader text={result.word} minimal={true} />
                   </div>
-                  <div className="flex-1 flex justify-end">
-                     <AddToSRSButton wordId={result.word} />
-                  </div>
+                  {result.id && (
+                    <div className="flex-1 flex justify-end">
+                       <AddToSRSButton wordId={result.id} />
+                    </div>
+                  )}
                 </div>
               </div>
             ) : (

@@ -6,25 +6,23 @@
  */
 
 import { Metadata } from "next";
-import { sanityFetch } from "@/lib/sanity.fetch";
-import { kanjiQuery } from "@/lib/queries";
+import { getLibraryItemBySlug } from "@/app/actions/library.actions";
 import { notFound } from "next/navigation";
 import Link from "next/link";
 import { 
   ChevronLeft, 
-  Sparkles, 
-  Link as LinkIcon,
-  Play,
   Home,
   Library,
   Languages
 } from "lucide-react";
-import { Card } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
-import { Badge } from "@/components/ui/badge";
-import { SmartJapanese } from "@/components/ui/SmartJapanese";
-import KanjiStrokePlayer from "@/components/features/kanji/components/KanjiStrokePlayer";
-import { PortableText } from "@portabletext/react";
+
+// Feature Components
+import { KanjiStrokeHero } from "@/components/features/kanji/detail/KanjiStrokeHero";
+import { KanjiReadings } from "@/components/features/kanji/detail/KanjiReadings";
+import { KanjiRadicals } from "@/components/features/kanji/detail/KanjiRadicals";
+import { KanjiMnemonic } from "@/components/features/kanji/detail/KanjiMnemonic";
+import { KanjiRelatedVocab } from "@/components/features/kanji/detail/KanjiRelatedVocab";
 
 export async function generateMetadata({
   params,
@@ -33,11 +31,7 @@ export async function generateMetadata({
 }): Promise<Metadata> {
   const { id } = await params;
   const decodedId = decodeURIComponent(id);
-  const kanji = await sanityFetch<any>({
-    query: kanjiQuery,
-    params: { id: decodedId },
-    tags: ["kanji"],
-  });
+  const kanji = await getLibraryItemBySlug("kanji", decodedId);
 
   if (!kanji) {
     return {
@@ -58,11 +52,7 @@ export default async function KanjiDetailPage({
 }) {
   const { id } = await params;
   const decodedId = decodeURIComponent(id);
-  const kanji = await sanityFetch<any>({
-    query: kanjiQuery,
-    params: { id: decodedId },
-    tags: ["kanji"],
-  });
+  const kanji = await getLibraryItemBySlug("kanji", decodedId);
 
   if (!kanji) notFound();
 
@@ -100,106 +90,27 @@ export default async function KanjiDetailPage({
 
         <div className="grid grid-cols-1 md:grid-cols-3 lg:grid-cols-4 gap-6 auto-rows-[minmax(0,auto)] animate-in fade-in slide-in-from-bottom-8 duration-1000 ease-out">
           {/* 1. Stroke & Visual Bento (Fokus Utama) */}
-          <Card className="p-8 md:p-12 bg-card/20 backdrop-blur-xl border-border rounded-[2.5rem] hover:border-primary/40 transition-all flex flex-col items-center justify-center group relative overflow-hidden md:col-span-2 lg:col-span-2 md:row-span-2">
-            <div className="absolute top-0 right-0 w-32 h-32 bg-primary/10 rounded-bl-[4rem] -mr-8 -mt-8 blur-3xl group-hover:bg-primary/20 transition-all duration-700" />
-            <div className="absolute bottom-0 left-0 w-32 h-32 bg-secondary/10 rounded-tr-[4rem] -ml-8 -mb-8 blur-3xl group-hover:bg-secondary/20 transition-all duration-700" />
-            
-            <div className="w-full max-w-[200px] md:max-w-[300px] relative z-10 flex justify-center">
-              <KanjiStrokePlayer 
-                character={kanji.character} 
-                sanitySvg={kanji.strokeOrderSvg}
-                size={200}
-              />
-            </div>
+          <KanjiStrokeHero 
+            character={kanji.character} 
+            strokeOrderSvg={kanji.strokeOrderSvg} 
+            meaning={kanji.meaning} 
+            jlpt={kanji.jlpt} 
+          />
 
-            <div className="mt-8 flex flex-col items-center gap-3 relative z-10">
-              <h1 className="text-4xl md:text-5xl lg:text-6xl font-black text-foreground tracking-tighter uppercase text-center drop-shadow-sm">
-                {kanji.meaning}
-              </h1>
-              <Badge variant="outline" className="px-4 py-1.5 text-[10px] font-black uppercase tracking-widest rounded-xl bg-primary/10 text-primary border-primary/20">
-                 JLPT {kanji.jlpt || "N/A"}
-              </Badge>
-            </div>
-          </Card>
-
-          {/* 2. Onyomi Bento (Cara Baca Mandarin) */}
-          <Card className="p-8 bg-card/20 backdrop-blur-xl border-border rounded-[2.5rem] hover:border-primary/40 transition-all relative overflow-hidden flex flex-col justify-center col-span-1 group">
-            <div className="absolute top-4 right-6 opacity-[0.05] group-hover:scale-110 transition-transform text-primary">
-              <Play size={40} aria-hidden="true" />
-            </div>
-            <span className="text-[10px] font-black uppercase tracking-[0.2em] text-primary block mb-3 relative z-10">Onyomi</span>
-            <span className="text-3xl md:text-4xl font-japanese font-black text-foreground leading-tight tracking-tight relative z-10">
-              {kanji.onyomi || "—"}
-            </span>
-          </Card>
-
-          {/* 3. Kunyomi Bento (Cara Baca Jepang) */}
-          <Card className="p-8 bg-card/20 backdrop-blur-xl border-border rounded-[2.5rem] hover:border-primary/40 transition-all relative overflow-hidden flex flex-col justify-center col-span-1 group">
-            <div className="absolute top-4 right-6 opacity-[0.05] group-hover:scale-110 transition-transform text-success">
-              <Play size={40} aria-hidden="true" />
-            </div>
-            <span className="text-[10px] font-black uppercase tracking-[0.2em] text-success block mb-3 relative z-10">Kunyomi</span>
-            <span className="text-3xl md:text-4xl font-japanese font-black text-foreground leading-tight tracking-tight relative z-10">
-              {kanji.kunyomi || "—"}
-            </span>
-          </Card>
+          {/* 2 & 3. Onyomi & Kunyomi */}
+          <KanjiReadings 
+            onyomi={kanji.onyomi} 
+            kunyomi={kanji.kunyomi} 
+          />
 
           {/* 4. Radicals Bento (Akar Kata) */}
-          <Card className="p-8 bg-card/20 backdrop-blur-xl border-border rounded-[2.5rem] hover:border-primary/40 transition-all md:col-span-3 lg:col-span-2 flex flex-col justify-center">
-            <span className="text-[10px] font-black uppercase tracking-[0.2em] text-muted-foreground block mb-4">Radikal Utama</span>
-            <div className="flex flex-wrap gap-3">
-              {kanji.radicals && kanji.radicals.length > 0 ? (
-                kanji.radicals.map((rad: string, i: number) => (
-                  <Badge key={i} variant="secondary" className="px-5 py-2.5 rounded-xl bg-muted/40 border border-border text-2xl font-japanese hover:border-primary/40 transition-all">
-                    {rad}
-                  </Badge>
-                ))
-              ) : (
-                <span className="text-sm text-muted-foreground italic">Tidak ada data radikal.</span>
-              )}
-            </div>
-          </Card>
+          <KanjiRadicals radicals={kanji.radicals} />
 
           {/* 5. Mnemonic Bento (Jembatan Keledai) */}
-          {kanji.mnemonics && (
-            <Card className="p-8 md:p-10 bg-card/20 backdrop-blur-xl border-border rounded-[2.5rem] hover:border-primary/40 transition-all md:col-span-full lg:col-span-2 relative overflow-hidden group">
-              <div className="flex items-center gap-3 mb-6 relative z-10">
-                <Sparkles size={20} className="text-warning" aria-hidden="true" />
-                <h2 className="text-sm font-black uppercase tracking-[0.2em] text-foreground">Memory Mnemonic</h2>
-              </div>
-              <div className="prose dark:prose-invert prose-sm max-w-none prose-p:leading-relaxed prose-p:text-warning italic font-medium relative z-10">
-                <PortableText value={kanji.mnemonics} />
-              </div>
-            </Card>
-          )}
+          <KanjiMnemonic mnemonics={kanji.mnemonics} />
 
           {/* 6. Related Context Bento (Kosakata Terkait) */}
-          <Card className="p-8 md:p-10 bg-card/20 backdrop-blur-xl border-border rounded-[2.5rem] hover:border-primary/40 transition-all md:col-span-full lg:col-span-2">
-            <div className="flex items-center gap-3 mb-6">
-              <LinkIcon size={20} className="text-primary" aria-hidden="true" />
-              <h2 className="text-sm font-black uppercase tracking-[0.2em] text-foreground">Kosakata Terkait</h2>
-            </div>
-            
-            {kanji.relatedVocab && kanji.relatedVocab.length > 0 ? (
-              <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
-                {kanji.relatedVocab.map((vocab: { _id: string; word: string; furigana: string; meaning: string; romaji?: string; slug?: string }) => (
-                  <Link key={vocab._id} href={`/library/vocab/${vocab.slug}`}>
-                    <Card className="p-6 bg-card/20 border-border rounded-2xl flex items-center gap-4 hover:bg-card/40 hover:border-primary/30 transition-all group cursor-pointer shadow-none">
-                      <div className="flex-1 min-w-0">
-                        <div className="text-xl font-bold text-foreground font-japanese group-hover:text-primary transition-colors">
-                          <SmartJapanese word={vocab.word} furigana={vocab.furigana} />
-                        </div>
-                        <p className="text-xs text-muted-foreground truncate mt-1">{vocab.meaning}</p>
-                      </div>
-                      <ChevronLeft size={16} className="rotate-180 text-muted-foreground/30 group-hover:text-primary transition-colors" aria-hidden="true" />
-                    </Card>
-                  </Link>
-                ))}
-              </div>
-            ) : (
-              <p className="text-xs text-muted-foreground italic">Belum ada kosakata yang terhubung ke karakter ini.</p>
-            )}
-          </Card>
+          <KanjiRelatedVocab relatedVocab={kanji.relatedVocab} />
         </div>
 
         {/* Footer Actions */}

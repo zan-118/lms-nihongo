@@ -15,6 +15,7 @@ import { usePathname, useRouter } from "next/navigation";
 import Link from "next/link";
 import { ChevronRight, ChevronLeft, Home } from "lucide-react";
 import { Button } from "@/components/ui/button";
+import { ROUTES, getRouteLabel } from "@/lib/routes";
 
 /**
  * NavWrapper: Komponen pembungkus navigasi sisi client.
@@ -54,28 +55,28 @@ export default function NavWrapper({ children }: NavWrapperProps) {
             className={`flex-1 w-full flex flex-col ${!isExamPage ? 'pb-40 md:pb-12' : 'pb-12'} outline-none relative`}
           >
             {!isExamPage && (
-              <div className="w-full px-4 md:px-8 lg:px-12 pt-6 flex items-center gap-4 z-20 relative animate-in fade-in slide-in-from-top-4 duration-500">
+              <div className="hidden md:flex w-full px-6 md:px-12 pt-8 items-center gap-4 z-20 relative animate-in fade-in slide-in-from-top-4 duration-500">
                 <Button 
                   onClick={() => router.back()}
                   variant="ghost" 
-                  className="w-10 h-10 p-0 shrink-0 rounded-xl bg-card border border-border hover:bg-primary/10 hover:border-primary/30 text-muted-foreground hover:text-primary transition-all shadow-sm flex items-center justify-center"
+                  className="w-10 h-10 p-0 shrink-0 rounded-xl bg-card/50 backdrop-blur-md border border-border/50 hover:bg-primary/10 hover:border-primary/30 text-muted-foreground hover:text-primary transition-all shadow-sm flex items-center justify-center"
                   aria-label="Kembali"
                 >
                   <ChevronLeft size={16} />
                 </Button>
                 
-                <nav className="flex items-center flex-wrap gap-2 text-[10px] md:text-xs font-black uppercase tracking-[0.2em] text-muted-foreground bg-card/40 backdrop-blur-md px-4 py-2 rounded-xl border border-border/50 shadow-sm">
-                  <Link href="/dashboard" className="flex items-center gap-1.5 hover:text-primary transition-colors">
-                    <Home size={14} /> <span className="hidden sm:inline">Beranda</span>
+                <nav className="flex items-center flex-wrap gap-2 text-[10px] md:text-xs font-black uppercase tracking-[0.2em] text-muted-foreground bg-card/30 backdrop-blur-md px-5 py-2.5 rounded-xl border border-border/40 shadow-sm transition-all hover:border-border/60">
+                  <Link href={ROUTES.DASHBOARD} className="flex items-center gap-1.5 hover:text-primary transition-colors">
+                    <Home size={13} className="mb-0.5" /> <span className="hidden sm:inline">Beranda</span>
                   </Link>
                   {pathSegments.map((segment, idx) => (
                     <div key={idx} className="flex items-center gap-2">
-                      <ChevronRight size={12} className="opacity-30" />
+                      <ChevronRight size={10} className="opacity-20" />
                       <Link 
                         href={`/${pathSegments.slice(0, idx + 1).join('/')}`}
                         className={`hover:text-primary transition-colors ${idx === pathSegments.length - 1 ? 'text-primary pointer-events-none' : ''}`}
                       >
-                        {decodeURIComponent(segment).replace(/-/g, ' ')}
+                        {getRouteLabel(segment)}
                       </Link>
                     </div>
                   ))}

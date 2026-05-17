@@ -1,12 +1,12 @@
 export interface FlashcardProps {
   id: string;
-  docType?: string;
+  docType?: "vocab" | "kanji";
   slug?: string;
   word: string;
   meaning: string;
-  furigana?: string;
-  romaji?: string;
-  kanjiDetails?: { onyomi?: string; kunyomi?: string };
+  furigana?: string | null;
+  romaji?: string | null;
+  kanjiDetails?: { onyomi?: string | null; kunyomi?: string | null };
   isFlipped: boolean;
   onFlip: () => void;
   type?: "vocab" | "kanji";
@@ -14,6 +14,7 @@ export interface FlashcardProps {
     interval: number;
     repetition: number;
     easeFactor: number;
+    /** Timestamp ms (next_review) */
     nextReview: number;
   };
   isShaking?: boolean;
@@ -22,21 +23,26 @@ export interface FlashcardProps {
   onUserInputChange?: (val: string) => void;
   isAnswerChecked?: boolean;
   inputResult?: "correct" | "wrong" | null;
-  mnemonic?: string;
-  pitchAccent?: string;
-  examples?: Array<{ japanese: string; indonesian: string }>;
-  hinshi?: string;
-  negative?: string;
-  past?: string;
-  pastNegative?: string;
-  teForm?: string;
-  adverbial?: string;
-  relatedKanji?: Array<{
+  mnemonic?: string | null;
+  pitch_accent?: string | null;
+  examples?: Array<{ japanese: string; indonesian: string }> | null;
+  hinshi?: string[] | null;
+  audio_url?: string | null;
+  /** Konjugasi kata kerja — dari kolom conjugations (jsonb) */
+  conjugations?: {
+    negative?: string;
+    past?: string;
+    pastNegative?: string;
+    teForm?: string;
+    adverbial?: string;
+    [key: string]: string | undefined;
+  } | null;
+  related_kanji?: Array<{
     character: string;
     meaning: string;
-    onyomi?: string;
-    kunyomi?: string;
-  }>;
+    onyomi?: string | null;
+    kunyomi?: string | null;
+  }> | null;
 }
 
 export interface FlashcardThemeContext {

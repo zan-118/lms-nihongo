@@ -3,13 +3,14 @@
 import { motion } from "framer-motion";
 import Link from "next/link";
 import Image from "next/image";
-import { useNavbar } from "@/components/layout/navbar/useNavbar";
+import { useNavbar } from "@/hooks/navigation/useNavbar";
 import { useHasMounted } from "@/hooks/useHasMounted";
 
 // Domain Components
 import { SidebarItem } from "./sidebar/SidebarItem";
 import { UserStatusSection } from "./sidebar/UserStatusSection";
 import { ThemeToggle } from "./ThemeToggle";
+import { ROUTES } from "@/lib/routes";
 
 export default function Sidebar({ isOpen, onClose }: { isOpen: boolean; onClose: () => void }) {
   const hasMounted = useHasMounted();
@@ -33,9 +34,9 @@ export default function Sidebar({ isOpen, onClose }: { isOpen: boolean; onClose:
       <div className="absolute inset-0 bg-[radial-gradient(circle_at_20%_20%,rgba(var(--primary-rgb),0.02)_0%,transparent_50%)] pointer-events-none" />
       
       {/* LOGO */}
-      <div className="mb-12 flex items-center gap-4 relative z-10">
+      <div className="mb-10 flex items-center gap-4 relative z-10 px-2">
         <Link href="/" className="flex items-center gap-3 group">
-          <div className="relative w-10 h-10 group-hover:rotate-12 transition-transform duration-500 drop-shadow-[0_0_15px_rgba(var(--primary-rgb),0.4)]">
+          <div className="relative w-8 h-8 group-hover:rotate-12 transition-transform duration-500 drop-shadow-[0_0_15px_rgba(var(--primary-rgb),0.4)]">
             <Image
               src="/logo-branding.svg"
               alt="NihongoRoute"
@@ -45,13 +46,13 @@ export default function Sidebar({ isOpen, onClose }: { isOpen: boolean; onClose:
             />
           </div>
           <div className="flex flex-col">
-             <span className="text-xl font-black text-foreground italic tracking-tighter uppercase leading-none">
+             <span className="text-lg font-black text-foreground italic tracking-tighter uppercase leading-none">
                Nihongo<span className="text-primary">Route</span>
              </span>
-             <div className="flex items-center gap-2 mt-1">
-                <span className="text-[8px] font-bold text-primary/50 uppercase tracking-widest">Ecosystem</span>
-                <span className="w-1 h-1 rounded-full bg-border" />
-                <span className="text-[8px] font-black text-muted-foreground/40 uppercase tracking-widest">v2.0</span>
+             <div className="flex items-center gap-1.5 mt-0.5">
+                <span className="text-[7px] font-bold text-primary/50 uppercase tracking-[0.2em]">Ecosystem</span>
+                <span className="w-0.5 h-0.5 rounded-full bg-border" />
+                <span className="text-[7px] font-black text-muted-foreground/40 uppercase tracking-[0.2em]">v2.0</span>
              </div>
           </div>
         </Link>
@@ -61,7 +62,7 @@ export default function Sidebar({ isOpen, onClose }: { isOpen: boolean; onClose:
       <nav className="flex-1 space-y-8 relative z-10 overflow-y-auto pr-2 custom-scrollbar">
         {/* Utama */}
         <div className="space-y-1">
-          <div className="text-xs font-bold text-muted-foreground uppercase tracking-[0.3em] mb-3 ml-4 opacity-50">
+          <div className="text-[9px] font-bold text-muted-foreground uppercase tracking-[0.4em] mb-4 ml-4 opacity-40">
             Platform
           </div>
           {links.main.map((item) => (
@@ -71,7 +72,7 @@ export default function Sidebar({ isOpen, onClose }: { isOpen: boolean; onClose:
 
         {/* Belajar */}
         <div className="space-y-1">
-          <div className="text-xs font-bold text-muted-foreground uppercase tracking-[0.3em] mb-3 ml-4 opacity-50">
+          <div className="text-[9px] font-bold text-muted-foreground uppercase tracking-[0.4em] mb-4 ml-4 opacity-40">
             Pembelajaran
           </div>
           {links.learn.map((item) => (
@@ -81,7 +82,7 @@ export default function Sidebar({ isOpen, onClose }: { isOpen: boolean; onClose:
 
         {/* Sistem */}
         <div className="space-y-1">
-          <div className="text-xs font-bold text-muted-foreground uppercase tracking-[0.3em] mb-3 ml-4 opacity-50">
+          <div className="text-[9px] font-bold text-muted-foreground uppercase tracking-[0.4em] mb-4 ml-4 opacity-40">
             Sistem
           </div>
           {links.system.map((item) => (
@@ -104,9 +105,9 @@ export default function Sidebar({ isOpen, onClose }: { isOpen: boolean; onClose:
       {/* MINI FOOTER - LEGAL & INFO */}
       <div className="mt-6 pt-4 border-t border-border relative z-10">
         <div className="flex items-center justify-center gap-4 text-[10px] font-bold uppercase tracking-widest text-muted-foreground/30">
-          <Link href="/privacy" className="hover:text-primary transition-colors">Privacy</Link>
+          <Link href={ROUTES.PRIVACY} className="hover:text-primary transition-colors">Privacy</Link>
           <span className="w-1 h-1 rounded-full bg-muted" />
-          <Link href="/terms" className="hover:text-primary transition-colors">Terms</Link>
+          <Link href={ROUTES.TERMS} className="hover:text-primary transition-colors">Terms</Link>
           <span className="w-1 h-1 rounded-full bg-muted" />
           <span className="opacity-50">© 2024</span>
         </div>

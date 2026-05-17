@@ -1,5 +1,4 @@
 import React from "react";
-import { SharedPortableText } from "@/components/ui/portable-text/SharedPortableText";
 import { BookOpen, Sparkles } from "lucide-react";
 
 interface KanjiInfoCardProps {
@@ -53,7 +52,18 @@ export default function KanjiInfoCard({
              <span className="text-[10px] font-black uppercase tracking-widest text-primary/70">Mnemonic Study</span>
           </div>
           <div className="bg-muted/50 border border-border rounded-2xl p-5 text-[13px] text-foreground/70 leading-relaxed font-medium italic shadow-inner">
-            <SharedPortableText value={mnemonics} />
+            {typeof mnemonics === "string"
+              ? mnemonics
+              : Array.isArray(mnemonics)
+                ? mnemonics
+                    .map((block: any) =>
+                      block?.children
+                        ?.map((c: any) => c?.text || "")
+                        .join("") || block?.text || (typeof block === "string" ? block : "")
+                    )
+                    .filter(Boolean)
+                    .join(" ")
+                : null}
           </div>
         </div>
       )}

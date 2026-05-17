@@ -50,10 +50,11 @@ async function getKuroshiro() {
 }
 
 const ALLOWED_ORIGINS = [
-  "https://nihongo-route-cms.sanity.studio",
-  "http://localhost:3333",
-  "https://www.nihongoroute.my.id"
-];
+  "http://localhost:3000",
+  "http://localhost:3001",
+  "https://www.nihongoroute.my.id",
+  process.env.NEXT_PUBLIC_SITE_URL
+].filter(Boolean) as string[];
 
 function getCorsHeaders(req: Request) {
   const origin = req.headers.get("origin");

@@ -9,44 +9,12 @@
 // ======================
 import { notFound } from "next/navigation";
 import type { Metadata } from "next";
-import { sanityFetch } from "@/lib/sanity.fetch";
 import CourseCategoryClient from "./CourseCategoryClient";
+import { getCourseCategoryData } from "@/app/actions/library.actions";
 
-// ======================
-// CONFIG / CONSTANTS
-// ======================
 
 interface PageProps {
   params: Promise<{ categoryId: string }>;
-}
-
-// ======================
-// DATABASE OPERATIONS
-// ======================
-
-/**
- * Mengambil metadata kategori dan daftar pelajaran dari Sanity CMS.
- * 
- * @param {string} slug - Identifikasi level (e.g., "n5").
- * @returns {Promise<Object>} Data kategori, pelajaran, dan ujian.
- */
-async function getCourseData(slug: string) {
-  const query = `{
-    "category": *[_type == "course_category" && slug.current == $slug][0] {
-      _id, title, type, description, "slug": slug.current
-    },
-    "lessons": *[_type == "lesson" && course_category->slug.current == $slug] | order(orderNumber asc, _createdAt desc) {
-      _id, title, summary, "slug": slug.current
-    },
-    "mockExams": *[_type == "mockExam" && course_category->slug.current == $slug] | order(_createdAt desc) {
-      _id, title, timeLimit, passingScore
-    }
-  }`;
-  return await sanityFetch<any>({
-    query,
-    params: { slug },
-    tags: ["course_category", "lesson", "mockExam"],
-  });
 }
 
 // ======================
@@ -61,7 +29,7 @@ export async function generateMetadata({
 }: PageProps): Promise<Metadata> {
   const { categoryId } = await params;
   const decodedCategoryId = decodeURIComponent(categoryId);
-  const data = await getCourseData(decodedCategoryId);
+  const data = await getCourseCategoryData(decodedCategoryId);
 
   if (!data.category)
     return { title: "Kategori Tidak Ditemukan | NihongoRoute" };
@@ -86,10 +54,11 @@ export async function generateMetadata({
 export default async function CourseCategoryPage({ params }: PageProps) {
   const { categoryId } = await params;
   const decodedCategoryId = decodeURIComponent(categoryId);
-  const data = await getCourseData(decodedCategoryId);
+  const data = await getCourseCategoryData(decodedCategoryId);
 
   if (!data.category) return notFound();
 
   return <CourseCategoryClient data={data} categoryId={decodedCategoryId} />;
 }
+
 

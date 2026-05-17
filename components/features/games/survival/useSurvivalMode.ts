@@ -30,14 +30,14 @@ export function useSurvivalMode(cards: CardData[]) {
     setTimeLeft(TIME_PER_QUESTION);
     setSelectedId(null);
 
-    let wrongOptions = currentDeck.filter((c) => c._id !== targetCard._id);
+    let wrongOptions = currentDeck.filter((c) => c.id !== targetCard.id);
 
-    if (targetCard.category) {
-      const sameCategoryOptions = wrongOptions.filter((c) => c.category === targetCard.category);
+    if (targetCard.type) {
+      const sameCategoryOptions = wrongOptions.filter((c) => c.type === targetCard.type);
       if (sameCategoryOptions.length >= 3) {
         wrongOptions = sameCategoryOptions;
       } else {
-        wrongOptions = [...sameCategoryOptions, ...shuffleArray(wrongOptions.filter(c => c.category !== targetCard.category))];
+        wrongOptions = [...sameCategoryOptions, ...shuffleArray(wrongOptions.filter(c => c.type !== targetCard.type))];
       }
     }
 
@@ -54,7 +54,7 @@ export function useSurvivalMode(cards: CardData[]) {
       if (newHp <= 0) {
         setGameState("gameover");
       } else {
-        const currentIndex = deck.findIndex((c) => c._id === currentCard?._id);
+        const currentIndex = deck.findIndex((c) => c.id === currentCard?.id);
         loadNextQuestion(deck, currentIndex + 1);
       }
       return newHp;
@@ -64,10 +64,10 @@ export function useSurvivalMode(cards: CardData[]) {
   const handleAnswer = useCallback((selectedOption: CardData) => {
     if (gameState !== "playing" || isCorrecting) return;
 
-    if (selectedOption._id === currentCard?._id) {
-      setSelectedId(selectedOption._id);
+    if (selectedOption.id === currentCard?.id) {
+      setSelectedId(selectedOption.id);
       setScore((prev) => prev + 1);
-      const currentIndex = deck.findIndex((c) => c._id === currentCard?._id);
+      const currentIndex = deck.findIndex((c) => c.id === currentCard?.id);
       
       setIsCorrecting(true);
       setTimeout(() => {
@@ -75,8 +75,8 @@ export function useSurvivalMode(cards: CardData[]) {
         setIsCorrecting(false);
       }, 400);
     } else {
-      setSelectedId(selectedOption._id);
-      setSelectedWrongId(selectedOption._id);
+      setSelectedId(selectedOption.id);
+      setSelectedWrongId(selectedOption.id);
       setIsCorrecting(true);
       
       setTimeout(() => {

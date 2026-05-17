@@ -88,16 +88,16 @@ export function UserStatusSection({
   }
 
   return (
-    <div className="space-y-4">
-       <ThemeToggle />
-       <motion.div whileTap={{ scale: 0.95 }}>
-         <Button
-           asChild
-           className="w-full h-12 bg-primary text-primary-foreground font-black text-xs uppercase tracking-widest rounded-2xl shadow-lg border-none hover:opacity-90"
-         >
-           <Link href="/login">Masuk atau Daftar</Link>
-         </Button>
-       </motion.div>
-    </div>
+     <div className="space-y-4">
+        <ThemeToggle />
+        <motion.div whileTap={{ scale: 0.95 }}>
+          <Button
+            asChild
+            className="w-full h-11 bg-primary text-primary-foreground font-black text-[10px] uppercase tracking-[0.2em] rounded-xl shadow-lg border-none hover:opacity-90 hover:shadow-primary/20 transition-all"
+          >
+            <Link href="/login">Masuk atau Daftar</Link>
+          </Button>
+        </motion.div>
+     </div>
   );
 }

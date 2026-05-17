@@ -7,11 +7,12 @@ import { motion, AnimatePresence } from "framer-motion";
 import { useRouter } from "next/navigation";
 import { useUIStore } from "@/store/useUIStore";
 import { useSRSStore } from "@/store/useSRSStore";
-import { useNavbar } from "@/components/layout/navbar/useNavbar";
+import { useNavbar } from "@/hooks/navigation/useNavbar";
 import NotificationPopover from "@/components/features/user/NotificationPopover";
 import SearchModal from "@/components/features/tools/search/SearchModal";
 import UserNav from "@/components/features/user/UserNav";
 import { ThemeToggle } from "@/components/layout/ThemeToggle";
+import { getRouteLabel } from "@/lib/routes";
 export default function Topbar({ onMenuClick }: { onMenuClick: () => void }) {
   const router = useRouter();
   const { pathname } = useNavbar();
@@ -47,14 +48,24 @@ export default function Topbar({ onMenuClick }: { onMenuClick: () => void }) {
         {/* Mobile Menu or Back Toggle */}
         <div className="md:hidden flex items-center gap-2">
           {pathSegments.length > 1 ? (
-            <motion.button 
-              whileTap={{ scale: 0.9 }}
-              onClick={() => router.back()}
-              aria-label="Kembali ke Halaman Sebelumnya"
-              className="w-10 h-10 flex items-center justify-center rounded-xl bg-muted/50 border border-border/50 text-muted-foreground hover:text-primary transition-all"
-            >
-               <ChevronLeft size={20} />
-            </motion.button>
+            <div className="flex items-center gap-1">
+              <motion.button 
+                whileTap={{ scale: 0.9 }}
+                onClick={() => router.back()}
+                aria-label="Kembali ke Halaman Sebelumnya"
+                className="w-10 h-10 flex items-center justify-center rounded-xl bg-muted/50 border border-border/50 text-muted-foreground hover:text-primary transition-all"
+              >
+                 <ChevronLeft size={20} />
+              </motion.button>
+              <motion.button 
+                whileTap={{ scale: 0.9 }}
+                onClick={onMenuClick}
+                aria-label="Buka Menu Navigasi"
+                className="w-10 h-10 flex items-center justify-center rounded-xl bg-muted/50 border border-border/50 text-muted-foreground hover:text-primary transition-all"
+              >
+                 <Menu size={18} />
+              </motion.button>
+            </div>
           ) : (
             <motion.button 
               whileTap={{ scale: 0.9 }}
@@ -67,10 +78,15 @@ export default function Topbar({ onMenuClick }: { onMenuClick: () => void }) {
           )}
         </div>
 
-        <div className="flex flex-col min-w-0">
-          <h1 className="text-xs md:text-lg font-black text-foreground uppercase tracking-wider truncate leading-none">
-            {pathSegments.length > 0 ? decodeURIComponent(pathSegments[pathSegments.length - 1]).replace(/-/g, ' ') : "Dashboard"}
+        <div className="flex flex-col min-w-0 max-w-[180px] sm:max-w-[240px] md:max-w-none">
+          <h1 className="text-sm md:text-lg font-black text-foreground tracking-tight truncate leading-none uppercase">
+            {pathSegments.length > 0 ? getRouteLabel(pathSegments[pathSegments.length - 1]) : "Beranda"}
           </h1>
+          {pathSegments.length > 1 && (
+             <span className="text-[10px] font-bold text-muted-foreground/40 uppercase tracking-widest mt-1 truncate">
+               {getRouteLabel(pathSegments[pathSegments.length - 2])}
+             </span>
+          )}
         </div>
       </div>
 
@@ -152,27 +168,33 @@ export default function Topbar({ onMenuClick }: { onMenuClick: () => void }) {
           <Search size={18} />
         </button>
 
-        <div className="flex items-center gap-1 sm:gap-2 md:gap-4 sm:border-l sm:border-border/50 sm:pl-2 md:pl-5">
+        <div className="flex items-center gap-1.5 sm:gap-2 md:gap-4 sm:border-l sm:border-border/50 sm:pl-2 md:pl-5">
           {/* Japanese Display Mode Switcher */}
-          <div className="hidden sm:flex items-center gap-1 p-1 rounded-xl bg-muted/30 border border-border/50">
+          <div className="flex items-center gap-1 p-1 rounded-xl bg-muted/30 border border-border/50">
             {[
               { id: "kanji", icon: BookOpen, label: "Kanji" },
               { id: "furigana", icon: Eye, label: "Furi" },
               { id: "hiragana", icon: EyeOff, label: "Hira" },
-            ].map((m) => (
+            ].map((m, idx, arr) => (
               <motion.button
                 key={m.id}
                 whileTap={{ scale: 0.9 }}
-                onClick={() => useUIStore.getState().setReadingState({ mode: m.id as any })}
-                className={`w-7 h-7 md:w-8 md:h-8 flex items-center justify-center rounded-lg transition-all ${
+                onClick={() => {
+                  if (window.innerWidth < 640) {
+                    const nextMode = arr[(idx + 1) % arr.length].id;
+                    useUIStore.getState().setReadingState({ mode: nextMode as any });
+                  } else {
+                    useUIStore.getState().setReadingState({ mode: m.id as any });
+                  }
+                }}
+                className={`w-7 h-7 sm:w-8 sm:h-8 flex items-center justify-center rounded-lg transition-all ${
                   readingMode === m.id
                     ? "bg-primary text-primary-foreground shadow-lg shadow-primary/20"
                     : "text-muted-foreground hover:bg-primary/10 hover:text-primary"
-                }`}
+                } ${readingMode !== m.id ? 'hidden sm:flex' : 'flex'}`}
                 aria-label={`Mode ${m.label}`}
-                title={`Tampilkan ${m.label}`}
               >
-                <m.icon size={14} />
+                <m.icon size={13} />
               </motion.button>
             ))}
           </div>

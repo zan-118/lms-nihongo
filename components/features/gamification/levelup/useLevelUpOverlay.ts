@@ -11,7 +11,7 @@ export function useLevelUpOverlay(level: number) {
     const lastSeenLevel = localStorage.getItem("nihongoroute_last_seen_level");
     
     if (!lastSeenLevel || parseInt(lastSeenLevel) < level) {
-      setShow(true);
+      setTimeout(() => setShow(true), 0);
       sounds?.playSuccess();
       
       // Mark this level as seen

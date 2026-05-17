@@ -185,6 +185,7 @@ export default function AudioController({
             compact ? "w-10 h-10" : "w-14 h-14"
           )}
           onClick={handlePlayPause}
+          aria-label={isPlaying ? "Pause Audio" : "Putar Audio"}
         >
           {isPlaying ? <Pause size={compact ? 20 : 28} fill="currentColor" /> : <Play size={compact ? 20 : 28} fill="currentColor" className={compact ? "ml-0.5" : "ml-1"} />}
         </Button>
@@ -242,6 +243,7 @@ export default function AudioController({
                    if (!isPlaying) handlePlayPause();
                 }
               }}
+              aria-label="Ulangi Audio"
             >
               <RotateCcw size={18} />
             </Button>
@@ -251,6 +253,7 @@ export default function AudioController({
               className="w-10 h-10 rounded-full hover:bg-background/5 text-muted-foreground/60 transition-all hover:text-destructive"
               onClick={stopAll}
               disabled={!isPlaying && currentTime === 0}
+              aria-label="Stop Audio"
             >
               <Square size={18} fill="currentColor" />
             </Button>

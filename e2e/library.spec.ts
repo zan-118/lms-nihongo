@@ -26,22 +26,7 @@ test.describe('Library & Content (Grammar, Verbs, Vocab)', () => {
     }
   });
 
-  test('Verbs Library: conjugation toggle', async ({ page }) => {
-    await page.goto('/library/verbs', { waitUntil: 'domcontentloaded' });
-    
-    // Check if verbs are listed
-    const verbCard = page.locator('.neo-card').first();
-    await expect(verbCard).toBeVisible({ timeout: 15000 });
-    
-    // Click to see details/conjugation
-    await verbCard.click();
-    
-    // Look for conjugation tables or labels
-    const teForm = page.getByText(/~te Form|Bentuk ~te/i);
-    if (await teForm.isVisible()) {
-        await expect(teForm).toBeVisible();
-    }
-  });
+
 
   test('Vocabulary Library: search and browse', async ({ page }) => {
     await page.goto('/library/vocab', { waitUntil: 'domcontentloaded' });

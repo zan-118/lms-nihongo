@@ -3,10 +3,10 @@ import { KanjiSvgData, StrokeData } from "../types";
 
 /**
  * @file useKanjiSvg.ts
- * @description Hook untuk mengambil dan mem-parse data SVG Kanji dari Sanity atau GitHub KanjiVG.
+ * @description Hook untuk mengambil dan mem-parse data SVG Kanji dari Database (Supabase) atau GitHub KanjiVG.
  */
 
-export function useKanjiSvg(character: string, sanitySvg?: string) {
+export function useKanjiSvg(character: string, strokeOrderSvg?: string) {
   const [data, setData] = useState<KanjiSvgData | null>(null);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
@@ -21,13 +21,14 @@ export function useKanjiSvg(character: string, sanitySvg?: string) {
       try {
         let svgText = "";
 
-        // 1. Cek Sanity Fallback
-        if (sanitySvg) {
-          svgText = sanitySvg;
+        // 1. Cek Database/Fallback
+        if (strokeOrderSvg) {
+          svgText = strokeOrderSvg;
         } else {
           // 2. Fetch dari GitHub KanjiVG
+          const KANJIVG_URL = "https://raw.githubusercontent.com/KanjiVG/kanjivg/master/kanji";
           const code = character.charCodeAt(0).toString(16).padStart(5, "0");
-          const url = `https://raw.githubusercontent.com/KanjiVG/kanjivg/master/kanji/${code}.svg`;
+          const url = `${KANJIVG_URL}/${code}.svg`;
           
           const res = await fetch(url);
           if (!res.ok) throw new Error("Gagal mengambil data dari KanjiVG");
@@ -88,7 +89,7 @@ export function useKanjiSvg(character: string, sanitySvg?: string) {
     };
 
     fetchSvg();
-  }, [character, sanitySvg]);
+  }, [character, strokeOrderSvg]);
 
   return { data, loading, error };
 }

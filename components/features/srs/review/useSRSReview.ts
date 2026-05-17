@@ -1,4 +1,4 @@
-import { useState, useEffect, useCallback, useRef } from "react";
+import { useState, useEffect, useCallback, useRef, useMemo } from "react";
 import { useRouter } from "next/navigation";
 import { useUserStore } from "@/store/useUserStore";
 import { useSRSStore } from "@/store/useSRSStore";
@@ -13,7 +13,10 @@ export function useSRSReview(cards: FlashcardType[]) {
   const [isFlipped, setIsFlipped] = useState(false);
   const [direction, setDirection] = useState(0);
   const [isClient, setIsClient] = useState(false);
-  const [shuffledCards, setShuffledCards] = useState<FlashcardType[]>([]);
+  const shuffledCards = useMemo(() => {
+    if (!cards || cards.length === 0) return [];
+    return shuffleArray([...cards]);
+  }, [cards]);
   
   // Feedback states
   const [isFinished, setIsFinished] = useState(false);
@@ -29,12 +32,9 @@ export function useSRSReview(cards: FlashcardType[]) {
   const router = useRouter();
 
   useEffect(() => {
-    if (cards && cards.length > 0) {
-      setShuffledCards(shuffleArray(cards));
-    }
     const frame = requestAnimationFrame(() => setIsClient(true));
     return () => cancelAnimationFrame(frame);
-  }, [cards]);
+  }, []);
 
   const currentCard = shuffledCards[currentIndex];
 
@@ -56,7 +56,7 @@ export function useSRSReview(cards: FlashcardType[]) {
       if (!currentCard || isProcessing.current) return;
       isProcessing.current = true;
 
-      const cardId = currentCard._id;
+      const cardId = currentCard.id;
       const currentState = srs[cardId] || createNewCardState();
       const newState = updateCardState(currentState, grade);
 

@@ -1,18 +1,13 @@
-import { sanityFetch } from "@/lib/sanity.fetch";
-import { readingMaterialQuery } from "@/lib/queries";
+import { getLibraryItemBySlug } from "@/app/actions/library.actions";
 import ReadingPageClient from "./ReadingPageClient";
 import { notFound } from "next/navigation";
-import { ReadingData } from "@/components/features/reading/types";
 
 export default async function ReadingPage({ params }: { params: Promise<{ slug: string }> }) {
   const { slug } = await params;
   const decodedSlug = decodeURIComponent(slug);
 
-  const data = await sanityFetch<ReadingData | null>({
-    query: readingMaterialQuery,
-    params: { slug: decodedSlug },
-    tags: ["readingMaterial"],
-  });
+  const data = await getLibraryItemBySlug("reading", decodedSlug);
+
 
   if (!data) {
     notFound();

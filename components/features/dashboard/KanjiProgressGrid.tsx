@@ -4,7 +4,7 @@ import { useState, useEffect } from "react";
 import { motion } from "framer-motion";
 import { Card } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
-import { client } from "@/sanity/lib/client";
+import { createClient } from "@/lib/supabase/client";
 
 import { Loader2, Info } from "lucide-react";
 import { useSRSStore } from "@/store/useSRSStore";
@@ -23,13 +23,20 @@ export default function KanjiProgressGrid() {
   useEffect(() => {
     const fetchKanjis = async () => {
       try {
-        const query = `*[_type == "kanji" && jlptLevel == "N5"] | order(_id asc) {
-          _id,
-          kanji,
-          meaning
-        }`;
-        const data = await client.fetch(query);
-        setKanjis(data);
+        const supabase = createClient();
+        const { data, error } = await supabase
+          .from("kanji")
+          .select("id, character, meaning")
+          .eq("jlpt_level", "N5")
+          .order("character", { ascending: true });
+
+        if (error) throw error;
+
+        setKanjis((data || []).map(k => ({
+          _id: k.id,
+          kanji: k.character,
+          meaning: k.meaning,
+        })));
       } catch (err) {
         console.error("Gagal memuat kanji:", err);
       } finally {

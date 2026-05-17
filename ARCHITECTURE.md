@@ -1,4 +1,3 @@
-```markdown
 # 🌀 Ringkasan Arsitektur NihongoRoute
 
 Dokumen ini menyajikan audit struktural yang komprehensif dari proyek NihongoRoute, merinci tumpukan teknologi, hubungan antar lapisan aplikasi, serta arsitektur alur data. File ini berfungsi sebagai rujukan teknis utama bagi para pengembang.
@@ -9,13 +8,15 @@ Dokumen ini menyajikan audit struktural yang komprehensif dari proyek NihongoRou
 
 NihongoRoute dibangun menggunakan arsitektur modern yang berfokus pada sisi antarmuka (*frontend-heavy*) dan mudah diskalakan. Fokus utamanya adalah memberikan pengalaman yang dikendalikan oleh klien dengan kemampuan penggunaan luring (*offline-first*), didukung oleh sinkronisasi awan (*cloud*).
 
-- **Kerangka Kerja (Framework):** Next.js 15 (App Router)
+- **Kerangka Kerja (Framework):** Next.js 16 (App Router)
 - **Bahasa Pemrograman:** TypeScript (Pengetikan ketat untuk keandalan)
 - **Gaya Visual (Styling):** Tailwind CSS & Radix UI (Estetika *Cyber-Glass*: `backdrop-blur`, *glassmorphism*, dan aksen neon)
 - **Manajemen Status (State Management):** Zustand (Penyimpanan tersegmentasi dengan persistensi IndexedDB melalui `idb-keyval`)
 - **Status Server:** React Query (`@tanstack/react-query`) untuk pencadangan cerdas (*caching*) dan orkestrasi sinkronisasi awan.
-- **Sisi Server & Autentikasi:** Supabase (PostgreSQL, Fungsi Tepi/RPC, Autentikasi)
-- **Manajemen Konten:** Sanity CMS (Sumber kebenaran utama untuk materi pelajaran statis, tata bahasa, dan kosakata)
+- **Sisi Server & Autentikasi:** Supabase (PostgreSQL, RPC, Auth)
+- **Manajemen Konten (Split-Source):** 
+  - **Sanity CMS**: Sumber kebenaran utama untuk konten editorial (*Lessons*, *Reading*, *Listening*, *Exams*).
+  - **Supabase**: Basis data terstruktur untuk entitas leksikal (*Kanji*, *Vocab*, *Grammar*) dan progres dinamis pengguna (*XP*, *SRS*).
 - **Animasi:** Framer Motion (Transisi berbasis pegas yang sangat mulus)
 - **Sinkronisasi Antar-Tab:** BroadcastChannel API (Memastikan konsistensi data di berbagai tab peramban)
 
@@ -23,7 +24,7 @@ NihongoRoute dibangun menggunakan arsitektur modern yang berfokus pada sisi anta
 
 ## 2. Peta Rute & Tata Letak (`app/`)
 
-Sistem perutean menggunakan App Router dari Next.js 15 dengan pemisahan tegas antara area utama aplikasi dan area yang terisolasi.
+Sistem perutean menggunakan App Router dari Next.js 16 dengan pemisahan tegas antara area utama aplikasi dan area yang terisolasi.
 
 ### Struktur Pohon Rute
 ```text
@@ -42,13 +43,13 @@ app/
 │       ├── flashcards/     # Mesin kartu pengingat dinamis
 │       ├── kana/           # Latihan Hiragana & Katakana
 │       └── writing/        # Mesin latihan menulis Kanji
+│       └── srs/            # Logika utama pengulangan berkala
 ├── auth/                   # Alur masuk, daftar, & panggilan balik
 ├── onboarding/             # Pengenalan bertahap (Terisolasi dari Tata Letak Utama)
-├── studio/                 # Integrasi Sanity Studio (CMS)
+├── (admin)/                # Command Center (Custom CMS)
 ├── globals.css             # Gaya dasar (Tailwind + Token Cyber-Glass)
 ├── layout.tsx              # Penyedia Utama (Autentikasi, Kueri, Tema)
 └── page.tsx                # Halaman Utama (Pemasaran)
-
 ```
 
 ### Tujuan Tata Letak Khusus
@@ -108,32 +109,35 @@ Aplikasi menyimpan status ke peramban secara asinkron menggunakan kunci berikut:
 
 ## 5. Alur Data & Sinkronisasi Awan
 
-Sistem menggunakan metode campuran untuk menggabungkan konten statis dari Sanity dengan data kemajuan dinamis dari Supabase.
+Sistem menggunakan arsitektur terpadu berbasis Supabase untuk semua jenis data, menggabungkan konten statis dengan kemajuan pengguna secara real-time.
 
-### Langkah 1: Pengambilan Konten (Sanity CMS)
+### Langkah 1: Pengambilan Konten Paralel (Promise.all & Server Actions)
 
-Data edukasi statis diambil menggunakan kueri GROQ (`lib/queries.ts`) untuk jenis dokumen seperti: kosakata, pelajaran, materi membaca, kanji, dan tugas mendengarkan.
+Data edukasi diambil secara paralel menggunakan arsitektur *Split-Source* melalui Server Actions. 
+- **Sanity CMS** melayani pemanggilan konten editorial yang kaya (mis. `lesson.actions.ts`, `reading.actions.ts`).
+- **Supabase** melayani pengambilan data kamus leksikal yang kaku (mis. `library.actions.ts`).
+Proses pengambilan data ini secara ketat mengimplementasikan pola `Promise.all` untuk menghindari *waterfall latency*, memanfaatkan *fetch caching* bawaan Next.js alih-alih invalidasi waktu kaku.
 
 ### Langkah 2: Sinkronisasi Awan ke Lokal (Supabase → Zustand)
 
-1. Saat aplikasi dimuat, `useCloudData` mengambil salinan data dari Supabase (profil, data SRS, pelajaran).
-2. Data digabungkan ke Zustand menggunakan strategi yang memprioritaskan data luring (*Offline-First*). Penyelesaian konflik data didasarkan pada stempel waktu terbaru.
+1. Saat aplikasi dimuat, `useCloudData` mengambil salinan data dari Supabase (profil, data SRS, status pelajaran).
+2. Data digabungkan ke Zustand menggunakan strategi **Offline-First**. Penyelesaian konflik data didasarkan pada `updated_at` terbaru.
 
-### Langkah 3: Interaksi Lokal & Penandaan Belum Sinkron (*Dirty Marking*)
+### Langkah 3: Interaksi Lokal & Dirty Marking
 
-Setiap interaksi pengguna akan langsung memperbarui status lokal dan menandai ID tersebut sebagai belum tersinkronisasi (*dirty*). Hal ini memastikan antarmuka tetap responsif tanpa harus menunggu koneksi internet (Nir-Jeda).
+Setiap interaksi (XP bertambah, kartu SRS dijawab) akan langsung memperbarui status lokal di Zustand dan menandai ID tersebut sebagai "dirty". UI memberikan umpan balik instan (< 16ms) tanpa menunggu respon jaringan.
 
-### Langkah 4: Penyimpanan Latar Belakang (Zustand → Supabase)
+### Langkah 4: Penyimpanan Latar Belakang (3-Tier Sync)
 
-1. `useSyncProgress` mengamati perubahan penyimpanan dengan penundaan (*debounce*) 2000 milidetik.
-2. `useCloudMutation` memicu prosedur RPC `sync_user_progress` yang secara otomatis memperbarui XP, SRS, dan Pelajaran di awan.
-3. Jika berhasil, penanda *dirty* dihapus dan pesan penyelesaian sinkronisasi dikirim melalui **BroadcastChannel** agar tab lain memperbarui datanya.
+1. **`useSyncProgress`**: Mengamati perubahan store dan melakukan debouncing paket data "dirty".
+2. **`useCloudMutation`**: Mengeksekusi prosedur RPC `sync_user_progress` di Supabase.
+3. **Konfirmasi**: Jika sukses, penanda *dirty* dihapus dan pesan `"SYNC_COMPLETE"` disiarkan melalui **BroadcastChannel** agar tab lain melakukan cache invalidation.
 
 ---
 
 ## 6. Batasan Arsitektur
 
-1. **Desain Berprioritas Tamu:** Aplikasi secara otomatis membuat profil "Tamu" agar semua fitur lokal dapat digunakan tanpa harus masuk (*login*).
+1. **Akses Bebas 100% (Free Access Strategy):** Pengguna dapat menikmati seluruh konten dan fitur secara gratis tanpa harus membuat akun (*login*). *Middleware Auth* bekerja secara pasif (hanya mengelola penyegaran token jika ada), dan profil lokal diamankan di *IndexedDB* secara penuh. Pembuatan akun sepenuhnya bersifat opsional demi keperluan pencadangan ke *cloud*.
 2. **Pemilihan Terperinci (*Atomic Selectors*):** Komponen WAJIB mengambil bagian data secara spesifik (contoh: `useUserStore(s => s.xp)`) untuk mencegah pemuatan ulang (*re-render*) yang tidak perlu.
 3. **Keamanan Multi-Tab:** Ketidakkonsistenan data antar-tab dicegah dengan membatalkan memori sementara kueri (*Query Cache*) yang dipicu oleh BroadcastChannel API.
 4. **Ketahanan Luring:** Semua penyimpanan utama dipertahankan di IndexedDB, memungkinkan pengguna belajar di area tanpa sinyal dan tersinkronisasi otomatis saat terhubung kembali.
@@ -153,7 +157,7 @@ Status pembacaan dikendalikan secara terpusat melalui `readingState`:
 ### 9.2 Komponen Rendering Cerdas
 - **`SmartJapanese`**: Komponen utama yang mendeteksi teks Jepang dan membungkusnya dengan logika interaksi.
 - **`FuriganaDisplay`**: Mengelola tampilan visual (Ruby) berdasarkan mode yang aktif. Menggunakan `0.55em` untuk proporsi yang optimal.
-- **`WordPopover`**: Muncul saat teks diklik, melakukan pencarian kosakata secara dinamis di Sanity/IDB untuk memberikan definisi, contoh, dan audio TTS.
+- **`WordPopover`**: Muncul saat teks diklik, melakukan pencarian kosakata secara dinamis di Supabase/IDB untuk memberikan definisi, contoh, dan audio TTS.
 
 ---
 
@@ -167,41 +171,43 @@ Untuk menjamin performa luring (*offline-first*) yang tangguh, NihongoRoute meng
 
 ---
 
-## 7. Standar Teknis (Aturan Pengembangan)
+## 11. Arsitektur AI-Native & Tata Kelola Konten
 
-### 🎨 Desain Sistem & Gaya Ketat
+NihongoRoute menggunakan alur kerja editorial yang ditenagai AI dengan kontrol deterministik, transparansi operasional yang tinggi, dan pengawasan manusia sebagai prioritas utama.
 
-* **DILARANG**: Penggunaan warna statis bawaan Tailwind secara mutlak (contoh: `bg-white`, `text-gray-900`), nilai transparansi tetap (`border-white/5`), dan nilai `rgba` absolut.
-* **DIWAJIBKAN**: 100% menggunakan **Variabel CSS Semantik**: `bg-background`, `text-foreground`, `primary`, `secondary`, `success` (hijau), `warning` (kuning/oranye), `destructive` (merah), `muted`, dan `card`.
-* **Transparansi & Pendaran**: Untuk efek bayangan atau pendaran, WAJIB menggunakan variabel RGB CSS (contoh: `rgba(var(--primary-rgb), 0.4)`).
-* **Estetika Cyber-Glass**: Gunakan kelas `.glass` untuk elemen melayang/kartu. Pembatas visual harus selalu menggunakan `border-border`, BUKAN `border-white/5`.
+### 11.1 Batasan Kepemilikan AI (Ownership Boundaries)
+Terdapat pemisahan tegas antara data yang dihasilkan AI dan metadata yang dimiliki oleh sistem untuk menjaga integritas relasional:
+- **Milik AI (Semantic Content)**: Isi blok konten, ringkasan, soal kuis, metadata SEO, dan contoh kalimat.
+- **Milik Sistem (Structural Governance)**: Status editorial (`status`), identitas unik (`id`), stempel waktu (`timestamps`), dan riwayat audit. AI dilarang keras mengubah metadata struktural ini secara otonom.
 
-### 📂 Aturan Direktori
+### 11.2 Siklus Hidup Generasi (Generation Lifecycle)
+Setiap konten melewati pipa pemrosesan lima tahap sebelum masuk ke tahap peninjauan:
+1. **Generation**: AI menghasilkan draf konten berdasarkan konteks database terbaru.
+2. **Validation**: Validasi skema ketat menggunakan Zod untuk memastikan integritas struktural dan tipe data.
+3. **Normalization**: Perbaikan otomatis pada format (pembersihan spasi, normalisasi enum, konversi tipe).
+4. **Enrichment (Semantic Resolution)**: Resolusi istilah referensi manusia (misal: "N5") menjadi ID database (UUID) secara deterministik melalui lapisan utilitas server.
+5. **Governance**: Penempelan otomatis pada status editorial, peringatan (*warnings*), jejak audit, dan sinyal kepercayaan.
 
-* **lib/**: **DILARANG KERAS** menyimpan file `.jsx` atau `.tsx`. Direktori ini murni untuk fungsi pembantu, kueri data, dan konfigurasi TypeScript.
-* **Komponen Antarmuka**: Harus ditempatkan di `components/ui/` (primitif) atau `components/features/` (spesifik domain).
-* **Halaman**: Penyusunan tingkat halaman hanya diizinkan di dalam direktori `app/`.
+### 11.3 Tata Kelola Editorial (Editorial Governance)
+Infrastruktur ini menyediakan visibilitas operasional penuh bagi editor manusia:
+- **Status Konten**: Mengikuti siklus hidup `draft` → `review` (default AI) → `approved` → `published` (atau `rejected`).
+- **Editorial Warnings**: Peringatan terstruktur (High/Medium/Low) yang bersifat penasihat (bukan pemblokir). Menggunakan kunci identitas kanonik (`v1:category:severity:target:path`) untuk mencegah duplikasi.
+- **Audit Trail (Operational Narrative)**: Riwayat peristiwa yang tidak dapat diubah (*immutable*) dan mudah dibaca manusia, menangkap "narasi operasional" (Peristiwa, Aktor, Pesan).
+- **Confidence Indicators**: Sinyal kepercayaan berbasis aturan deterministik (bukan intuisi AI) yang diturunkan dari fakta operasional seperti jumlah percobaan ulang (*retries*) dan tingkat keparahan peringatan.
 
-### 📡 Pengambilan Data (ISR Sesuai Permintaan)
+### 11.4 Filosofi Metadata Operasional
+- **Immutable Snapshots**: Setiap peristiwa generasi menghasilkan rekaman permanen yang tidak dapat diubah. Perbaikan konten menghasilkan snapshot baru alih-alih memutasi riwayat lama (*append-only*).
+- **Semantic Transparency**: Memisahkan konten teks dari referensi database keras untuk mencegah kerusakan relasional selama proses regenerasi sebagian.
+- **Human-in-the-Loop**: AI hanya berfungsi sebagai pendukung keputusan; kewenangan akhir status `published` tetap berada di tangan editor manusia melalui sistem sinyal yang transparan.
 
-* **DILARANG**: Penggunaan pembaruan berbasis waktu (contoh: `export const revalidate = 3600;`).
-* **DIWAJIBKAN**: Menggunakan fungsi `sanityFetch` dari `@/lib/sanity.fetch` dengan mengirimkan `tags` yang relevan agar sinkron dengan Webhook Sanity.
+### 11.6 Post-Phase 4 Scaling Constraints (PENTING)
+Setelah Phase 4 selesai, pengembangan masa depan WAJIB mematuhi batasan berikut untuk mencegah inflasi kompleksitas:
+- **Prioritas Utama**: Throughput editorial (kecepatan publish), ergonomi alur kerja (kenyamanan editor), dan stabilitas operasional.
+- **DILARANG**: Otonomi AI yang tidak perlu, sistem tata kelola bergaya enterprise yang birokratis, mesin moderasi probabilistik, dan fragmentasi infrastruktur prematur.
+- **Fokus Evolusi**: Mempercepat editor, memperjelas sinyal operasional, dan menjaga performa kueri tetap ringan meskipun metadata (audit/warnings) semakin kaya.
 
-### ♿ Aksesibilitas & Tipografi
-
-* **Furigana ()**: Wajib menggunakan ukuran relatif (`0.55em`) agar seimbang di berbagai peramban melalui komponen `SmartJapanese`.
-* **Label Aksesibilitas**: Semua tombol yang hanya berupa ikon WAJIB memiliki `aria-label`. Ikon dekorasi wajib memiliki atribut `aria-hidden="true"`.
-
----
-
-## 8. Infrastruktur Pengujian & Alat Pengembangan
-
-Repositori ini menerapkan standar pengujian yang menyeluruh untuk memastikan stabilitas fitur.
-
-* **Pengujian Unit & Integrasi (Vitest):** Digunakan secara luas pada direktori `__tests__/` untuk menguji logika fungsional (*hooks*) seperti `useAddToSRS` dan `useDailyQuests`, serta fungsi utilitas lainnya.
-* **Pengujian Ujung-ke-Ujung / E2E (Playwright):** Terletak di folder `e2e/`, digunakan untuk mensimulasikan perjalanan pengguna secara utuh (seperti alur dasbor, perjalanan belajar, dan ujian).
-* **Pengecekan Kualitas Kode (Linting & Pre-commit):** Proyek ini menggunakan **Husky** untuk mengamankan proses sebelum melakukan *commit* dan memiliki konfigurasi **ESLint** yang ketat (`.eslintrc.json`) untuk menjaga kebersihan dan standar kode.
-
-```
-
-```
+### 11.5 Governance UX & Review Queue (Phase 4)
+- **Urgency-First Sorting**: Konten diurutkan berdasarkan `status` (Review diutamakan) dan kemudian `confidence_rank` (Kepercayaan rendah diutamakan) untuk memprioritaskan intervensi manusia.
+- **Inline Operational Signals**: Editor menampilkan `Confidence Banners` dan `Warning Inspectors` untuk menjelaskan keandalan AI kepada manusia secara transparan.
+- **Lifecycle Governance**: Transisi status manual (misal: Review -> Approved) dicatat dalam `audit_log` yang tidak dapat diubah dengan deskripsi naratif.
+- **Cognitive Simplicity**: Metadata tata kelola disajikan sebagai sinyal bantuan, bukan sebagai hambatan birokrasi yang kaku.

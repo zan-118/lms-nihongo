@@ -74,7 +74,7 @@ export function SurvivalPlaying({
 
       <AnimatePresence mode="wait">
         <motion.div
-          key={currentCard?._id}
+          key={currentCard?.id}
           initial={{ opacity: 0, scale: 0.95, y: 20 }}
           animate={{
             opacity: 1,
@@ -149,8 +149,8 @@ export function SurvivalPlaying({
 
       <div className="grid grid-cols-1 sm:grid-cols-2 gap-3 md:gap-6 items-stretch">
         {options.map((option, idx) => {
-          const isCorrect = selectedId === option._id && option._id === currentCard?._id;
-          const isWrong = selectedWrongId === option._id;
+          const isCorrect = selectedId === option.id && option.id === currentCard?.id;
+          const isWrong = selectedWrongId === option.id;
           
           return (
             <Button

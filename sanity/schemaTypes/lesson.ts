@@ -1,160 +1,341 @@
-/**
- * @file lesson.ts
- * @description Definisi skema Sanity untuk dokumen 'lesson' (materi pembelajaran).
- * Mengatur struktur konten materi, referensi kosakata, artikel, dan kuis terkait.
- * @module sanity/schemaTypes/lesson
- */
+import { SupabaseSelector } from '../components/SupabaseSelector';
+import { FuriganaGeneratorInput } from '../components/FuriganaGeneratorInput';
+import { SupabaseCategorySelect } from '../components/SupabaseCategorySelect';
 
-import { defineType, defineField } from "sanity";
-import { AutoSlugInput } from "../components/AutoSlugInput";
-
-// ======================
-// SCHEMA DEFINITION
-// ======================
-
-export default defineType({
-  name: "lesson",
-  title: "Lesson",
-  type: "document",
+export default {
+  name: 'lesson',
+  title: 'Pelajaran (Lesson)',
+  type: 'document',
+  groups: [
+    { name: 'content', title: '📝 Materi & Kuis', default: true },
+    { name: 'relations', title: '🔗 Koneksi Supabase' },
+    { name: 'metadata', title: '⚙️ Pengaturan Pelajaran' },
+    { name: 'seo', title: '🔍 Optimasi SEO' },
+  ],
   fields: [
-
-    defineField({ name: "title", title: "Title", type: "string" }),
-    defineField({
-      name: "slug",
-      title: "Slug",
-      type: "slug",
-      options: { source: "title" },
-      components: {
-        input: AutoSlugInput,
+    // ─── METADATA GROUP ───
+    {
+      name: 'title',
+      title: 'Judul Pelajaran',
+      type: 'string',
+      group: 'metadata',
+      validation: (Rule: any) => Rule.required(),
+    },
+    {
+      name: 'slug',
+      title: 'Slug',
+      type: 'slug',
+      group: 'metadata',
+      options: {
+        source: 'title',
+        maxLength: 96,
       },
-    }),
-    defineField({ name: "orderNumber", title: "Order Number", type: "number" }),
-    defineField({
-      name: "mainImage",
-      title: "Thumbnail / Cover Image",
-      type: "image",
-      options: { hotspot: true },
-    }),
-    defineField({
-      name: "estimatedMinutes",
-      title: "Estimasi Waktu Baca (Menit)",
-      type: "number",
-      initialValue: 5,
-    }),
-    defineField({
-      name: "isPremium",
-      title: "Konten Premium? 💎",
-      type: "boolean",
+      validation: (Rule: any) => Rule.required(),
+    },
+    {
+      name: 'order_number',
+      title: 'Urutan Pelajaran (Order Number)',
+      type: 'number',
+      group: 'metadata',
+      initialValue: 0,
+      validation: (Rule: any) => Rule.required(),
+    },
+    {
+      name: 'category_id',
+      title: 'Kategori Kursus (Supabase)',
+      description: 'Pilih kategori kursus yang dihubungkan langsung dari Supabase.',
+      type: 'string',
+      group: 'metadata',
+      components: {
+        input: SupabaseCategorySelect
+      }
+    },
+    {
+      name: 'summary',
+      title: 'Ringkasan Pelajaran',
+      type: 'text',
+      group: 'metadata',
+    },
+    {
+      name: 'estimated_minutes',
+      title: 'Estimasi Waktu Belajar (Menit)',
+      type: 'number',
+      group: 'metadata',
+      initialValue: 10,
+    },
+    {
+      name: 'is_premium',
+      title: 'Pelajaran Premium?',
+      type: 'boolean',
+      group: 'metadata',
       initialValue: false,
-    }),
-    defineField({ name: "summary", title: "Summary", type: "text" }),
-    defineField({
-      name: "course_category",
-      title: "Course Category",
-      type: "reference",
-      to: [{ type: "course_category" }],
-    }),
-    defineField({
-      name: "vocabList",
-      title: "Daftar Kosakata",
-      type: "array",
+    },
+    {
+      name: 'is_published',
+      title: 'Diterbitkan (Published)?',
+      type: 'boolean',
+      group: 'metadata',
+      initialValue: false,
+    },
+
+    // ─── CONTENT GROUP ───
+    {
+      name: 'content_blocks',
+      title: 'Materi Pelajaran (Rich Text Editor)',
+      description: 'Editor teks lengkap mirip Microsoft Word / Google Docs. Anda bisa menulis paragraf, membuat daftar, judul, serta menyisipkan komponen khusus (Dialog, Tata Bahasa, Catatan Budaya, Gambar) langsung di dalam aliran teks.',
+      type: 'array',
+      group: 'content',
+      of: [
+        // 1. Standard Rich Text Block
+        {
+          type: 'block',
+          styles: [
+            { title: 'Normal', value: 'normal' },
+            { title: 'Sub-Judul Besar (H2)', value: 'h2' },
+            { title: 'Sub-Judul Sedang (H3)', value: 'h3' },
+            { title: 'Kutipan (Blockquote)', value: 'blockquote' }
+          ],
+          lists: [
+            { title: 'Daftar Bullet', value: 'bullet' },
+            { title: 'Daftar Angka', value: 'number' }
+          ],
+          marks: {
+            decorators: [
+              { title: 'Tebal (Bold)', value: 'strong' },
+              { title: 'Miring (Italic)', value: 'em' },
+              { title: 'Garis Bawah (Underline)', value: 'underline' },
+              { title: 'Coret (Strikethrough)', value: 'strike-through' }
+            ]
+          }
+        },
+        // 2. Custom Embed: Dialogue Block
+        {
+          type: 'object',
+          name: 'dialogueBlock',
+          title: 'Sisipkan: Dialog / Percakapan',
+          fields: [
+            { name: 'title', title: 'Judul Dialog (Opsional)', type: 'string' },
+            {
+              name: 'content',
+              title: 'Teks Dialog (Format: Pembicara: Teks)',
+              type: 'text',
+              description: 'Contoh:\nTakahashi: 初めまして。\nAyu: 初めまして。',
+              validation: (Rule: any) => Rule.required()
+            },
+            { name: 'translation', title: 'Terjemahan Dialog', type: 'text' },
+            { name: 'furigana', title: 'Furigana (Satu baris per baris dialog)', type: 'text', components: { input: FuriganaGeneratorInput } }
+          ]
+        },
+        // 3. Custom Embed: Grammar Block
+        {
+          type: 'object',
+          name: 'grammarBlock',
+          title: 'Sisipkan: Pola Tata Bahasa',
+          fields: [
+            { name: 'title', title: 'Nama Pola Tata Bahasa', type: 'string', validation: (Rule: any) => Rule.required() },
+            { name: 'content', title: 'Formula / Bentuk Jepang', type: 'string' },
+            { name: 'furigana', title: 'Furigana Tata Bahasa', type: 'string', components: { input: FuriganaGeneratorInput } },
+            { name: 'translation', title: 'Fungsi / Arti', type: 'text' },
+            {
+              name: 'examples',
+              title: 'Contoh Kalimat',
+              type: 'array',
+              of: [
+                {
+                  type: 'object',
+                  name: 'exampleSentence',
+                  title: 'Kalimat Contoh',
+                  fields: [
+                    { name: 'jp', title: 'Bahasa Jepang', type: 'string', validation: (Rule: any) => Rule.required() },
+                    { name: 'id', title: 'Terjemahan Indonesia', type: 'string', validation: (Rule: any) => Rule.required() },
+                    { name: 'romaji', title: 'Romaji', type: 'string' },
+                    { name: 'furigana', title: 'Furigana', type: 'string', components: { input: FuriganaGeneratorInput } }
+                  ]
+                }
+              ]
+            }
+          ]
+        },
+        // 4. Custom Embed: Callout Block (Cultural / Warning)
+        {
+          type: 'object',
+          name: 'calloutBlock',
+          title: 'Sisipkan: Catatan Penting / Budaya',
+          fields: [
+            { name: 'title', title: 'Judul Catatan', type: 'string' },
+            { name: 'content', title: 'Isi Catatan', type: 'text', validation: (Rule: any) => Rule.required() },
+            { name: 'translation', title: 'Terjemahan / Arti (Opsional)', type: 'text' }
+          ]
+        },
+        // 5. Custom Embed: Image Block
+        {
+          type: 'object',
+          name: 'imageBlock',
+          title: 'Sisipkan: Gambar',
+          fields: [
+            { name: 'title', title: 'Caption Gambar', type: 'string' },
+            { name: 'content', title: 'URL Gambar (Sanity/CDN)', type: 'string', validation: (Rule: any) => Rule.required() }
+          ]
+        },
+        // 6. Custom Embed: Vocab Block
+        {
+          type: 'object',
+          name: 'vocabBlock',
+          title: 'Sisipkan: Daftar Kosakata',
+          fields: [
+            { name: 'title', title: 'Judul Seksi Kosakata', type: 'string', initialValue: 'Kosakata (Vocab)' }
+          ]
+        },
+        // 7. Custom Embed: Kanji Block
+        {
+          type: 'object',
+          name: 'kanjiBlock',
+          title: 'Sisipkan: Daftar Kanji',
+          fields: [
+            { name: 'title', title: 'Judul Seksi Kanji', type: 'string', initialValue: 'Kanji Dasar' }
+          ]
+        }
+      ]
+    },
+    {
+      name: 'quizzes',
+      title: 'Kuis Evaluasi Akhir Pelajaran (Quizzes)',
+      description: 'Daftar pertanyaan kuis evaluasi bab (sesuai format standar Bab: 7. Kuis Evaluasi & 8. Kunci Jawaban & Pembahasan).',
+      type: 'array',
+      group: 'content',
       of: [
         {
-          type: "reference",
-          to: [{ type: "vocab" }, { type: "verb_dictionary" }],
+          type: 'object',
+          name: 'lessonQuiz',
+          title: 'Soal Kuis',
+          fields: [
+            {
+              name: 'id',
+              title: 'Unique Quiz ID',
+              type: 'string',
+              validation: (Rule: any) => Rule.required(),
+            },
+            {
+              name: 'question',
+              title: 'Pertanyaan',
+              type: 'text',
+              validation: (Rule: any) => Rule.required(),
+            },
+            {
+              name: 'options',
+              title: 'Pilihan Jawaban',
+              type: 'array',
+              of: [{ type: 'string' }],
+              validation: (Rule: any) => Rule.required().min(2),
+            },
+            {
+              name: 'correct_answer',
+              title: 'Jawaban Benar (Ketik teks jawabannya persis)',
+              type: 'string',
+              validation: (Rule: any) => Rule.required(),
+            },
+            {
+              name: 'explanation',
+              title: 'Penjelasan Jawaban',
+              type: 'text',
+            },
+            {
+              name: 'audio_url',
+              title: 'Audio URL (Sanity/CDN)',
+              type: 'string',
+            },
+            {
+              name: 'image_url',
+              title: 'Image URL (Sanity/CDN)',
+              type: 'string',
+            },
+            {
+              name: 'type',
+              title: 'Jenis Kuis',
+              type: 'string',
+              options: {
+                list: [
+                  { title: 'Pilihan Ganda (Multiple Choice)', value: 'multiple-choice' },
+                  { title: 'Benar / Salah (True or False)', value: 'true-false' },
+                  { title: 'Isian Rumpang (Fill in the Blank)', value: 'fill-in-the-blank' },
+                ],
+              },
+              validation: (Rule: any) => Rule.required(),
+            },
+          ],
         },
       ],
-      description: "Kosakata utama yang dipelajari di lesson ini.",
-    }),
-    defineField({
-      name: "kanjiList",
-      title: "Daftar Kanji",
-      type: "array",
-      of: [{ type: "reference", to: [{ type: "kanji" }] }],
-      description: "Kanji yang diperkenalkan atau dipelajari di lesson ini.",
-    }),
-    defineField({
-      name: "grammar",
-      title: "Tata Bahasa (Inline)",
-      type: "blockContent",
-      description: "Gunakan ini untuk penjelasan tata bahasa singkat langsung di lesson.",
-    }),
-    defineField({
-      name: "grammarList",
-      title: "Hubungkan Library Grammar",
-      type: "array",
-      of: [{ type: "reference", to: [{ type: "grammar_article" }] }],
-      description: "Hubungkan dengan artikel tata bahasa mendalam dari Library.",
-    }),
-    defineField({
-      name: "articles",
-      title: "Artikel Materi (Inline)",
-      type: "blockContent",
-      description: "Gunakan ini untuk penjelasan teks langsung di dalam lesson.",
-    }),
-    defineField({
-      name: "listeningList",
-      title: "Latihan Mendengar",
-      type: "array",
-      of: [{ type: "reference", to: [{ type: "listeningTask" }] }],
-    }),
-    defineField({
-      name: "readingList",
-      title: "Bahan Bacaan",
-      type: "array",
-      of: [{ type: "reference", to: [{ type: "readingMaterial" }] }],
-    }),
-    defineField({
-      name: "cheatsheets",
-      title: "Referensi Cepat (Cheatsheets)",
-      type: "array",
-      of: [{ type: "reference", to: [{ type: "cheatsheet" }] }],
-    }),
-    defineField({
-      name: "quizzes",
-      title: "Kuis Pendek (Inline)",
-      type: "array",
-      of: [{ type: "quiz" }],
-    }),
-    defineField({
-      name: "finalPractice",
-      title: "Ujian/Latihan Akhir",
-      type: "reference",
-      to: [{ type: "mockExam" }],
-      description: "Hubungkan dengan simulasi ujian atau latihan komprehensif.",
-    }),
-    defineField({
-      name: "is_published",
-      title: "Is Published?",
-      type: "boolean",
-      initialValue: false,
-    }),
-    defineField({
-      name: "seoTitle",
-      title: "SEO Title",
-      type: "string",
-      description: "Idealnya maksimal 60 karakter.",
-      validation: (Rule) => Rule.max(60).warning("SEO Title yang terlalu panjang mungkin terpotong di Google."),
-    }),
-    defineField({
-      name: "seoDescription",
-      title: "SEO Description",
-      type: "text",
-      rows: 3,
-      description: "Ringkasan konten untuk hasil pencarian Google (Maks 160 karakter).",
-      validation: (Rule) => Rule.max(160).warning("SEO Description sebaiknya tidak lebih dari 160 karakter."),
-    }),
+    },
+
+    // ─── RELATIONS GROUP ───
+    {
+      name: 'vocab_list',
+      title: 'Daftar Kosakata Terkait (Pencarian Supabase)',
+      description: 'Cari kosakata dari database Supabase secara real-time',
+      type: 'array',
+      group: 'relations',
+      of: [{ type: 'string' }],
+      components: {
+        input: SupabaseSelector
+      },
+      options: {
+        supabaseType: 'vocab'
+      }
+    },
+    {
+      name: 'kanji_list',
+      title: 'Daftar Kanji Terkait (Pencarian Supabase)',
+      description: 'Cari karakter kanji dari database Supabase secara real-time',
+      type: 'array',
+      group: 'relations',
+      of: [{ type: 'string' }],
+      components: {
+        input: SupabaseSelector
+      },
+      options: {
+        supabaseType: 'kanji'
+      }
+    },
+    {
+      name: 'grammar_list',
+      title: 'Daftar Tata Bahasa Terkait (Pencarian Supabase)',
+      description: 'Cari tata bahasa dari database Supabase secara real-time',
+      type: 'array',
+      group: 'relations',
+      of: [{ type: 'string' }],
+      components: {
+        input: SupabaseSelector
+      },
+      options: {
+        supabaseType: 'grammar'
+      }
+    },
+    {
+      name: 'reading_list',
+      title: 'Daftar Materi Bacaan Terkait (Slugs)',
+      type: 'array',
+      group: 'relations',
+      of: [{ type: 'string' }],
+    },
+    {
+      name: 'listening_list',
+      title: 'Daftar Materi Menyimak Terkait (Slugs)',
+      type: 'array',
+      group: 'relations',
+      of: [{ type: 'string' }],
+    },
+
+    // ─── SEO GROUP ───
+    {
+      name: 'seo',
+      title: 'SEO Metadata',
+      type: 'object',
+      group: 'seo',
+      fields: [
+        { name: 'title', title: 'SEO Title', type: 'string' },
+        { name: 'description', title: 'SEO Description', type: 'text' },
+        { name: 'keywords', title: 'Keywords (pisahkan dengan koma)', type: 'string' },
+      ],
+    },
   ],
-  preview: {
-    select: {
-      title: "title",
-      subtitle: "summary",
-    },
-    prepare({ title, subtitle }) {
-      return {
-        title: title,
-        subtitle: subtitle || "No summary",
-      };
-    },
-  },
-});
+};

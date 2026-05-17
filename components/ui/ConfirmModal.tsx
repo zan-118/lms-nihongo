@@ -42,7 +42,7 @@ export default function ConfirmModal({
               animate={{ opacity: 1, scale: 1, y: 0 }}
               exit={{ opacity: 0, scale: 0.95, y: 20 }}
               transition={{ type: "spring", stiffness: 300, damping: 25 }}
-              className="w-full max-w-md bg-card backdrop-blur-2xl border border-border p-6 md:p-8 rounded-[2rem] shadow-2xl pointer-events-auto relative overflow-hidden transition-colors duration-300"
+              className="w-[calc(100%-2rem)] max-w-md bg-card backdrop-blur-2xl border border-border p-5 md:p-8 rounded-[2rem] shadow-2xl pointer-events-auto relative overflow-hidden transition-colors duration-300"
             >
               <div className={`absolute top-0 left-0 w-full h-1 ${isDestructive ? 'bg-destructive' : 'bg-primary'} shadow-sm`} />
               

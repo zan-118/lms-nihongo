@@ -1,18 +1,18 @@
 "use client";
 
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { motion, AnimatePresence } from "framer-motion";
-import { Headphones, Info, Trophy, CheckCircle2 } from "lucide-react";
 import { ListeningTaskData } from "@/components/features/listening/types";
 import ListeningKaraoke from "@/components/features/listening/components/ListeningKaraoke";
 import ListeningQuiz from "@/components/features/listening/components/ListeningQuiz";
 import { useListeningSync } from "@/components/features/listening/hooks/useListeningSync";
-import AudioController from "@/components/features/reading/components/AudioController";
 import { useUserStore } from "@/store/useUserStore";
 import { useUIStore } from "@/store/useUIStore";
 import { cn } from "@/lib/utils";
-import { useEffect } from "react";
 
+// Modular Components
+import { ListeningHeader } from "@/components/features/listening/components/ListeningHeader";
+import { ListeningSidebar } from "@/components/features/listening/components/ListeningSidebar";
 
 interface ListeningPageClientProps {
   data: ListeningTaskData;
@@ -42,7 +42,6 @@ export default function ListeningPageClient({ data }: ListeningPageClientProps) 
     });
   }, [data, setListeningState]);
 
-  
   const { 
     activeIndex, 
     handleTimeUpdate, 
@@ -55,95 +54,35 @@ export default function ListeningPageClient({ data }: ListeningPageClientProps) 
 
   const handleQuizComplete = (score: number) => {
     setIsCompleted(true);
-    // Reward XP based on score
     const reward = score * 50;
     addXP(reward);
-    completeLesson(data._id);
+    completeLesson((data as any)._id || data.id);
   };
 
   return (
     <div className="min-h-screen bg-background text-foreground pb-32 relative overflow-hidden">
-
       {/* Premium Ambient Background */}
-      <div className="absolute top-0 left-1/4 w-[500px] h-[500px] bg-primary/5 blur-[120px] rounded-full pointer-events-none" />
-      <div className="absolute top-1/2 -right-48 w-96 h-96 bg-primary/10 blur-[100px] rounded-full pointer-events-none" />
-
-      {/* Hero Section / Header */}
-      <div className="relative w-full border-b border-border bg-card overflow-hidden">
-
-
-        {/* Background Patterns */}
-        <div className="absolute top-0 right-0 w-1/3 h-full bg-primary/5 blur-[120px] rounded-full -translate-y-1/2" />
-        
-        <div className="max-w-7xl mx-auto px-6 py-12 lg:py-16">
-          <div className="flex flex-col md:flex-row md:items-center justify-between gap-8 relative z-10">
-
-            <div className="flex flex-col gap-4">
-              <div className="flex items-center gap-3">
-                <div className="p-2 rounded-xl bg-primary/10 border border-primary/20 text-primary">
-                  <Headphones size={20} />
-                </div>
-                <span className="text-[10px] font-black uppercase tracking-[0.4em] text-primary/60">
-                  Listening Comprehension
-                </span>
-              </div>
-              <h1 className="text-4xl lg:text-5xl font-black text-foreground tracking-tighter leading-tight uppercase drop-shadow-sm">
-
-
-                {data.title}
-              </h1>
-              {data.description && (
-                <p className="text-muted-foreground text-sm max-w-2xl leading-relaxed font-medium">
-
-
-                  {data.description}
-                </p>
-              )}
-            </div>
-
-            {/* Tab Switcher & Audio Header */}
-            <div className="flex flex-col md:flex-row items-center gap-4">
-              <AudioController 
-                audioUrl={data.audioUrl}
-                textToSpeak={listeningState.textToSpeak}
-                onTimeUpdate={handleTimeUpdate}
-                externalSeek={externalSeek}
-                compact={true}
-              />
-
-              <div className="flex p-1 bg-muted/30 border border-border rounded-2xl backdrop-blur-md">
-                <button
-                  onClick={() => setListeningState({ activeTab: "transcript" })}
-                  className={cn(
-                    "px-6 py-2.5 rounded-xl text-xs font-black uppercase tracking-widest transition-all",
-                    activeTab === "transcript" ? "bg-primary text-primary-foreground shadow-lg shadow-primary/20" : "text-muted-foreground hover:text-foreground"
-                  )}
-                >
-                  Transcript
-                </button>
-                <button
-                  onClick={() => setListeningState({ activeTab: "quiz" })}
-                  className={cn(
-                    "px-6 py-2.5 rounded-xl text-xs font-black uppercase tracking-widest transition-all flex items-center gap-2",
-                    activeTab === "quiz" ? "bg-primary text-primary-foreground shadow-lg shadow-primary/20" : "text-muted-foreground hover:text-foreground"
-                  )}
-                >
-                  Take Quiz
-                  {isCompleted && <CheckCircle2 size={12} />}
-                </button>
-              </div>
-            </div>
-
-          </div>
-        </div>
+      <div className="fixed inset-0 pointer-events-none overflow-hidden z-0">
+        <div className="absolute top-0 left-1/4 w-[500px] h-[500px] bg-primary/5 blur-[120px] rounded-full" />
+        <div className="absolute top-1/2 -right-48 w-96 h-96 bg-primary/10 blur-[100px] rounded-full" />
       </div>
 
-      {/* Main Content Layout */}
-      <main className="max-w-7xl mx-auto px-4 lg:px-6 mt-12 relative">
+      <ListeningHeader
+        title={data.title}
+        description={data.description}
+        audioUrl={data.audioUrl}
+        textToSpeak={listeningState.textToSpeak || ""}
+        activeTab={activeTab as "transcript" | "quiz"}
+        onTabChange={(tab) => setListeningState({ activeTab: tab })}
+        isCompleted={isCompleted}
+        onTimeUpdate={handleTimeUpdate}
+        externalSeek={externalSeek || 0}
+      />
+
+      <main className="max-w-7xl mx-auto px-4 lg:px-6 mt-12 relative z-10">
         <div className="grid grid-cols-1 lg:grid-cols-12 gap-12">
           {/* Left Column: Interactive Area */}
           <div className="lg:col-span-8 relative min-h-[600px]">
-            {/* BACKGROUND TRANSCRIPT (Always Rendered for Overlay Effect) */}
             <div className={cn(
               "transition-all duration-700",
               activeTab === "quiz" ? "blur-md scale-[0.98] opacity-30 pointer-events-none" : "blur-0 scale-100 opacity-100"
@@ -155,7 +94,6 @@ export default function ListeningPageClient({ data }: ListeningPageClientProps) 
               />
             </div>
 
-            {/* QUIZ OVERLAY */}
             <AnimatePresence>
               {activeTab === "quiz" && (
                 <motion.div
@@ -185,7 +123,6 @@ export default function ListeningPageClient({ data }: ListeningPageClientProps) 
                         >
                           Back to Transcript
                         </button>
-
                       </div>
                     )}
                   </motion.div>
@@ -194,53 +131,9 @@ export default function ListeningPageClient({ data }: ListeningPageClientProps) 
             </AnimatePresence>
           </div>
 
-          {/* Right Column: Sidebar */}
-          <aside className="lg:col-span-4 flex flex-col gap-6">
-            {/* Mission Info */}
-            <div className="p-6 rounded-3xl bg-background/[0.02] border border-border flex flex-col gap-6">
-              <div className="flex items-center gap-3">
-                <Info size={18} className="text-primary/50" />
-                <h4 className="text-[10px] font-black uppercase tracking-[0.2em] text-foreground">Study Notes</h4>
-              </div>
-              <ul className="flex flex-col gap-4">
-                <li className="flex gap-4 items-start">
-                  <div className="w-1.5 h-1.5 rounded-full bg-primary mt-1.5 shrink-0" />
-                  <p className="text-xs text-muted-foreground leading-relaxed">
-                    Dengarkan audio secara menyeluruh sebelum mencoba menjawab kuis.
-                  </p>
-                </li>
-                <li className="flex gap-4 items-start">
-                  <div className="w-1.5 h-1.5 rounded-full bg-primary mt-1.5 shrink-0" />
-                  <p className="text-xs text-muted-foreground leading-relaxed">
-                    Klik pada baris transkrip untuk mengulangi bagian tertentu (Shadowing).
-                  </p>
-                </li>
-                <li className="flex gap-4 items-start">
-                  <div className="w-1.5 h-1.5 rounded-full bg-primary mt-1.5 shrink-0" />
-                  <p className="text-xs text-muted-foreground leading-relaxed">
-                    Gunakan tombol &quot;Translate&quot; jika kamu kesulitan memahami konteks kalimat.
-                  </p>
-                </li>
-              </ul>
-            </div>
-
-            {/* Achievement Preview */}
-            <div className="p-6 rounded-3xl bg-gradient-to-br from-primary/10 to-transparent border border-primary/20 flex flex-col gap-4 relative overflow-hidden group">
-              <Trophy size={40} className="absolute -bottom-2 -right-2 text-primary/10 group-hover:scale-110 transition-transform" />
-              <div className="flex flex-col gap-1">
-                <span className="text-[10px] font-black uppercase tracking-widest text-primary">Reward</span>
-                <span className="text-xl font-black text-foreground">+{data.quiz ? data.quiz.length * 50 : 0} XP</span>
-              </div>
-              <p className="text-[10px] text-primary/60 font-medium leading-relaxed">
-                Complete the quiz with 100% accuracy to earn maximum XP bonus.
-              </p>
-            </div>
-          </aside>
+          <ListeningSidebar quizLength={data.quiz?.length || 0} />
         </div>
       </main>
-
-      {/* Floating Audio Controller is now handled by FAB and Header */}
     </div>
-
   );
 }

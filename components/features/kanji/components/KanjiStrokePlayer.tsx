@@ -17,18 +17,18 @@ import { PlaybackStatus } from "../types";
 
 interface KanjiStrokePlayerProps {
   character: string;
-  sanitySvg?: string;
+  strokeOrderSvg?: string;
   strokeColor?: string;
   size?: number;
 }
 
 export default function KanjiStrokePlayer({
   character,
-  sanitySvg,
+  strokeOrderSvg,
   strokeColor = "#a855f7",
   size = 250,
 }: KanjiStrokePlayerProps) {
-  const { data, loading, error } = useKanjiSvg(character, sanitySvg);
+  const { data, loading, error } = useKanjiSvg(character, strokeOrderSvg);
   
   // Playback State
   const [status, setStatus] = useState<PlaybackStatus>("paused");
@@ -73,19 +73,12 @@ export default function KanjiStrokePlayer({
     if (status === "playing") {
       setStatus("paused");
     } else {
-      if (status === "finished" || currentStroke === -1) {
-        setCurrentStroke(0);
-      }
+      const nextStroke = (status === "finished" || currentStroke === -1) ? 0 : currentStroke;
+      setCurrentStroke(nextStroke);
       setStatus("playing");
     }
   };
 
-  // Auto-play logic
-  useEffect(() => {
-    if (status === "playing" && currentStroke === -1) {
-       setCurrentStroke(0);
-    }
-  }, [status, currentStroke]);
 
   if (loading) return (
     <div className="flex items-center justify-center bg-[rgba(var(--card-rgb),0.2)] backdrop-blur-xl rounded-3xl border border-border" style={{ width: size, height: size }}>
@@ -103,9 +96,12 @@ export default function KanjiStrokePlayer({
     <div className="flex flex-col items-center gap-6">
       {/* CYBER-GLASS PLAYER CONTAINER */}
       <div 
-        className="relative bg-[rgba(var(--card-rgb),0.4)] backdrop-blur-2xl rounded-[2.5rem] border border-border shadow-2xl overflow-hidden group p-8"
-
-        style={{ width: size + 64, height: size + 64 }}
+        className="relative bg-[rgba(var(--card-rgb),0.4)] backdrop-blur-2xl rounded-[2.5rem] border border-border shadow-2xl overflow-hidden group p-6 md:p-8 flex items-center justify-center"
+        style={{ 
+          width: '100%',
+          maxWidth: size + 64, 
+          aspectRatio: '1/1'
+        }}
       >
         {/* Neon Glow Border */}
         <div className="absolute inset-0 rounded-[2.5rem] ring-1 ring-border group-hover:ring-primary/30 transition-all duration-500" />

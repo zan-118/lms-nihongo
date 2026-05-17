@@ -4,44 +4,43 @@
   <img src="./public/logo-branding.svg" alt="Logo NihongoRoute" width="120" height="120" />
   <h3>Ekosistem Pembelajaran Bahasa Jepang Profesional untuk Indonesia</h3>
   <p align="center">
-    Platform pembelajaran generasi baru berbasis offline-first, dirancang untuk menjembatani pedagogi tradisional dengan teknologi interaktif modern.
+    Platform pembelajaran generasi baru berbasis <strong>Offline-First</strong>, dirancang dengan estetika Cyber-Glass dan performa tingkat tinggi.
   </p>
 
-  [![Next.js](https://img.shields.io/badge/Next.js-15-000000?style=for-the-badge&logo=nextdotjs)](https://nextjs.org/)
+  [![Next.js](https://img.shields.io/badge/Next.js-16-000000?style=for-the-badge&logo=nextdotjs)](https://nextjs.org/)
   [![TypeScript](https://img.shields.io/badge/TypeScript-007ACC?style=for-the-badge&logo=typescript&logoColor=white)](https://www.typescriptlang.org/)
   [![Supabase](https://img.shields.io/badge/Supabase-3ECF8E?style=for-the-badge&logo=supabase&logoColor=white)](https://supabase.com/)
-  [![Sanity](https://img.shields.io/badge/Sanity-F1662A?style=for-the-badge&logo=sanity&logoColor=white)](https://www.sanity.io/)
   [![Tailwind](https://img.shields.io/badge/Tailwind_CSS-38B2AC?style=for-the-badge&logo=tailwind-css&logoColor=white)](https://tailwindcss.com/)
+  [![React](https://img.shields.io/badge/React-19-61DAFB?style=for-the-badge&logo=react&logoColor=black)](https://react.dev/)
 </div>
 
 ---
 
 ## 📖 Gambaran Proyek
 
-**NihongoRoute** adalah ekosistem pembelajaran bahasa Jepang kelas enterprise yang disesuaikan khusus untuk pembelajar di Indonesia. Platform ini mengintegrasikan data pedagogis masif dengan **Sistem Desain Semantik Cyber-Glass** yang mutakhir. Fokus utama platform ini adalah pada performa tinggi dan interaksi berbasis *offline-first*, sembari memastikan sinkronisasi *cloud* yang mulus untuk pengalaman belajar yang berkesinambungan di berbagai perangkat.
+**NihongoRoute** adalah ekosistem pembelajaran bahasa Jepang kelas enterprise yang disesuaikan khusus untuk pembelajar di Indonesia. Platform ini mengintegrasikan data pedagogis masif dengan **Sistem Desain Semantik Cyber-Glass** yang mutakhir. Fokus utama platform ini adalah pada performa tinggi dan interaksi berbasis *offline-first*, sembari memastikan sinkronisasi *cloud* yang mulus melalui protokol **3-Tier Sync** yang tangguh.
 
 ---
 
 ## ✨ Fitur Unggulan
 
 ### 💎 UI/UX Semantic Cyber-Glass
-Antarmuka imersif yang dibangun sepenuhnya di atas **Token Desain Semantik** dan **Variabel RGB**. Tidak ada lagi warna statis (seperti `bg-white`, `border-white/5` atau absolute `rgba`)—sistem kami beradaptasi 100% secara dinamis antara mode Terang dan Gelap. Setiap border, shadow, dan efek neon (glow) memanfaatkan variabel dinamis untuk menyediakan lingkungan yang berorientasi pada fokus belajar dengan estetika premium.
+Antarmuka imersif yang dibangun sepenuhnya di atas **Token Desain Semantik** dan **Variabel RGB**. Sistem kami beradaptasi 100% secara dinamis antara mode Terang dan Gelap. Setiap border, shadow, dan efek neon (glow) memanfaatkan variabel dinamis untuk menyediakan lingkungan yang berorientasi pada fokus belajar dengan estetika premium.
 
 ### 🧠 Mesin Pembelajaran Cerdas & SRS
-- **Spaced Repetition (SRS) Lanjutan**: Algoritma cerdas berbasis *local-first* yang menjamin retensi ingatan jangka panjang.
-- **On-Demand ISR**: Pembaruan konten secara real-time melalui Sanity Webhooks, memastikan Anda selalu mendapatkan kurikulum terbaru tanpa mengorbankan kecepatan.
-- **Mode Membaca Pintar**: Rendering teks berdampingan (Jepang-Indonesia) dengan integrasi TTS (Text-to-Speech) dan pencarian kamus instan.
-
-### 🎮 Perjalanan Pedagogis Tergamifikasi
-- **Sistem XP & Streak**: Pembelajaran berbasis imbalan untuk menjaga motivasi belajar setiap hari.
-- **Penguasaan JLPT N5 - N2**: Pelajaran terstruktur, panduan tata bahasa komprehensif dengan rumus pembentukan kalimat, serta simulasi ujian interaktif.
-- **Generator PDF Dinamis**: Ekspor materi belajar, daftar kosakata, dan sertifikat dalam tata letak bermerek yang siap cetak.
+- **Spaced Repetition (SRS) Lanjutan**: Algoritma SM-2 yang dimodifikasi dengan dukungan *due-date guarding* untuk retensi ingatan jangka panjang.
+- **Arsitektur Split-Source Terpusat**: Konten editorial interaktif ditenagai oleh Sanity CMS, sementara data leksikal dan progres dinamis dikelola oleh Supabase melalui Server Actions berkinerja tinggi menggunakan *Parallel Fetching* (`Promise.all`).
+- **Smart Japanese Rendering**: Komponen `SmartJapanese` yang melakukan parsing cerdas dan rendering Furigana dengan skala presisi `0.55em`.
 
 ### 🛡️ Arsitektur Offline-First
 Dibangun dengan **Protokol Sinkronisasi 3-Tier**:
-1. **Penyimpanan Lokal (Zustand + IndexedDB)**: Umpan balik instan tanpa latensi.
-2. **Orchestrator (useSyncProgress)**: Pendeteksian perubahan dan *debouncing* di latar belakang.
-3. **Mutasi Cloud (Supabase RPC)**: Persistensi data yang handal dan integritas multi-tab melalui BroadcastChannel API.
+1. **Lapis Store (Zustand + IndexedDB)**: Umpan balik instan tanpa latensi (< 16ms).
+2. **Lapis Orkestrasi (useSyncProgress)**: Pendeteksian perubahan otomatis dan *debouncing* di latar belakang.
+3. **Lapis Mutasi (Supabase RPC)**: Sinkronisasi paket data "dirty" ke cloud dengan integritas multi-tab melalui BroadcastChannel API.
+
+### 🎮 Perjalanan Pedagogis Tergamifikasi
+- **Sistem XP, Level & Streak**: Pembelajaran berbasis imbalan untuk menjaga motivasi belajar setiap hari.
+- **Penguasaan JLPT N5 - N2**: Pelajaran terstruktur, panduan tata bahasa komprehensif, serta simulasi ujian interaktif.
 
 ---
 
@@ -49,12 +48,12 @@ Dibangun dengan **Protokol Sinkronisasi 3-Tier**:
 
 | Layer | Teknologi |
 | :--- | :--- |
-| **Frontend** | Next.js 15 (App Router), React 19, TypeScript |
+| **Frontend** | Next.js 16 (App Router), React 19, TypeScript |
 | **Styling** | Tailwind CSS (Semantik), Framer Motion, Radix UI |
-| **Database & Auth** | Supabase (PostgreSQL, Edge Functions, RPC) |
-| **Konten CMS** | Sanity CMS (GROQ Queries, Portable Text) |
+| **Database & Auth** | Supabase (PostgreSQL, RPC, Edge Functions, Auth) |
 | **State Management** | Zustand (Persisten via idb-keyval), TanStack Query v5 |
-| **Infrastruktur** | Vercel (Analytics & Speed Insights), PWA Service Workers |
+| **Media Layer** | Cloudinary Media Integration |
+| **Audio Engine** | Procedural Web Audio API & TTS Integration |
 
 ---
 
@@ -62,12 +61,11 @@ Dibangun dengan **Protokol Sinkronisasi 3-Tier**:
 
 NihongoRoute mengikuti standar direktori yang ketat untuk modularitas dan skalabilitas:
 
-- `app/`: Layer perutean (routing) dan komposisi halaman.
-- `components/features/`: Logika bisnis spesifik domain (Quiz, SRS, Exams).
-- `components/ui/`: Komponen primitif atomik (berbasis semantik).
-- `lib/`: Fungsi utilitas murni dan konfigurasi (**Tanpa TSX**).
+- `app/`: Layer perutean (routing), komposisi halaman, dan Server Actions.
+- `components/features/`: Logika bisnis spesifik domain (Quiz, SRS, Exams, Lessons).
+- `components/ui/`: Komponen primitif atomik berbasis semantik.
+- `lib/`: Fungsi utilitas murni, algoritma pedagogi, dan konfigurasi (**Tanpa TSX**).
 - `store/`: Manajemen state global terfragmentasi dengan persistensi offline.
-- `sanity/`: Skema konten deklaratif dan konfigurasi CMS.
 
 ---
 
@@ -87,13 +85,12 @@ npm install
 ```
 
 ### 3. Konfigurasi Lingkungan (Environment)
-Buat file `.env.local` di direktori root dan masukkan kunci API Anda:
+Buat file `.env.local` di direktori root:
 ```env
-NEXT_PUBLIC_SANITY_PROJECT_ID=...
-NEXT_PUBLIC_SANITY_DATASET=...
-NEXT_PUBLIC_SUPABASE_URL=...
-NEXT_PUBLIC_SUPABASE_ANON_KEY=...
-SANITY_REVALIDATE_SECRET=...
+NEXT_PUBLIC_SUPABASE_URL=your_supabase_url
+NEXT_PUBLIC_SUPABASE_ANON_KEY=your_supabase_anon_key
+NEXT_PUBLIC_CLOUDINARY_CLOUD_NAME=your_cloudinary_name
+NEXT_PUBLIC_SITE_URL=http://localhost:3000
 ```
 
 ### 4. Pengembangan
@@ -107,7 +104,7 @@ npm run dev
 
 **Fauzan Abdul Basith**
 - GitHub: [@zan-118](https://github.com/zan-118)
-- Website: [www.fauzanabdulbasith.com](https://www.fauzanabdulbasith.com)
+- Website: [fauzanabdulbasith.com](https://www.fauzanabdulbasith.com)
 
 ---
 <div align="center">

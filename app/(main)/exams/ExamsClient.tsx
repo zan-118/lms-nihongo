@@ -21,6 +21,7 @@ import {
 } from "lucide-react";
 import { Card } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
+import { ROUTES } from "@/lib/routes";
 
 // ======================
 // CONFIG / CONSTANTS
@@ -42,7 +43,8 @@ const itemVariants: Variants = {
 // INTERFACES
 // ======================
 export interface ExamData {
-  _id: string;
+  id?: string;
+  _id?: string;
   title: string;
   description?: string;
   levelCode?: string;
@@ -129,12 +131,12 @@ export default function ExamsClient({ exams }: { exams: ExamData[] }) {
           {exams.length > 0 ? (
             exams.map((exam) => (
               <motion.div
-                key={exam._id}
+                key={exam.id || exam._id}
                 variants={itemVariants}
                 className="h-full"
               >
                 <Link
-                  href={`/exams/${exam.slug || exam._id}`}
+                  href={ROUTES.EXAMS.SESSION(exam.slug || exam.id || "")}
                   className="block h-full"
                 >
                   <Card className="p-6 md:p-8 group hover:border-destructive/40 hover:bg-destructive/[0.02] transition-all duration-300 flex flex-col h-full relative overflow-hidden cursor-pointer bg-card rounded-2xl border-border hover:shadow-[0_0_40px_rgba(var(--destructive-rgb),0.06)]">

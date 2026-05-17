@@ -1,6 +1,6 @@
 "use client";
 
-import { useNavbar } from "@/components/layout/navbar/useNavbar";
+import { useNavbar } from "@/hooks/navigation/useNavbar";
 import { 
   User, 
   Settings, 

@@ -16,14 +16,14 @@ interface VocabFlashcardViewProps {
  */
 export function VocabFlashcardView({ vocabList, onBack }: VocabFlashcardViewProps) {
   const flashcardData = vocabList.map((item) => ({
-    _id: item._id,
+    id: item.id,
     word: item.word,
-    meaning: item.meaning,
+    meaning: item.meaning || "",
     furigana: item.furigana,
     romaji: item.romaji,
-    level: { code: "library" },
+    jlpt_level: "library",
     mnemonic: item.mnemonic,
-    relatedKanji: item.relatedKanji,
+    related_kanji: item.related_kanji,
   }));
 
   return (

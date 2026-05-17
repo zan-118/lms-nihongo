@@ -1,23 +1,15 @@
 /**
  * @file page.tsx
  * @description Halaman rute referensi kilat (Cheatsheets). 
- * Menangani penarikan data referensi statis dari Sanity CMS.
+ * Menangani penarikan data referensi statis dari Supabase.
  * @module CheatsheetPage
  */
 
 // ======================
 // IMPORTS
 // ======================
-import { sanityFetch } from "@/lib/sanity.fetch";
 import CheatsheetClient from "./CheatsheetClient";
-
-// ======================
-// CONFIG / CONSTANTS
-// ======================
-
-// ======================
-// MAIN EXECUTION
-// ======================
+import { getCheatsheets } from "@/app/actions/library.actions";
 
 /**
  * Komponen CheatsheetPage: Menarik data cheatsheet dan merender CheatsheetClient.
@@ -28,13 +20,8 @@ export default async function CheatsheetPage() {
   // ======================
   // DATABASE OPERATIONS
   // ======================
-  const sheets = await sanityFetch<any[]>({
-    query: `*[_type == "cheatsheet"] | order(category asc, title asc) {
-      _id, "slug": slug.current, title, category, items,
-      linkedVocab[]->{ "jp": word, "label": meaning, romaji }
-    }`,
-    tags: ["cheatsheet"],
-  });
+  const sheets = await getCheatsheets();
+
 
   // ======================
   // RENDER

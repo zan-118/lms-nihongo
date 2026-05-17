@@ -2,13 +2,13 @@
 
 import { useState, useEffect, useCallback } from "react";
 import * as wanakana from "wanakana";
-import { client } from "@/sanity/lib/client";
+import { createClient } from "@/lib/supabase/client";
 import { VocabItem } from "./types";
 
 const ITEMS_PER_PAGE = 50;
 
 /**
- * Hook untuk menangani data fetching, filter, dan pagination kosakata dari Sanity.
+ * Hook untuk menangani data fetching, filter, dan pagination kosakata dari Supabase.
  */
 export function useVocabList(initialData: VocabItem[] = []) {
   const [level, setLevel] = useState("N5");
@@ -28,52 +28,51 @@ export function useVocabList(initialData: VocabItem[] = []) {
 
   const fetchData = useCallback(async (page: number) => {
     setLoading(true);
-    const start = (page - 1) * ITEMS_PER_PAGE;
-    const end = start + ITEMS_PER_PAGE;
+    const supabase = createClient();
+    const offset = (page - 1) * ITEMS_PER_PAGE;
     const levelFilter = level.toUpperCase();
-    const kanaSearch = wanakana.toHiragana(debouncedSearch.trim());
-    const kataSearch = wanakana.toKatakana(debouncedSearch.trim());
-
-    let filterStr = `(_type == "vocab" || _type == "verb_dictionary") && jlptLevel == $levelFilter`;
-    if (debouncedSearch.trim() !== "") {
-      filterStr += ` && (word match $search + "*" || jisho match $search + "*" || romaji match $search + "*" || meaning match $search + "*" || word match $kana + "*" || jisho match $kana + "*" || furigana match $kana + "*" || word match $kata + "*" || jisho match $kata + "*")`;
-    }
-    if (hinshi !== "all") {
-      if (hinshi === "verb") {
-        filterStr += ` && _type == "verb_dictionary"`;
-      } else {
-        filterStr += ` && _type == "vocab" && hinshi == $hinshi`;
-      }
-    }
-
-    const queryStr = `{
-      "items": *[${filterStr}] | order(coalesce(romaji, "") asc) [$start...$end] { 
-        _id, 
-        _type,
-        "slug": slug.current,
-        "word": coalesce(word, jisho), 
-        furigana, 
-        romaji, 
-        meaning, 
-        "hinshi": coalesce(hinshi, "verb"),
-        mnemonic,
-        "relatedKanji": relatedKanji[]->{ character, meaning }
-      },
-      "total": count(*[${filterStr}])
-    }`;
+    const trimmed = debouncedSearch.trim();
 
     try {
-      const { items, total } = await client.fetch(queryStr, {
-        levelFilter,
-        search: debouncedSearch.trim(),
-        kana: kanaSearch,
-        kata: kataSearch,
-        hinshi,
-        start,
-        end,
-      });
-      setVocabList(items);
-      setTotalItems(total);
+      let query = supabase
+        .from("vocab")
+        .select("id, word, furigana, romaji, meaning_id, hinshi, mnemonic, slug, related_kanji, jlpt_level", { count: "exact" })
+        .eq("jlpt_level", levelFilter);
+
+      // Apply search filter
+      if (trimmed !== "") {
+        const kanaSearch = wanakana.toHiragana(trimmed);
+        const kataSearch = wanakana.toKatakana(trimmed);
+        query = query.or(
+          `word.ilike.%${trimmed}%,meaning_id.ilike.%${trimmed}%,romaji.ilike.%${trimmed}%,word.ilike.%${kanaSearch}%,furigana.ilike.%${kanaSearch}%,word.ilike.%${kataSearch}%`
+        );
+      }
+
+      // Apply hinshi filter
+      if (hinshi !== "all") {
+        query = query.contains("hinshi", JSON.stringify([hinshi]));
+      }
+
+      const { data, count, error } = await query
+        .order("romaji", { ascending: true, nullsFirst: false })
+        .range(offset, offset + ITEMS_PER_PAGE - 1);
+
+      if (error) throw error;
+
+      const mapped: VocabItem[] = (data || []).map(v => ({
+        id: v.id,
+        word: v.word,
+        furigana: v.furigana || undefined,
+        romaji: v.romaji || undefined,
+        meaning: v.meaning_id || "",
+        hinshi: Array.isArray(v.hinshi) ? v.hinshi : v.hinshi ? [v.hinshi] : undefined,
+        mnemonic: v.mnemonic || undefined,
+        slug: v.slug || undefined,
+        related_kanji: (v.related_kanji as Array<{ character: string; meaning: string }>) || [],
+      }));
+
+      setVocabList(mapped);
+      setTotalItems(count || 0);
     } catch (error) {
       console.error("Gagal mengambil data:", error);
     } finally {
@@ -82,32 +81,31 @@ export function useVocabList(initialData: VocabItem[] = []) {
   }, [level, hinshi, debouncedSearch]);
 
   const fetchTotalCount = useCallback(async () => {
+    const supabase = createClient();
     const levelFilter = level.toUpperCase();
-    const kanaSearch = wanakana.toHiragana(debouncedSearch.trim());
-    const kataSearch = wanakana.toKatakana(debouncedSearch.trim());
-
-    let queryStr = `count(*[(_type == "vocab" || _type == "verb_dictionary") && jlptLevel == $levelFilter`;
-    if (debouncedSearch.trim() !== "") {
-      queryStr += ` && (word match $search + "*" || jisho match $search + "*" || romaji match $search + "*" || meaning match $search + "*" || word match $kana + "*" || jisho match $kana + "*" || furigana match $kana + "*" || word match $kata + "*" || jisho match $kata + "*")`;
-    }
-    if (hinshi !== "all") {
-      if (hinshi === "verb") {
-        queryStr += ` && _type == "verb_dictionary"`;
-      } else {
-        queryStr += ` && _type == "vocab" && hinshi == $hinshi`;
-      }
-    }
-    queryStr += `])`;
+    const trimmed = debouncedSearch.trim();
 
     try {
-      const count = await client.fetch(queryStr, {
-        levelFilter,
-        search: debouncedSearch.trim(),
-        kana: kanaSearch,
-        kata: kataSearch,
-        hinshi,
-      });
-      setTotalItems(count);
+      let query = supabase
+        .from("vocab")
+        .select("id", { count: "exact", head: true })
+        .eq("jlpt_level", levelFilter);
+
+      if (trimmed !== "") {
+        const kanaSearch = wanakana.toHiragana(trimmed);
+        const kataSearch = wanakana.toKatakana(trimmed);
+        query = query.or(
+          `word.ilike.%${trimmed}%,meaning_id.ilike.%${trimmed}%,romaji.ilike.%${trimmed}%,word.ilike.%${kanaSearch}%,furigana.ilike.%${kanaSearch}%,word.ilike.%${kataSearch}%`
+        );
+      }
+
+      if (hinshi !== "all") {
+        query = query.contains("hinshi", JSON.stringify([hinshi]));
+      }
+
+      const { count, error } = await query;
+      if (error) throw error;
+      setTotalItems(count || 0);
     } catch (error) {
       console.error("Gagal mengambil count:", error);
     }
@@ -119,12 +117,14 @@ export function useVocabList(initialData: VocabItem[] = []) {
     
     // On first render with default filters, use initial data but fetch count
     if (isDefaultFilter && initialData.length > 0 && totalItems === 0) {
-      fetchTotalCount();
+      requestAnimationFrame(() => fetchTotalCount());
       return;
     }
 
-    setCurrentPage(1);
-    fetchData(1);
+    requestAnimationFrame(() => {
+      setCurrentPage(1);
+      fetchData(1);
+    });
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [level, hinshi, debouncedSearch]);
 

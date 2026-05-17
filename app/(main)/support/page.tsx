@@ -147,7 +147,7 @@ export default function SupportPage() {
             <StatItem
               icon={<Zap className="text-warning text-warning" size={20} />}
               title="Infrastruktur"
-              desc="Biaya server database (Sanity), hosting (Vercel), dan domain agar aplikasi tetap ngebut dan stabil."
+              desc="Biaya server database (Supabase), hosting (Vercel), dan domain agar aplikasi tetap ngebut dan stabil."
               color="bg-warning/10 border-warning/30 neo-inset"
             />
             <StatItem

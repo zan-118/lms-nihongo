@@ -8,31 +8,25 @@ import { useUIStore } from "@/store/useUIStore";
 
 import { motion, Variants } from "framer-motion";
 import dynamic from "next/dynamic";
-import DashboardHero from "@/components/features/dashboard/DashboardHero";
-import DashboardStats from "@/components/features/dashboard/DashboardStats";
 import DashboardSettings from "@/components/features/dashboard/DashboardSettings";
 import LevelUpOverlay from "@/components/features/gamification/LevelUpOverlay";
 import ConfirmModal from "@/components/ui/ConfirmModal";
 import OnboardingTour from "@/components/features/onboarding/OnboardingTour";
-import DailyQuests from "@/components/features/dashboard/quests/DailyQuests";
 import { toast } from "sonner";
 import { UserProgress } from "@/store/types";
 import { SRSState } from "@/lib/srs";
+import { useRouter } from "next/navigation";
+import { createClient } from "@/lib/supabase/client";
 
 // Domain Components
 import { DashboardTabs } from "@/components/features/dashboard/DashboardTabs";
-
-const KanjiProgressGrid = dynamic(() => import("@/components/features/dashboard/KanjiProgressGrid"), { 
-  ssr: false,
-  loading: () => <div className="h-[200px] w-full animate-pulse bg-muted rounded-2xl" />
-});
+import { HomePanel } from "@/components/features/dashboard/panels/HomePanel";
+import { ProgressPanel } from "@/components/features/dashboard/panels/ProgressPanel";
 
 const AchievementsGrid = dynamic(() => import("@/components/features/gamification/AchievementsGrid"), { 
   ssr: false,
   loading: () => <div className="h-[200px] w-full animate-pulse bg-muted rounded-2xl" />
 });
-import { useRouter } from "next/navigation";
-import { createClient } from "@/lib/supabase/client";
 
 // ======================
 // CONFIG / CONSTANTS
@@ -56,11 +50,13 @@ const TABS = [
 
 interface DashboardClientProps {
   courseMetadata: Array<{
-    _id: string;
+    id?: string;
+    _id?: string;
     title: string;
     slug: string;
     lessons: Array<{
-      _id: string;
+      id?: string;
+      _id?: string;
       title: string;
       slug: string;
     }>;
@@ -100,7 +96,6 @@ export default function DashboardClient({ courseMetadata }: DashboardClientProps
     resetUI();
   };
 
-  // Reconstruct a lightweight progress object for legacy components if needed
   const progress: UserProgress = {
     id: id || "guest", 
     isGuest: !!isGuest, 
@@ -117,6 +112,7 @@ export default function DashboardClient({ courseMetadata }: DashboardClientProps
     settings: settings || { notificationsEnabled: true },
     completedLessons: {}
   };
+
   const [guestId, setGuestId] = useState<string>("MENYIAPKAN...");
   const [confirmModal, setConfirmModal] = useState({
     isOpen: false,
@@ -135,13 +131,10 @@ export default function DashboardClient({ courseMetadata }: DashboardClientProps
       if (isAuthenticated) {
         const { data: { session } } = await supabase.auth.getSession();
         if (session?.user) {
-          // Gunakan UID Supabase yang dipendekkan sebagai Student ID
           setGuestId("ST-" + session.user.id.substring(0, 8).toUpperCase());
           return;
         }
       }
-
-      // Fallback ke Guest ID
       let savedId = localStorage.getItem("nihongo_guest_id");
       if (!savedId) {
         savedId = "NP-" + Math.random().toString(36).substring(2, 8).toUpperCase();
@@ -149,12 +142,10 @@ export default function DashboardClient({ courseMetadata }: DashboardClientProps
       }
       setGuestId(savedId);
     };
-
     checkId();
   }, [isAuthenticated, supabase.auth]);
 
   const handleExportData = () => exportData();
-
   const handleImportData = () => {
     const input = document.createElement("input");
     input.type = "file";
@@ -214,7 +205,9 @@ export default function DashboardClient({ courseMetadata }: DashboardClientProps
   useEffect(() => {
     const now = Date.now();
     const count = Object.values(progress.srs as Record<string, SRSState>).filter((card: SRSState) => card.nextReview <= now).length;
-    setDueCount(count);
+    requestAnimationFrame(() => {
+      setDueCount(count);
+    });
   }, [progress.srs]);
 
   const [activeTab, setActiveTab] = useState("beranda");
@@ -250,74 +243,25 @@ export default function DashboardClient({ courseMetadata }: DashboardClientProps
         className="mt-[34px]"
       >
         {activeTab === "beranda" && (
-          <div className="grid grid-cols-1 lg:grid-cols-12 gap-[55px]">
-            {/* Main Content Area */}
-            <div className="lg:col-span-8 space-y-[89px]">
-              <DashboardHero 
-                loading={loading} 
-                guestId={guestId} 
-                dueCount={dueCount}
-                itemVariants={itemVariants}
-                isAuthenticated={isAuthenticated}
-                courseMetadata={courseMetadata}
-              />
-              
-              <section className="space-y-[34px]">
-                <div className="flex flex-col gap-2">
-                  <div className="flex items-center gap-[13px]">
-                    <div className="w-[34px] h-[1px] bg-primary/40" />
-                    <h2 className="text-[10px] font-bold uppercase tracking-[0.2em] text-primary">
-                      Ringkasan Belajar
-                    </h2>
-                  </div>
-                  <h3 className="text-3xl font-bold tracking-tight text-foreground">
-                    Rangkuman <span className="text-muted-foreground font-medium">Progresmu</span>
-                  </h3>
-                </div>
-                
-                <div className="p-[21px] rounded-[34px] bg-card/30 backdrop-blur-sm border border-border">
-                  <KanjiProgressGrid />
-                </div>
-              </section>
-            </div>
-            
-            {/* Sidebar Area */}
-            <aside className="lg:col-span-4 space-y-[34px]">
-              <div className="sticky top-[100px]">
-                <DailyQuests />
-              </div>
-            </aside>
-          </div>
+          <HomePanel
+            loading={loading}
+            guestId={guestId}
+            dueCount={dueCount}
+            itemVariants={itemVariants}
+            isAuthenticated={isAuthenticated}
+            courseMetadata={courseMetadata}
+          />
         )}
 
         {activeTab === "progres" && (
-          <div className="space-y-[89px]">
-            <DashboardStats 
-              loading={loading} 
-              progress={progress} 
-              xpNeeded={xpNeeded} 
-              xpProgress={xpProgress} 
-              itemVariants={itemVariants} 
-              courseMetadata={courseMetadata}
-            />
-            
-            <section className="space-y-[34px]">
-              <div className="flex flex-col gap-2">
-                <div className="flex items-center gap-[13px]">
-                  <div className="w-[34px] h-[1px] bg-primary/40" />
-                  <h2 className="text-[10px] font-bold uppercase tracking-[0.2em] text-primary">
-                    Analisis Mendalam
-                  </h2>
-                </div>
-                <h3 className="text-3xl font-bold tracking-tight text-foreground">
-                  Data <span className="text-muted-foreground font-medium">Belajarmu</span>
-                </h3>
-              </div>
-              <div className="p-[21px] rounded-[34px] bg-card/30 backdrop-blur-sm border border-border">
-                <KanjiProgressGrid />
-              </div>
-            </section>
-          </div>
+          <ProgressPanel
+            loading={loading}
+            progress={progress}
+            xpNeeded={xpNeeded}
+            xpProgress={xpProgress}
+            itemVariants={itemVariants}
+            courseMetadata={courseMetadata}
+          />
         )}
 
         {activeTab === "pencapaian" && (

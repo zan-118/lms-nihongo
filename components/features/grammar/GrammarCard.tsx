@@ -5,6 +5,7 @@ import Link from "next/link";
 import { Bookmark, ArrowRight } from "lucide-react";
 import { Card } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
+import { ROUTES } from "@/lib/routes";
 
 interface GrammarCardProps {
   article: {
@@ -44,7 +45,7 @@ export function GrammarCard({ article, index, selectedLevel }: GrammarCardProps)
         willChange: 'transform'
       }}
     >
-      <Link href={`/library/grammar/${article.slug}`} className="block h-full">
+      <Link href={ROUTES.LIBRARY.GRAMMAR(article.slug)} className="block h-full">
         <Card className="h-full p-6 bg-card/40 backdrop-blur-xl border border-border rounded-[2rem] group transition-all duration-500 flex flex-col cursor-pointer hover:border-primary/50 hover:bg-card/60 shadow-2xl relative overflow-hidden">
           {/* Hover Glow Effect */}
           <div className="absolute inset-0 bg-gradient-to-br from-primary/5 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500 pointer-events-none" />

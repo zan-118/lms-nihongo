@@ -13,18 +13,14 @@ export default function NotificationManager() {
   const toggleNotifications = useUIStore((state) => state.toggleNotifications);
   const notificationsEnabled = settings?.notificationsEnabled || false;
   
-  const [permission, setPermission] = useState<NotificationPermission>("default");
-  const [isEnabled, setIsEnabled] = useState(notificationsEnabled);
-
-  useEffect(() => {
-    setIsEnabled(notificationsEnabled);
-  }, [notificationsEnabled]);
-
-  useEffect(() => {
-    if ("Notification" in window) {
-      setPermission(Notification.permission);
+  const [permission, setPermission] = useState<NotificationPermission>(() => {
+    if (typeof window !== "undefined" && "Notification" in window) {
+      return Notification.permission;
     }
-  }, []);
+    return "default";
+  });
+
+  const isEnabled = notificationsEnabled;
 
   const requestPermission = async () => {
     if (!("Notification" in window)) {

@@ -11,36 +11,29 @@ import { LibraryServerStatus } from "@/components/features/library/LibraryServer
 export default function LibraryPage() {
   const categories = [
     {
-      href: "/library/verbs",
-      title: "Kamus Kata Kerja",
-      desc: "Belajar perubahan kata kerja N5-N4. Dari bentuk Masu sampai Te, semua ada di sini.",
-      icon: <RefreshCw size={28} />,
-      label: "Kamus Verba",
-      delay: 0.2
-    },
-    {
       href: "/library/grammar",
       title: "Panduan Tata Bahasa",
       desc: "Bahas pola kalimat jadi lebih mudah dengan contoh audio dan penjelasan yang simpel.",
       icon: <BookOpen size={28} />,
       label: "Pola Kalimat",
-      delay: 0.3
+      delay: 0.2
     },
     {
       href: "/library/vocab",
       title: "Daftar Kosakata",
-      desc: "Perkaya perbendaharaan kata N5-N2 Anda dengan ribuan entri yang dikurasi untuk persiapan JLPT.",
+      desc: "Ribuan kosakata, kata kerja, dan kata sifat N5-N2 lengkap dengan audio dan fitur SRS.",
       icon: <Database size={28} />,
       label: "Perbendaharaan Kata",
-      delay: 0.4
+      delay: 0.3
     },
+
     {
       href: "/library/cheatsheet",
       title: "Catatan Cepat",
       desc: "Referensi cepat untuk angka, partikel, dan materi dasar lainnya sebagai penunjang belajar harian.",
       icon: <BarChart2 size={28} />,
       label: "Panduan Cepat",
-      delay: 0.5
+      delay: 0.4
     },
     {
       href: "/library/reading",
@@ -48,7 +41,7 @@ export default function LibraryPage() {
       desc: "Asah kemahiran membaca melalui teks interaktif yang dikategorikan sesuai standar level JLPT.",
       icon: <BookOpen size={28} />,
       label: "Bacaan Berjenjang",
-      delay: 0.6
+      delay: 0.5
     },
     {
       href: "/exams",
@@ -56,7 +49,7 @@ export default function LibraryPage() {
       desc: "Uji kesiapan Anda menghadapi ujian JLPT sesungguhnya dengan simulasi skor yang akurat.",
       icon: <Award size={28} />,
       label: "Latihan Ujian",
-      delay: 0.7
+      delay: 0.6
     },
     {
       href: "/library/kanji",
@@ -64,7 +57,7 @@ export default function LibraryPage() {
       desc: "Dalami struktur ribuan kanji melalui visualisasi urutan goresan (stroke order) yang interaktif.",
       icon: <Type size={28} />,
       label: "Koleksi Kanji",
-      delay: 0.8
+      delay: 0.7
     },
     {
       href: "/library/listening",
@@ -72,8 +65,9 @@ export default function LibraryPage() {
       desc: "Tingkatkan kepekaan pendengaran melalui modul audio interaktif dan dukungan transkrip.",
       icon: <Headphones size={28} />,
       label: "Listening Lab",
-      delay: 0.9
+      delay: 0.8
     }
+
   ];
 
   return (

@@ -52,7 +52,7 @@ export const viewport: Viewport = {
  * Mengatur judul, deskripsi, OpenGraph, dan verifikasi mesin pencari.
  */
 export const metadata: Metadata = {
-  metadataBase: new URL("https://www.nihongoroute.my.id"), 
+  metadataBase: new URL(process.env.NEXT_PUBLIC_SITE_URL || "https://www.nihongoroute.my.id"), 
   title: "NihongoRoute | Belajar Bahasa Jepang Gratis",
   description:
     "Platform belajar bahasa Jepang dengan sistem terstruktur, gamifikasi, dan latihan interaktif.",
@@ -81,7 +81,7 @@ export const metadata: Metadata = {
     title: "NihongoRoute | Misi Menguasai Bahasa Jepang",
     description:
       "Tingkatkan level bahasa Jepangmu! Belajar JLPT N5 dengan sistem Flashcard SRS, Quiz interaktif, dan kamus pintar.",
-    url: "https://www.nihongoroute.my.id",
+    url: process.env.NEXT_PUBLIC_SITE_URL || "https://www.nihongoroute.my.id",
     siteName: "NihongoRoute",
     images: [
       {
@@ -144,6 +144,7 @@ export default function RootLayout({
           <Toaster 
             theme="dark"
             position="top-center"
+            offset={80} // Offset to clear Topbar (64px + 16px)
             toastOptions={{
               style: {
                 background: 'rgba(var(--background-rgb), 0.9)',

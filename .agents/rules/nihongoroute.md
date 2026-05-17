@@ -13,11 +13,11 @@ Kamu WAJIB SELALU mematuhi file `ARCHITECTURE.md` secara ketat terkait struktur 
 
 <ATURAN_KRITIS>
   <INTEGRITAS_DATA>
-    - SUMBER KEBENARAN UTAMA: Konten edukasi statis (kosakata, pelajaran) WAJIB berasal dari Sanity (`lib/queries.ts`). Kemajuan dinamis pengguna (XP, SRS) WAJIB berasal dari Supabase.
-    - SINKRONISASI 3 TINGKAT: Semua pembaruan antarmuka pengguna (UI) harus berinteraksi dengan Zustand terlebih dahulu (tanpa jeda/zero-latency). `useSyncProgress.ts` mengatur dan menunda (debounce), kemudian `useCloudMutation.ts` mengeksekusi RPC Supabase.
-    - KEAMANAN MULTI-TAB: Mutasi awan (cloud) yang sukses WAJIB menyiarkan "SYNC_COMPLETE" melalui `BroadcastChannel("nihongoroute_sync")` untuk membatalkan (invalidate) cache React Query di semua tab.
-    - ZUSTAND: Gunakan secara ketat `useAuthStore`, `useUserStore`, `useSRSStore`, dan `useUIStore` (dipersistensi melalui `idb-keyval`). DILARANG membuat penyimpanan global (global stores) baru tanpa izin.
-    - ISR SESUAI PERMINTAAN: Validasi ulang berbasis waktu (time-based revalidation) DILARANG. Gunakan `sanityFetch` dari `@/lib/sanity.fetch` dengan `tags` yang relevan untuk sinkronisasi webhook otomatis.
+    - SUMBER KEBENARAN UTAMA: Seluruh konten edukasi (kosakata, pelajaran, kanji) dan kemajuan dinamis pengguna (XP, SRS) WAJIB berasal dari Supabase melalui Server Actions di `app/actions/`.
+    - SINKRONISASI 3 TINGKAT: Semua pembaruan antarmuka pengguna (UI) harus berinteraksi dengan Zustand terlebih dahulu (zero-latency). `useSyncProgress.ts` mengatur debouncing, kemudian `useCloudMutation.ts` mengeksekusi RPC Supabase.
+    - KEAMANAN MULTI-TAB: Mutasi awan yang sukses WAJIB menyiarkan "SYNC_COMPLETE" melalui `BroadcastChannel("nihongoroute_sync")` untuk memicu invalidasi cache di tab lain.
+    - ZUSTAND: Gunakan secara ketat `useAuthStore`, `useUserStore`, `useSRSStore`, dan `useUIStore` (dipersistensi melalui `idb-keyval`). DILARANG membuat penyimpanan global baru tanpa izin.
+    - SERVER ACTIONS: Gunakan pola `use server` untuk pengambilan data. Revalidasi dilakukan secara manual melalui `revalidatePath` setelah mutasi, JANGAN menggunakan revalidasi berbasis waktu.
   </INTEGRITAS_DATA>
 
   <GAYA_DESAIN_KETAT>
@@ -52,12 +52,16 @@ Kamu WAJIB SELALU mematuhi file `ARCHITECTURE.md` secara ketat terkait struktur 
 
   <CONTOH_PENGAMBILAN_DATA>
     // ❌ BURUK (JANGAN LAKUKAN INI)
-    export const revalidate = 3600; // validasi ulang berbasis waktu dilarang
-    const data = await client.fetch(query);
+    export const revalidate = 3600; // revalidasi berbasis waktu dilarang
+    const res = await fetch('/api/data'); // gunakan server actions untuk data internal
 
     // ✅ BAIK (WAJIB SEPERTI INI)
-    import { sanityFetch } from '@/lib/sanity.fetch';
-    const data = await sanityFetch({ query, tags: ['lesson'] });
+    import { getLessonBySlug } from '@/app/actions/lesson.actions';
+    
+    export default async function Page({ params }) {
+      const { data: lesson } = await getLessonBySlug(params.slug);
+      // ... render
+    }
   </CONTOH_PENGAMBILAN_DATA>
 </CONTOH_KODE>
 

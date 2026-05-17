@@ -19,9 +19,9 @@ import { useUIStore } from "@/store/useUIStore";
 import { useAuthStore } from "@/store/useAuthStore";
 
 // Sub-components
-import ProfileSection from "./comp/ProfileSection";
-import DataManagementSection from "./comp/DataManagementSection";
-import SyncStatusSection from "./comp/SyncStatusSection";
+import ProfileSection from "./_components/ProfileSection";
+import DataManagementSection from "./_components/DataManagementSection";
+import SyncStatusSection from "./_components/SyncStatusSection";
 
 const containerVariants: Variants = {
   hidden: { opacity: 0 },

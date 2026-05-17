@@ -6,76 +6,24 @@
  */
 
 import { Metadata } from "next";
-import { sanityFetch } from "@/lib/sanity.fetch";
+import { getLibraryItemBySlug } from "@/app/actions/library.actions";
 import { notFound } from "next/navigation";
 import Link from "next/link";
 import { 
   ChevronLeft, 
   Home, 
   Library, 
-  Book, 
-  Sparkles, 
-  Layers,
-  ArrowRightLeft,
-  Link as LinkIcon,
-  Info
+  Book
 } from "lucide-react";
-import { Card } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
-import { Badge } from "@/components/ui/badge";
-import TTSReader from "@/components/features/tools/tts/TTSReader";
-import { SmartJapanese } from "@/components/ui/SmartJapanese";
-import { vocabDetailQuery } from "@/lib/queries";
 
-interface VocabRelatedKanji {
-  _id: string;
-  character: string;
-  meaning: string;
-  onyomi: string;
-  kunyomi: string;
-  slug: string;
-}
-
-interface VocabRelatedWord {
-  _id: string;
-  slug?: string;
-  word: string;
-  meaning: string;
-  furigana?: string;
-  romaji?: string;
-}
-
-interface VocabExample {
-  japanese: string;
-  indonesian: string;
-  furigana?: string;
-  romaji?: string;
-}
-
-interface VocabDetail {
-  _id: string;
-  slug: string;
-  word: string;
-  furigana?: string;
-  romaji?: string;
-  meaning: string;
-  hinshi?: string;
-  pitchAccent?: string;
-  mnemonic?: string;
-  showInFlashcard?: boolean;
-  jlptLevel?: string;
-  audioUrl?: string;
-  relatedKanji?: VocabRelatedKanji[];
-  synonyms?: VocabRelatedWord[];
-  antonyms?: VocabRelatedWord[];
-  examples?: VocabExample[];
-  usageNotes?: string;
-  negative?: string;
-  past?: string;
-  pastNegative?: string;
-  teForm?: string;
-  adverbial?: string;
-}
+// Feature Components
+import { VocabHero } from "@/components/features/library/vocab/detail/VocabHero";
+import { VocabDetails } from "@/components/features/library/vocab/detail/VocabDetails";
+import { VocabNotes } from "@/components/features/library/vocab/detail/VocabNotes";
+import { VocabConjugation } from "@/components/features/library/vocab/detail/VocabConjugation";
+import { VocabExamples } from "@/components/features/library/vocab/detail/VocabExamples";
+import { VocabRelated } from "@/components/features/library/vocab/detail/VocabRelated";
 
 export async function generateMetadata({
   params,
@@ -85,11 +33,7 @@ export async function generateMetadata({
   const { id } = await params;
   const decodedId = decodeURIComponent(id);
 
-  const vocab = await sanityFetch<VocabDetail | null>({
-    query: vocabDetailQuery,
-    params: { id: decodedId },
-    tags: ["vocab", "verb_dictionary"],
-  });
+  const vocab = await getLibraryItemBySlug("vocab", decodedId);
 
   if (!vocab) {
     return {
@@ -111,15 +55,16 @@ export default async function VocabDetailPage({
   const { id } = await params;
   const decodedId = decodeURIComponent(id);
 
-  const vocab = await sanityFetch<VocabDetail | null>({
-    query: vocabDetailQuery,
-    params: { id: decodedId },
-    tags: ["vocab", "verb_dictionary"],
-  });
+  const vocab = await getLibraryItemBySlug("vocab", decodedId);
 
   if (!vocab) return notFound();
 
-  const isAdjective = vocab.hinshi ? ["i-adjective", "na-adjective"].includes(vocab.hinshi) : false;
+  const hinshiList = Array.isArray(vocab.hinshi)
+    ? vocab.hinshi.map((h: string) => h.toLowerCase())
+    : (typeof vocab.hinshi === "string" ? [vocab.hinshi.toLowerCase()] : []);
+
+  const isAdjective = hinshiList.some((h: string) => h.includes("adjective"));
+  const isVerb = hinshiList.some((h: string) => h.includes("verb"));
 
   return (
     <main className="w-full bg-background px-4 md:px-8 lg:px-12 relative overflow-hidden flex flex-col justify-start min-h-screen pb-32 transition-colors duration-300">
@@ -155,201 +100,42 @@ export default async function VocabDetailPage({
 
         <div className="grid grid-cols-1 md:grid-cols-3 lg:grid-cols-4 gap-4 md:gap-6 auto-rows-[minmax(0,auto)]">
           {/* 1. Hero Bento (Fokus Utama) */}
-          <Card className="p-8 md:p-12 bg-card/40 backdrop-blur-xl border-border rounded-[2rem] hover:border-primary/40 transition-all group overflow-hidden relative md:col-span-2 lg:col-span-2 md:row-span-2 flex flex-col items-center justify-center text-center shadow-2xl">
-            <div className="absolute top-4 right-4 z-10">
-              <TTSReader text={vocab.word} minimal={false} />
-            </div>
-            <h1 className="text-5xl md:text-7xl lg:text-8xl font-black text-foreground font-japanese leading-none tracking-tighter mb-4 drop-shadow-sm mt-8">
-              <SmartJapanese word={vocab.word} furigana={vocab.furigana} />
-            </h1>
-            {vocab.romaji && (
-              <p className="text-sm md:text-base font-black text-muted-foreground uppercase tracking-[0.4em] opacity-50 mb-6">
-                {vocab.romaji}
-              </p>
-            )}
-            <div className="h-1.5 w-16 bg-primary rounded-full mb-6 shadow-[0_0_15px_rgba(var(--primary-rgb),0.5)] mx-auto" />
-            <p className="text-2xl md:text-3xl font-black text-foreground leading-tight">
-              {vocab.meaning}
-            </p>
-          </Card>
+          <VocabHero 
+            word={vocab.word} 
+            furigana={vocab.furigana} 
+            romaji={vocab.romaji} 
+            meaning={vocab.meaning} 
+          />
 
           {/* 2. Meta Data Bento (Atribut Kata) */}
-          <Card className="p-6 bg-card/20 backdrop-blur-xl border-border rounded-[2rem] hover:border-primary/40 transition-all group overflow-hidden relative col-span-1 flex flex-col justify-center gap-4">
-            <span className="text-[10px] font-black uppercase tracking-[0.2em] text-muted-foreground">Atribut Kata</span>
-            <div className="flex flex-wrap gap-2">
-              <Badge variant="outline" className="px-3 py-1.5 text-[10px] font-black uppercase tracking-widest rounded-xl bg-primary/10 text-primary border-primary/20">
-                {vocab.hinshi || "Kosakata"}
-              </Badge>
-              {vocab.jlptLevel && (
-                <Badge variant="outline" className="px-3 py-1.5 text-[10px] font-black uppercase tracking-widest rounded-xl bg-secondary/10 text-secondary border-secondary/20">
-                  JLPT {vocab.jlptLevel}
-                </Badge>
-              )}
-              {vocab.pitchAccent && (
-                <Badge variant="secondary" className="px-3 py-1.5 text-[9px] font-bold tracking-widest bg-muted border-border">
-                  PITCH: {vocab.pitchAccent}
-                </Badge>
-              )}
-            </div>
-          </Card>
+          <VocabDetails 
+            hinshi={vocab.hinshi} 
+            jlptLevel={vocab.jlptLevel} 
+            pitchAccent={vocab.pitchAccent} 
+          />
 
           {/* 3. Mnemonic & Notes Bento */}
-          <Card className="p-6 bg-warning/5 backdrop-blur-xl border-warning/20 rounded-[2rem] hover:border-warning/40 transition-all group overflow-hidden relative col-span-1 md:col-span-1 lg:col-span-1 flex flex-col gap-4">
-            <div className="absolute -top-4 -right-4 p-8 opacity-[0.05] group-hover:scale-110 transition-transform duration-700 text-warning">
-              <Sparkles size={80} />
-            </div>
-            {vocab.mnemonic && (
-              <div>
-                <div className="flex items-center gap-2 mb-2">
-                  <Sparkles size={14} aria-hidden="true" className="text-warning" />
-                  <span className="text-[10px] font-black uppercase tracking-[0.2em] text-warning">Mnemonic</span>
-                </div>
-                <p className="text-sm font-medium text-warning leading-relaxed italic">
-                  &quot;{vocab.mnemonic}&quot;
-                </p>
-              </div>
-            )}
-            {vocab.usageNotes && (
-              <div className={vocab.mnemonic ? "pt-4 border-t border-warning/10" : ""}>
-                <div className="flex items-center gap-2 mb-2">
-                  <Info size={14} aria-hidden="true" className="text-warning" />
-                  <span className="text-[10px] font-black uppercase tracking-[0.2em] text-warning">Catatan</span>
-                </div>
-                <p className="text-sm font-medium text-warning/90 leading-relaxed">
-                  {vocab.usageNotes}
-                </p>
-              </div>
-            )}
-            {!vocab.mnemonic && !vocab.usageNotes && (
-              <div className="flex items-center gap-2 opacity-50">
-                 <Info size={14} aria-hidden="true" className="text-warning" />
-                 <span className="text-xs italic text-warning">Belum ada catatan khusus.</span>
-              </div>
-            )}
-          </Card>
+          <VocabNotes 
+            mnemonic={vocab.mnemonic} 
+            usageNotes={vocab.usageNotes} 
+          />
 
-          {/* 4. Conjugation Bento (Jika Kata Sifat) */}
-          {isAdjective && (
-            <Card className="p-6 md:p-8 bg-card/20 backdrop-blur-xl border-border rounded-[2rem] hover:border-primary/40 transition-all group overflow-hidden relative md:col-span-3 lg:col-span-2">
-              <div className="flex items-center gap-3 mb-6">
-                <ArrowRightLeft size={18} aria-hidden="true" className="text-primary" />
-                <h2 className="text-sm font-black uppercase tracking-[0.2em] text-foreground">Konjugasi Kata Sifat</h2>
-              </div>
-              <div className="grid grid-cols-2 gap-4">
-                {[
-                  { label: "Negatif", value: vocab.negative },
-                  { label: "Lampau", value: vocab.past },
-                  { label: "Lampau Negatif", value: vocab.pastNegative },
-                  { label: "Te-Form", value: vocab.teForm },
-                  { label: "Adverbial", value: vocab.adverbial },
-                ].map((conj, i) => conj.value && (
-                  <div key={i} className="p-4 bg-[rgba(var(--muted-rgb),0.2)] border border-border rounded-xl">
-                    <span className="text-[9px] font-black uppercase tracking-widest text-muted-foreground block mb-1">{conj.label}</span>
-                    <span className="text-base font-bold text-foreground font-japanese">{conj.value}</span>
-                  </div>
-                ))}
-              </div>
-            </Card>
-          )}
+          {/* 4. Conjugation Bento (Jika Kata Sifat atau Kata Kerja) */}
+          <VocabConjugation 
+            isAdjective={isAdjective}
+            isVerb={isVerb}
+            conjugations={vocab.conjugations}
+          />
 
           {/* 5. Examples Bento */}
-          <Card className="p-6 md:p-8 bg-card/20 backdrop-blur-xl border-border rounded-[2rem] hover:border-primary/40 transition-all group overflow-hidden relative md:col-span-full lg:col-span-2">
-            <div className="flex items-center gap-3 mb-6">
-              <Layers size={18} aria-hidden="true" className="text-primary" />
-              <h2 className="text-sm font-black uppercase tracking-[0.2em] text-foreground">Contoh Penggunaan</h2>
-            </div>
-            <div className="space-y-4">
-              {vocab.examples?.map((ex: { japanese: string; indonesian: string; furigana?: string; romaji?: string }, i: number) => (
-                <div key={i} className="p-5 bg-[rgba(var(--card-rgb),0.3)] border border-border rounded-2xl">
-                  <div className="mb-3 flex flex-col gap-1">
-                    <p className="text-lg md:text-xl font-bold text-foreground font-japanese leading-relaxed">
-                      <SmartJapanese word={ex.japanese} furigana={ex.furigana} />
-                    </p>
-                    {ex.romaji && (
-                      <span className="text-[10px] md:text-xs font-black text-muted-foreground uppercase tracking-[0.2em] font-sans opacity-60">
-                        {ex.romaji}
-                      </span>
-                    )}
-                  </div>
-                  <div className="flex items-start gap-3 border-t border-border/50 pt-3">
-                    <div className="w-1.5 h-1.5 rounded-full bg-primary/40 mt-1.5 shrink-0" />
-                    <p className="text-sm font-medium text-muted-foreground italic">
-                      {ex.indonesian}
-                    </p>
-                  </div>
-                </div>
-              ))}
-              {(!vocab.examples || vocab.examples.length === 0) && (
-                <p className="text-xs text-muted-foreground italic">Belum ada contoh kalimat untuk kata ini.</p>
-              )}
-            </div>
-          </Card>
+          <VocabExamples examples={vocab.examples} />
 
           {/* 6. Related Context Bento */}
-          <Card className="p-6 md:p-8 bg-card/20 backdrop-blur-xl border-border rounded-[2rem] hover:border-primary/40 transition-all group overflow-hidden relative md:col-span-full lg:col-span-2 space-y-8">
-            {/* Related Kanji */}
-            {vocab.relatedKanji && vocab.relatedKanji.length > 0 && (
-              <div className="space-y-4">
-                <div className="flex items-center gap-3">
-                  <LinkIcon size={16} aria-hidden="true" className="text-primary" />
-                  <h2 className="text-xs font-black uppercase tracking-[0.2em] text-foreground">Karakter Kanji</h2>
-                </div>
-                <div className="flex flex-wrap gap-3">
-                  {vocab.relatedKanji.map((kanji: { _id: string; character: string; meaning: string; onyomi: string; kunyomi: string; slug: string }) => (
-                    <Link key={kanji._id} href={`/library/kanji/${kanji.character}`}>
-                      <div className="p-2 pr-4 bg-[rgba(var(--muted-rgb),0.3)] border border-border rounded-xl flex items-center gap-3 hover:border-primary/40 transition-all group/kanji">
-                        <div className="w-10 h-10 rounded-lg bg-background border border-border flex items-center justify-center text-xl font-japanese group-hover/kanji:text-primary transition-colors">
-                          {kanji.character}
-                        </div>
-                        <div>
-                          <p className="text-[10px] font-black text-foreground uppercase">{kanji.meaning}</p>
-                          <p className="text-[8px] font-bold text-muted-foreground mt-0.5">{kanji.onyomi} • {kanji.kunyomi}</p>
-                        </div>
-                      </div>
-                    </Link>
-                  ))}
-                </div>
-              </div>
-            )}
-
-            {/* Synonyms */}
-            {vocab.synonyms && vocab.synonyms.length > 0 && (
-              <div className="space-y-3">
-                <span className="text-[10px] font-black uppercase tracking-[0.2em] text-muted-foreground block">Sinonim</span>
-                <div className="flex flex-wrap gap-2">
-                  {vocab.synonyms.map((s: { _id: string; word: string; meaning: string; romaji?: string; slug?: string }) => (
-                    <Link key={s._id} href={`/library/vocab/${s.slug}`}>
-                      <Badge variant="secondary" className="px-3 py-1.5 rounded-lg bg-muted border border-border hover:border-primary/40 transition-all cursor-pointer">
-                        <span className="font-japanese mr-1.5">{s.word}</span>
-                        <span className="text-[8px] opacity-60">({s.meaning})</span>
-                      </Badge>
-                    </Link>
-                  ))}
-                </div>
-              </div>
-            )}
-
-            {/* Antonyms */}
-            {vocab.antonyms && vocab.antonyms.length > 0 && (
-              <div className="space-y-3">
-                <span className="text-[10px] font-black uppercase tracking-[0.2em] text-muted-foreground block">Antonim</span>
-                <div className="flex flex-wrap gap-2">
-                  {vocab.antonyms.map((a: { _id: string; word: string; meaning: string; romaji?: string; slug?: string }) => (
-                    <Link key={a._id} href={`/library/vocab/${a.slug}`}>
-                      <Badge variant="secondary" className="px-3 py-1.5 rounded-lg bg-muted border border-border hover:border-destructive/40 transition-all cursor-pointer">
-                        <span className="font-japanese mr-1.5">{a.word}</span>
-                        <span className="text-[8px] opacity-60">({a.meaning})</span>
-                      </Badge>
-                    </Link>
-                  ))}
-                </div>
-              </div>
-            )}
-            
-            {!(vocab.relatedKanji?.length) && !(vocab.synonyms?.length) && !(vocab.antonyms?.length) && (
-               <p className="text-xs text-muted-foreground italic">Tidak ada referensi tambahan untuk kata ini.</p>
-            )}
-          </Card>
+          <VocabRelated 
+            relatedKanji={vocab.relatedKanji} 
+            synonyms={vocab.synonyms} 
+            antonyms={vocab.antonyms} 
+          />
         </div>
 
         {/* Action Footer */}

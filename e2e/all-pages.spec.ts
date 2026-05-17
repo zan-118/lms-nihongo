@@ -12,7 +12,8 @@ const routes = [
   { path: '/courses', title: /Materi|Kursus/i },
   { path: '/library', title: /Pustaka|Library/i },
   { path: '/library/grammar', title: /Tata Bahasa|Grammar/i },
-  { path: '/library/verbs', title: /Kata Kerja|Verbs/i },
+
+
   { path: '/library/vocab', title: /Kosakata|Vocab/i },
   { path: '/exams', title: /Ujian|Exams/i },
   { path: '/review', title: /Review|Hafalan/i },

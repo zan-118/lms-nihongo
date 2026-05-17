@@ -1,42 +1,15 @@
-import { sanityFetch } from "@/lib/sanity.fetch";
 import DashboardClient from "./DashboardClient";
 import type { Metadata } from "next";
-
-interface CourseMetadata {
-  _id: string;
-  title: string;
-  slug: string;
-  lessons: Array<{
-    _id: string;
-    title: string;
-    slug: string;
-  }>;
-}
+import { getCourseCategories } from "@/app/actions/lessons.actions";
 
 export const metadata: Metadata = {
   title: "Dashboard | NihongoRoute",
   description: "Pantau progres belajar bahasa Jepang Anda, kelola jadwal SRS, dan taklukkan quest harian.",
 };
 
-async function getCourseMetadata() {
-  const query = `*[_type == "course_category"] | order(title asc) {
-    _id,
-    title,
-    "slug": slug.current,
-    "lessons": *[_type == "lesson" && references(^._id)] | order(orderNumber asc, _createdAt desc) {
-      _id,
-      title,
-      "slug": slug.current
-    }
-  }`;
-  return await sanityFetch<CourseMetadata[]>({
-    query,
-    tags: ["course_category", "lesson"],
-  });
-}
-
 export default async function DashboardPage() {
-  const courseMetadata = await getCourseMetadata();
+  const courseMetadata = await getCourseCategories();
+
 
   return (
     <div className="w-full min-h-screen bg-background relative overflow-hidden pt-12 pb-24 px-4 md:px-8 transition-colors duration-300">

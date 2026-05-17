@@ -43,7 +43,7 @@ export default function FloatingActions() {
 
   return (
     <>
-      <div className="fixed bottom-28 right-6 md:bottom-10 md:right-10 z-[100] flex flex-col items-end gap-4">
+      <div className="fixed bottom-32 right-6 md:bottom-10 md:right-10 z-[100] flex flex-col items-end gap-4">
         <AnimatePresence mode="wait">
           {/* Global Actions (Non-Reading) - Uses unmounting for AnimatePresence */}
           {!isReadingPage && isOpen && (

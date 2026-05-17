@@ -1,0 +1,417 @@
+{
+  "_type": "lesson",
+  "_id": "lesson-bab-1",
+  "title": "Bab 1: Perkenalan Diri (Jikoshoukai)",
+  "slug": {
+    "_type": "slug",
+    "current": "bab-1"
+  },
+  "order_number": 1,
+  "category_id": "N5-Course",
+  "summary": "Hari pertama di lingkungan baru, baik di kampus maupun tempat kerja di Jepang, adalah momen paling krusial. Setelah menyelesaikan bab ini, Anda ditargetkan mampu:",
+  "estimated_minutes": 15,
+  "is_premium": false,
+  "is_published": true,
+  "vocab_list": [
+    "私",
+    "貴方",
+    "さん",
+    "ちゃん",
+    "くん",
+    "人",
+    "どなた",
+    "先生",
+    "教師",
+    "学生",
+    "会社員",
+    "社員",
+    "銀行員",
+    "医者",
+    "研究者",
+    "エンジニア",
+    "大学",
+    "病院",
+    "電気",
+    "歳",
+    "何歳",
+    "おいくつ",
+    "はい",
+    "いいえ",
+    "初めまして",
+    "から来ました",
+    "よろしくお願いします",
+    "失礼ですが",
+    "お名前は？",
+    "日本",
+    "インドネシア",
+    "アメリカ",
+    "イギリス",
+    "中国",
+    "韓国",
+    "タイ",
+    "インド",
+    "ドイツ",
+    "ブラジル",
+    "オーストラリア"
+  ],
+  "kanji_list": [
+    "一",
+    "二",
+    "三",
+    "人",
+    "日"
+  ],
+  "grammar_list": [
+    "[A] は [B] です ([A] wa [B] desu)",
+    "[A] は [B] じゃありません ([A] wa [B] ja arimasen)",
+    "～ですか (~desu ka)",
+    "～も (~mo)",
+    "[A] の [B] ([A] no [B])"
+  ],
+  "reading_list": [],
+  "listening_list": [],
+  "seo": {
+    "title": "Belajar Bab 1 Bahasa Jepang N5 - Perkenalan Diri (Jikoshoukai) | NihongoRoute",
+    "description": "Kuasai materi pelajaran Bahasa Jepang N5 Bab 1: Perkenalan Diri (Jikoshoukai). Kosakata, Kanji, Tata Bahasa, Percakapan, dan Kuis interaktif.",
+    "keywords": "NihongoRoute, N5, Bab 1, Perkenalan Diri (Jikoshoukai), Bahasa Jepang"
+  },
+  "content_blocks": [
+    {
+      "_type": "block",
+      "style": "h2",
+      "children": [
+        {
+          "_type": "span",
+          "text": "🎯 1. Tujuan Belajar (Can-Do Objectives)"
+        }
+      ]
+    },
+    {
+      "_type": "block",
+      "style": "normal",
+      "children": [
+        {
+          "_type": "span",
+          "text": "Hari pertama di lingkungan baru, baik di kampus maupun tempat kerja di Jepang, adalah momen paling krusial. Setelah menyelesaikan bab ini, Anda ditargetkan mampu:"
+        }
+      ]
+    },
+    {
+      "_type": "block",
+      "style": "normal",
+      "children": [
+        {
+          "_type": "span",
+          "text": "• Memperkenalkan diri sendiri dengan menyebutkan nama, asal negara, dan profesi.\n• Menanyakan identitas lawan bicara dengan sopan tanpa menyinggung perasaan.\n• Memahami etiket dasar saat pertama kali bertemu seseorang di Jepang (seperti bertukar kartu nama)."
+        }
+      ]
+    },
+    {
+      "_type": "block",
+      "style": "h2",
+      "children": [
+        {
+          "_type": "span",
+          "text": "📖 2. Bedah Kosakata (40 Kata)"
+        }
+      ]
+    },
+    {
+      "_type": "block",
+      "style": "normal",
+      "children": [
+        {
+          "_type": "span",
+          "text": "Format: Kanji (Hiragana - Romaji) : Arti"
+        }
+      ]
+    },
+    {
+      "_type": "vocabBlock",
+      "title": "Daftar Kosakata"
+    },
+    {
+      "_type": "block",
+      "style": "h2",
+      "children": [
+        {
+          "_type": "span",
+          "text": "🛠️ 3. Tata Bahasa Ekstensif"
+        }
+      ]
+    },
+    {
+      "_type": "grammarBlock",
+      "title": "A. Pola Dasar: [A] は [B] です ([A] wa [B] desu)",
+      "content": "[A] は [B] です ([A] wa [B] desu)",
+      "furigana": "",
+      "translation": "Menyatakan bahwa A adalah B. Partikel は (ditulis 'ha', namun dibaca 'wa') berfungsi menandai topik kalimat. です (desu) diletakkan di akhir untuk kesopanan.",
+      "examples": [
+        {
+          "jp": "私は学生です。",
+          "romaji": "Watashi wa gakusei desu.",
+          "id": "Saya adalah pelajar.",
+          "furigana": ""
+        }
+      ]
+    },
+    {
+      "_type": "grammarBlock",
+      "title": "B. Pola Negatif: [A] は [B] じゃありません ([A] wa [B] ja arimasen)",
+      "content": "[A] は [B] じゃありません ([A] wa [B] ja arimasen)",
+      "furigana": "",
+      "translation": "Menyangkal sebuah pernyataan (A bukan B). Dalam pidato atau tulisan formal yang kaku, gunakan *dewa arimasen*.",
+      "examples": [
+        {
+          "jp": "私は医者じゃありません。",
+          "romaji": "Watashi wa isha ja arimasen.",
+          "id": "Saya bukan dokter.",
+          "furigana": ""
+        }
+      ]
+    },
+    {
+      "_type": "grammarBlock",
+      "title": "C. Pola Interogatif: ～ですか (~desu ka)",
+      "content": "～ですか (~desu ka)",
+      "furigana": "",
+      "translation": "Mengubah kalimat pernyataan menjadi pertanyaan dengan menambahkan partikel か (ka) di akhir.",
+      "examples": [
+        {
+          "jp": "ミラーさんはアメリカ人ですか。",
+          "romaji": "Miraa",
+          "id": "san wa Amerika-jin desu ka. - Apakah Tuan Miller orang Amerika?",
+          "furigana": ""
+        }
+      ]
+    },
+    {
+      "_type": "grammarBlock",
+      "title": "D. Partikel Kesetaraan: ～も (~mo)",
+      "content": "～も (~mo)",
+      "furigana": "",
+      "translation": "Partikel も (mo) berarti \"juga\". Digantikan posisinya dengan partikel は (wa) jika subjek memiliki predikat yang sama.",
+      "examples": [
+        {
+          "jp": "私は会社員です。アリさんも会社員です。",
+          "romaji": "Watashi wa kaishain desu. Ari",
+          "id": "san mo kaishain desu. - Saya pegawai. Ari juga pegawai.",
+          "furigana": ""
+        }
+      ]
+    },
+    {
+      "_type": "grammarBlock",
+      "title": "E. Partikel Modifikasi: [A] の [B] ([A] no [B])",
+      "content": "[A] の [B] ([A] no [B])",
+      "furigana": "",
+      "translation": "Menghubungkan dua kata benda. Benda A menjelaskan afiliasi, identitas, atau letak Benda B.",
+      "examples": [
+        {
+          "jp": "IMCの社員",
+          "romaji": "IMC no shain",
+          "id": "Pegawai (di perusahaan) IMC",
+          "furigana": ""
+        }
+      ]
+    },
+    {
+      "_type": "block",
+      "style": "h2",
+      "children": [
+        {
+          "_type": "span",
+          "text": "🖌️ 4. Daftar Kanji Dasar (Bab 1)"
+        }
+      ]
+    },
+    {
+      "_type": "block",
+      "style": "normal",
+      "children": [
+        {
+          "_type": "span",
+          "text": "Detail urutan coretan (stroke order) dan gabungan kata dapat dilihat di rute halaman eksplorasi Kanji."
+        }
+      ]
+    },
+    {
+      "_type": "kanjiBlock",
+      "title": "Daftar Kanji"
+    },
+    {
+      "_type": "block",
+      "style": "h2",
+      "children": [
+        {
+          "_type": "span",
+          "text": "⛩️ 5. Catatan Budaya (Etiket Pertemuan)"
+        }
+      ]
+    },
+    {
+      "_type": "calloutBlock",
+      "title": "Kartu Nama (Meishi)",
+      "content": "Saat memperkenalkan diri di dunia kerja, orang Jepang saling bertukar kartu nama. Terima dengan kedua belah tangan, lalu bacalah sejenak sebagai bentuk penghormatan."
+    },
+    {
+      "_type": "calloutBlock",
+      "title": "Membungkuk (Ojigi)",
+      "content": "Bungkukkan badan sekitar 30 derajat saat mengucapkan \"Yoroshiku onegaishimasu\"."
+    },
+    {
+      "_type": "calloutBlock",
+      "title": "Menyebut Nama",
+      "content": "Jangan pernah menambahkan gelar \"~san\" atau \"~sensei\" pada nama Anda sendiri, karena itu mengesankan Anda meninggikan diri sendiri/sombong."
+    },
+    {
+      "_type": "block",
+      "style": "h2",
+      "children": [
+        {
+          "_type": "span",
+          "text": "💬 6. Praktik Membaca Nyata (Dialog)"
+        }
+      ]
+    },
+    {
+      "_type": "dialogueBlock",
+      "title": "Praktik Membaca Nyata (Dialog)",
+      "content": "高橋：初めまして。高橋です。\nアユ：初めまして。アユです。インドネシアから来ました。\n高橋：アユさんはエンジニアですか。\nアユ：はい、エンジニアです。よろしくお願いします。\n高橋：こちらこそ、よろしくお願いします。",
+      "translation": "Takahashi: Salam kenal. Saya Takahashi.\nAyu: Salam kenal. Saya Ayu. Datang dari Indonesia.\nTakahashi: san wa enjinia desu ka. - Apakah Ayu seorang teknisi/engineer?\nAyu: Ya, saya teknisi. Mohon bimbingannya.\nTakahashi: Saya juga, mohon bimbingannya.",
+      "furigana": ""
+    },
+    {
+      "_type": "block",
+      "style": "h2",
+      "children": [
+        {
+          "_type": "span",
+          "text": "✏️ 7. Kuis Evaluasi Bab 1"
+        }
+      ]
+    }
+  ],
+  "quizzes": [
+    {
+      "id": "n5-bab1-q1",
+      "question": "Jika ingin mengatakan \"Saya adalah orang Indonesia\", bahasa Jepangnya adalah...",
+      "options": [
+        "私はインドネシアです。",
+        "私はインドネシア人です。",
+        "インドネシアは私です。"
+      ],
+      "correct_answer": "私はインドネシア人です。",
+      "explanation": "Untuk menyatakan kewarganegaraan, tambahkan akhiran 人 (jin) di belakang nama negara.",
+      "type": "multiple-choice"
+    },
+    {
+      "id": "n5-bab1-q2",
+      "question": "Gelar apa yang pantas Anda tambahkan di belakang nama Anda sendiri saat perkenalan?",
+      "options": [
+        "～さん (~san)",
+        "～先生 (~sensei)",
+        "Tidak boleh ditambahkan apa-apa."
+      ],
+      "correct_answer": "Tidak boleh ditambahkan apa-apa.",
+      "explanation": "Menambahkan gelar seperti ~san pada nama sendiri di depan orang Jepang dianggap meninggikan diri sendiri dan tidak sopan.",
+      "type": "multiple-choice"
+    },
+    {
+      "id": "n5-bab1-q3",
+      "question": "Budi adalah dokter. Tanaka juga dokter. Kalimat yang tepat untuk Tanaka adalah...",
+      "options": [
+        "田中さんは医者です。",
+        "田中さんの医者です。",
+        "田中さんも医者です。"
+      ],
+      "correct_answer": "田中さんも医者です。",
+      "explanation": "Karena Tanaka memiliki profesi yang sama dengan Budi (Dokter/Isha), partikel は diganti dengan も (mo/juga).",
+      "type": "multiple-choice"
+    },
+    {
+      "id": "n5-bab1-q4",
+      "question": "Partikel \"no\" (の) pada \"大学の先生 (Daigaku no sensei)\" berfungsi untuk...",
+      "options": [
+        "Menandai subjek",
+        "Menjelaskan bahwa guru tersebut berafiliasi di Universitas",
+        "Menyangkal profesi"
+      ],
+      "correct_answer": "Menjelaskan bahwa guru tersebut berafiliasi di Universitas",
+      "explanation": "Partikel の (no) menggabungkan dua benda, di mana kata di depan (Daigaku/Universitas) menerangkan afiliasi kata di belakangnya (Sensei/Guru).",
+      "type": "multiple-choice"
+    },
+    {
+      "id": "n5-bab1-q5",
+      "question": "*Lengkapi percakapan ini!*\nA: キムさんは学生ですか。 (Kimu-san wa gakusei desu ka.)\nB: いいえ、学生（ ____ ）。(Iie, gakusei ____. )",
+      "options": [
+        "じゃありません (ja arimasen)",
+        "です (desu)",
+        "も (mo)"
+      ],
+      "correct_answer": "じゃありません (ja arimasen)",
+      "explanation": "Karena diawali kata \"いいえ\" (Iie/Tidak), kalimat tersebut adalah kalimat negatif.",
+      "type": "multiple-choice"
+    },
+    {
+      "id": "n5-bab1-q6",
+      "question": "Huruf Kanji mana yang merepresentasikan arti \"Tiga\"?",
+      "options": [
+        "一",
+        "二",
+        "三"
+      ],
+      "correct_answer": "三",
+      "explanation": "Kanji 三 dengan tiga coretan horizontal berarti 3.",
+      "type": "multiple-choice"
+    },
+    {
+      "id": "n5-bab1-q7",
+      "question": "Anda bekerja sebagai guru dan ingin memperkenalkan profesi Anda. Kalimat yang paling natural adalah...",
+      "options": [
+        "私は日本語の先生です。 (Watashi wa Nihongo no sensei desu.)",
+        "私は日本語の教師です。 (Watashi wa Nihongo no kyoushi desu.)",
+        "私は日本語の学生です。 (Watashi wa Nihongo no gakusei desu.)"
+      ],
+      "correct_answer": "私は日本語の教師です。 (Watashi wa Nihongo no kyoushi desu.)",
+      "explanation": "Kata \"Sensei\" adalah gelar kehormatan untuk orang lain. Gunakan \"Kyoushi\" (pengajar) untuk menyebut profesi diri sendiri.",
+      "type": "multiple-choice"
+    },
+    {
+      "id": "n5-bab1-q8",
+      "question": "Apa sapaan yang tepat digunakan untuk anak laki-laki atau bawahan pria?",
+      "options": [
+        "～ちゃん (~chan)",
+        "～くん (~kun)",
+        "～じん (~jin)"
+      ],
+      "correct_answer": "～くん (~kun)",
+      "explanation": "\"~kun\" digunakan untuk anak laki-laki, sedangkan \"~chan\" umumnya untuk anak perempuan atau teman yang sudah sangat akrab.",
+      "type": "multiple-choice"
+    },
+    {
+      "id": "n5-bab1-q9",
+      "question": "Cara membaca Kanji \"人\" pada kata \"インドネシア人\" adalah...",
+      "options": [
+        "ひと (hito)",
+        "じん (jin)",
+        "にん (nin)"
+      ],
+      "correct_answer": "じん (jin)",
+      "explanation": "Saat merepresentasikan kewarganegaraan, karakter 人 dibaca \"jin\".",
+      "type": "multiple-choice"
+    },
+    {
+      "id": "n5-bab1-q10",
+      "question": "Jika ingin bertanya tentang umur seseorang dengan cara yang sangat sopan, frasa yang digunakan adalah...",
+      "options": [
+        "お名前は (Onamae wa)",
+        "何歳 (Nansai)",
+        "おいくつ (Oikutsu)"
+      ],
+      "correct_answer": "おいくつ (Oikutsu)",
+      "explanation": "\"Oikutsu\" adalah bentuk hormat tingkat tinggi (Keigo) dari kata \"Nansai\" untuk menanyakan umur.",
+      "type": "multiple-choice"
+    }
+  ]
+}

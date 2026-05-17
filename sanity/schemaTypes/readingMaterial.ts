@@ -1,131 +1,186 @@
-import { defineType, defineField } from "sanity";
-import { BookOpen } from "lucide-react";
-import { AutoSlugInput } from "../components/AutoSlugInput";
-import { AutoFuriganaInput } from "../components/AutoFuriganaInput";
-import { AutoRomajiInput } from "../components/AutoRomajiInput";
+import { FuriganaGeneratorInput } from '../components/FuriganaGeneratorInput';
 
-export default defineType({
-  name: "readingMaterial",
-  title: "Graded Reading",
-  type: "document",
-  icon: BookOpen,
+export default {
+  name: 'readingMaterial',
+  title: 'Materi Bacaan (Reading)',
+  type: 'document',
+  groups: [
+    { name: 'content', title: '📝 Konten Bacaan', default: true },
+    { name: 'metadata', title: '⚙️ Metadata & Level' },
+    { name: 'seo', title: '🔍 Optimasi SEO' },
+  ],
   fields: [
-    defineField({
-      name: "title",
-      title: "Judul",
-      type: "string",
-      validation: (Rule) => Rule.required(),
-    }),
-    defineField({
-      name: "slug",
-      title: "Slug",
-      type: "slug",
+    // ─── METADATA GROUP ───
+    {
+      name: 'title',
+      title: 'Judul',
+      type: 'string',
+      group: 'metadata',
+      validation: (Rule: any) => Rule.required(),
+    },
+    {
+      name: 'slug',
+      title: 'Slug',
+      type: 'slug',
+      group: 'metadata',
       options: {
-        source: "title",
+        source: 'title',
         maxLength: 96,
       },
-      components: {
-        input: AutoSlugInput,
-      },
-      validation: (Rule) => Rule.required(),
-    }),
-    defineField({
-      name: "difficulty",
-      title: "Level JLPT",
-      type: "string",
+      validation: (Rule: any) => Rule.required(),
+    },
+    {
+      name: 'jlpt_level',
+      title: 'JLPT Level',
+      type: 'string',
+      group: 'metadata',
       options: {
         list: [
-          { title: "N5", value: "N5" },
-          { title: "N4", value: "N4" },
-          { title: "N3", value: "N3" },
-          { title: "N2", value: "N2" },
-          { title: "N1", value: "N1" },
+          { title: 'N5', value: 'N5' },
+          { title: 'N4', value: 'N4' },
+          { title: 'N3', value: 'N3' },
+          { title: 'N2', value: 'N2' },
+          { title: 'N1', value: 'N1' },
         ],
       },
-      validation: (Rule) => Rule.required(),
-    }),
-    defineField({
-      name: "mainImage",
-      title: "Thumbnail / Cover Image",
-      type: "image",
-      options: { hotspot: true },
-    }),
-    defineField({
-      name: "estimatedMinutes",
-      title: "Estimasi Waktu Baca (Menit)",
-      type: "number",
-      initialValue: 3,
-    }),
-    defineField({
-      name: "isPremium",
-      title: "Konten Premium? 💎",
-      type: "boolean",
-      initialValue: false,
-    }),
-    defineField({
-      name: "category",
-      title: "Kategori",
-      type: "reference",
-      to: [{ type: "course_category" }],
-    }),
-    defineField({
-      name: "keyVocabulary",
-      title: "Kosakata Kunci (Key Vocab)",
-      type: "array",
-      of: [{ type: "reference", to: [{ type: "vocab" }, { type: "verb_dictionary" }] }],
-      description: "Daftar kosakata penting yang muncul di bacaan ini agar user bisa mempelajarinya terlebih dahulu.",
-    }),
-    defineField({
-      name: "audioFile",
-      title: "File Audio (Native)",
-      type: "file",
-      options: {
-        accept: "audio/*",
-      },
-      description: "Unggah file audio pengucapan asli. Batas ukuran maksimal: 2MB.",
-    }),
-    defineField({
-      name: "isTTSDisabled",
-      title: "Matikan TTS Otomatis",
-      description: "Centang jika tidak ingin menggunakan suara AI jika file audio native tidak ada.",
-      type: "boolean",
-      initialValue: false,
-    }),
-    defineField({
-      name: "body",
-      title: "Bacaan Asli (Kanji/Kana)",
-      description: "Teks asli dalam bahasa Jepang. Gunakan Furigana Annotation untuk kata sulit.",
-      type: "blockContent",
-      validation: (Rule) => Rule.required(),
-    }),
-    defineField({
-      name: "hiragana",
-      title: "Full Hiragana",
-      description: "Versi Hiragana lengkap dari teks di atas untuk pembentukan Furigana otomatis.",
-      type: "text",
-      components: { input: AutoFuriganaInput },
-      options: { sourceField: "body" },
-    }),
-    defineField({
-      name: "romaji",
-      title: "Full Romaji",
-      description: "Versi Romaji lengkap dari teks di atas.",
-      type: "text",
-      components: { input: AutoRomajiInput },
-      options: { sourceField: "hiragana" },
-    }),
-    defineField({
-      name: "translation",
-      title: "Terjemahan (Bahasa Indonesia)",
-      description: "Terjemahan cerita untuk membantu pemahaman.",
-      type: "blockContent",
-      validation: (Rule) => Rule.required(),
-    }),
-  ],
-  preview: {
-    select: {
-      title: "title",
-      subtitle: "difficulty",
+      validation: (Rule: any) => Rule.required(),
     },
-  },
-});
+    {
+      name: 'difficulty',
+      title: 'Kesulitan (Difficulty)',
+      type: 'string',
+      group: 'metadata',
+    },
+    {
+      name: 'estimated_minutes',
+      title: 'Estimasi Waktu Baca (Menit)',
+      type: 'number',
+      group: 'metadata',
+      initialValue: 5,
+    },
+
+    // ─── CONTENT GROUP ───
+    {
+      name: 'body',
+      title: 'Konten / Teks Utama (Kanji/Kana)',
+      type: 'text',
+      group: 'content',
+      validation: (Rule: any) => Rule.required(),
+    },
+    {
+      name: 'hiragana',
+      title: 'Furigana / Hiragana Full (Opsional)',
+      type: 'text',
+      group: 'content',
+      components: {
+        input: FuriganaGeneratorInput
+      }
+    },
+    {
+      name: 'translation',
+      title: 'Terjemahan Bahasa Indonesia',
+      type: 'text',
+      group: 'content',
+    },
+    {
+      name: 'audio_url',
+      title: 'Audio URL (Sanity/CDN)',
+      type: 'string',
+      group: 'content',
+    },
+    {
+      name: 'image_url',
+      title: 'Image URL (Sanity/CDN)',
+      type: 'string',
+      group: 'content',
+    },
+    {
+      name: 'video_url',
+      title: 'Video URL (Sanity/CDN)',
+      type: 'string',
+      group: 'content',
+    },
+    {
+      name: 'quizzes',
+      title: 'Kuis Evaluasi Terkait (Quizzes)',
+      description: 'Pertanyaan evaluasi opsional khusus materi bacaan ini',
+      type: 'array',
+      group: 'content',
+      of: [
+        {
+          type: 'object',
+          name: 'readingQuiz',
+          title: 'Soal Kuis Bacaan',
+          fields: [
+            {
+              name: 'id',
+              title: 'Unique Quiz ID',
+              type: 'string',
+              validation: (Rule: any) => Rule.required(),
+            },
+            {
+              name: 'question',
+              title: 'Pertanyaan',
+              type: 'text',
+              validation: (Rule: any) => Rule.required(),
+            },
+            {
+              name: 'options',
+              title: 'Pilihan Jawaban',
+              type: 'array',
+              of: [{ type: 'string' }],
+              validation: (Rule: any) => Rule.required().min(2),
+            },
+            {
+              name: 'correct_answer',
+              title: 'Jawaban Benar (Ketik teks jawabannya persis)',
+              type: 'string',
+              validation: (Rule: any) => Rule.required(),
+            },
+            {
+              name: 'explanation',
+              title: 'Penjelasan Jawaban',
+              type: 'text',
+            },
+            {
+              name: 'audio_url',
+              title: 'Audio URL (Sanity/CDN)',
+              type: 'string',
+            },
+            {
+              name: 'image_url',
+              title: 'Image URL (Sanity/CDN)',
+              type: 'string',
+            },
+            {
+              name: 'type',
+              title: 'Jenis Kuis',
+              type: 'string',
+              options: {
+                list: [
+                  { title: 'Pilihan Ganda (Multiple Choice)', value: 'multiple-choice' },
+                  { title: 'Benar / Salah (True or False)', value: 'true-false' },
+                  { title: 'Isian Rumpang (Fill in the Blank)', value: 'fill-in-the-blank' },
+                ],
+              },
+              validation: (Rule: any) => Rule.required(),
+            },
+          ],
+        },
+      ],
+    },
+
+    // ─── SEO GROUP ───
+    {
+      name: 'seo',
+      title: 'SEO Metadata',
+      type: 'object',
+      group: 'seo',
+      fields: [
+        { name: 'title', title: 'SEO Title', type: 'string' },
+        { name: 'description', title: 'SEO Description', type: 'text' },
+        { name: 'keywords', title: 'Keywords (pisahkan dengan koma)', type: 'string' },
+      ],
+    },
+  ],
+};

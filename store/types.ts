@@ -11,17 +11,19 @@ export interface Notification {
 
 export interface Inventory {
   streakFreeze: number;
-  claimedQuests: {
+  /** claimedQuests disimpan di client-side / local state, bukan kolom DB */
+  claimedQuests?: {
     date: string;
     quests: string[];
   };
 }
 
 export interface Settings {
-  dailyReviewGoal: number;
-  dailyLessonGoal: number;
   notificationsEnabled: boolean;
-  showFurigana: boolean;
+  /** Field berikut disimpan di client-side / local state, bukan kolom DB */
+  dailyReviewGoal?: number;
+  dailyLessonGoal?: number;
+  showFurigana?: boolean;
 }
 
 export interface LessonProgress {

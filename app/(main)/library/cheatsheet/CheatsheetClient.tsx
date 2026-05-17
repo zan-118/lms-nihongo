@@ -35,7 +35,8 @@ export interface SheetItem {
   romaji: string;
 }
 export interface Cheatsheet {
-  _id: string;
+  _id?: string;
+  id?: string;
   title: string;
   category: string;
   slug?: string;
@@ -121,13 +122,13 @@ export default function CheatsheetClient({
            <AnimatePresence>
               {filteredSheets.map((sheet, idx) => (
                 <motion.div
-                  key={sheet._id}
+                  key={sheet._id || sheet.id}
                   initial={{ opacity: 0, y: 20 }}
                   animate={{ opacity: 1, y: 0 }}
                   exit={{ opacity: 0, scale: 0.95 }}
                   transition={{ delay: idx * 0.05 }}
                 >
-                  <Link href={`/library/cheatsheet/${sheet.slug || sheet._id}`}>
+                  <Link href={`/library/cheatsheet/${sheet.slug || sheet.id || sheet._id}`}>
                     <Card 
                       className="group relative h-full bg-card hover:bg-primary/[0.02] border border-border/50 hover:border-primary/40 rounded-[2.5rem] p-8 cursor-pointer transition-all duration-500 shadow-sm hover:shadow-[0_20px_50px_rgba(var(--background-rgb),0.1)] dark:hover:shadow-[0_20px_50px_rgba(var(--background-rgb),0.3)] flex flex-col gap-6 overflow-hidden"
                     >

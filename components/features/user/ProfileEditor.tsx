@@ -128,16 +128,16 @@ export default function ProfileEditor() {
           </div>
           
           <div className="flex-1">
-            <h2 className="text-4xl md:text-5xl lg:text-6xl font-black text-foreground tracking-tighter leading-none flex items-center gap-4">
+            <h2 className="text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-black text-foreground tracking-tighter leading-none flex items-center gap-3 sm:gap-4 text-balance">
               <span className="text-transparent bg-clip-text bg-gradient-to-r from-primary to-blue-600">
                 {progress.name || "Pelajar"}
               </span>
               <button
                 onClick={() => setIsEditing(true)}
-                className="opacity-0 group-hover:opacity-100 transition-opacity p-2 text-muted-foreground hover:text-primary outline-none focus-visible:ring-2 focus-visible:ring-primary rounded-lg"
+                className="opacity-0 group-hover:opacity-100 transition-opacity p-2 text-muted-foreground hover:text-primary outline-none focus-visible:ring-2 focus-visible:ring-primary rounded-lg shrink-0"
                 aria-label="Edit Nama Profil"
               >
-                <Edit2 size={24} />
+                <Edit2 size={20} className="sm:w-6 sm:h-6" />
               </button>
             </h2>
             <p className="text-muted-foreground text-xs md:text-sm font-bold uppercase tracking-[0.2em] mt-2 flex items-center gap-2">

@@ -6,6 +6,14 @@ const nextConfig: NextConfig = {
     remotePatterns: [
       {
         protocol: "https",
+        hostname: "hubqetausiziocdlbdmd.supabase.co",
+      },
+      {
+        protocol: "https",
+        hostname: "res.cloudinary.com", // Keep for legacy, but we'll mainly use Sanity
+      },
+      {
+        protocol: "https",
         hostname: "cdn.sanity.io",
       },
     ],

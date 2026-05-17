@@ -123,7 +123,7 @@ export default function SRSReviewEngine({ cards }: { cards: FlashcardType[] }) {
 
             {engine.currentCard && (
               <Flashcard
-                id={engine.currentCard._id}
+                id={engine.currentCard.id}
                 word={engine.currentCard.word}
                 meaning={engine.currentCard.meaning}
                 furigana={engine.currentCard.furigana}

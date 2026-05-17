@@ -9,12 +9,8 @@
 // IMPORTS
 // ======================
 import type { Metadata } from "next";
-import { sanityFetch } from "@/lib/sanity.fetch";
 import ExamsClient from "./ExamsClient";
-
-// ======================
-// CONFIG / CONSTANTS
-// ======================
+import { getExamsList } from "@/app/actions/library.actions";
 
 export const metadata: Metadata = {
   title: "Pusat Ujian Simulasi JLPT | NihongoRoute",
@@ -22,43 +18,9 @@ export const metadata: Metadata = {
     "Uji kemampuan bahasa Jepang Anda dengan mesin simulasi ujian JLPT waktu nyata.",
 };
 
-// ======================
-// DATABASE OPERATIONS
-// ======================
-
-/**
- * Menarik daftar ujian simulasi dari Sanity CMS.
- * 
- * @returns {Promise<Array>} Kumpulan data metadata simulasi ujian.
- */
-async function getExamsData() {
-  const query = `*[_type == "mockExam" && !(_id in path("drafts.**"))] | order(_createdAt desc) {
-    _id,
-    "slug": slug.current,
-    title,
-    description,
-    "levelCode": course_category->slug.current,
-    timeLimit,
-    passingScore
-  }`;
-
-  return await sanityFetch<any[]>({
-    query,
-    tags: ["mockExam"],
-  });
-}
-
-// ======================
-// MAIN EXECUTION
-// ======================
-
-/**
- * Komponen ExamsPage (Server Component): Mengambil data ujian dan merender ExamsClient.
- * 
- * @returns {JSX.Element} Halaman pusat ujian.
- */
 export default async function ExamsPage() {
-  const exams = await getExamsData();
+  const exams = await getExamsList();
+
 
   return <ExamsClient exams={exams} />;
 }

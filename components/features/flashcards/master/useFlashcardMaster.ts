@@ -54,7 +54,7 @@ export function useFlashcardMaster({
     isProcessing.current = true;
     
     const card = currentCards[currentIndex];
-    const cardId = card._id || card.id || "unknown";
+    const cardId = card.id || "unknown";
     
     // XP Scaling based on Grade (0: 5, 1: 10, 2: 15, 3: 20)
     const xpRewards = [5, 10, 15, 20];

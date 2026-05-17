@@ -11,21 +11,23 @@ interface KanjiStrokeOrderProps {
 }
 
 export default function KanjiStrokeOrder({ kanji, minimal = false }: KanjiStrokeOrderProps) {
-  const [svgUrl, setSvgUrl] = useState<string>("");
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(false);
+  const [resetKey, setResetKey] = useState(0);
+
+  const codePoint = kanji ? kanji.charCodeAt(0).toString(16).padStart(5, '0') : "";
+  const svgUrl = codePoint ? `https://raw.githubusercontent.com/KanjiVG/kanjivg/master/kanji/${codePoint}.svg` : "";
 
   useEffect(() => {
-    if (!kanji) return;
-
-    // Convert kanji to hex string (KanjiVG format: 04e00.svg)
-    const codePoint = kanji.charCodeAt(0).toString(16).padStart(5, '0');
-    const url = `https://raw.githubusercontent.com/KanjiVG/kanjivg/master/kanji/${codePoint}.svg`;
-    
-    setSvgUrl(url);
-    setLoading(true);
-    setError(false);
-  }, [kanji]);
+    if (svgUrl) {
+      requestAnimationFrame(() => {
+        setLoading(true);
+      });
+    }
+    requestAnimationFrame(() => {
+      setError(false);
+    });
+  }, [kanji, svgUrl]);
 
   return (
     <div className={`flex flex-col ${minimal ? 'gap-2' : 'gap-4'}`}>
@@ -44,6 +46,7 @@ export default function KanjiStrokeOrder({ kanji, minimal = false }: KanjiStroke
         ) : (
           svgUrl && (
             <Image 
+              key={`${svgUrl}-${resetKey}`}
               src={svgUrl} 
               alt={`Stroke order for ${kanji}`}
               width={200}
@@ -67,11 +70,7 @@ export default function KanjiStrokeOrder({ kanji, minimal = false }: KanjiStroke
               variant="outline" 
               size="sm" 
               className="h-8 px-3 rounded-lg text-xs font-bold uppercase tracking-widest gap-2"
-              onClick={() => {
-                const currentUrl = svgUrl;
-                setSvgUrl("");
-                setTimeout(() => setSvgUrl(currentUrl), 10);
-              }}
+              onClick={() => setResetKey(prev => prev + 1)}
             >
               <RotateCcw size={12} /> Ulangi
             </Button>

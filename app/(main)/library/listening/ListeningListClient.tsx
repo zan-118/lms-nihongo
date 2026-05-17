@@ -82,7 +82,7 @@ export default function ListeningListClient({ initialData }: ListeningListClient
           <AnimatePresence mode="popLayout">
             {tasks.map((task: ListeningTaskItem, idx: number) => (
             <motion.div
-              key={task._id}
+              key={task.id}
               initial={{ opacity: 0, x: -20 }}
               animate={{ opacity: 1, x: 0 }}
               exit={{ opacity: 0, x: 20 }}

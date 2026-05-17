@@ -72,7 +72,8 @@ export function useTTSReader(text: string) {
 
     // JIKA: Dipaksa menggunakan proxy atau tidak ada suara premium di browser
     if (forceProxy || !premiumJPVoice) {
-      const proxyUrl = `https://translate.google.com/translate_tts?ie=UTF-8&q=${encodeURIComponent(text)}&tl=ja&client=tw-ob`;
+      const GOOGLE_TTS_URL = "https://translate.google.com/translate_tts?ie=UTF-8&tl=ja&client=tw-ob&q=";
+      const proxyUrl = `${GOOGLE_TTS_URL}${encodeURIComponent(text)}`;
       
       if (!audioRef.current) {
         audioRef.current = new Audio();

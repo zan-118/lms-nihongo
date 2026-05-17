@@ -61,3 +61,16 @@ export const shuffleArray = <T,>(array: T[]): T[] => {
   }
   return newArr;
 };
+
+/**
+ * Membuat string menjadi format slug (URL-friendly).
+ */
+export function slugify(text: string): string {
+  return text
+    .toString()
+    .toLowerCase()
+    .trim()
+    .replace(/\s+/g, '-')     // Ganti spasi dengan -
+    .replace(/[^\w\u3040-\u309f\u30a0-\u30ff\u4e00-\u9faf-]+/g, '') // Simpan karakter Jepang & alphanumeric
+    .replace(/--+/g, '-');    // Hapus double dash
+}

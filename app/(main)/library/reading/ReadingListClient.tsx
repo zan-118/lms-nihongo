@@ -8,6 +8,7 @@ import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { useQuery, keepPreviousData } from "@tanstack/react-query";
+import { ROUTES } from "@/lib/routes";
 import { getPaginatedReading, PaginatedReadingResponse } from "@/app/actions/library.actions";
 
 interface ReadingListClientProps {
@@ -88,7 +89,7 @@ export default function ReadingListClient({ initialData }: ReadingListClientProp
               exit={{ opacity: 0, scale: 0.95 }}
               transition={{ delay: index * 0.1 }}
             >
-              <Link href={`/library/reading/${material.slug}`}>
+              <Link href={ROUTES.LIBRARY.READING(material.slug)}>
                 <div className="group h-full p-8 rounded-[2.5rem] bg-card/40 backdrop-blur-3xl border border-border hover:border-primary/40 transition-all duration-500 relative overflow-hidden flex flex-col justify-between">
                   {/* Hover Glow */}
                   <div className="absolute top-0 right-0 w-32 h-32 bg-primary/5 blur-[50px] rounded-full -mr-16 -mt-16 group-hover:bg-primary/10 transition-all" />

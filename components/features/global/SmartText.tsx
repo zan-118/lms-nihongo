@@ -9,8 +9,9 @@ interface KeywordLink {
 
 const COMMON_KEYWORDS: KeywordLink[] = [
   { keyword: "Partikel", href: "/library/cheatsheet#particles", description: "Kata bantu yang menunjukkan hubungan gramatikal." },
-  { keyword: "Kata Kerja", href: "/library/verbs", description: "Dōshi - Kata yang menunjukkan tindakan atau keadaan." },
-  { keyword: "Kata Sifat", href: "/library/cheatsheet#adjectives", description: "Keiyōshi - Kata yang mendeskripsikan benda." },
+  { keyword: "Kata Kerja", href: "/library/vocab", description: "Dōshi - Kata yang menunjukkan tindakan atau keadaan." },
+  { keyword: "Kata Sifat", href: "/library/vocab", description: "Keiyōshi - Kata yang mendeskripsikan benda." },
+
   { keyword: "JLPT", href: "/exams", description: "Japanese Language Proficiency Test." },
   { keyword: "Kanji", href: "/library/kanji", description: "Karakter logografis yang digunakan dalam penulisan Jepang." },
   { keyword: "Hiragana", href: "/tools/kana#hiragana", description: "Suku kata dasar dalam penulisan bahasa Jepang." },

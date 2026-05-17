@@ -10,21 +10,14 @@ import { useEffect } from "react";
 
 export default function LoginPage() {
   const [loading, setLoading] = useState(false);
-  const [isRegistering, setIsRegistering] = useState(false);
+  const searchParams = useSearchParams();
+  const [isRegistering, setIsRegistering] = useState(() => searchParams.get("mode") === "signup");
   const [email, setEmail] = useState("");
   const [fullName, setFullName] = useState("");
   const [password, setPassword] = useState("");
   
   const router = useRouter();
-  const searchParams = useSearchParams();
   const supabase = createClient();
-
-  useEffect(() => {
-    const mode = searchParams.get("mode");
-    if (mode === "signup") {
-      setIsRegistering(true);
-    }
-  }, [searchParams]);
 
   const handleEmailAuth = async (e: React.FormEvent) => {
     e.preventDefault();

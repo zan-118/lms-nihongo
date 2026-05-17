@@ -30,10 +30,10 @@ export default function FuriganaDisplay({
   const currentMode = mode || globalMode || "kanji";
 
   const sizeConfig = {
-    small: { furi: "text-[9px]", kanji: "text-sm" },
-    medium: { furi: "text-[10px] md:text-[12px]", kanji: "text-base md:text-lg" },
-    large: { furi: "text-xs md:text-sm", kanji: "text-xl md:text-2xl" },
-    xl: { furi: "text-sm md:text-lg", kanji: "text-2xl md:text-4xl" },
+    small: { furi: "text-[0.55em]", kanji: "text-sm" },
+    medium: { furi: "text-[0.55em]", kanji: "text-base md:text-lg" },
+    large: { furi: "text-[0.55em]", kanji: "text-xl md:text-2xl" },
+    xl: { furi: "text-[0.55em]", kanji: "text-2xl md:text-4xl" },
   };
 
   const { furi: furiSize, kanji: kanjiSize } = sizeConfig[size];
@@ -41,16 +41,16 @@ export default function FuriganaDisplay({
   // Hiragana Mode: Direct return of furigana prop to ensure 100% no Kanji and high performance
   if (currentMode === "hiragana" && furigana) {
     return (
-      <div className={`font-noto-serif leading-relaxed tracking-normal inline-block w-full text-foreground ${kanjiSize} ${className}`}>
+      <span className={`font-noto-serif leading-relaxed tracking-normal inline-block w-full text-foreground ${kanjiSize} ${className}`}>
         {furigana}
-      </div>
+      </span>
     );
   }
 
   const parts = splitFurigana(text, furigana);
 
   const content = (
-    <div 
+    <span 
       className={`font-noto-serif leading-relaxed tracking-normal inline-block w-full ${className}`}
       style={{ rubyPosition: 'over', rubyAlign: 'center' } as React.CSSProperties}
     >
@@ -74,7 +74,7 @@ export default function FuriganaDisplay({
           )}
         </React.Fragment>
       ))}
-    </div>
+    </span>
   );
 
   if (interactive && text) {

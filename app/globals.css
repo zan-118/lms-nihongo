@@ -199,10 +199,9 @@
     transition-duration: 0.15s !important;
   }
 
-  /* Force GPU for all cards */
+  /* Force GPU for all cards without breaking transforms */
   .neo-card, .card {
     will-change: transform;
-    transform: translateZ(0);
     backface-visibility: hidden;
   }
 }

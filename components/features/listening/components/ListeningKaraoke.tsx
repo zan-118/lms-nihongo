@@ -5,7 +5,6 @@ import { motion, AnimatePresence } from "framer-motion";
 import { Languages } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { TranscriptLine } from "../types";
-import { SharedPortableText } from "@/components/ui/portable-text/SharedPortableText";
 import { cn } from "@/lib/utils";
 
 interface ListeningKaraokeProps {
@@ -111,11 +110,17 @@ export default function ListeningKaraoke({
                   isActive ? "text-foreground" : "text-foreground/40 group-hover:text-foreground/70"
                 )}>
 
-                  {typeof line.text === "string" ? (
-                    line.text
-                  ) : (
-                    <SharedPortableText value={line.text} />
-                  )}
+                  {typeof line.text === "string"
+                    ? line.text
+                    : Array.isArray(line.text)
+                      ? line.text
+                          .map((block: any) =>
+                            block?.children
+                              ?.map((c: any) => c?.text || "")
+                              .join("") || block?.text || ""
+                          )
+                          .join(" ")
+                      : String(line.text || "")}
                 </div>
  
                 {/* Translation (Optional) */}

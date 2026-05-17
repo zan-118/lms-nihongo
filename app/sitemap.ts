@@ -9,16 +9,14 @@
 // IMPORTS
 // ======================
 import { MetadataRoute } from "next";
-import { sanityFetch } from "@/lib/sanity.fetch";
-
-interface SitemapLevel {
-  code: string;
-}
+import { createClient } from "@/lib/supabase/server";
 
 interface SitemapLesson {
   slug: string;
-  level_code: string;
-  _updatedAt: string;
+  created_at: string;
+  course_categories: {
+    slug: string;
+  } | null;
 }
 
 // ======================
@@ -27,7 +25,7 @@ interface SitemapLesson {
 
 /**
  * Membuat data sitemap untuk aplikasi.
- * Mengambil data level dan lesson dari CMS untuk menghasilkan URL dinamis.
+ * Mengambil data level dan lesson dari Supabase untuk menghasilkan URL dinamis.
  * 
  * @returns {Promise<MetadataRoute.Sitemap>} Daftar URL untuk sitemap.
  */
@@ -35,6 +33,7 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
   const baseUrl =
     process.env.NEXT_PUBLIC_SITE_URL ?? "https://www.nihongoroute.my.id/";
   const urls: MetadataRoute.Sitemap = [];
+  const supabase = await createClient();
 
   // Rute Statis
   urls.push(
@@ -42,42 +41,43 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
     { url: `${baseUrl}/courses`, lastModified: new Date() },
   );
 
-  // Ambil Data Kategori dari Sanity
-  const categoriesQuery = `*[_type == "course_category"] { "code": slug.current }`;
-  const categories: SitemapLevel[] = await sanityFetch<SitemapLevel[]>({
-    query: categoriesQuery,
-    tags: ["course_category"],
-  });
+  // Ambil Data Kategori dari Supabase
+  const { data: categories } = await supabase
+    .from("course_categories")
+    .select("slug");
 
   if (categories) {
     for (const category of categories) {
       urls.push({
-        url: `${baseUrl}/courses/${category.code}`,
+        url: `${baseUrl}/courses/${category.slug}`,
         lastModified: new Date(),
       });
     }
   }
 
-  // Ambil Data Lesson dari Sanity
-  const lessonsQuery = `*[_type == "lesson" && is_published == true] {
-    "slug": slug.current,
-    "level_code": course_category->slug.current,
-    _updatedAt
-  }`;
-  const lessons: SitemapLesson[] = await sanityFetch<SitemapLesson[]>({
-    query: lessonsQuery,
-    tags: ["lesson", "course_category"],
-  });
+  // Ambil Data Lesson dari Supabase
+  const { data: lessons } = await (supabase
+    .from("lessons")
+    .select(`
+      slug,
+      created_at,
+      course_categories (
+        slug
+      )
+    `)
+    .eq("is_published", true) as any);
 
   if (lessons) {
-    for (const lesson of lessons) {
-      urls.push({
-        url: `${baseUrl}/courses/${lesson.level_code}/${lesson.slug}`,
-        lastModified: new Date(lesson._updatedAt),
-      });
+    for (const lesson of (lessons as SitemapLesson[])) {
+      const categorySlug = lesson.course_categories?.slug;
+      if (categorySlug) {
+        urls.push({
+          url: `${baseUrl}/courses/${categorySlug}/${lesson.slug}`,
+          lastModified: new Date(lesson.created_at),
+        });
+      }
     }
   }
 
   return urls;
 }
-

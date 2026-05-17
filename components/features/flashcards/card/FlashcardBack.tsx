@@ -14,8 +14,8 @@ interface FlashcardBackProps {
   slug?: string;
   word: string;
   meaning: string;
-  furigana?: string;
-  romaji?: string;
+  furigana?: string | null;
+  romaji?: string | null;
   themeContext: FlashcardThemeContext;
   onDrawClick: (e: React.MouseEvent) => void;
   srsState?: {
@@ -24,12 +24,12 @@ interface FlashcardBackProps {
     easeFactor: number;
     nextReview: number;
   };
-  mnemonic?: string;
-  pitchAccent?: string;
-  hinshi?: string;
-  examples?: Array<{ japanese: string; indonesian: string }>;
+  mnemonic?: string | null;
+  pitchAccent?: string | null;
+  hinshi?: string | null;
+  examples?: Array<{ japanese: string; indonesian: string }> | null;
   kanjiDetails?: any;
-  relatedKanji?: any[];
+  relatedKanji?: any[] | null;
 }
 
 export function FlashcardBack({
@@ -172,7 +172,7 @@ export function FlashcardBack({
                   href={`/library/${
                     docType === 'verb_dictionary' ? 'verbs' : 
                     isKanji ? 'kanji' : 'vocab'
-                  }/${slug || romaji || id}`} 
+                  }/${slug || id}`} 
                   aria-label="Lihat detail kata ini"
                 >
                   <ExternalLink size={10} className="mr-1" aria-hidden="true" /> Detail

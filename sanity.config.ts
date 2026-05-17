@@ -1,39 +1,23 @@
-import { defineConfig } from "sanity";
-import { structureTool } from "sanity/structure";
-import { visionTool } from "@sanity/vision";
-import { codeInput } from "@sanity/code-input";
-import { schema } from "./sanity/schemaTypes";
-import { structure } from "./sanity/structure";
-import { GenerateAIAction } from "./sanity/actions/GenerateAIAction";
+import { defineConfig } from 'sanity';
+import { structureTool } from 'sanity/structure';
+import { visionTool } from '@sanity/vision';
+import { schemaTypes } from './sanity/schemaTypes';
 
 export default defineConfig({
-  name: "default",
-  title: "NihongoRoute CMS",
+  name: 'default',
+  title: 'NihongoRoute Studio',
 
-  projectId: "qoczxvvo",
-  dataset: "production",
-  basePath: "/studio",
+  projectId: process.env.NEXT_PUBLIC_SANITY_PROJECT_ID || 'qoczxvvo',
+  dataset: process.env.NEXT_PUBLIC_SANITY_DATASET || 'production',
+
+  basePath: '/studio',
 
   plugins: [
-    structureTool({
-      structure,
-    }),
-    visionTool(),
-    codeInput(),
- 
+    structureTool(),
+    visionTool({ defaultApiVersion: '2026-05-17' })
   ],
 
   schema: {
-    types: schema.types,
-  },
-
-  document: {
-    actions: (prev, context) => {
-      // Hanya tampilkan tombol AI pada tipe dokumen tertentu
-      if (["vocab", "kanji", "verb_dictionary"].includes(context.schemaType)) {
-        return [GenerateAIAction, ...prev];
-      }
-      return prev;
-    },
+    types: schemaTypes,
   },
 });

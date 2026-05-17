@@ -30,13 +30,19 @@ function ShareContent() {
     if (rawData) {
       try {
         const decoded = JSON.parse(decodeURIComponent(atob(rawData)));
-        setData(decoded);
+        requestAnimationFrame(() => {
+          setData(decoded);
+        });
       } catch (e) {
         console.error("Gagal memproses data share", e);
-        setError(true);
+        requestAnimationFrame(() => {
+          setError(true);
+        });
       }
     } else {
-      setError(true);
+      requestAnimationFrame(() => {
+        setError(true);
+      });
     }
   }, [searchParams]);
 

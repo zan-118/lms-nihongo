@@ -27,7 +27,7 @@ export default function Flashcard({
   isAnswerChecked,
   inputResult,
   mnemonic,
-  relatedKanji,
+  related_kanji,
 }: FlashcardProps) {
   const {
     showWritingModal,
@@ -82,7 +82,7 @@ export default function Flashcard({
             onDrawClick={handleDrawClick}
             srsState={srsState}
             mnemonic={mnemonic}
-            relatedKanji={relatedKanji}
+            relatedKanji={related_kanji}
           />
         </motion.div>
       </motion.div>
