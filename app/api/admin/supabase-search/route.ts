@@ -65,7 +65,7 @@ export async function GET(req: Request) {
 
       if (query.trim()) {
         queryBuilder = queryBuilder.or(
-          `word.ilike.%${query}%,furigana.ilike.%${query}%,meaning_id.ilike.%${query}%`
+          `word.ilike.%${query}%,furigana.ilike.%${query}%,meaning_id.ilike.%${query}%,romaji.ilike.%${query}%`
         );
       }
 
@@ -81,7 +81,7 @@ export async function GET(req: Request) {
 
       if (query.trim()) {
         queryBuilder = queryBuilder.or(
-          `character.ilike.%${query}%,meaning.ilike.%${query}%`
+          `character.ilike.%${query}%,meaning.ilike.%${query}%,onyomi.ilike.%${query}%,kunyomi.ilike.%${query}%,romaji.ilike.%${query}%`
         );
       }
 
@@ -97,7 +97,7 @@ export async function GET(req: Request) {
 
       if (query.trim()) {
         queryBuilder = queryBuilder.or(
-          `title.ilike.%${query}%,meaning.ilike.%${query}%`
+          `title.ilike.%${query}%,meaning.ilike.%${query}%,slug.ilike.%${query}%`
         );
       }
 

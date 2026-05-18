@@ -226,10 +226,19 @@ export async function getLibraryItemBySlug(
         if (!vocabListRaw.length) return;
         const cleanList = vocabListRaw.map((s: unknown) => String(s).trim());
         const hasUUIDs = cleanList.some(isUUID);
-        const { data: vItems } = await supabase
-          .from("vocab")
-          .select("id, word, furigana, romaji, meaning_id, hinshi, pitch_accent, usage_notes, mnemonic")
-          .in(hasUUIDs ? "id" : "word", cleanList);
+        
+        let vItems: any[] = [];
+        if (hasUUIDs) {
+          const { data } = await supabase.from("vocab").select("id, word, furigana, romaji, meaning_id, hinshi, pitch_accent, usage_notes, mnemonic").in("id", cleanList);
+          vItems = data || [];
+        } else {
+          const [byWord, bySlug] = await Promise.all([
+            supabase.from("vocab").select("id, word, furigana, romaji, meaning_id, hinshi, pitch_accent, usage_notes, mnemonic").in("word", cleanList),
+            supabase.from("vocab").select("id, word, furigana, romaji, meaning_id, hinshi, pitch_accent, usage_notes, mnemonic").in("slug", cleanList)
+          ]);
+          vItems = [...(byWord.data || []), ...(bySlug.data || [])];
+          vItems = Array.from(new Map(vItems.map(item => [item.id, item])).values());
+        }
         
         result.vocabList = (vItems && vItems.length > 0) 
           ? vItems.map((v: { id: string; meaning_id: string }) => ({ ...v, _id: v.id, meaning: v.meaning_id }))
@@ -254,10 +263,19 @@ export async function getLibraryItemBySlug(
         if (!grammarListRaw.length) return;
         const cleanList = grammarListRaw.map((s: unknown) => String(s).trim());
         const hasUUIDs = cleanList.some(isUUID);
-        const { data: gItems } = await supabase
-          .from("grammar")
-          .select("id, title, meaning, formation, formation_furigana, slug, jlpt_level, examples, notes")
-          .in(hasUUIDs ? "id" : "title", cleanList);
+        
+        let gItems: any[] = [];
+        if (hasUUIDs) {
+          const { data } = await supabase.from("grammar").select("id, title, meaning, formation, formation_furigana, slug, jlpt_level, examples, notes").in("id", cleanList);
+          gItems = data || [];
+        } else {
+          const [byTitle, bySlug] = await Promise.all([
+            supabase.from("grammar").select("id, title, meaning, formation, formation_furigana, slug, jlpt_level, examples, notes").in("title", cleanList),
+            supabase.from("grammar").select("id, title, meaning, formation, formation_furigana, slug, jlpt_level, examples, notes").in("slug", cleanList)
+          ]);
+          gItems = [...(byTitle.data || []), ...(bySlug.data || [])];
+          gItems = Array.from(new Map(gItems.map(item => [item.id, item])).values());
+        }
         
         result.grammarList = (gItems && gItems.length > 0)
           ? gItems.map((g: { id: string; jlpt_level: string | null; examples: unknown }) => ({ ...g, _id: g.id, jlptLevel: g.jlpt_level, exampleSentences: g.examples }))
@@ -268,10 +286,19 @@ export async function getLibraryItemBySlug(
         if (!listeningListRaw.length) return;
         const cleanList = listeningListRaw.map((s: unknown) => String(s).trim());
         const hasUUIDs = cleanList.some(isUUID);
-        const { data: lItems } = await supabase
-          .from("listening_material")
-          .select("*")
-          .in(hasUUIDs ? "id" : "title", cleanList);
+        
+        let lItems: any[] = [];
+        if (hasUUIDs) {
+          const { data } = await supabase.from("listening_material").select("*").in("id", cleanList);
+          lItems = data || [];
+        } else {
+          const [byTitle, bySlug] = await Promise.all([
+            supabase.from("listening_material").select("*").in("title", cleanList),
+            supabase.from("listening_material").select("*").in("slug", cleanList)
+          ]);
+          lItems = [...(byTitle.data || []), ...(bySlug.data || [])];
+          lItems = Array.from(new Map(lItems.map(item => [item.id, item])).values());
+        }
         
         if (lItems && lItems.length > 0) {
           result.listeningList = lItems.map((l: ListeningTable) => {
@@ -333,10 +360,19 @@ export async function getLibraryItemBySlug(
         if (!readingListRaw.length) return;
         const cleanList = readingListRaw.map((s: any) => String(s).trim());
         const hasUUIDs = cleanList.some(isUUID);
-        const { data: rItems } = await supabase
-          .from("reading_material")
-          .select("*")
-          .in(hasUUIDs ? "id" : "title", cleanList);
+        
+        let rItems: any[] = [];
+        if (hasUUIDs) {
+          const { data } = await supabase.from("reading_material").select("*").in("id", cleanList);
+          rItems = data || [];
+        } else {
+          const [byTitle, bySlug] = await Promise.all([
+            supabase.from("reading_material").select("*").in("title", cleanList),
+            supabase.from("reading_material").select("*").in("slug", cleanList)
+          ]);
+          rItems = [...(byTitle.data || []), ...(bySlug.data || [])];
+          rItems = Array.from(new Map(rItems.map(item => [item.id, item])).values());
+        }
         
         if (rItems && rItems.length > 0) {
           result.readingList = rItems.map(r => ({
