@@ -2,8 +2,7 @@ import React, { useState, useEffect, useCallback } from 'react';
 import { Stack, Card, Text, TextInput, Button, Flex, Box, Spinner, Badge } from '@sanity/ui';
 import { set, unset, useFormValue } from 'sanity';
 
-// Secret token for Supabase Search Bridge
-const SECRET_TOKEN = 'd5a7a32586755e828a338457a2524288';
+import { getApiUrl, SECRET_TOKEN } from './api';
 
 export function SupabaseSelector(props: any) {
   const { onChange, value = [], schemaType } = props;
@@ -27,7 +26,7 @@ export function SupabaseSelector(props: any) {
       setLoading(true);
       try {
         const response = await fetch(
-          `/api/admin/supabase-search?type=${supabaseType}&query=${encodeURIComponent(query)}&secret=${SECRET_TOKEN}`
+          getApiUrl(`/api/admin/supabase-search?type=${supabaseType}&query=${encodeURIComponent(query)}&secret=${SECRET_TOKEN}`)
         );
         const json = await response.json();
         if (json.data) {
@@ -89,7 +88,7 @@ export function SupabaseSelector(props: any) {
         }
       });
 
-      const response = await fetch('/api/admin/ai-assistant', {
+      const response = await fetch(getApiUrl('/api/admin/ai-assistant'), {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({

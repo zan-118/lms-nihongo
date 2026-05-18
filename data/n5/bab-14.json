@@ -1,0 +1,398 @@
+{
+  "_type": "lesson",
+  "_id": "lesson-bab-14",
+  "title": "Bab 14: ちょっと待ってください (Instruksi, Tawaran, & Bentuk-Te)",
+  "slug": {
+    "_type": "slug",
+    "current": "bab-14"
+  },
+  "order_number": 14,
+  "category_id": "N5-Course",
+  "summary": "Di bab ini, Anda akan mempelajari *Te-Form* (Bentuk-Te), yaitu kunci untuk merangkai kalimat kompleks dalam bahasa Jepang. Setelah menyelesaikan bab ini, Anda ditargetkan mampu:",
+  "estimated_minutes": 15,
+  "is_premium": false,
+  "is_published": true,
+  "vocab_list": [
+    "待ちます",
+    "持ちます",
+    "取ります",
+    "手伝います",
+    "呼びます",
+    "話します",
+    "使います",
+    "止まります",
+    "急ぎます",
+    "座ります",
+    "立ちます",
+    "降ります",
+    "置きます",
+    "消します",
+    "開けます",
+    "閉めます",
+    "つけます",
+    "見せます",
+    "止めます",
+    "コピーします",
+    "エアコン",
+    "パスポート",
+    "名前",
+    "住所",
+    "地図",
+    "塩",
+    "砂糖",
+    "信号",
+    "角",
+    "答え",
+    "まっすぐ",
+    "ゆっくり",
+    "すぐ",
+    "また",
+    "あとで",
+    "もう",
+    "方",
+    "お釣り",
+    "結構です",
+    "さあ"
+  ],
+  "kanji_list": [
+    "名",
+    "前",
+    "話",
+    "待",
+    "止"
+  ],
+  "grammar_list": [
+    "A. 3 Golongan Kata Kerja Bahasa Jepang",
+    "B. Rumus Perubahan Bentuk-Te (Te-Form)",
+    "[Kata Kerja-Te] ください (~te kudasai)",
+    "[Kata Kerja-Te] います (~te imasu)",
+    "[Kata Kerja akar] ましょうか (~mashou ka)"
+  ],
+  "reading_list": [],
+  "listening_list": [],
+  "seo": {
+    "title": "Belajar Bab 14 Bahasa Jepang N5 - ちょっと待ってください (Instruksi, Tawaran, & Bentuk-Te) | NihongoRoute",
+    "description": "Kuasai materi pelajaran Bahasa Jepang N5 Bab 14: ちょっと待ってください (Instruksi, Tawaran, & Bentuk-Te). Kosakata, Kanji, Tata Bahasa, Percakapan, dan Kuis interaktif.",
+    "keywords": "NihongoRoute, N5, Bab 14, ちょっと待ってください (Instruksi, Tawaran, & Bentuk-Te), Bahasa Jepang"
+  },
+  "content_blocks": [
+    {
+      "_type": "block",
+      "style": "h2",
+      "children": [
+        {
+          "_type": "span",
+          "text": "🎯 1. Tujuan Belajar (Can-Do Objectives)"
+        }
+      ]
+    },
+    {
+      "_type": "block",
+      "style": "normal",
+      "children": [
+        {
+          "_type": "span",
+          "text": "Di bab ini, Anda akan mempelajari *Te-Form* (Bentuk-Te), yaitu kunci untuk merangkai kalimat kompleks dalam bahasa Jepang. Setelah menyelesaikan bab ini, Anda ditargetkan mampu:"
+        }
+      ]
+    },
+    {
+      "_type": "block",
+      "style": "normal",
+      "children": [
+        {
+          "_type": "span",
+          "text": "• Membedakan 3 golongan kata kerja bahasa Jepang (Grup 1, 2, dan 3).\n• Mengubah kata kerja bentuk sopan (*-masu*) menjadi *Te-Form*.\n• Memberikan instruksi atau meminta tolong kepada orang lain (Tolong tulis, Tolong tunggu).\n• Menawarkan bantuan kepada orang lain secara sopan (Bagaimana kalau saya bantu?).\n• Menyatakan aktivitas yang sedang berlangsung saat ini (*Present Continuous*)."
+        }
+      ]
+    },
+    {
+      "_type": "block",
+      "style": "h2",
+      "children": [
+        {
+          "_type": "span",
+          "text": "📖 2. Bedah Kosakata (40 Kata)"
+        }
+      ]
+    },
+    {
+      "_type": "block",
+      "style": "normal",
+      "children": [
+        {
+          "_type": "span",
+          "text": "Format: Kanji (Hiragana - Romaji) : Arti"
+        }
+      ]
+    },
+    {
+      "_type": "vocabBlock",
+      "title": "Daftar Kosakata"
+    },
+    {
+      "_type": "block",
+      "style": "h2",
+      "children": [
+        {
+          "_type": "span",
+          "text": "🛠️ 3. Tata Bahasa Ekstensif"
+        }
+      ]
+    },
+    {
+      "_type": "grammarBlock",
+      "title": "A. 3 Golongan Kata Kerja Bahasa Jepang",
+      "content": "A. 3 Golongan Kata Kerja Bahasa Jepang",
+      "furigana": "",
+      "translation": "",
+      "examples": []
+    },
+    {
+      "_type": "grammarBlock",
+      "title": "B. Rumus Perubahan Bentuk-Te (Te-Form)",
+      "content": "B. Rumus Perubahan Bentuk-Te (Te-Form)",
+      "furigana": "",
+      "translation": "",
+      "examples": []
+    },
+    {
+      "_type": "grammarBlock",
+      "title": "C. Meminta Tolong: [Kata Kerja-Te] ください (~te kudasai)",
+      "content": "[Kata Kerja-Te] ください (~te kudasai)",
+      "furigana": "",
+      "translation": "Digunakan untuk menginstruksikan atau meminta seseorang melakukan sesuatu dengan sopan.",
+      "examples": [
+        {
+          "jp": "* ここに住所と名前を**書いてください**。",
+          "romaji": "Koko ni juusho to namae wo **kaite kudasai**.",
+          "id": "Tolong tulis alamat dan nama di sini.",
+          "furigana": ""
+        }
+      ]
+    },
+    {
+      "_type": "grammarBlock",
+      "title": "D. Sedang Melakukan (Present Continuous): [Kata Kerja-Te] います (~te imasu)",
+      "content": "[Kata Kerja-Te] います (~te imasu)",
+      "furigana": "",
+      "translation": "Menyatakan aktivitas yang sedang berlangsung tepat pada saat ini.",
+      "examples": [
+        {
+          "jp": "* ミラーさんは今、電話を**かけています**。",
+          "romaji": "Miraa",
+          "id": "san wa ima, denwa wo **kakete imasu**. - Tuan Miller sekarang sedang menelepon.",
+          "furigana": ""
+        }
+      ]
+    },
+    {
+      "_type": "grammarBlock",
+      "title": "E. Menawarkan Bantuan: [Kata Kerja akar] ましょうか (~mashou ka)",
+      "content": "[Kata Kerja akar] ましょうか (~mashou ka)",
+      "furigana": "",
+      "translation": "Berbeda dengan *~mashou* (Mari/Ayo) di Bab 6, jika ditambahkan *'ka'*, artinya menjadi tawaran bantuan dari pembicara (\"Bagaimana kalau saya...\").",
+      "examples": [
+        {
+          "jp": "* 窓を**開けましょうか**。",
+          "romaji": "Mado wo **akemashou ka**.",
+          "id": "Bagaimana kalau jendelanya saya bukakan?",
+          "furigana": ""
+        }
+      ]
+    },
+    {
+      "_type": "block",
+      "style": "h2",
+      "children": [
+        {
+          "_type": "span",
+          "text": "🖌️ 4. Daftar Kanji Dasar (Bab 14)"
+        }
+      ]
+    },
+    {
+      "_type": "block",
+      "style": "normal",
+      "children": [
+        {
+          "_type": "span",
+          "text": "Detail urutan coretan (stroke order) dan gabungan kata dapat dilihat di rute halaman eksplorasi Kanji."
+        }
+      ]
+    },
+    {
+      "_type": "kanjiBlock",
+      "title": "Daftar Kanji"
+    },
+    {
+      "_type": "block",
+      "style": "h2",
+      "children": [
+        {
+          "_type": "span",
+          "text": "⛩️ 5. Catatan Budaya (Etiket & Komunikasi)"
+        }
+      ]
+    },
+    {
+      "_type": "calloutBlock",
+      "title": "Konteks ~te Kudasai",
+      "content": "Walaupun diterjemahkan \"Tolong\", ungkapan *~te kudasai* pada dasarnya adalah \"kalimat perintah yang diperhalus\". Anda **TIDAK BOLEH** menggunakan pola ini untuk menyuruh atasan atau klien. Kepada atasan, orang Jepang menggunakan bentuk yang lebih merendah seperti *~te itadakemasen ka* (Bisakah Anda bersedia...)."
+    },
+    {
+      "_type": "calloutBlock",
+      "title": "Menyela Pembicaraan",
+      "content": "Jika Anda ingin meminta izin bertanya atau menyela seseorang, gunakan *\"Sumimasen ga...\"* (Maaf, tetapi...). Ini adalah *cushion word* (kata bantalan) agar instruksi Anda tidak terdengar memaksa."
+    },
+    {
+      "_type": "block",
+      "style": "h2",
+      "children": [
+        {
+          "_type": "span",
+          "text": "💬 6. Praktik Membaca Nyata (Dialog)"
+        }
+      ]
+    },
+    {
+      "_type": "dialogueBlock",
+      "title": "Praktik Membaca Nyata (Dialog)",
+      "content": "佐藤：ブディさん、荷物が多いですね。手伝いましょうか。\nブディ：すみません。お願いします。\n佐藤：どこに置きますか。\nブディ：あの机の上に置いてください。\n佐藤：わあ、重いですね。中に何が入っていますか。\nブディ：本と辞書です。\n佐藤：そうですか。あ、電話が鳴っていますよ。\nブディ：すみません、ちょっと待ってください。",
+      "translation": "Satou: san, nimotsu ga ooi desu ne. Tetsudaimashou ka. - Budi, barang bawaannya banyak ya. Mau saya bantu?\nBudi: Maaf (merepotkan\nSatou: Ditaruh di mana?\nBudi: Tolong letakkan di atas meja itu.\nSatou: Wah, berat ya. Di dalamnya ada apa?\nBudi: Buku dan kamus.\nSatou: Oh begitu. Ah, teleponnya sedang berdering lho.\nBudi: Maaf, tolong tunggu sebentar.",
+      "furigana": ""
+    },
+    {
+      "_type": "block",
+      "style": "h2",
+      "children": [
+        {
+          "_type": "span",
+          "text": "✏️ 7. Kuis Evaluasi Bab 14"
+        }
+      ]
+    }
+  ],
+  "quizzes": [
+    {
+      "id": "n5-bab14-q1",
+      "question": "Kata kerja \"飲みます\" (Nomimasu / Minum) termasuk dalam Grup 1. Apa bentuk *Te* dari kata kerja ini?",
+      "options": [
+        "のみて (Nomite)",
+        "のんで (Nonde)",
+        "のって (Notte)"
+      ],
+      "correct_answer": "のんで (Nonde)",
+      "explanation": "*Nomimasu* berakhiran 'mi'. Rumus Grup 1 untuk 'mi, bi, ni' adalah berubah menjadi *nde* (Nonde).",
+      "type": "multiple-choice"
+    },
+    {
+      "id": "n5-bab14-q2",
+      "question": "Manakah dari kata kerja berikut yang termasuk dalam **Grup 2**?",
+      "options": [
+        "待ちます (Machimasu)",
+        "急ぎます (Isogimasu)",
+        "開けます (Akemasu)"
+      ],
+      "correct_answer": "開けます (Akemasu)",
+      "explanation": "*Akemasu* berakhiran huruf vokal 'e' sebelum 'masu' (A-ke-masu), sehingga mutlak masuk Grup 2.",
+      "type": "multiple-choice"
+    },
+    {
+      "id": "n5-bab14-q3",
+      "question": "\"Tolong tulis nama dengan huruf Katakana.\" Terjemahan bahasa Jepang yang tepat adalah...",
+      "options": [
+        "カタカナに名前を書いてください。(Katakana ni namae wo kaite kudasai.)",
+        "カタカナで名前を書いてください。(Katakana de namae wo kaite kudasai.)",
+        "カタカナで名前を書ってくだい。(Katakana de namae wo katte kudasai.)"
+      ],
+      "correct_answer": "カタカナで名前を書いてください。(Katakana de namae wo kaite kudasai.)",
+      "explanation": "Katakana bertindak sebagai alat/sarana penulisan, jadi wajib menggunakan partikel *de*. Kata kerja *Kakimasu* (Grup 1 berakhiran 'ki') berubah menjadi *Kaite*.",
+      "type": "multiple-choice"
+    },
+    {
+      "id": "n5-bab14-q4",
+      "question": "Bagaimana cara menawarkan bantuan \"Bagaimana kalau AC-nya saya matikan?\" dalam bahasa Jepang?",
+      "options": [
+        "エアコンを消しましょうか。(Eakon wo keshimashou ka.)",
+        "エアコンを消してください。(Eakon wo keshite kudasai.)",
+        "エアコンを消してか。(Eakon wo keshite ka.)"
+      ],
+      "correct_answer": "エアコンを消しましょうか。(Eakon wo keshimashou ka.)",
+      "explanation": "Tawaran bantuan menggunakan pola akar kata kerja + *mashou ka*. Mematikan alat elektronik adalah *Keshimasu*, sehingga menjadi *Keshimashou ka*.",
+      "type": "multiple-choice"
+    },
+    {
+      "id": "n5-bab14-q5",
+      "question": "*Lengkapi kalimat berikut:*\nアリさんは今、ロビーで友達と（ ____ ）。 (Ari-san wa ima, robii de tomodachi to ____.)",
+      "options": [
+        "話します (Hanashimasu)",
+        "話してします (Hanashite shimasu)",
+        "話しています (Hanashite imasu)"
+      ],
+      "correct_answer": "話しています (Hanashite imasu)",
+      "explanation": "Karena ada kata waktu *ima* (sekarang), aktivitas tersebut sedang berlangsung (*Present Continuous*). Polanya adalah *~te imasu* (Hanashite imasu / Sedang berbicara).",
+      "type": "multiple-choice"
+    },
+    {
+      "id": "n5-bab14-q6",
+      "question": "Gabungan Kanji \"名前\" (Namae) memiliki arti...",
+      "options": [
+        "Sebelum berbicara",
+        "Nama (Identitas)",
+        "Berhenti menunggu"
+      ],
+      "correct_answer": "Nama (Identitas)",
+      "explanation": "名 (Nama / Na) dan 前 (Depan / Mae) membentuk kata \"Namae\" (Nama).",
+      "type": "multiple-choice"
+    },
+    {
+      "id": "n5-bab14-q7",
+      "question": "Kata kerja \"行きます\" (Ikimasu - Pergi) adalah pengecualian (Irregular) dari Grup 1. Bentuk *Te* yang benar adalah...",
+      "options": [
+        "いいて (Iite)",
+        "いって (Itte)",
+        "いんで (Inde)"
+      ],
+      "correct_answer": "いって (Itte)",
+      "explanation": "Meskipun berakhiran 'ki' (yang biasanya menjadi *ite*), khusus untuk kata *Ikimasu* (Pergi), bentuk *Te*-nya berubah menjadi *Itte*. Ini adalah satu-satunya pengecualian di aturan 'ki'.",
+      "type": "multiple-choice"
+    },
+    {
+      "id": "n5-bab14-q8",
+      "question": "Saat seseorang berkata \"手伝いましょうか\" (Tetsudaimashou ka / Mau saya bantu?), respons yang paling tepat dan sopan untuk menerimanya adalah...",
+      "options": [
+        "はい、手伝います。(Hai, tetsudaimasu.)",
+        "すみません。お願いします。(Sumimasen. Onegaishimasu.)",
+        "結構です。(Kekkou desu.)"
+      ],
+      "correct_answer": "すみません。お願いします。(Sumimasen. Onegaishimasu.)",
+      "explanation": "Menerima tawaran bantuan di Jepang selalu diawali dengan permintaan maaf (*Sumimasen*) karena merasa telah merepotkan orang tersebut, lalu dilanjutkan dengan *Onegaishimasu* (Tolong).",
+      "type": "multiple-choice"
+    },
+    {
+      "id": "n5-bab14-q9",
+      "question": "\"Tolong bicara pelan-pelan (lebih lambat).\" Kalimat bahasa Jepangnya adalah...",
+      "options": [
+        "すぐ話してください。(Sugu hanashite kudasai.)",
+        "ゆっくり話してください。(Yukkuri hanashite kudasai.)",
+        "まっすぐ話してください。(Massugu hanashite kudasai.)"
+      ],
+      "correct_answer": "ゆっくり話してください。(Yukkuri hanashite kudasai.)",
+      "explanation": "*Yukkuri* adalah kata keterangan yang berarti \"Pelan-pelan / Santai\". Sangat berguna jika Anda meminta orang Jepang memperlambat tempo bicara mereka.",
+      "type": "multiple-choice"
+    },
+    {
+      "id": "n5-bab14-q10",
+      "question": "Berdasarkan teks dialog, di manakah Budi meminta Sato meletakkan barang-barang tersebut?",
+      "options": [
+        "机の下に置いてください。(Tolong letakkan di bawah meja.)",
+        "机の上に置いてください。(Tolong letakkan di atas meja.)",
+        "椅子の上に置いてください。(Tolong letakkan di atas kursi.)"
+      ],
+      "correct_answer": "机の上に置いてください。(Tolong letakkan di atas meja.)",
+      "explanation": "Dalam dialog, Budi menjawab \"Ano tsukue no ue ni oite kudasai\" yang artinya \"Tolong letakkan di atas meja itu\".",
+      "type": "multiple-choice"
+    }
+  ]
+}

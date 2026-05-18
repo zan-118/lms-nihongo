@@ -1,0 +1,412 @@
+{
+  "_type": "lesson",
+  "_id": "lesson-bab-4",
+  "title": "Bab 4: 今、何時ですか (Waktu & Aktivitas Rutin)",
+  "slug": {
+    "_type": "slug",
+    "current": "bab-4"
+  },
+  "order_number": 4,
+  "category_id": "N5-Course",
+  "summary": "Setelah bisa menyebutkan benda dan tempat, bab ini akan membawa Anda ke dalam percakapan yang lebih dinamis. Setelah menyelesaikan bab ini, Anda ditargetkan mampu:",
+  "estimated_minutes": 15,
+  "is_premium": false,
+  "is_published": true,
+  "vocab_list": [
+    "今",
+    "時",
+    "分",
+    "半",
+    "午前",
+    "午後",
+    "朝",
+    "昼",
+    "晩",
+    "毎日",
+    "毎朝",
+    "毎晩",
+    "月曜日",
+    "火曜日",
+    "水曜日",
+    "木曜日",
+    "金曜日",
+    "土曜日",
+    "日曜日",
+    "何曜日",
+    "今日",
+    "明日",
+    "昨日",
+    "あさって",
+    "おととい",
+    "休み",
+    "昼休み",
+    "試験",
+    "会議",
+    "映画",
+    "図書館",
+    "美術館",
+    "デパート",
+    "起きます",
+    "寝ます",
+    "働きます",
+    "休みます",
+    "勉強します",
+    "終わります",
+    "大変ですね"
+  ],
+  "kanji_list": [
+    "月",
+    "火",
+    "水",
+    "木",
+    "金"
+  ],
+  "grammar_list": [
+    "今、～時 ～分です (Ima, ~ji ~fun desu)",
+    "B. Pengenalan Kata Kerja Sopan (Masu-Form)",
+    "～に (~ni)",
+    "～から ～まで (~kara ~made)",
+    "～ね (~ne)"
+  ],
+  "reading_list": [],
+  "listening_list": [],
+  "seo": {
+    "title": "Belajar Bab 4 Bahasa Jepang N5 - 今、何時ですか (Waktu & Aktivitas Rutin) | NihongoRoute",
+    "description": "Kuasai materi pelajaran Bahasa Jepang N5 Bab 4: 今、何時ですか (Waktu & Aktivitas Rutin). Kosakata, Kanji, Tata Bahasa, Percakapan, dan Kuis interaktif.",
+    "keywords": "NihongoRoute, N5, Bab 4, 今、何時ですか (Waktu & Aktivitas Rutin), Bahasa Jepang"
+  },
+  "content_blocks": [
+    {
+      "_type": "block",
+      "style": "h2",
+      "children": [
+        {
+          "_type": "span",
+          "text": "🎯 1. Tujuan Belajar (Can-Do Objectives)"
+        }
+      ]
+    },
+    {
+      "_type": "block",
+      "style": "normal",
+      "children": [
+        {
+          "_type": "span",
+          "text": "Setelah bisa menyebutkan benda dan tempat, bab ini akan membawa Anda ke dalam percakapan yang lebih dinamis. Setelah menyelesaikan bab ini, Anda ditargetkan mampu:"
+        }
+      ]
+    },
+    {
+      "_type": "block",
+      "style": "normal",
+      "children": [
+        {
+          "_type": "span",
+          "text": "• Menyebutkan jam dan menit saat ini (Waktu).\n• Menyebutkan hari dalam seminggu dan pembagian waktu (Pagi/Siang/Malam).\n• Menceritakan jadwal rutinitas sehari-hari menggunakan kata kerja dasar (Bangun, Tidur, Bekerja, Belajar).\n• Mengatakan dari jam berapa sampai jam berapa sebuah aktivitas dilakukan."
+        }
+      ]
+    },
+    {
+      "_type": "block",
+      "style": "h2",
+      "children": [
+        {
+          "_type": "span",
+          "text": "📖 2. Bedah Kosakata (40 Kata)"
+        }
+      ]
+    },
+    {
+      "_type": "block",
+      "style": "normal",
+      "children": [
+        {
+          "_type": "span",
+          "text": "Format: Kanji (Hiragana - Romaji) : Arti"
+        }
+      ]
+    },
+    {
+      "_type": "vocabBlock",
+      "title": "Daftar Kosakata"
+    },
+    {
+      "_type": "block",
+      "style": "h2",
+      "children": [
+        {
+          "_type": "span",
+          "text": "🛠️ 3. Tata Bahasa Ekstensif"
+        }
+      ]
+    },
+    {
+      "_type": "grammarBlock",
+      "title": "A. Menyebutkan Waktu: 今、～時 ～分です (Ima, ~ji ~fun desu)",
+      "content": "今、～時 ～分です (Ima, ~ji ~fun desu)",
+      "furigana": "",
+      "translation": "Menyatakan jam saat ini. Untuk AM/PM, letakkan kata *Gozen* atau *Gogo* sebelum angka jam.",
+      "examples": [
+        {
+          "jp": "* 今、何時ですか。",
+          "romaji": "Ima, nanji desu ka.",
+          "id": "Sekarang jam berapa?",
+          "furigana": ""
+        }
+      ]
+    },
+    {
+      "_type": "grammarBlock",
+      "title": "B. Pengenalan Kata Kerja Sopan (Masu-Form)",
+      "content": "B. Pengenalan Kata Kerja Sopan (Masu-Form)",
+      "furigana": "",
+      "translation": "Kata kerja berakhiran ~ます (~masu) menunjukkan aksi kebiasaan (rutinitas) atau aksi di masa depan. Bentuk ini memiliki 4 konjugasi waktu:",
+      "examples": [
+        {
+          "jp": "* 私は毎日働きます。",
+          "romaji": "Watashi wa mainichi hatarakimasu.",
+          "id": "Saya bekerja setiap hari.",
+          "furigana": ""
+        }
+      ]
+    },
+    {
+      "_type": "grammarBlock",
+      "title": "C. Partikel Waktu Mutlak: ～に (~ni)",
+      "content": "～に (~ni)",
+      "furigana": "",
+      "translation": "Partikel に (ni) ditambahkan di belakang penunjuk waktu yang **memiliki angka spesifik** (seperti jam, tanggal, tahun) untuk menandakan kapan aksi tersebut terjadi. Kata waktu relatif (besok, kemarin, hari ini) **tidak** menggunakan partikel 'ni'.",
+      "examples": [
+        {
+          "jp": "* ６時に起きます。",
+          "romaji": "Roku",
+          "id": "ji ni okimasu. - Saya bangun pada jam 6.",
+          "furigana": ""
+        }
+      ]
+    },
+    {
+      "_type": "grammarBlock",
+      "title": "D. Rentang Waktu: ～から ～まで (~kara ~made)",
+      "content": "～から ～まで (~kara ~made)",
+      "furigana": "",
+      "translation": "*Kara* berarti \"Dari\", dan *Made* berarti \"Sampai\". Bisa digunakan bersamaan atau terpisah.",
+      "examples": [
+        {
+          "jp": "* 会議は９時から５時までです。",
+          "romaji": "Kaigi wa ku",
+          "id": "ji kara go-ji made desu. - Rapatnya dari jam 9 sampai jam 5.",
+          "furigana": ""
+        }
+      ]
+    },
+    {
+      "_type": "grammarBlock",
+      "title": "E. Partikel Konfirmasi: ～ね (~ne)",
+      "content": "～ね (~ne)",
+      "furigana": "",
+      "translation": "Diletakkan di akhir kalimat untuk mencari persetujuan dari lawan bicara, mirip dengan \"..., ya?\" atau \"..., kan?\" dalam bahasa Indonesia.",
+      "examples": [
+        {
+          "jp": "* 銀行は３時までですね。",
+          "romaji": "Ginkou wa san",
+          "id": "ji made desu ne. - Bank tutup jam 3, kan?",
+          "furigana": ""
+        }
+      ]
+    },
+    {
+      "_type": "block",
+      "style": "h2",
+      "children": [
+        {
+          "_type": "span",
+          "text": "🖌️ 4. Daftar Kanji Dasar (Bab 4)"
+        }
+      ]
+    },
+    {
+      "_type": "block",
+      "style": "normal",
+      "children": [
+        {
+          "_type": "span",
+          "text": "Detail urutan coretan (stroke order) dan gabungan kata dapat dilihat di rute halaman eksplorasi Kanji."
+        }
+      ]
+    },
+    {
+      "_type": "kanjiBlock",
+      "title": "Daftar Kanji"
+    },
+    {
+      "_type": "block",
+      "style": "h2",
+      "children": [
+        {
+          "_type": "span",
+          "text": "⛩️ 5. Catatan Budaya (Etiket & Komunikasi)"
+        }
+      ]
+    },
+    {
+      "_type": "calloutBlock",
+      "title": "Ketepatan Waktu (Punctuality)",
+      "content": "Di Jepang, datang tepat waktu berarti datang 5 hingga 10 menit *sebelum* waktu yang dijanjikan. Datang tepat pada jam yang ditentukan sering dianggap sebagai keterlambatan."
+    },
+    {
+      "_type": "calloutBlock",
+      "title": "Taihen desu ne (大変ですね)",
+      "content": "Budaya kerja Jepang sangat menghargai kerja keras. Jika rekan Anda menceritakan bahwa ia bekerja sampai larut malam atau harus belajar seharian, respons paling natural adalah mengangguk sambil berkata *\"Taihen desu ne\"* (Pasti berat ya / Pasti melelahkan). Ini adalah bentuk empati sosial yang wajib dikuasai."
+    },
+    {
+      "_type": "block",
+      "style": "h2",
+      "children": [
+        {
+          "_type": "span",
+          "text": "💬 6. Praktik Membaca Nyata (Dialog)"
+        }
+      ]
+    },
+    {
+      "_type": "dialogueBlock",
+      "title": "Praktik Membaca Nyata (Dialog)",
+      "content": "ブディ：田中さん、すみません。図書館は何時から何時までですか。\n田中：午前９時から、午後８時までです。\nブディ：そうですか。休みは何曜日ですか。\n田中：月曜日です。\nブディ：ありがとうございます。明日、図書館で勉強します。\n田中：ブディさんは毎日何時まで勉強しますか。\nブディ：夜１１時まで勉強します。\n田中：１１時ですか。大変ですね。",
+      "translation": "Budi: san, sumimasen. Toshokan wa nanji kara nanji made desu ka. - Tuan Tanaka, permisi. Perpustakaan (buka\nTanaka: ji kara, gogo hachi-ji made desu. - Dari jam 9 pagi sampai jam 8 malam.\nBudi: Oh, begitu. Liburnya hari apa?\nTanaka: Hari Senin.\nBudi: Terima kasih. Besok, saya belajar di perpustakaan.\nTanaka: san wa mainichi nanji made benkyoushimasu ka. - Budi belajar sampai jam berapa setiap hari?\nBudi: ji made benkyoushimasu. - Saya belajar sampai jam 11 malam.\nTanaka: ji desu ka. Taihen desu ne. - Jam 11? Pasti berat/melelahkan ya.",
+      "furigana": ""
+    },
+    {
+      "_type": "block",
+      "style": "h2",
+      "children": [
+        {
+          "_type": "span",
+          "text": "✏️ 7. Kuis Evaluasi Bab 4"
+        }
+      ]
+    }
+  ],
+  "quizzes": [
+    {
+      "id": "n5-bab4-q1",
+      "question": "Jika sekarang adalah pukul 08:30 pagi, bagaimana cara menyatakannya dalam bahasa Jepang?",
+      "options": [
+        "午後８時半です。(Gogo hachi-ji han desu.)",
+        "午前８時半です。(Gozen hachi-ji han desu.)",
+        "午前８時分です。(Gozen hachi-jifun desu.)"
+      ],
+      "correct_answer": "午前８時半です。(Gozen hachi-ji han desu.)",
+      "explanation": "Pagi hari menggunakan \"Gozen\" (AM). Angka 8 adalah *hachi*. Setengah / 30 menit disebut *han*.",
+      "type": "multiple-choice"
+    },
+    {
+      "id": "n5-bab4-q2",
+      "question": "Anda ingin menanyakan \"Hari ini hari apa?\". Kalimat yang benar adalah...",
+      "options": [
+        "今日は何曜日ですか。(Kyou wa nanyoubi desu ka.)",
+        "今日は何時ですか。(Kyou wa nanji desu ka.)",
+        "今日はいつですか。(Kyou wa itsu desu ka.)"
+      ],
+      "correct_answer": "今日は何曜日ですか。(Kyou wa nanyoubi desu ka.)",
+      "explanation": "\"Hari apa\" dalam bahasa Jepang adalah *Nan-youbi*.",
+      "type": "multiple-choice"
+    },
+    {
+      "id": "n5-bab4-q3",
+      "question": "Kalimat mana yang menggunakan partikel waktu dengan **BENAR**?",
+      "options": [
+        "明日に働きます。(Ashita ni hatarakimasu.)",
+        "毎日におきます。(Mainichi ni okimasu.)",
+        "７時に起きます。(Shichi-ji ni okimasu.)"
+      ],
+      "correct_answer": "７時に起きます。(Shichi-ji ni okimasu.)",
+      "explanation": "Partikel \"ni\" (pada/di) untuk penunjuk waktu hanya boleh ditempelkan pada waktu yang punya angka pasti mutlak (seperti Jam 7 = *Shichi-ji*). Waktu relatif (seperti Besok = *Ashita*, atau Setiap hari = *Mainichi*) **tidak boleh** memakai partikel 'ni'.",
+      "type": "multiple-choice"
+    },
+    {
+      "id": "n5-bab4-q4",
+      "question": "Apa bentuk lampau negatif (past-negative) dari kata kerja \"寝ます\" (nemasu / tidur)?",
+      "options": [
+        "寝ません (Nemasen)",
+        "寝ました (Nemashita)",
+        "寝ませんでした (Nemasen deshita)"
+      ],
+      "correct_answer": "寝ませんでした (Nemasen deshita)",
+      "explanation": "Kata kerja akhiran *~masu* berubah menjadi *~masen* untuk negatif sekarang, *~mashita* untuk lampau positif, dan *~masen deshita* untuk lampau negatif.",
+      "type": "multiple-choice"
+    },
+    {
+      "id": "n5-bab4-q5",
+      "question": "*Lengkapi percakapan berikut:*\nA: 銀行は９時（ ____ ）３時（ ____ ）です。 (Ginkou wa ku-ji ____ san-ji ____ desu.)",
+      "options": [
+        "から / に (kara / ni)",
+        "から / まで (kara / made)",
+        "に / まで (ni / made)"
+      ],
+      "correct_answer": "から / まで (kara / made)",
+      "explanation": "Rentang waktu selalu menggunakan kombinasi *kara* (dari) dan *made* (sampai).",
+      "type": "multiple-choice"
+    },
+    {
+      "id": "n5-bab4-q6",
+      "question": "Kanji \"金\" digunakan untuk merepresentasikan hari \"Jumat\" (金曜日 / Kinyoubi). Apa makna asli dari karakter ini?",
+      "options": [
+        "Bulan",
+        "Air",
+        "Emas / Uang"
+      ],
+      "correct_answer": "Emas / Uang",
+      "explanation": "Kanji 金 (Kin/Kane) bermakna emas, logam, atau uang.",
+      "type": "multiple-choice"
+    },
+    {
+      "id": "n5-bab4-q7",
+      "question": "Rekan Anda mengeluh, \"Kemarin saya bekerja dari jam 8 pagi sampai jam 10 malam.\" Respons paling natural dan berempati untuk situasi ini adalah...",
+      "options": [
+        "どうぞ。(Douzo.)",
+        "そうですか。(Sou desu ka.)",
+        "大変ですね。(Taihen desu ne.)"
+      ],
+      "correct_answer": "大変ですね。(Taihen desu ne.)",
+      "explanation": "*Taihen desu ne* adalah ungkapan sakti di Jepang untuk mengapresiasi kelelahan, beban kerja, atau cobaan orang lain.",
+      "type": "multiple-choice"
+    },
+    {
+      "id": "n5-bab4-q8",
+      "question": "Terjemahan yang tepat untuk kata \"あさって\" (Asatte) adalah...",
+      "options": [
+        "Kemarin",
+        "Besok",
+        "Lusa"
+      ],
+      "correct_answer": "Lusa",
+      "explanation": "*Asatte* berarti Lusa (dua hari ke depan). *Ashita* berarti besok, dan *Kinou* berarti kemarin.",
+      "type": "multiple-choice"
+    },
+    {
+      "id": "n5-bab4-q9",
+      "question": "\"Bekerja dari jam 9 sampai jam 5\". Bahasa Jepangnya adalah...",
+      "options": [
+        "９時から５時まで働きます。(Ku-ji kara go-ji made hatarakimasu.)",
+        "９時に５時まで働きます。(Ku-ji ni go-ji made hatarakimasu.)",
+        "９時から５時まで勉強します。(Ku-ji kara go-ji made benkyoushimasu.)"
+      ],
+      "correct_answer": "９時から５時まで働きます。(Ku-ji kara go-ji made hatarakimasu.)",
+      "explanation": "Kombinasi *kara* dan *made* digabungkan dengan kata kerja *hatarakimasu* (bekerja). Pilihan C salah karena kata kerjanya *benkyoushimasu* (belajar).",
+      "type": "multiple-choice"
+    },
+    {
+      "id": "n5-bab4-q10",
+      "question": "Berdasarkan teks dialog, hari apa perpustakaan tutup (libur)?",
+      "options": [
+        "土曜日 (Doyoubi - Sabtu)",
+        "日曜日 (Nichiyoubi - Minggu)",
+        "月曜日 (Getsuyoubi - Senin)"
+      ],
+      "correct_answer": "月曜日 (Getsuyoubi - Senin)",
+      "explanation": "Dalam dialog, Budi bertanya \"Yasumi wa nanyoubi desu ka\" (Liburnya hari apa?), dan Tanaka menjawab \"Getsuyoubi desu\" (Hari Senin).",
+      "type": "multiple-choice"
+    }
+  ]
+}

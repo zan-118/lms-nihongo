@@ -1,0 +1,412 @@
+{
+  "_type": "lesson",
+  "_id": "lesson-bab-7",
+  "title": "Bab 7: 箸で食べます (Alat, Memberi, & Menerima)",
+  "slug": {
+    "_type": "slug",
+    "current": "bab-7"
+  },
+  "order_number": 7,
+  "category_id": "N5-Course",
+  "summary": "Dalam kehidupan sehari-hari dan dunia kerja, Anda akan sering berinteraksi yang melibatkan pertukaran barang atau informasi. Setelah menyelesaikan bab ini, Anda ditargetkan mampu:",
+  "estimated_minutes": 15,
+  "is_premium": false,
+  "is_published": true,
+  "vocab_list": [
+    "切ります",
+    "送ります",
+    "あげます",
+    "もらいます",
+    "貸します",
+    "借ります",
+    "教えます",
+    "習います",
+    "かけます",
+    "手",
+    "箸",
+    "スプーン",
+    "フォーク",
+    "ナイフ",
+    "はさみ",
+    "消しゴム",
+    "セロテープ",
+    "紙",
+    "花",
+    "シャツ",
+    "プレゼント",
+    "荷物",
+    "お金",
+    "切符",
+    "電話",
+    "メール",
+    "クリスマス",
+    "父",
+    "母",
+    "お父さん",
+    "お母さん",
+    "兄",
+    "姉",
+    "もう",
+    "まだ",
+    "これから",
+    "ごめんください",
+    "いらっしゃい",
+    "失礼します",
+    "ありがとうございます"
+  ],
+  "kanji_list": [
+    "手",
+    "紙",
+    "父",
+    "母",
+    "花"
+  ],
+  "grammar_list": [
+    "[Alat/Bahasa] で [Kata Kerja]",
+    "\"Kata\" は [Bahasa] で何ですか",
+    "[Pemberi/Subjek] は [Penerima] に [Benda] をあげます",
+    "[Penerima/Subjek] は [Pemberi] に/から [Benda] をもらいます",
+    "もう ～ました (Mou ~mashita) vs まだです (Mada desu)"
+  ],
+  "reading_list": [],
+  "listening_list": [],
+  "seo": {
+    "title": "Belajar Bab 7 Bahasa Jepang N5 - 箸で食べます (Alat, Memberi, & Menerima) | NihongoRoute",
+    "description": "Kuasai materi pelajaran Bahasa Jepang N5 Bab 7: 箸で食べます (Alat, Memberi, & Menerima). Kosakata, Kanji, Tata Bahasa, Percakapan, dan Kuis interaktif.",
+    "keywords": "NihongoRoute, N5, Bab 7, 箸で食べます (Alat, Memberi, & Menerima), Bahasa Jepang"
+  },
+  "content_blocks": [
+    {
+      "_type": "block",
+      "style": "h2",
+      "children": [
+        {
+          "_type": "span",
+          "text": "🎯 1. Tujuan Belajar (Can-Do Objectives)"
+        }
+      ]
+    },
+    {
+      "_type": "block",
+      "style": "normal",
+      "children": [
+        {
+          "_type": "span",
+          "text": "Dalam kehidupan sehari-hari dan dunia kerja, Anda akan sering berinteraksi yang melibatkan pertukaran barang atau informasi. Setelah menyelesaikan bab ini, Anda ditargetkan mampu:"
+        }
+      ]
+    },
+    {
+      "_type": "block",
+      "style": "normal",
+      "children": [
+        {
+          "_type": "span",
+          "text": "• Menyatakan alat atau sarana yang digunakan untuk melakukan suatu aktivitas (misalnya: makan dengan sumpit, menulis dengan pulpen).\n• Bertanya cara mengucapkan sebuah kata dalam bahasa asing.\n• Menjelaskan siapa memberi apa kepada siapa, dan siapa menerima dari siapa.\n• Memahami perbedaan penyebutan anggota keluarga sendiri vs keluarga orang lain.\n• Menyatakan apakah suatu tindakan sudah selesai dilakukan atau belum (Sudah/Belum)."
+        }
+      ]
+    },
+    {
+      "_type": "block",
+      "style": "h2",
+      "children": [
+        {
+          "_type": "span",
+          "text": "📖 2. Bedah Kosakata (40 Kata)"
+        }
+      ]
+    },
+    {
+      "_type": "block",
+      "style": "normal",
+      "children": [
+        {
+          "_type": "span",
+          "text": "Format: Kanji (Hiragana - Romaji) : Arti"
+        }
+      ]
+    },
+    {
+      "_type": "vocabBlock",
+      "title": "Daftar Kosakata"
+    },
+    {
+      "_type": "block",
+      "style": "h2",
+      "children": [
+        {
+          "_type": "span",
+          "text": "🛠️ 3. Tata Bahasa Ekstensif"
+        }
+      ]
+    },
+    {
+      "_type": "grammarBlock",
+      "title": "A. Partikel Alat/Metode: [Alat/Bahasa] で [Kata Kerja]",
+      "content": "[Alat/Bahasa] で [Kata Kerja]",
+      "furigana": "",
+      "translation": "Di Bab 5, partikel で (de) berarti \"Naik kendaraan\". Di sini, partikel で diperluas maknanya menjadi \"Menggunakan/Dengan (alat, sarana, atau bahasa)\".",
+      "examples": [
+        {
+          "jp": "* 箸でご飯を食べます。",
+          "romaji": "Hashi de gohan wo tabemasu.",
+          "id": "Makan nasi menggunakan sumpit.",
+          "furigana": ""
+        }
+      ]
+    },
+    {
+      "_type": "grammarBlock",
+      "title": "B. Menanyakan Terjemahan: \"Kata\" は [Bahasa] で何ですか",
+      "content": "\"Kata\" は [Bahasa] で何ですか",
+      "furigana": "",
+      "translation": "Pola ini sangat praktis jika Anda ingin tahu arti sebuah kata atau cara mengucapkannya dalam bahasa asing.",
+      "examples": [
+        {
+          "jp": "* 「Terima kasih」は日本語で何ですか。",
+          "romaji": "\"Terima kasih\" wa nihongo de nan desu ka.",
+          "id": "\"Terima kasih\" bahasa Jepangnya apa?",
+          "furigana": ""
+        }
+      ]
+    },
+    {
+      "_type": "grammarBlock",
+      "title": "C. Memberi Sesuatu: [Pemberi/Subjek] は [Penerima] に [Benda] をあげます",
+      "content": "[Pemberi/Subjek] は [Penerima] に [Benda] をあげます",
+      "furigana": "",
+      "translation": "Partikel に (ni) di sini berfungsi menandakan **target atau penerima** aksi. (Pengecualian: *Agemasu* tidak boleh digunakan jika Anda adalah penerimanya).",
+      "examples": [
+        {
+          "jp": "* 私は山田さんに花をあげました。",
+          "romaji": "Watashi wa Yamada",
+          "id": "san ni hana wo agemashita. - Saya telah memberikan bunga kepada Yamada.",
+          "furigana": ""
+        }
+      ]
+    },
+    {
+      "_type": "grammarBlock",
+      "title": "D. Menerima Sesuatu: [Penerima/Subjek] は [Pemberi] に/から [Benda] をもらいます",
+      "content": "[Penerima/Subjek] は [Pemberi] に/から [Benda] をもらいます",
+      "furigana": "",
+      "translation": "Menyatakan dari siapa Anda menerima barang/jasa. Anda bisa menggunakan partikel に (ni) atau から (kara) untuk menandakan si pemberi asal. Keduanya berarti \"dari\".",
+      "examples": [
+        {
+          "jp": "* 私は父にお金をもらいました。",
+          "romaji": "Watashi wa chichi ni okane wo moraimashita.",
+          "id": "Saya menerima uang dari ayah saya.",
+          "furigana": ""
+        }
+      ]
+    },
+    {
+      "_type": "grammarBlock",
+      "title": "E. Aksi Selesai vs Belum: もう ～ました (Mou ~mashita) vs まだです (Mada desu)",
+      "content": "もう ～ました (Mou ~mashita) vs まだです (Mada desu)",
+      "furigana": "",
+      "translation": "\"Mou\" artinya sudah, dan harus selalu diikuti oleh kata kerja bentuk lampau (mashita). Jika belum, jawabannya sangat ringkas yaitu \"Mada desu\".",
+      "examples": [
+        {
+          "jp": "* もう昼ごはんを食べましたか。",
+          "romaji": "Mou hirugohan wo tabemashita ka.",
+          "id": "Apakah sudah makan siang?",
+          "furigana": ""
+        }
+      ]
+    },
+    {
+      "_type": "block",
+      "style": "h2",
+      "children": [
+        {
+          "_type": "span",
+          "text": "🖌️ 4. Daftar Kanji Dasar (Bab 7)"
+        }
+      ]
+    },
+    {
+      "_type": "block",
+      "style": "normal",
+      "children": [
+        {
+          "_type": "span",
+          "text": "Detail urutan coretan (stroke order) dan gabungan kata dapat dilihat di rute halaman eksplorasi Kanji."
+        }
+      ]
+    },
+    {
+      "_type": "kanjiBlock",
+      "title": "Daftar Kanji"
+    },
+    {
+      "_type": "block",
+      "style": "h2",
+      "children": [
+        {
+          "_type": "span",
+          "text": "⛩️ 5. Catatan Budaya (Etiket & Komunikasi)"
+        }
+      ]
+    },
+    {
+      "_type": "calloutBlock",
+      "title": "Budaya Uchi-Soto (Dalam-Luar)",
+      "content": "Saat berbicara dengan orang lain tentang keluarga Anda sendiri, gunakan panggilan merendah (Chichi/Ayahku, Haha/Ibuku). Anda **dilarang keras** menyebut ayah Anda sendiri \"Otousan\" di depan orang luar, karena kata \"Otousan/Okaasan\" adalah gelar kehormatan khusus untuk keluarga lawan bicara."
+    },
+    {
+      "_type": "calloutBlock",
+      "title": "Etiket Bertamu",
+      "content": "Saat Anda diundang ke rumah orang Jepang, ucapkan *Gomen kudasai* (Permisi) saat di pintu. Ketika dipersilakan masuk dan Anda melangkah ke bagian dalam rumah (setelah melepas sepatu), ucapkan *Ojama shimasu* (Maaf saya mengganggu) atau *Shitsurei shimasu* (Permisi)."
+    },
+    {
+      "_type": "block",
+      "style": "h2",
+      "children": [
+        {
+          "_type": "span",
+          "text": "💬 6. Praktik Membaca Nyata (Dialog)"
+        }
+      ]
+    },
+    {
+      "_type": "dialogueBlock",
+      "title": "Praktik Membaca Nyata (Dialog)",
+      "content": "山田：ごめんください。\nミラー：いらっしゃい。どうぞお上がりください。\n山田：失礼します。あ、ミラーさん、これ、プレゼントです。\nミラー：ありがとうございます。何ですか。\n山田：シャツです。\nミラー：そうですか。ミラーさん、もう昼ごはんを食べましたか。\n山田：いいえ、まだです。\nミラー：じゃ、一緒に食べましょう。\n山田：いいですね。",
+      "translation": "Yamada: Permisi / Ada orang di rumah?\nMiraa: Selamat datang. Silakan naik/masuk.\nYamada: san, kore, purezento desu. - Permisi (maaf kelancangan saya\nMiraa: Terima kasih banyak. Apa ini?\nYamada: Kemeja.\nMiraa: san, mou hirugohan wo tabemashita ka. - Oh begitu. Tuan Yamada, apakah Anda sudah makan siang?\nYamada: Belum.\nMiraa: Kalau begitu, ayo makan bersama.\nYamada: Boleh juga/Ide bagus.",
+      "furigana": ""
+    },
+    {
+      "_type": "block",
+      "style": "h2",
+      "children": [
+        {
+          "_type": "span",
+          "text": "✏️ 7. Kuis Evaluasi Bab 7"
+        }
+      ]
+    }
+  ],
+  "quizzes": [
+    {
+      "id": "n5-bab7-q1",
+      "question": "Partikel yang digunakan untuk menandakan sarana atau alat yang dipakai dalam suatu tindakan adalah...",
+      "options": [
+        "に (ni)",
+        "で (de)",
+        "を (wo)"
+      ],
+      "correct_answer": "で (de)",
+      "explanation": "Partikel で (de) menunjuk alat/sarana/metode (dengan/menggunakan).",
+      "type": "multiple-choice"
+    },
+    {
+      "id": "n5-bab7-q2",
+      "question": "\"Saya menulis laporan menggunakan bahasa Inggris.\" Terjemahan yang tepat adalah...",
+      "options": [
+        "英語にレポートを書きます。(Eigo ni repooto wo kakimasu.)",
+        "英語をレポートで書きます。(Eigo wo repooto de kakimasu.)",
+        "英語でレポートを書きます。(Eigo de repooto wo kakimasu.)"
+      ],
+      "correct_answer": "英語でレポートを書きます。(Eigo de repooto wo kakimasu.)",
+      "explanation": "Bahasa bertindak sebagai \"sarana komunikasi\", sehingga diikuti partikel で. Laporan (Repooto) adalah objek penderita sehingga diikuti partikel を.",
+      "type": "multiple-choice"
+    },
+    {
+      "id": "n5-bab7-q3",
+      "question": "Anda ingin bertanya apa bahasa Jepangnya kata \"Love\". Kalimat yang tepat adalah...",
+      "options": [
+        "「Love」は日本語で何ですか。(\"Love\" wa nihongo de nan desu ka.)",
+        "「Love」は日本語でどうですか。(\"Love\" wa nihongo de dou desu ka.)",
+        "日本語で「Love」は何ですか。(Nihongo de \"Love\" wa nan desu ka.)"
+      ],
+      "correct_answer": "「Love」は日本語で何ですか。(\"Love\" wa nihongo de nan desu ka.)",
+      "explanation": "Pola mutlak untuk menanyakan terjemahan: *[Kata] wa [Bahasa] de nan desu ka*.",
+      "type": "multiple-choice"
+    },
+    {
+      "id": "n5-bab7-q4",
+      "question": "Saat berbicara dengan rekan kerja (orang luar), sebutan yang **BENAR** untuk ibu kandung Anda sendiri adalah...",
+      "options": [
+        "お母さん (Okaasan)",
+        "母 (Haha)",
+        "家族 (Kazoku)"
+      ],
+      "correct_answer": "母 (Haha)",
+      "explanation": "*Haha* digunakan untuk ibu sendiri di depan orang luar (konsep merendah / humble). *Okaasan* digunakan untuk menyebut ibu orang lain.",
+      "type": "multiple-choice"
+    },
+    {
+      "id": "n5-bab7-q5",
+      "question": "*Lengkapi kalimat berikut:*\n昨日、田中さん（ ____ ）花をもらいました。(Kinou, Tanaka-san ____ hana wo moraimashita.)",
+      "options": [
+        "で (de)",
+        "は (wa)",
+        "に (ni)"
+      ],
+      "correct_answer": "に (ni)",
+      "explanation": "Dalam konteks *moraimasu* (menerima), pihak yang memberi ditandai dengan partikel に (ni) atau から (kara).",
+      "type": "multiple-choice"
+    },
+    {
+      "id": "n5-bab7-q6",
+      "question": "Kanji \"紙\" (Kami) melambangkan...",
+      "options": [
+        "Tangan",
+        "Bunga",
+        "Kertas"
+      ],
+      "correct_answer": "Kertas",
+      "explanation": "紙 (Kami / Shi) artinya kertas. Muncul di kosakata \"Tegami\" (Surat).",
+      "type": "multiple-choice"
+    },
+    {
+      "id": "n5-bab7-q7",
+      "question": "Jika ada yang bertanya, \"もうレポートを送りましたか\" (Apakah Anda sudah mengirim laporan?), dan kenyataannya Anda belum mengirimnya. Respons yang paling natural adalah...",
+      "options": [
+        "いいえ、まだです。(Iie, mada desu.)",
+        "いいえ、送りませんでした。(Iie, okurimasen deshita.)",
+        "いいえ、もうです。(Iie, mou desu.)"
+      ],
+      "correct_answer": "いいえ、まだです。(Iie, mada desu.)",
+      "explanation": "\"Mada desu\" (Belum) adalah pasangan mutlak untuk membantah pernyataan \"Mou\" (Sudahkah?). Menjawab dengan *Okurimasen deshita* menyiratkan penolakan atau bahwa Anda tidak berniat mengirimnya kemarin.",
+      "type": "multiple-choice"
+    },
+    {
+      "id": "n5-bab7-q8",
+      "question": "Anda meminjamkan penghapus kepada teman Anda. Kosakata \"Meminjamkan\" dalam bahasa Jepang adalah...",
+      "options": [
+        "借ります (Karimasu)",
+        "貸します (Kashimasu)",
+        "教えます (Oshiemasu)"
+      ],
+      "correct_answer": "貸します (Kashimasu)",
+      "explanation": "*Kashimasu* = Meminjamkan (Uang/Barang keluar dari Anda). *Karimasu* = Meminjam (Uang/Barang masuk ke Anda).",
+      "type": "multiple-choice"
+    },
+    {
+      "id": "n5-bab7-q9",
+      "question": "\"Saya menelepon ayah (saya).\" Susunan kalimat yang benar adalah...",
+      "options": [
+        "お父さんに電話をかけます。(Otousan ni denwa wo kakemasu.)",
+        "父に電話をかけます。(Chichi ni denwa wo kakemasu.)",
+        "父で電話をかけます。(Chichi de denwa wo kakemasu.)"
+      ],
+      "correct_answer": "父に電話をかけます。(Chichi ni denwa wo kakemasu.)",
+      "explanation": "Karena \"ayah sendiri\", gunakan *Chichi*, bukan *Otousan*. Karena ayah adalah target penerima telepon, gunakan partikel に (ni).",
+      "type": "multiple-choice"
+    },
+    {
+      "id": "n5-bab7-q10",
+      "question": "Berdasarkan teks dialog, apa yang diberikan oleh Yamada kepada Miller?",
+      "options": [
+        "お金 (Okane / Uang)",
+        "花 (Hana / Bunga)",
+        "シャツ (Shatsu / Kemeja)"
+      ],
+      "correct_answer": "シャツ (Shatsu / Kemeja)",
+      "explanation": "Di dalam dialog, Miller bertanya \"Nan desu ka?\" (Apa ini?), lalu Yamada menjawab \"Shatsu desu\" (Kemeja).",
+      "type": "multiple-choice"
+    }
+  ]
+}

@@ -1,0 +1,251 @@
+{
+  "_type": "lesson",
+  "_id": "lesson-bab-19",
+  "title": "Bab 19: 相撲を見たことがあります (Bentuk-Ta, Pengalaman, & Pengandaian)",
+  "slug": {
+    "_type": "slug",
+    "current": "bab-19"
+  },
+  "order_number": 19,
+  "category_id": "N5-Course",
+  "summary": "Setelah menguasai rutinitas, bab ini membawa Anda untuk menceritakan pengalaman hidup dan mengandaikan suatu kondisi. Anda ditargetkan mampu:",
+  "estimated_minutes": 15,
+  "is_premium": false,
+  "is_published": true,
+  "vocab_list": [
+    "登ります",
+    "泊まります",
+    "曲がります",
+    "渡ります",
+    "押します",
+    "触ります",
+    "掃除します",
+    "洗濯します",
+    "なります",
+    "道",
+    "交差点",
+    "橋",
+    "信号",
+    "角",
+    "右",
+    "左",
+    "機械",
+    "ボタン",
+    "山",
+    "川",
+    "風",
+    "雪",
+    "温泉",
+    "お茶",
+    "相撲",
+    "眠い",
+    "強い",
+    "弱い",
+    "寂しい",
+    "調子がいい",
+    "無理（な）",
+    "一度",
+    "一度も",
+    "何度も",
+    "だんだん",
+    "もうすぐ",
+    "もし",
+    "いくら",
+    "おかげさまで",
+    "乾杯"
+  ],
+  "kanji_list": [
+    "道",
+    "右",
+    "左",
+    "雨",
+    "雪"
+  ],
+  "grammar_list": [
+    "A. Rumus Bentuk-Ta (Ta-Form)",
+    "[V-Ta] ことがあります (koto ga arimasu)",
+    "[V-Ta]り、[V-Ta]り します (~tari, ~tari shimasu)",
+    "[V-Kamus] と (~to)",
+    "~たら (~tara) & ~ても (~temo)"
+  ],
+  "reading_list": [],
+  "listening_list": [],
+  "seo": {
+    "title": "Belajar Bab 19 Bahasa Jepang N5 - 相撲を見たことがあります (Bentuk-Ta, Pengalaman, & Pengandaian) | NihongoRoute",
+    "description": "Kuasai materi pelajaran Bahasa Jepang N5 Bab 19: 相撲を見たことがあります (Bentuk-Ta, Pengalaman, & Pengandaian). Kosakata, Kanji, Tata Bahasa, Percakapan, dan Kuis interaktif.",
+    "keywords": "NihongoRoute, N5, Bab 19, 相撲を見たことがあります (Bentuk-Ta, Pengalaman, & Pengandaian), Bahasa Jepang"
+  },
+  "content_blocks": [
+    {
+      "_type": "block",
+      "style": "h2",
+      "children": [
+        {
+          "_type": "span",
+          "text": "🎯 1. Tujuan Belajar (Can-Do Objectives)"
+        }
+      ]
+    },
+    {
+      "_type": "block",
+      "style": "normal",
+      "children": [
+        {
+          "_type": "span",
+          "text": "Setelah menguasai rutinitas, bab ini membawa Anda untuk menceritakan pengalaman hidup dan mengandaikan suatu kondisi. Anda ditargetkan mampu:"
+        }
+      ]
+    },
+    {
+      "_type": "block",
+      "style": "normal",
+      "children": [
+        {
+          "_type": "span",
+          "text": "• Mengubah kata kerja ke dalam Bentuk-Ta (Lampau Kasual).\n• Menyatakan pengalaman hidup (Pernah / Belum pernah).\n• Menceritakan aktivitas acak tanpa mempedulikan urutan waktu.\n• Memberikan petunjuk arah atau cara kerja mesin (Jika / Kalau).\n• Mengungkapkan pengandaian bersyarat (Kalau... / Meskipun...)."
+        }
+      ]
+    },
+    {
+      "_type": "block",
+      "style": "h2",
+      "children": [
+        {
+          "_type": "span",
+          "text": "📖 2. Bedah Kosakata (40 Kata)"
+        }
+      ]
+    },
+    {
+      "_type": "block",
+      "style": "normal",
+      "children": [
+        {
+          "_type": "span",
+          "text": "Format: Kanji (Hiragana - Romaji) : Arti"
+        }
+      ]
+    },
+    {
+      "_type": "vocabBlock",
+      "title": "Daftar Kosakata"
+    },
+    {
+      "_type": "block",
+      "style": "h2",
+      "children": [
+        {
+          "_type": "span",
+          "text": "🛠️ 3. Tata Bahasa Ekstensif"
+        }
+      ]
+    },
+    {
+      "_type": "grammarBlock",
+      "title": "A. Rumus Bentuk-Ta (Ta-Form)",
+      "content": "A. Rumus Bentuk-Ta (Ta-Form)",
+      "furigana": "",
+      "translation": "",
+      "examples": []
+    },
+    {
+      "_type": "grammarBlock",
+      "title": "B. Pengalaman Masa Lalu: [V-Ta] ことがあります (koto ga arimasu)",
+      "content": "[V-Ta] ことがあります (koto ga arimasu)",
+      "furigana": "",
+      "translation": "",
+      "examples": []
+    },
+    {
+      "_type": "grammarBlock",
+      "title": "C. Aktivitas Acak (Listing): [V-Ta]り、[V-Ta]り します (~tari, ~tari shimasu)",
+      "content": "[V-Ta]り、[V-Ta]り します (~tari, ~tari shimasu)",
+      "furigana": "",
+      "translation": "",
+      "examples": []
+    },
+    {
+      "_type": "grammarBlock",
+      "title": "D. Konjungsi Pengandaian Mutlak: [V-Kamus] と (~to)",
+      "content": "[V-Kamus] と (~to)",
+      "furigana": "",
+      "translation": "",
+      "examples": []
+    },
+    {
+      "_type": "grammarBlock",
+      "title": "E. Pengandaian Umum (Kalau) & (Meskipun): ~たら (~tara) & ~ても (~temo)",
+      "content": "~たら (~tara) & ~ても (~temo)",
+      "furigana": "",
+      "translation": "",
+      "examples": []
+    },
+    {
+      "_type": "block",
+      "style": "h2",
+      "children": [
+        {
+          "_type": "span",
+          "text": "🖌️ 4. Daftar Kanji Dasar (Bab 19)"
+        }
+      ]
+    },
+    {
+      "_type": "block",
+      "style": "normal",
+      "children": [
+        {
+          "_type": "span",
+          "text": "Detail urutan coretan (stroke order) dan gabungan kata dapat dilihat di rute halaman eksplorasi Kanji."
+        }
+      ]
+    },
+    {
+      "_type": "kanjiBlock",
+      "title": "Daftar Kanji"
+    },
+    {
+      "_type": "block",
+      "style": "h2",
+      "children": [
+        {
+          "_type": "span",
+          "text": "⛩️ 5. Catatan Budaya (Etiket & Komunikasi)"
+        }
+      ]
+    },
+    {
+      "_type": "calloutBlock",
+      "title": "Aturan Onsen (温泉)",
+      "content": "Pemandian air panas alam Jepang melarang keras tamu memakai baju renang atau pakaian dalam saat masuk ke air. Anda juga tidak boleh mencelupkan handuk kecil ke dalam air (letakkan di atas kepala Anda)."
+    },
+    {
+      "_type": "block",
+      "style": "h2",
+      "children": [
+        {
+          "_type": "span",
+          "text": "💬 6. Praktik Membaca Nyata (Dialog)"
+        }
+      ]
+    },
+    {
+      "_type": "dialogueBlock",
+      "title": "Praktik Membaca Nyata (Dialog)",
+      "content": "ブディ：すみません、駅に行きたいですが、道を教えてくれませんか。\n住民：ああ、駅ですね。この道をまっすぐ行くと、交差点があります。\nブディ：はい、交差点ですね。\n住民：その交差点を右へ曲がると、橋があります。橋を渡ったら、すぐに駅が見えますよ。\nブディ：分かりました。ありがとうございます。",
+      "translation": "Budi: Permisi, saya ingin ke stasiun, bisakah Anda memberitahu jalannya?\nJuumin: Ah, stasiun ya. Jika Anda jalan lurus di jalan ini, akan ada perempatan.\nBudi: Ya, perempatan ya.\nJuumin: Jika Anda belok kanan di perempatan itu, akan ada jembatan. Kalau Anda sudah menyeberangi jembatan, stasiunnya akan langsung terlihat lho.\nBudi: Mengerti. Terima kasih.",
+      "furigana": ""
+    },
+    {
+      "_type": "block",
+      "style": "h2",
+      "children": [
+        {
+          "_type": "span",
+          "text": "✏️ 7. Kuis Evaluasi Bab 19"
+        }
+      ]
+    }
+  ],
+  "quizzes": []
+}

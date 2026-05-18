@@ -2,8 +2,7 @@ import React, { useState, useEffect, useCallback } from 'react';
 import { Stack, Card, Text, Select } from '@sanity/ui';
 import { set, unset } from 'sanity';
 
-// Secret token for Supabase Search Bridge
-const SECRET_TOKEN = 'd5a7a32586755e828a338457a2524288';
+import { getApiUrl, SECRET_TOKEN } from './api';
 
 export function SupabaseCategorySelect(props: any) {
   const { onChange, value = '', schemaType } = props;
@@ -18,7 +17,7 @@ export function SupabaseCategorySelect(props: any) {
       setError(null);
       try {
         const response = await fetch(
-          `/api/admin/supabase-search?type=category&secret=${SECRET_TOKEN}`
+          getApiUrl(`/api/admin/supabase-search?type=category&secret=${SECRET_TOKEN}`)
         );
         if (!response.ok) {
           throw new Error(`HTTP error! status: ${response.status}`);

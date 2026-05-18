@@ -1,0 +1,405 @@
+{
+  "_type": "lesson",
+  "_id": "lesson-bab-10",
+  "title": "Bab 10: あそこにコンビニがあります (Eksistensi & Posisi Letak)",
+  "slug": {
+    "_type": "slug",
+    "current": "bab-10"
+  },
+  "order_number": 10,
+  "category_id": "N5-Course",
+  "summary": "Mengetahui di mana letak suatu benda atau seseorang adalah keterampilan navigasi dasar yang krusial. Setelah menyelesaikan bab ini, Anda ditargetkan mampu:",
+  "estimated_minutes": 15,
+  "is_premium": false,
+  "is_published": true,
+  "vocab_list": [
+    "あります",
+    "います",
+    "上",
+    "下",
+    "前",
+    "後ろ",
+    "右",
+    "左",
+    "中",
+    "外",
+    "隣",
+    "近く",
+    "間",
+    "男の人",
+    "女の人",
+    "男の子",
+    "女の子",
+    "犬",
+    "猫",
+    "物",
+    "木",
+    "電池",
+    "箱",
+    "スイッチ",
+    "冷蔵庫",
+    "テーブル",
+    "ベッド",
+    "棚",
+    "ドア",
+    "窓",
+    "ポスト",
+    "ビル",
+    "交番",
+    "駐車場",
+    "乗り場",
+    "県",
+    "いろいろ（な）",
+    "や",
+    "など",
+    "一番"
+  ],
+  "kanji_list": [
+    "上",
+    "下",
+    "左",
+    "右",
+    "中"
+  ],
+  "grammar_list": [
+    "A. あります (Arimasu) vs います (Imasu)",
+    "[Tempat] に [Benda/Orang] が あります/います",
+    "[Benda/Orang] は [Tempat] に あります/います",
+    "[Benda A] の [Posisi]",
+    "E. Partikel や (Ya) dan など (Nado)"
+  ],
+  "reading_list": [],
+  "listening_list": [],
+  "seo": {
+    "title": "Belajar Bab 10 Bahasa Jepang N5 - あそこにコンビニがあります (Eksistensi & Posisi Letak) | NihongoRoute",
+    "description": "Kuasai materi pelajaran Bahasa Jepang N5 Bab 10: あそこにコンビニがあります (Eksistensi & Posisi Letak). Kosakata, Kanji, Tata Bahasa, Percakapan, dan Kuis interaktif.",
+    "keywords": "NihongoRoute, N5, Bab 10, あそこにコンビニがあります (Eksistensi & Posisi Letak), Bahasa Jepang"
+  },
+  "content_blocks": [
+    {
+      "_type": "block",
+      "style": "h2",
+      "children": [
+        {
+          "_type": "span",
+          "text": "🎯 1. Tujuan Belajar (Can-Do Objectives)"
+        }
+      ]
+    },
+    {
+      "_type": "block",
+      "style": "normal",
+      "children": [
+        {
+          "_type": "span",
+          "text": "Mengetahui di mana letak suatu benda atau seseorang adalah keterampilan navigasi dasar yang krusial. Setelah menyelesaikan bab ini, Anda ditargetkan mampu:"
+        }
+      ]
+    },
+    {
+      "_type": "block",
+      "style": "normal",
+      "children": [
+        {
+          "_type": "span",
+          "text": "• Membedakan penggunaan kata kerja ada/berada untuk benda mati dan makhluk hidup.\n• Menyebutkan posisi spesifik sebuah benda (misalnya: di atas meja, di dalam laci, di belakang gedung).\n• Bertanya dan menjelaskan di mana seseorang atau sebuah fasilitas umum berada.\n• Menyebutkan beberapa benda dalam satu tempat menggunakan partikel \"dan lain-lain\"."
+        }
+      ]
+    },
+    {
+      "_type": "block",
+      "style": "h2",
+      "children": [
+        {
+          "_type": "span",
+          "text": "📖 2. Bedah Kosakata (40 Kata)"
+        }
+      ]
+    },
+    {
+      "_type": "block",
+      "style": "normal",
+      "children": [
+        {
+          "_type": "span",
+          "text": "Format: Kanji (Hiragana - Romaji) : Arti"
+        }
+      ]
+    },
+    {
+      "_type": "vocabBlock",
+      "title": "Daftar Kosakata"
+    },
+    {
+      "_type": "block",
+      "style": "h2",
+      "children": [
+        {
+          "_type": "span",
+          "text": "🛠️ 3. Tata Bahasa Ekstensif"
+        }
+      ]
+    },
+    {
+      "_type": "grammarBlock",
+      "title": "A. あります (Arimasu) vs います (Imasu)",
+      "content": "A. あります (Arimasu) vs います (Imasu)",
+      "furigana": "",
+      "translation": "",
+      "examples": []
+    },
+    {
+      "_type": "grammarBlock",
+      "title": "B. Keberadaan: [Tempat] に [Benda/Orang] が あります/います",
+      "content": "[Tempat] に [Benda/Orang] が あります/います",
+      "furigana": "",
+      "translation": "Digunakan untuk menjelaskan **apa/siapa** yang ada di sebuah lokasi. Lokasi ditandai partikel に (ni) dan benda ditandai partikel が (ga).",
+      "examples": [
+        {
+          "jp": "* 部屋にベッドがあります。",
+          "romaji": "Heya ni beddo ga arimasu.",
+          "id": "Di kamar ada tempat tidur.",
+          "furigana": ""
+        }
+      ]
+    },
+    {
+      "_type": "grammarBlock",
+      "title": "C. Menjelaskan Lokasi Subjek: [Benda/Orang] は [Tempat] に あります/います",
+      "content": "[Benda/Orang] は [Tempat] に あります/います",
+      "furigana": "",
+      "translation": "Pola ini dibalik dari pola B. Digunakan saat subjeknya sudah diketahui, dan Anda ingin menjelaskan **di mana** lokasinya.",
+      "examples": [
+        {
+          "jp": "* トイレはどこにありますか。",
+          "romaji": "Toire wa doko ni arimasu ka.",
+          "id": "Toilet ada di mana?",
+          "furigana": ""
+        }
+      ]
+    },
+    {
+      "_type": "grammarBlock",
+      "title": "D. Posisi Spesifik: [Benda A] の [Posisi]",
+      "content": "[Benda A] の [Posisi]",
+      "furigana": "",
+      "translation": "Untuk mempersempit lokasi (Atas, Bawah, Dalam, Luar), Anda merangkai benda patokan dengan kata posisinya menggunakan partikel の (no).",
+      "examples": [
+        {
+          "jp": "* 机の上",
+          "romaji": "Tsukue no ue",
+          "id": "Atas meja",
+          "furigana": ""
+        }
+      ]
+    },
+    {
+      "_type": "grammarBlock",
+      "title": "E. Partikel や (Ya) dan など (Nado)",
+      "content": "E. Partikel や (Ya) dan など (Nado)",
+      "furigana": "",
+      "translation": "Di bab sebelumnya Anda belajar partikel と (To) yang berarti \"Dan\" (Menyebutkan semua benda secara lengkap). Partikel や (Ya) juga berarti \"Dan\", tetapi **hanya menyebutkan sebagian contoh**. Biasanya ditutup dengan など (Nado / dan lain-lain).",
+      "examples": [
+        {
+          "jp": "* 箱の中に手紙や写真などがあります。",
+          "romaji": "Hako no naka ni tegami ya shashin nado ga arimasu.",
+          "id": "Di dalam kotak ada surat dan foto, dan lain-lain.",
+          "furigana": ""
+        }
+      ]
+    },
+    {
+      "_type": "block",
+      "style": "h2",
+      "children": [
+        {
+          "_type": "span",
+          "text": "🖌️ 4. Daftar Kanji Dasar (Bab 10)"
+        }
+      ]
+    },
+    {
+      "_type": "block",
+      "style": "normal",
+      "children": [
+        {
+          "_type": "span",
+          "text": "Detail urutan coretan (stroke order) dan gabungan kata dapat dilihat di rute halaman eksplorasi Kanji."
+        }
+      ]
+    },
+    {
+      "_type": "kanjiBlock",
+      "title": "Daftar Kanji"
+    },
+    {
+      "_type": "block",
+      "style": "h2",
+      "children": [
+        {
+          "_type": "span",
+          "text": "⛩️ 5. Catatan Budaya (Etiket & Komunikasi)"
+        }
+      ]
+    },
+    {
+      "_type": "calloutBlock",
+      "title": "交番 (Kouban)",
+      "content": "Pos polisi lingkungan khas Jepang. Jika Anda tersesat, dompet hilang, atau ingin menanyakan alamat di Jepang (yang sistem penomoran bloknya sering membingungkan), Kouban adalah tempat pertama yang harus Anda datangi. Polisi Jepang sangat ramah dalam memberikan panduan jalan."
+    },
+    {
+      "_type": "calloutBlock",
+      "title": "Membaca Ruangan",
+      "content": "Orang Jepang jarang menggunakan kata \"Kiri\" dan \"Kanan\" saat memberi petunjuk arah di dalam ruangan, mereka lebih sering menggunakan objek patokan. Misalnya: \"Di sebelah rak buku\" (*Hondana no tonari*), atau \"Di depan kulkas\" (*Reizouko no mae*)."
+    },
+    {
+      "_type": "block",
+      "style": "h2",
+      "children": [
+        {
+          "_type": "span",
+          "text": "💬 6. Praktik Membaca Nyata (Dialog)"
+        }
+      ]
+    },
+    {
+      "_type": "dialogueBlock",
+      "title": "Praktik Membaca Nyata (Dialog)",
+      "content": "山田：すみません、近くにＡＴＭがありますか。\n田中：ＡＴＭですか。あそこにコンビニがありますね。\n山田：はい。\n田中：ＡＴＭはあのコンビニの中にありますよ。\n山田：コンビニの中ですね。あのコンビニはどこですか。\n田中：スーパーと銀行の間にあります。\n山田：分かりました。どうもありがとうございます。",
+      "translation": "Yamada: Permisi, apakah di dekat sini ada ATM?\nTanaka: ATM ya. Di sana ada minimarket, kan.\nYamada: Ya.\nTanaka: ATM-nya ada di dalam minimarket itu.\nYamada: Di dalam minimarket ya. Minimarket itu letaknya di mana?\nTanaka: Ada di antara supermarket dan bank.\nYamada: Saya mengerti. Terima kasih banyak.",
+      "furigana": ""
+    },
+    {
+      "_type": "block",
+      "style": "h2",
+      "children": [
+        {
+          "_type": "span",
+          "text": "✏️ 7. Kuis Evaluasi Bab 10"
+        }
+      ]
+    }
+  ],
+  "quizzes": [
+    {
+      "id": "n5-bab10-q1",
+      "question": "Kata kerja manakah yang tepat untuk mengisi kalimat \"Di taman ada anak laki-laki\"?\n(公園に男の子が ____ )",
+      "options": [
+        "あります (arimasu)",
+        "います (imasu)",
+        "します (shimasu)"
+      ],
+      "correct_answer": "います (imasu)",
+      "explanation": "Anak laki-laki (Otoko no ko) adalah makhluk hidup yang bisa bergerak dengan kemauannya sendiri, sehingga wajib menggunakan *imasu*.",
+      "type": "multiple-choice"
+    },
+    {
+      "id": "n5-bab10-q2",
+      "question": "Manakah kalimat bahasa Jepang yang **BENAR** untuk mengatakan \"Di atas meja ada kunci\"?",
+      "options": [
+        "机の上が鍵にあります。(Tsukue no ue ga kagi ni arimasu.)",
+        "鍵の上に机があります。(Kagi no ue ni tsukue ga arimasu.)",
+        "机の上に鍵があります。(Tsukue no ue ni kagi ga arimasu.)"
+      ],
+      "correct_answer": "机の上に鍵があります。(Tsukue no ue ni kagi ga arimasu.)",
+      "explanation": "Susunan yang benar adalah [Tempat/Posisi] に [Benda] が あります. Tempatnya adalah *Tsukue no ue* (Atas meja).",
+      "type": "multiple-choice"
+    },
+    {
+      "id": "n5-bab10-q3",
+      "question": "\"Kucing ada di bawah kursi\". Terjemahan yang tepat adalah...",
+      "options": [
+        "猫は椅子の下にいます。(Neko wa isu no shita ni imasu.)",
+        "猫は椅子の下にあります。(Neko wa isu no shita ni arimasu.)",
+        "猫は椅子の中に行きます。(Neko wa isu no naka ni ikimasu.)"
+      ],
+      "correct_answer": "猫は椅子の下にいます。(Neko wa isu no shita ni imasu.)",
+      "explanation": "Kucing (Neko) menggunakan *imasu*. Bawah adalah *shita*. Sehingga posisinya adalah *Isu no shita ni imasu*. Pilihan B salah karena menggunakan *arimasu*.",
+      "type": "multiple-choice"
+    },
+    {
+      "id": "n5-bab10-q4",
+      "question": "Apa perbedaan antara partikel と (To) dan や (Ya)?",
+      "options": [
+        "\"To\" untuk manusia, \"Ya\" untuk benda mati.",
+        "\"To\" menyebutkan seluruh benda, \"Ya\" hanya menyebutkan sebagian (sebagai contoh).",
+        "\"To\" digunakan dengan Arimasu, \"Ya\" digunakan dengan Imasu."
+      ],
+      "correct_answer": "\"To\" menyebutkan seluruh benda, \"Ya\" hanya menyebutkan sebagian (sebagai contoh).",
+      "explanation": "Partikel と mengimplikasikan bahwa daftar benda sudah lengkap. Partikel や menyiratkan \"A dan B, dan mungkin masih ada yang lain lagi\".",
+      "type": "multiple-choice"
+    },
+    {
+      "id": "n5-bab10-q5",
+      "question": "*Lengkapi percakapan berikut:*\nA: 郵便局はどこにありますか。(Yuubinkyoku wa doko ni arimasu ka.)\nB: 銀行の（ ____ ）にあります。(Ginkou no ____ ni arimasu.)",
+      "options": [
+        "上 (Ue - Atas)",
+        "男の人 (Otoko no hito - Laki-laki)",
+        "隣 (Tonari - Sebelah)"
+      ],
+      "correct_answer": "隣 (Tonari - Sebelah)",
+      "explanation": "Secara logis, kantor pos terletak di *sebelah* (Tonari) bank. Tidak mungkin di atas bank (Ue) atau di dalam laki-laki (Otoko no hito).",
+      "type": "multiple-choice"
+    },
+    {
+      "id": "n5-bab10-q6",
+      "question": "Kanji \"中\" (Naka / Chuu) memiliki arti...",
+      "options": [
+        "Kanan",
+        "Dalam / Tengah",
+        "Bawah"
+      ],
+      "correct_answer": "Dalam / Tengah",
+      "explanation": "中 (Naka) artinya dalam, atau bagian tengah. Sering digunakan pada frasa *Kaban no naka* (Dalam tas).",
+      "type": "multiple-choice"
+    },
+    {
+      "id": "n5-bab10-q7",
+      "question": "Anda ingin mengatakan \"Di dalam kulkas ada sayur dan daging (serta barang lainnya)\". Kalimat yang tepat adalah...",
+      "options": [
+        "冷蔵庫の中に野菜や肉などがあります。(Reizouko no naka ni yasai ya niku nado ga arimasu.)",
+        "野菜や肉の中に冷蔵庫があります。(Yasai ya niku no naka ni reizouko ga arimasu.)",
+        "冷蔵庫の中に野菜と肉がいます。(Reizouko no naka ni yasai to niku ga imasu.)"
+      ],
+      "correct_answer": "冷蔵庫の中に野菜や肉などがあります。(Reizouko no naka ni yasai ya niku nado ga arimasu.)",
+      "explanation": "Karena menyebutkan benda dengan \"dan lain-lain\", gunakan partikel や dan など. Karena sayur dan daging bukan benda yang bisa bergerak sendiri, gunakan *arimasu*.",
+      "type": "multiple-choice"
+    },
+    {
+      "id": "n5-bab10-q8",
+      "question": "Posisi \"Di antara A dan B\" dalam bahasa Jepang menggunakan kata...",
+      "options": [
+        "A と B の中 (A to B no naka)",
+        "A と B の間 (A to B no aida)",
+        "A と B の近く (A to B no chikaku)"
+      ],
+      "correct_answer": "A と B の間 (A to B no aida)",
+      "explanation": "\"Di antara\" adalah 間 (Aida). Format mutlaknya adalah \"A to B no aida ni...\".",
+      "type": "multiple-choice"
+    },
+    {
+      "id": "n5-bab10-q9",
+      "question": "\"Pohon\" dalam bahasa Jepang, yang keberadaannya menggunakan kata kerja *arimasu* (karena tidak bisa bergerak), adalah...",
+      "options": [
+        "花 (Hana)",
+        "物 (Mono)",
+        "木 (Ki)"
+      ],
+      "correct_answer": "木 (Ki)",
+      "explanation": "木 (Ki) artinya pohon. Meskipun pohon adalah makhluk biologis, dalam tata bahasa Jepang ia diklasifikasikan sebagai \"benda yang terpaku / tidak bergerak\", sehingga memakai *arimasu*.",
+      "type": "multiple-choice"
+    },
+    {
+      "id": "n5-bab10-q10",
+      "question": "Berdasarkan teks dialog, di manakah letak persisnya mesin ATM tersebut?",
+      "options": [
+        "銀行の中にあります。(Di dalam bank.)",
+        "コンビニの中にあります。(Di dalam minimarket.)",
+        "スーパーの隣にあります。(Di sebelah supermarket.)"
+      ],
+      "correct_answer": "コンビニの中にあります。(Di dalam minimarket.)",
+      "explanation": "Tanaka memberi tahu bahwa ATM tersebut terletak di dalam minimarket (*Konbini no naka ni arimasu*). Bank dan supermarket hanyalah patokan letak minimarketnya.",
+      "type": "multiple-choice"
+    }
+  ]
+}

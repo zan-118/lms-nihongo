@@ -2,6 +2,8 @@ import React, { useState, useCallback, useEffect, useRef } from 'react';
 import { Stack, Flex, Text, Button, TextArea, TextInput, Spinner, Box } from '@sanity/ui';
 import { set, unset, useFormValue } from 'sanity';
 
+import { getApiUrl } from './api';
+
 export function FuriganaGeneratorInput(props: any) {
   const { onChange, value = '', schemaType, path, elementProps } = props;
   const [loading, setLoading] = useState(false);
@@ -20,7 +22,7 @@ export function FuriganaGeneratorInput(props: any) {
     
     setLoading(true);
     try {
-      const response = await fetch('/api/furigana', {
+      const response = await fetch(getApiUrl('/api/furigana'), {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',

@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import { Stack, Card, Text, TextInput, Button, Flex, Box, Spinner, Select, Label } from '@sanity/ui';
 import { set, useFormValue } from 'sanity';
+import { getApiUrl } from './api';
 
 export function AIAssistantBar(props: any) {
   const { onChange } = props;
@@ -26,7 +27,7 @@ export function AIAssistantBar(props: any) {
     setStatusMessage('✨ AI sedang menyusun pelajaran utuh (estimasi 20-30 detik)...');
 
     try {
-      const response = await fetch('/api/admin/ai-assistant', {
+      const response = await fetch(getApiUrl('/api/admin/ai-assistant'), {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({
@@ -95,7 +96,7 @@ export function AIAssistantBar(props: any) {
         }
       });
 
-      const response = await fetch('/api/admin/ai-assistant', {
+      const response = await fetch(getApiUrl('/api/admin/ai-assistant'), {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({
@@ -147,7 +148,7 @@ export function AIAssistantBar(props: any) {
     try {
       const textToConvert = blocksWithText.map((b: any) => b.content).join('\n');
 
-      const response = await fetch('/api/admin/ai-assistant', {
+      const response = await fetch(getApiUrl('/api/admin/ai-assistant'), {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({

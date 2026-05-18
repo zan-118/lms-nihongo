@@ -1,0 +1,398 @@
+{
+  "_type": "lesson",
+  "_id": "lesson-bab-12",
+  "title": "Bab 12: 昨日は雨でした (Masa Lampau & Perbandingan)",
+  "slug": {
+    "_type": "slug",
+    "current": "bab-12"
+  },
+  "order_number": 12,
+  "category_id": "N5-Course",
+  "summary": "Setelah menguasai kata sifat di Bab 8, sekarang saatnya Anda menceritakan pengalaman di masa lalu dan membandingkan berbagai hal. Setelah menyelesaikan bab ini, Anda ditargetkan mampu:",
+  "estimated_minutes": 15,
+  "is_premium": false,
+  "is_published": true,
+  "vocab_list": [
+    "甘い",
+    "辛い",
+    "苦い",
+    "重い",
+    "軽い",
+    "広い",
+    "狭い",
+    "多い",
+    "少ない",
+    "涼しい",
+    "暖かい",
+    "天気",
+    "雨",
+    "雪",
+    "曇り",
+    "季節",
+    "春",
+    "夏",
+    "秋",
+    "冬",
+    "世界",
+    "海",
+    "祭り",
+    "パーティー",
+    "ホテル",
+    "クラス",
+    "乗り物",
+    "刺身",
+    "寿司",
+    "紅茶",
+    "生け花",
+    "皆さん",
+    "どちら",
+    "より",
+    "の",
+    "ずっと",
+    "初めて",
+    "疲れます",
+    "遊びます",
+    "迎えます"
+  ],
+  "kanji_list": [
+    "天",
+    "気",
+    "雨",
+    "春",
+    "夏"
+  ],
+  "grammar_list": [
+    "A. Bentuk Lampau Kata Benda & Kata Sifat-Na",
+    "B. Bentuk Lampau Kata Sifat-I",
+    "[A] は [B] より [Sifat] です",
+    "[A] と [B] と どちらが [Sifat] ですか",
+    "[Kategori] で [A] が 一番 [Sifat] です"
+  ],
+  "reading_list": [],
+  "listening_list": [],
+  "seo": {
+    "title": "Belajar Bab 12 Bahasa Jepang N5 - 昨日は雨でした (Masa Lampau & Perbandingan) | NihongoRoute",
+    "description": "Kuasai materi pelajaran Bahasa Jepang N5 Bab 12: 昨日は雨でした (Masa Lampau & Perbandingan). Kosakata, Kanji, Tata Bahasa, Percakapan, dan Kuis interaktif.",
+    "keywords": "NihongoRoute, N5, Bab 12, 昨日は雨でした (Masa Lampau & Perbandingan), Bahasa Jepang"
+  },
+  "content_blocks": [
+    {
+      "_type": "block",
+      "style": "h2",
+      "children": [
+        {
+          "_type": "span",
+          "text": "🎯 1. Tujuan Belajar (Can-Do Objectives)"
+        }
+      ]
+    },
+    {
+      "_type": "block",
+      "style": "normal",
+      "children": [
+        {
+          "_type": "span",
+          "text": "Setelah menguasai kata sifat di Bab 8, sekarang saatnya Anda menceritakan pengalaman di masa lalu dan membandingkan berbagai hal. Setelah menyelesaikan bab ini, Anda ditargetkan mampu:"
+        }
+      ]
+    },
+    {
+      "_type": "block",
+      "style": "normal",
+      "children": [
+        {
+          "_type": "span",
+          "text": "• Menceritakan cuaca atau keadaan di masa lalu (Kemarin hujan, minggu lalu sibuk).\n• Mengubah kata sifat-Na dan kata sifat-I ke bentuk lampau secara tepat.\n• Membandingkan dua hal (A lebih besar daripada B).\n• Menanyakan dan menjawab preferensi di antara dua pilihan (Mana yang lebih Anda suka?).\n• Menyatakan yang \"Paling / Terbaik\" di dalam sebuah kategori."
+        }
+      ]
+    },
+    {
+      "_type": "block",
+      "style": "h2",
+      "children": [
+        {
+          "_type": "span",
+          "text": "📖 2. Bedah Kosakata (40 Kata)"
+        }
+      ]
+    },
+    {
+      "_type": "block",
+      "style": "normal",
+      "children": [
+        {
+          "_type": "span",
+          "text": "Format: Kanji (Hiragana - Romaji) : Arti"
+        }
+      ]
+    },
+    {
+      "_type": "vocabBlock",
+      "title": "Daftar Kosakata"
+    },
+    {
+      "_type": "block",
+      "style": "h2",
+      "children": [
+        {
+          "_type": "span",
+          "text": "🛠️ 3. Tata Bahasa Ekstensif"
+        }
+      ]
+    },
+    {
+      "_type": "grammarBlock",
+      "title": "A. Bentuk Lampau Kata Benda & Kata Sifat-Na",
+      "content": "A. Bentuk Lampau Kata Benda & Kata Sifat-Na",
+      "furigana": "",
+      "translation": "",
+      "examples": []
+    },
+    {
+      "_type": "grammarBlock",
+      "title": "B. Bentuk Lampau Kata Sifat-I",
+      "content": "B. Bentuk Lampau Kata Sifat-I",
+      "furigana": "",
+      "translation": "",
+      "examples": []
+    },
+    {
+      "_type": "grammarBlock",
+      "title": "C. Perbandingan 2 Hal: [A] は [B] より [Sifat] です",
+      "content": "[A] は [B] より [Sifat] です",
+      "furigana": "",
+      "translation": "Menyatakan bahwa A memiliki sifat yang lebih daripada B. Partikel より (yori) berarti \"daripada\".",
+      "examples": [
+        {
+          "jp": "* 新幹線はバス**より**速いです。",
+          "romaji": "Shinkansen wa basu **yori** hayai desu.",
+          "id": "Shinkansen lebih cepat daripada bus.",
+          "furigana": ""
+        }
+      ]
+    },
+    {
+      "_type": "grammarBlock",
+      "title": "D. Bertanya Pilihan (A atau B): [A] と [B] と どちらが [Sifat] ですか",
+      "content": "[A] と [B] と どちらが [Sifat] ですか",
+      "furigana": "",
+      "translation": "Menanyakan preferensi atau fakta di antara DUA benda. Selalu gunakan kata tanya *Dochira* (Yang mana).",
+      "examples": [
+        {
+          "jp": "* A: サッカーとテニスと**どちらが**面白いですか。",
+          "romaji": "Sakkaa to tenisu to **dochira ga** omoshiroi desu ka.",
+          "id": "Antara sepak bola dan tenis, mana yang lebih menarik?",
+          "furigana": ""
+        }
+      ]
+    },
+    {
+      "_type": "grammarBlock",
+      "title": "E. Superlatif (Paling): [Kategori] で [A] が 一番 [Sifat] です",
+      "content": "[Kategori] で [A] が 一番 [Sifat] です",
+      "furigana": "",
+      "translation": "Jika membandingkan lebih dari tiga benda (atau dalam satu lingkup kategori luas), gunakan *Ichiban* (Paling/Nomor satu). Lingkup kategori ditandai dengan partikel で (de).",
+      "examples": [
+        {
+          "jp": "* 季節**で**春**が一番**好きです。",
+          "romaji": "Kisetsu **de** haru **ga ichiban** suki desu.",
+          "id": "Di dalam kategori musim, saya paling suka musim semi.",
+          "furigana": ""
+        }
+      ]
+    },
+    {
+      "_type": "block",
+      "style": "h2",
+      "children": [
+        {
+          "_type": "span",
+          "text": "🖌️ 4. Daftar Kanji Dasar (Bab 12)"
+        }
+      ]
+    },
+    {
+      "_type": "block",
+      "style": "normal",
+      "children": [
+        {
+          "_type": "span",
+          "text": "Detail urutan coretan (stroke order) dan gabungan kata dapat dilihat di rute halaman eksplorasi Kanji."
+        }
+      ]
+    },
+    {
+      "_type": "kanjiBlock",
+      "title": "Daftar Kanji"
+    },
+    {
+      "_type": "block",
+      "style": "h2",
+      "children": [
+        {
+          "_type": "span",
+          "text": "⛩️ 5. Catatan Budaya (Etiket & Komunikasi)"
+        }
+      ]
+    },
+    {
+      "_type": "calloutBlock",
+      "title": "Obrolan Cuaca (Tenki no Hanashi)",
+      "content": "Di Jepang, mengawali pembicaraan dengan kolega atau tetangga menggunakan topik cuaca atau musim adalah etiket emas. Contoh sapaan standar: *\"Kyou wa atsui desu ne!\"* (Hari ini panas ya!) atau *\"Atatakaku narimashita ne\"* (Sudah mulai hangat ya)."
+    },
+    {
+      "_type": "calloutBlock",
+      "title": "Yokatta (よかった)",
+      "content": "Bentuk lampau dari kata 'bagus/baik' ini sering diucapkan sendiri sebagai ekspresi kelegaan. Jika teman Anda lulus ujian atau barang yang hilang ditemukan, ucapkan *\"Aa, yokatta!\"* (Ah, syukurlah / baguslah!)."
+    },
+    {
+      "_type": "block",
+      "style": "h2",
+      "children": [
+        {
+          "_type": "span",
+          "text": "💬 6. Praktik Membaca Nyata (Dialog)"
+        }
+      ]
+    },
+    {
+      "_type": "dialogueBlock",
+      "title": "Praktik Membaca Nyata (Dialog)",
+      "content": "田中：ブディさん、京都はどうでしたか。\nブディ：とても楽しかったです。でも、人が多かったです。\n田中：祭りはどうでしたか。\nブディ：賑やかでした。そして、少し疲れました。\n田中：京都の天気はどうでしたか。\nブディ：雨でした。あまり暑くなかったです。\n田中：そうですか。東京と京都とどちらが好きですか。\nブディ：京都のほうがずっと好きです。古い町ですから。",
+      "translation": "Tanaka: san, Kyouto wa dou deshita ka. - Budi, Kyoto bagaimana (pengalamannya\nBudi: Sangat menyenangkan. Tapi, orangnya banyak.\nTanaka: Festivalnya bagaimana?\nBudi: Dulu meriah. Dan juga, saya sedikit lelah.\nTanaka: Cuaca di Kyoto bagaimana?\nBudi: Dulu hujan. Tidak begitu panas.\nTanaka: Oh, begitu. Antara Tokyo dan Kyoto, mana yang lebih Anda suka?\nBudi: Saya jauh lebih suka Kyoto. Karena itu adalah kota yang tua/kuno.",
+      "furigana": ""
+    },
+    {
+      "_type": "block",
+      "style": "h2",
+      "children": [
+        {
+          "_type": "span",
+          "text": "✏️ 7. Kuis Evaluasi Bab 12"
+        }
+      ]
+    }
+  ],
+  "quizzes": [
+    {
+      "id": "n5-bab12-q1",
+      "question": "Apa bentuk lampau dari kalimat \"今日は暇です\" (Kyou wa hima desu / Hari ini senggang)?",
+      "options": [
+        "昨日は暇かった です。(Kinou wa himakatta desu.)",
+        "昨日は暇でした。(Kinou wa hima deshita.)",
+        "昨日は暇くなかったです。(Kinou wa himakunakatta desu.)"
+      ],
+      "correct_answer": "昨日は暇でした。(Kinou wa hima deshita.)",
+      "explanation": "*Hima* adalah Kata Sifat-Na. Untuk mengubahnya ke masa lalu, langsung ubah \"desu\" menjadi \"deshita\" (Hima deshita).",
+      "type": "multiple-choice"
+    },
+    {
+      "id": "n5-bab12-q2",
+      "question": "\"Film kemarin sangat menarik (omoshiroi).\" Penulisan yang tepat adalah...",
+      "options": [
+        "昨日の映画はとても面白いでした。(Kinou no eiga wa totemo omoshiroi deshita.)",
+        "昨日の映画はとても面白かったです。(Kinou no eiga wa totemo omoshirokatta desu.)",
+        "昨日の映画はとても面白かったでした。(Kinou no eiga wa totemo omoshirokatta deshita.)"
+      ],
+      "correct_answer": "昨日の映画はとても面白かったです。(Kinou no eiga wa totemo omoshirokatta desu.)",
+      "explanation": "*Omoshiroi* adalah Kata Sifat-I. Aturannya: buang huruf 'i' terakhir, ganti dengan *katta desu* (Omoshiro-katta desu). Dilarang keras menggabungkan *katta* dengan *deshita* seperti di pilihan C.",
+      "type": "multiple-choice"
+    },
+    {
+      "id": "n5-bab12-q3",
+      "question": "Bentuk lampau dari kata \"いい\" (Bagus) adalah...",
+      "options": [
+        "いかった (Ikatta)",
+        "いいでした (Ii deshita)",
+        "よかった (Yokatta)"
+      ],
+      "correct_answer": "よかった (Yokatta)",
+      "explanation": "Kata *ii* adalah pengecualian dari zaman Jepang kuno (berasal dari kata *yoi*). Bentuk lampaunya selalu *yokatta*.",
+      "type": "multiple-choice"
+    },
+    {
+      "id": "n5-bab12-q4",
+      "question": "\"Sashimi lebih mahal daripada sushi.\" Terjemahan bahasa Jepang yang benar adalah...",
+      "options": [
+        "刺身は寿司より高いです。(Sashimi wa sushi yori takai desu.)",
+        "寿司は刺身より高いです。(Sushi wa sashimi yori takai desu.)",
+        "刺身のほうが寿司高いです。(Sashimi no hou ga sushi takai desu.)"
+      ],
+      "correct_answer": "刺身は寿司より高いです。(Sashimi wa sushi yori takai desu.)",
+      "explanation": "Polanya adalah [Subjek] wa [Pembanding] yori [Sifat]. Karena subjek utamanya adalah Sashimi (yang lebih mahal), maka Sashimi diletakkan di depan sebelum partikel *wa*.",
+      "type": "multiple-choice"
+    },
+    {
+      "id": "n5-bab12-q5",
+      "question": "Saat teman Anda bertanya \"Musim panas dan musim dingin, mana yang lebih kamu suka?\", Anda ingin menjawab \"Saya lebih suka musim dingin.\" Kalimat Anda adalah...",
+      "options": [
+        "冬が一番好きです。(Fuyu ga ichiban suki desu.)",
+        "冬より好きです。(Fuyu yori suki desu.)",
+        "冬のほうが好きです。(Fuyu no hou ga suki desu.)"
+      ],
+      "correct_answer": "冬のほうが好きです。(Fuyu no hou ga suki desu.)",
+      "explanation": "Untuk menjawab pertanyaan perbandingan 2 hal (A atau B), gunakan selalu struktur **~ no hou ga** (Pihak ~ lebih...).",
+      "type": "multiple-choice"
+    },
+    {
+      "id": "n5-bab12-q6",
+      "question": "Kanji yang menggabungkan \"天\" (Ten) dan \"気\" (Ki) berarti...",
+      "options": [
+        "Musim",
+        "Udara/Pernapasan",
+        "Cuaca"
+      ],
+      "correct_answer": "Cuaca",
+      "explanation": "天 (Ten - Langit) dan 気 (Ki - Udara) bergabung menjadi 天気 (Tenki) yang berarti Cuaca.",
+      "type": "multiple-choice"
+    },
+    {
+      "id": "n5-bab12-q7",
+      "question": "*Lengkapi kalimat berikut:*\n１年（ ____ ）８月（ ____ ）一番暑いです。 (Ichi-nen ____ hachi-gatsu ____ ichiban atsui desu.)\n*Petunjuk: Di dalam 1 tahun, bulan Agustus adalah yang paling panas.*",
+      "options": [
+        "は / が (wa / ga)",
+        "で / が (de / ga)",
+        "に / は (ni / wa)"
+      ],
+      "correct_answer": "で / が (de / ga)",
+      "explanation": "Untuk menyatakan *superlatif* (paling), lingkup kategorinya (1 tahun) harus ditutup dengan partikel で (de). Subjek yang memenangkan kategori tersebut (Bulan Agustus) ditandai dengan partikel が (ga).",
+      "type": "multiple-choice"
+    },
+    {
+      "id": "n5-bab12-q8",
+      "question": "Apa arti dari kata keterangan \"ずっと\" (Zutto) dalam kalimat perbandingan?",
+      "options": [
+        "Kadang-kadang",
+        "Jauh lebih... (Sangat)",
+        "Sama sekali tidak"
+      ],
+      "correct_answer": "Jauh lebih... (Sangat)",
+      "explanation": "*Zutto* digunakan di depan kata sifat untuk memberikan penekanan bahwa perbedaan tingkatannya sangat jauh/signifikan (Jauh lebih...).",
+      "type": "multiple-choice"
+    },
+    {
+      "id": "n5-bab12-q9",
+      "question": "\"Pesta kemarin tidak begitu ramai (nigiyaka).\" Terjemahan gramatikal yang tepat adalah...",
+      "options": [
+        "昨日のパーティーはあまり賑やかじゃありませんでした。(Kinou no paatii wa amari nigiyaka ja arimasen deshita.)",
+        "昨日のパーティーはあまり賑やかなくなかったです。(Kinou no paatii wa amari nigiyakanakunakatta desu.)",
+        "昨日のパーティーはあまり賑やかでした。(Kinou no paatii wa amari nigiyaka deshita.)"
+      ],
+      "correct_answer": "昨日のパーティーはあまり賑やかじゃありませんでした。(Kinou no paatii wa amari nigiyaka ja arimasen deshita.)",
+      "explanation": "*Nigiyaka* adalah Kata Sifat-Na. Bentuk negatif lampaunya mengikuti aturan kata benda, yaitu *ja arimasen deshita*.",
+      "type": "multiple-choice"
+    },
+    {
+      "id": "n5-bab12-q10",
+      "question": "Berdasarkan teks dialog, mengapa Budi sedikit merasa lelah?",
+      "options": [
+        "Karena ia tidak menyukai kota Kyoto.",
+        "Karena di festival terdapat banyak orang.",
+        "Karena cuaca di Kyoto sangat panas."
+      ],
+      "correct_answer": "Karena di festival terdapat banyak orang.",
+      "explanation": "Dalam dialog Budi menyatakan bahwa festivalnya meriah dan orangnya banyak (*Hito ga ookatta desu*), yang berakibat pada kelelahan (*Sukoshi tsukaremashita*). Budi justru menyatakan cuacanya tidak terlalu panas (*Amari atsukunakatta desu*).",
+      "type": "multiple-choice"
+    }
+  ]
+}

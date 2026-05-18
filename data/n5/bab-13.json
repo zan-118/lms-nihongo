@@ -1,0 +1,389 @@
+{
+  "_type": "lesson",
+  "_id": "lesson-bab-13",
+  "title": "Bab 13: 新しい靴が欲しいです (Mengekspresikan Keinginan)",
+  "slug": {
+    "_type": "slug",
+    "current": "bab-13"
+  },
+  "order_number": 13,
+  "category_id": "N5-Course",
+  "summary": "Setelah mampu mendeskripsikan preferensi, kini saatnya Anda belajar menyampaikan hasrat atau keinginan pribadi. Setelah menyelesaikan bab ini, Anda ditargetkan mampu:",
+  "estimated_minutes": 15,
+  "is_premium": false,
+  "is_published": true,
+  "vocab_list": [
+    "欲しい",
+    "たい",
+    "遊びます",
+    "泳ぎます",
+    "迎えます",
+    "疲れます",
+    "プール",
+    "川",
+    "美術館",
+    "映画館",
+    "山",
+    "買い物",
+    "食事",
+    "見学",
+    "車",
+    "家",
+    "靴",
+    "カメラ",
+    "お金",
+    "お腹",
+    "広い",
+    "狭い",
+    "痛い",
+    "いつも",
+    "週末",
+    "夏休み",
+    "お正月",
+    "喉",
+    "今度",
+    "何か",
+    "どこか",
+    "お腹がすきました",
+    "お腹がいっぱいです",
+    "喉がかわきました",
+    "そうしましょう",
+    "ご注文は？",
+    "定食",
+    "牛どん",
+    "少々お待ちください",
+    "別々に"
+  ],
+  "kanji_list": [
+    "秋",
+    "冬",
+    "車",
+    "買",
+    "行"
+  ],
+  "grammar_list": [
+    "[Benda] が 欲しいです (Hoshii desu)",
+    "[Akar Kata Kerja] たいです (~tai desu)",
+    "[Tempat] へ [Aktivitas] に 行きます",
+    "D. Sesuatu & Suatu Tempat (Nanika / Dokoka)"
+  ],
+  "reading_list": [],
+  "listening_list": [],
+  "seo": {
+    "title": "Belajar Bab 13 Bahasa Jepang N5 - 新しい靴が欲しいです (Mengekspresikan Keinginan) | NihongoRoute",
+    "description": "Kuasai materi pelajaran Bahasa Jepang N5 Bab 13: 新しい靴が欲しいです (Mengekspresikan Keinginan). Kosakata, Kanji, Tata Bahasa, Percakapan, dan Kuis interaktif.",
+    "keywords": "NihongoRoute, N5, Bab 13, 新しい靴が欲しいです (Mengekspresikan Keinginan), Bahasa Jepang"
+  },
+  "content_blocks": [
+    {
+      "_type": "block",
+      "style": "h2",
+      "children": [
+        {
+          "_type": "span",
+          "text": "🎯 1. Tujuan Belajar (Can-Do Objectives)"
+        }
+      ]
+    },
+    {
+      "_type": "block",
+      "style": "normal",
+      "children": [
+        {
+          "_type": "span",
+          "text": "Setelah mampu mendeskripsikan preferensi, kini saatnya Anda belajar menyampaikan hasrat atau keinginan pribadi. Setelah menyelesaikan bab ini, Anda ditargetkan mampu:"
+        }
+      ]
+    },
+    {
+      "_type": "block",
+      "style": "normal",
+      "children": [
+        {
+          "_type": "span",
+          "text": "• Menyatakan benda apa yang ingin Anda miliki saat ini.\n• Menyatakan aktivitas apa yang ingin Anda lakukan (ingin makan, ingin pergi, ingin melihat).\n• Mengatakan tujuan perjalanan Anda (\"Pergi ke [Tempat] untuk [Tujuan]\").\n• Memahami batasan budaya dalam menanyakan keinginan lawan bicara secara langsung."
+        }
+      ]
+    },
+    {
+      "_type": "block",
+      "style": "h2",
+      "children": [
+        {
+          "_type": "span",
+          "text": "📖 2. Bedah Kosakata (40 Kata)"
+        }
+      ]
+    },
+    {
+      "_type": "block",
+      "style": "normal",
+      "children": [
+        {
+          "_type": "span",
+          "text": "Format: Kanji (Hiragana - Romaji) : Arti"
+        }
+      ]
+    },
+    {
+      "_type": "vocabBlock",
+      "title": "Daftar Kosakata"
+    },
+    {
+      "_type": "block",
+      "style": "h2",
+      "children": [
+        {
+          "_type": "span",
+          "text": "🛠️ 3. Tata Bahasa Ekstensif"
+        }
+      ]
+    },
+    {
+      "_type": "grammarBlock",
+      "title": "A. Keinginan Memiliki Benda: [Benda] が 欲しいです (Hoshii desu)",
+      "content": "[Benda] が 欲しいです (Hoshii desu)",
+      "furigana": "",
+      "translation": "Kata *Hoshii* secara gramatikal adalah **Kata Sifat-I**, yang berarti ia menjelaskan \"kondisi/atribut benda yang diinginkan\", BUKAN tindakan dari si subjek. Oleh karena itu, partikel di depan benda **WAJIB menggunakan が (ga)**, bukan を (wo).",
+      "examples": [
+        {
+          "jp": "* 私は新しい車**が欲しい**です。",
+          "romaji": "Watashi wa atarashii kuruma **ga hoshii** desu.",
+          "id": "Saya ingin (memiliki) mobil baru.",
+          "furigana": ""
+        }
+      ]
+    },
+    {
+      "_type": "grammarBlock",
+      "title": "B. Keinginan Melakukan Aksi: [Akar Kata Kerja] たいです (~tai desu)",
+      "content": "[Akar Kata Kerja] たいです (~tai desu)",
+      "furigana": "",
+      "translation": "Untuk menyatakan keinginan berbuat sesuatu, buang akhiran *~masu* dari kata kerja, lalu ganti dengan **~tai desu**.",
+      "examples": [
+        {
+          "jp": "* （私は）寿司**を/が 食べたい**です。",
+          "romaji": "Sushi wo/ga **tabetai** desu.",
+          "id": "Saya ingin makan sushi.",
+          "furigana": ""
+        }
+      ]
+    },
+    {
+      "_type": "grammarBlock",
+      "title": "C. Tujuan Perjalanan: [Tempat] へ [Aktivitas] に 行きます",
+      "content": "[Tempat] へ [Aktivitas] に 行きます",
+      "furigana": "",
+      "translation": "Menyatakan tujuan Anda pergi/datang ke suatu tempat. Partikel に (ni) diletakkan di belakang aktivitas.",
+      "examples": []
+    },
+    {
+      "_type": "grammarBlock",
+      "title": "D. Sesuatu & Suatu Tempat (Nanika / Dokoka)",
+      "content": "D. Sesuatu & Suatu Tempat (Nanika / Dokoka)",
+      "furigana": "",
+      "translation": "Bertindak sebagai kata benda (Sesuatu/Suatu tempat) dan tidak memerlukan partikel *wo/e* di belakangnya.",
+      "examples": [
+        {
+          "jp": "* **何か**飲みたいです。",
+          "romaji": "**Nanika** nomitai desu.",
+          "id": "Saya ingin minum sesuatu.",
+          "furigana": ""
+        }
+      ]
+    },
+    {
+      "_type": "block",
+      "style": "h2",
+      "children": [
+        {
+          "_type": "span",
+          "text": "🖌️ 4. Daftar Kanji Dasar (Bab 13)"
+        }
+      ]
+    },
+    {
+      "_type": "block",
+      "style": "normal",
+      "children": [
+        {
+          "_type": "span",
+          "text": "Detail urutan coretan (stroke order) dan gabungan kata dapat dilihat di rute halaman eksplorasi Kanji."
+        }
+      ]
+    },
+    {
+      "_type": "kanjiBlock",
+      "title": "Daftar Kanji"
+    },
+    {
+      "_type": "block",
+      "style": "h2",
+      "children": [
+        {
+          "_type": "span",
+          "text": "⛩️ 5. Catatan Budaya (Etiket & Komunikasi)"
+        }
+      ]
+    },
+    {
+      "_type": "calloutBlock",
+      "title": "Tabu \"Hoshii desu ka\"",
+      "content": "Anda **dilarang keras** menanyakan keinginan atasan atau orang yang dihormati secara langsung (\"Shachou, mizu ga hoshii desu ka?\" - Bos, mau air?). Kalimat ini terdengar seperti menginterogasi anak kecil. Gunakan bahasa penawaran seperti *\"Mizu wa ikaga desu ka\"* (Bagaimana kalau air putih?)."
+    },
+    {
+      "_type": "calloutBlock",
+      "title": "Kata Ganti Orang Ketiga",
+      "content": "Pola *Hoshii* dan *~tai* pada dasarnya **hanya boleh digunakan untuk mengekspresikan perasaan pembicara (Saya)**. Anda tidak bisa berkata \"Tanaka-san wa kuruma ga hoshii desu\" (Tanaka ingin mobil), karena Anda tidak bisa memastikan isi hati orang lain."
+    },
+    {
+      "_type": "block",
+      "style": "h2",
+      "children": [
+        {
+          "_type": "span",
+          "text": "💬 6. Praktik Membaca Nyata (Dialog)"
+        }
+      ]
+    },
+    {
+      "_type": "dialogueBlock",
+      "title": "Praktik Membaca Nyata (Dialog)",
+      "content": "山田：ブディさん、毎日残業ですね。疲れたでしょう。\nブディ：はい、とても疲れました。\n山田：少し休みませんか。\nブディ：ええ、そうしましょう。喉がかわきましたから、何か飲みたいです。\n山田：じゃ、あそこの喫茶店に入りましょう。ブディさんは今、何が一番欲しいですか。\nブディ：そうですねえ・・・時間が欲しいです。早くうちへ帰って、寝たいです。",
+      "translation": "Yamada: san, mainichi zangyou desu ne. Tsukareta deshou. - Budi, lembur setiap hari ya. Pasti lelah kan.\nBudi: Ya, saya sangat lelah.\nYamada: Maukah kita istirahat sebentar?\nBudi: Ya, ayo lakukan itu. Karena tenggorokan saya kering (haus\nYamada: san wa ima, nani ga ichiban hoshii desu ka. - Kalau begitu, mari masuk ke kafe di sana. Budi, sekarang apa yang paling ingin Anda miliki?\nBudi: Hmm, biarkan saya berpikir... Saya ingin (punya",
+      "furigana": ""
+    },
+    {
+      "_type": "block",
+      "style": "h2",
+      "children": [
+        {
+          "_type": "span",
+          "text": "✏️ 7. Kuis Evaluasi Bab 13"
+        }
+      ]
+    }
+  ],
+  "quizzes": [
+    {
+      "id": "n5-bab13-q1",
+      "question": "Partikel mutlak apa yang **HARUS** berada di depan kata \"欲しい\" (Hoshii / Ingin memiliki benda)?",
+      "options": [
+        "を (wo)",
+        "が (ga)",
+        "に (ni)"
+      ],
+      "correct_answer": "が (ga)",
+      "explanation": "Kata *Hoshii* diperlakukan sebagai Kata Sifat yang menjelaskan status benda yang diinginkan, sehingga wajib menggunakan partikel が (ga).",
+      "type": "multiple-choice"
+    },
+    {
+      "id": "n5-bab13-q2",
+      "question": "\"Saya ingin makan sushi.\" Penulisan gramatikal yang paling **BENAR** adalah...",
+      "options": [
+        "寿司が食べたいです。(Sushi ga tabetai desu.)",
+        "寿司を食べますたいです。(Sushi wo tabemasutai desu.)",
+        "寿司を欲しいです。(Sushi wo hoshii desu.)"
+      ],
+      "correct_answer": "寿司が食べたいです。(Sushi ga tabetai desu.)",
+      "explanation": "Akhiran *~tai* ditempelkan pada akar kata kerja (*Tabemasu* menjadi *Tabetai*). Partikel objek (wo) boleh dan sangat lazim diubah menjadi partikel subjek (ga) jika berdampingan dengan *~tai*.",
+      "type": "multiple-choice"
+    },
+    {
+      "id": "n5-bab13-q3",
+      "question": "\"Saya tidak ingin pergi ke mana pun.\" (Menolak total). Kalimat bahasa Jepangnya adalah...",
+      "options": [
+        "どこかへ行きたくないです。(Dokoka e ikitakunai desu.)",
+        "どこへも行きたくないです。(Doko e mo ikitakunai desu.)",
+        "どこか行きたいじゃありません。(Dokoka ikitai ja arimasen.)"
+      ],
+      "correct_answer": "どこへも行きたくないです。(Doko e mo ikitakunai desu.)",
+      "explanation": "Untuk menyatakan penyangkalan mutlak (ke mana pun), gunakan \"Doko e mo\". Akhiran *~tai* diubah ke negatif layaknya sifat-I, menjadi *~takunai desu*.",
+      "type": "multiple-choice"
+    },
+    {
+      "id": "n5-bab13-q4",
+      "question": "Bagaimana cara menggabungkan tujuan \"Belanja\" (Kaimono) dan kata kerja \"Pergi\" (Ikimasu)?",
+      "options": [
+        "買い物に行きます。(Kaimono ni ikimasu.)",
+        "買い物をして行きます。(Kaimono wo shite ikimasu.)",
+        "買い物をしますに行きます。(Kaimono wo shimasu ni ikimasu.)"
+      ],
+      "correct_answer": "買い物に行きます。(Kaimono ni ikimasu.)",
+      "explanation": "Karena \"Kaimono\" adalah kata benda yang bisa menjadi aksi (*Kaimono shimasu*), maka cukup hilangkan *shimasu*-nya, tempelkan partikel *ni*, dan sambung dengan kata pergi (*Kaimono ni ikimasu*).",
+      "type": "multiple-choice"
+    },
+    {
+      "id": "n5-bab13-q5",
+      "question": "*Lengkapi kalimat berikut:*\n週末、プールへ（ ____ ）に行きます。 (Shuumatsu, puuru e ____ ni ikimasu.)",
+      "options": [
+        "泳ぎます (Oyogimasu)",
+        "泳ぎたい (Oyogitai)",
+        "泳ぎ (Oyogi)"
+      ],
+      "correct_answer": "泳ぎ (Oyogi)",
+      "explanation": "Akar kata kerja dari 泳ぎます (Oyogimasu / Berenang) adalah \"Oyogi\". Jadi, *Oyogi ni ikimasu* (Pergi berenang).",
+      "type": "multiple-choice"
+    },
+    {
+      "id": "n5-bab13-q6",
+      "question": "Kanji \"買\" (Kaimasu) merujuk pada aktivitas...",
+      "options": [
+        "Berjalan",
+        "Membeli",
+        "Berenang"
+      ],
+      "correct_answer": "Membeli",
+      "explanation": "買 (Kai) adalah kanji dari kata kerja 買います (Kaimasu / Membeli).",
+      "type": "multiple-choice"
+    },
+    {
+      "id": "n5-bab13-q7",
+      "question": "Saat Anda merasa lapar (perut kosong), ekspresi natural yang Anda ucapkan adalah...",
+      "options": [
+        "お腹がいっぱいです。(Onaka ga ippai desu.)",
+        "喉がかわきました。(Nodo ga kawakimashita.)",
+        "お腹がすきました。(Onaka ga sukimashita.)"
+      ],
+      "correct_answer": "お腹がすきました。(Onaka ga sukimashita.)",
+      "explanation": "*Onaka ga sukimashita* berarti perut kosong / lapar. (*Ippai desu* = Kenyang. *Nodo ga kawakimashita* = Haus).",
+      "type": "multiple-choice"
+    },
+    {
+      "id": "n5-bab13-q8",
+      "question": "Saat membayar di kasir restoran dan Anda ingin membayar tagihan masing-masing (tidak ditraktir satu orang), kata yang diucapkan adalah...",
+      "options": [
+        "少々お待ちください (Shoushou omachi kudasai)",
+        "別々に (Betsubetsu ni)",
+        "全部で (Zenbu de)"
+      ],
+      "correct_answer": "別々に (Betsubetsu ni)",
+      "explanation": "*Betsubetsu ni* artinya \"Secara terpisah\" atau \"Pisah nota\" (Bill split), yang sangat umum dilakukan antarteman di Jepang.",
+      "type": "multiple-choice"
+    },
+    {
+      "id": "n5-bab13-q9",
+      "question": "Manakah dari kalimat di bawah ini yang melanggar etiket komunikasi budaya Jepang?",
+      "options": [
+        "私はパソコンが欲しいです。(Watashi wa pasokon ga hoshii desu.)",
+        "（先生に）先生、コーヒーを飲みたいですか。((Kepada Guru) Sensei, koohii wo nomitai desu ka.)",
+        "デパートへ靴を買いに行きます。(Depaato e kutsu wo kai ni ikimasu.)"
+      ],
+      "correct_answer": "（先生に）先生、コーヒーを飲みたいですか。((Kepada Guru) Sensei, koohii wo nomitai desu ka.)",
+      "explanation": "Menanyakan *Hoshii* atau *~tai* secara langsung kepada orang yang dihormati (seperti atasan atau guru) sangat kasar karena mencampuri ranah hasrat pribadi mereka secara terbuka.",
+      "type": "multiple-choice"
+    },
+    {
+      "id": "n5-bab13-q10",
+      "question": "Berdasarkan teks dialog, apa yang paling diinginkan oleh Budi saat ini?",
+      "options": [
+        "お金 (Okane / Uang)",
+        "飲み物 (Nomimono / Minuman)",
+        "時間 (Jikan / Waktu)"
+      ],
+      "correct_answer": "時間 (Jikan / Waktu)",
+      "explanation": "Di akhir dialog, Budi mengatakan \"Jikan ga hoshii desu\" (Saya ingin waktu), karena ia ingin cepat pulang dan tidur akibat terlalu lelah bekerja.",
+      "type": "multiple-choice"
+    }
+  ]
+}

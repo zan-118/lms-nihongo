@@ -1,0 +1,375 @@
+{
+  "_type": "lesson",
+  "_id": "lesson-bab-11",
+  "title": "Bab 11: りんごを３つ買いました (Berhitung, Satuan, & Durasi)",
+  "slug": {
+    "_type": "slug",
+    "current": "bab-11"
+  },
+  "order_number": 11,
+  "category_id": "N5-Course",
+  "summary": "Mengetahui nama benda saja tidak cukup jika Anda ingin berbelanja atau memesan sesuatu. Setelah menyelesaikan bab ini, Anda ditargetkan mampu:",
+  "estimated_minutes": 15,
+  "is_premium": false,
+  "is_published": true,
+  "vocab_list": [
+    "１つ",
+    "２つ",
+    "３つ",
+    "４つ",
+    "５つ",
+    "６つ",
+    "７つ",
+    "８つ",
+    "９つ",
+    "１０",
+    "いくつ",
+    "１人",
+    "２人",
+    "人",
+    "何人",
+    "台",
+    "枚",
+    "回",
+    "杯",
+    "時間",
+    "週間",
+    "か月",
+    "年",
+    "どのくらい",
+    "ぐらい",
+    "りんご",
+    "みかん",
+    "切手",
+    "葉書",
+    "封筒",
+    "航空便",
+    "船便",
+    "両親",
+    "兄弟",
+    "みんな",
+    "全部で",
+    "かかります",
+    "いらっしゃいませ",
+    "かしこまりました",
+    "行ってきます"
+  ],
+  "kanji_list": [
+    "百",
+    "千",
+    "万",
+    "半",
+    "間"
+  ],
+  "grammar_list": [
+    "A. Posisi Kata Bantu Bilangan (Counters)",
+    "B. Penggunaan Satuan yang Tepat",
+    "C. Durasi & Biaya (Kakarimasu)",
+    "[Periode] に [Berapa] 回 [Aksi]"
+  ],
+  "reading_list": [],
+  "listening_list": [],
+  "seo": {
+    "title": "Belajar Bab 11 Bahasa Jepang N5 - りんごを３つ買いました (Berhitung, Satuan, & Durasi) | NihongoRoute",
+    "description": "Kuasai materi pelajaran Bahasa Jepang N5 Bab 11: りんごを３つ買いました (Berhitung, Satuan, & Durasi). Kosakata, Kanji, Tata Bahasa, Percakapan, dan Kuis interaktif.",
+    "keywords": "NihongoRoute, N5, Bab 11, りんごを３つ買いました (Berhitung, Satuan, & Durasi), Bahasa Jepang"
+  },
+  "content_blocks": [
+    {
+      "_type": "block",
+      "style": "h2",
+      "children": [
+        {
+          "_type": "span",
+          "text": "🎯 1. Tujuan Belajar (Can-Do Objectives)"
+        }
+      ]
+    },
+    {
+      "_type": "block",
+      "style": "normal",
+      "children": [
+        {
+          "_type": "span",
+          "text": "Mengetahui nama benda saja tidak cukup jika Anda ingin berbelanja atau memesan sesuatu. Setelah menyelesaikan bab ini, Anda ditargetkan mampu:"
+        }
+      ]
+    },
+    {
+      "_type": "block",
+      "style": "normal",
+      "children": [
+        {
+          "_type": "span",
+          "text": "• Menghitung jumlah barang umum (1 sampai 10 buah).\n• Menggunakan satuan khusus untuk benda tipis (kertas), mesin (mobil), dan manusia.\n• Memesan jumlah porsi atau jumlah barang saat berbelanja.\n• Menyatakan durasi waktu (berapa jam, berapa bulan, berapa tahun) dan biaya perjalanan.\n• Menyatakan frekuensi aktivitas (berapa kali dalam seminggu/sebulan)."
+        }
+      ]
+    },
+    {
+      "_type": "block",
+      "style": "h2",
+      "children": [
+        {
+          "_type": "span",
+          "text": "📖 2. Bedah Kosakata (40 Kata)"
+        }
+      ]
+    },
+    {
+      "_type": "block",
+      "style": "normal",
+      "children": [
+        {
+          "_type": "span",
+          "text": "Format: Kanji (Hiragana - Romaji) : Arti"
+        }
+      ]
+    },
+    {
+      "_type": "vocabBlock",
+      "title": "Daftar Kosakata"
+    },
+    {
+      "_type": "block",
+      "style": "h2",
+      "children": [
+        {
+          "_type": "span",
+          "text": "🛠️ 3. Tata Bahasa Ekstensif"
+        }
+      ]
+    },
+    {
+      "_type": "grammarBlock",
+      "title": "A. Posisi Kata Bantu Bilangan (Counters)",
+      "content": "A. Posisi Kata Bantu Bilangan (Counters)",
+      "furigana": "",
+      "translation": "",
+      "examples": []
+    },
+    {
+      "_type": "grammarBlock",
+      "title": "B. Penggunaan Satuan yang Tepat",
+      "content": "B. Penggunaan Satuan yang Tepat",
+      "furigana": "",
+      "translation": "",
+      "examples": []
+    },
+    {
+      "_type": "grammarBlock",
+      "title": "C. Durasi & Biaya (Kakarimasu)",
+      "content": "C. Durasi & Biaya (Kakarimasu)",
+      "furigana": "",
+      "translation": "",
+      "examples": []
+    },
+    {
+      "_type": "grammarBlock",
+      "title": "D. Frekuensi Aktivitas: [Periode] に [Berapa] 回 [Aksi]",
+      "content": "[Periode] に [Berapa] 回 [Aksi]",
+      "furigana": "",
+      "translation": "Menyatakan seberapa sering Anda melakukan sesuatu. Partikel に (ni) di sini bermakna \"dalam/per\".",
+      "examples": [
+        {
+          "jp": "* １週間に３回スポーツをします。",
+          "romaji": "Isshuukan ni san",
+          "id": "kai supootsu wo shimasu. - Saya berolahraga 3 kali dalam seminggu.",
+          "furigana": ""
+        }
+      ]
+    },
+    {
+      "_type": "block",
+      "style": "h2",
+      "children": [
+        {
+          "_type": "span",
+          "text": "🖌️ 4. Daftar Kanji Dasar (Bab 11)"
+        }
+      ]
+    },
+    {
+      "_type": "block",
+      "style": "normal",
+      "children": [
+        {
+          "_type": "span",
+          "text": "Detail urutan coretan (stroke order) dan gabungan kata dapat dilihat di rute halaman eksplorasi Kanji."
+        }
+      ]
+    },
+    {
+      "_type": "kanjiBlock",
+      "title": "Daftar Kanji"
+    },
+    {
+      "_type": "block",
+      "style": "h2",
+      "children": [
+        {
+          "_type": "span",
+          "text": "⛩️ 5. Catatan Budaya (Etiket & Komunikasi)"
+        }
+      ]
+    },
+    {
+      "_type": "calloutBlock",
+      "title": "Irasshaimase (いらっしゃいませ)",
+      "content": "Ini adalah ucapan sakral di dunia ritel dan kuliner Jepang. Saat Anda masuk ke minimarket atau restoran, staf akan meneriakkan ini. Sebagai pelanggan, Anda **TIDAK PERLU** menjawabnya (tidak perlu bilang \"Terima kasih\" atau \"Irasshaimase\" balik). Cukup masuk dan berbelanja dengan normal."
+    },
+    {
+      "_type": "calloutBlock",
+      "title": "Kantor Pos (郵便局 - Yuubinkyoku)",
+      "content": "Kantor pos di Jepang tidak hanya melayani surat. Mereka adalah salah satu institusi perbankan terbesar di Jepang (Japan Post Bank), melayani asuransi jiwa, hingga pengiriman barang domestik (*Kuroneko Yamato / Yu-pack*) yang terkenal dengan ketepatan waktunya hingga ke hitungan menit."
+    },
+    {
+      "_type": "block",
+      "style": "h2",
+      "children": [
+        {
+          "_type": "span",
+          "text": "💬 6. Praktik Membaca Nyata (Dialog)"
+        }
+      ]
+    },
+    {
+      "_type": "dialogueBlock",
+      "title": "Praktik Membaca Nyata (Dialog)",
+      "content": "局員：いらっしゃいませ。\nブディ：すみません、この荷物をインドネシアへ送りたいです。\n局員：船便ですか、航空便ですか。\nブディ：航空便でいくらですか。\n局員：航空便で４,５００円です。\nブディ：どのくらいかかりますか。\n局員：だいたい１週間ぐらいかかります。船便は１か月ぐらいです。\nブディ：じゃ、航空便でお願いします。あと、８０円の切手を５枚ください。\n局員：かしこまりました。",
+      "translation": "Kyokuin/Petugas: Selamat datang.\nBudi: Permisi, saya ingin mengirim paket ini ke Indonesia.\nKyokuin: Apakah pos laut, atau pos udara?\nBudi: Kalau dengan pos udara harganya berapa?\nKyokuin: sen go-hyaku en desu. - Dengan pos udara harganya 4.500 Yen.\nBudi: Membutuhkan waktu berapa lama?\nKyokuin: Kira-kira memakan waktu 1 minggu. Kalau pos laut kira-kira 1 bulan.\nBudi: juu en no kitte wo go-mai kudasai. - Kalau begitu, tolong pakai pos udara. Oh ya tambahan, tolong beri saya prangko 80 Yen sebanyak 5 lembar.\nKyokuin: Baik, saya mengerti.",
+      "furigana": ""
+    },
+    {
+      "_type": "block",
+      "style": "h2",
+      "children": [
+        {
+          "_type": "span",
+          "text": "✏️ 7. Kuis Evaluasi Bab 11"
+        }
+      ]
+    }
+  ],
+  "quizzes": [
+    {
+      "id": "n5-bab11-q1",
+      "question": "Jika Anda ingin memesan 4 buah apel, kalimat bahasa Jepang yang paling alami dan gramatikal adalah...",
+      "options": [
+        "りんごをよっつ買います。(Ringo wo yottsu kaimasu.)",
+        "４つりんごを買います。(Yottsu ringo wo kaimasu.)",
+        "りんごを４つを買います。(Ringo wo yottsu wo kaimasu.)"
+      ],
+      "correct_answer": "りんごをよっつ買います。(Ringo wo yottsu kaimasu.)",
+      "explanation": "Format penempatan jumlah (angka) dalam bahasa Jepang yang paling alami adalah diletakkan persis setelah partikel (sebelum kata kerja). Tidak perlu menambahkan partikel 'wo' lagi di belakang angka.",
+      "type": "multiple-choice"
+    },
+    {
+      "id": "n5-bab11-q2",
+      "question": "Satuan penghitung yang tepat untuk benda tipis seperti kemeja, perangko, atau kertas adalah...",
+      "options": [
+        "～台 (~dai)",
+        "～枚 (~mai)",
+        "～杯 (~hai)"
+      ],
+      "correct_answer": "～枚 (~mai)",
+      "explanation": "*Mai* digunakan untuk lembaran atau benda tipis. (*Dai* untuk mesin, *Hai* untuk cangkir/gelas).",
+      "type": "multiple-choice"
+    },
+    {
+      "id": "n5-bab11-q3",
+      "question": "Untuk menyebutkan \"Dua orang\", bahasa Jepangnya adalah...",
+      "options": [
+        "ふたり (Futari)",
+        "ににん (Ni-nin)",
+        "ふたつ (Futatsu)"
+      ],
+      "correct_answer": "ふたり (Futari)",
+      "explanation": "Satu orang adalah *Hitori*, dan dua orang adalah *Futari*. (Untuk 3 orang ke atas, polanya menjadi normal: *San-nin, Yo-nin, Go-nin*).",
+      "type": "multiple-choice"
+    },
+    {
+      "id": "n5-bab11-q4",
+      "question": "Di kamar saya ada dua unit komputer. Kosakata bantu bilangan yang tepat untuk kalimat ini adalah...",
+      "options": [
+        "２つ (Futatsu)",
+        "２人 (Futari)",
+        "２台 (Ni-dai)"
+      ],
+      "correct_answer": "２台 (Ni-dai)",
+      "explanation": "Komputer adalah barang elektronik / mesin (Machine), sehingga satuannya menggunakan *Dai* (Ni-dai = 2 unit).",
+      "type": "multiple-choice"
+    },
+    {
+      "id": "n5-bab11-q5",
+      "question": "*Lengkapi kalimat berikut:*\n１か月に２（ ____ ）映画を見ます。(Ikkagetsu ni ni-____ eiga wo mimasu.)\n*Petunjuk: Menonton film 2 KALI dalam sebulan.*",
+      "options": [
+        "回 (kai)",
+        "時間 (jikan)",
+        "枚 (mai)"
+      ],
+      "correct_answer": "回 (kai)",
+      "explanation": "Untuk menyatakan frekuensi (kali), satuan yang digunakan adalah 回 (*Kai*).",
+      "type": "multiple-choice"
+    },
+    {
+      "id": "n5-bab11-q6",
+      "question": "Kanji \"万\" (Man) memiliki nominal angka berapa?",
+      "options": [
+        "1.000",
+        "10.000",
+        "1.000.000 (Satu Juta)"
+      ],
+      "correct_answer": "10.000",
+      "explanation": "10.000. Ingat bahwa orang Jepang menghitung angka nol dalam blok empat. Jadi 10.000 bukanlah \"10 ribu\" di Jepang, melainkan unit mandiri \"Satu-Man\" (Ichi-man).",
+      "type": "multiple-choice"
+    },
+    {
+      "id": "n5-bab11-q7",
+      "question": "Arti dari kata \"かかります\" (Kakarimasu) dalam konteks pengiriman atau perjalanan adalah...",
+      "options": [
+        "Membutuhkan (Waktu / Uang)",
+        "Mengirim",
+        "Datang"
+      ],
+      "correct_answer": "Membutuhkan (Waktu / Uang)",
+      "explanation": "Kakarimasu digunakan untuk menyatakan jumlah \"konsumsi\" waktu tempuh atau biaya dari sebuah proses.",
+      "type": "multiple-choice"
+    },
+    {
+      "id": "n5-bab11-q8",
+      "question": "Saat Anda memasuki restoran di Jepang dan pelayan berseru \"Irasshaimase!\", apa yang seharusnya Anda lakukan?",
+      "options": [
+        "Menjawab dengan \"Irasshaimase\"",
+        "Menjawab dengan \"Arigatou gozaimasu\"",
+        "Tidak perlu menjawab apa-apa, cukup masuk."
+      ],
+      "correct_answer": "Tidak perlu menjawab apa-apa, cukup masuk.",
+      "explanation": "*Irasshaimase* adalah bentuk sapaan selamat datang satu arah dari pihak penyedia jasa kepada konsumen. Adalah hal yang lumrah dan wajar bagi tamu untuk mengabaikannya secara sopan.",
+      "type": "multiple-choice"
+    },
+    {
+      "id": "n5-bab11-q9",
+      "question": "\"Dari rumah ke kantor memakan waktu 1 jam.\" Kalimat bahasa Jepangnya adalah...",
+      "options": [
+        "うちから会社まで１時間かかります。(Uchi kara kaisha made ichi-jikan kakarimasu.)",
+        "うちから会社まで１時かかります。(Uchi kara kaisha made ichi-ji kakarimasu.)",
+        "うちから会社まで１時間があります。(Uchi kara kaisha made ichi-jikan ga arimasu.)"
+      ],
+      "correct_answer": "うちから会社まで１時間かかります。(Uchi kara kaisha made ichi-jikan kakarimasu.)",
+      "explanation": "Durasi 1 jam adalah *Ichi-jikan*, bukan *Ichi-ji* (yang berarti Pukul 1). Menggunakan kata kerja *Kakarimasu* untuk memakan waktu.",
+      "type": "multiple-choice"
+    },
+    {
+      "id": "n5-bab11-q10",
+      "question": "Berdasarkan teks dialog, mengapa Budi tidak memilih pengiriman via pos laut (Funabin)?",
+      "options": [
+        "Karena biayanya sangat mahal (4.500 Yen).",
+        "Karena memakan waktu terlalu lama (kira-kira 1 bulan).",
+        "Karena pos laut tidak bisa mengirim ke Indonesia."
+      ],
+      "correct_answer": "Karena memakan waktu terlalu lama (kira-kira 1 bulan).",
+      "explanation": "Dalam dialog, Budi bertanya durasinya. Petugas menjawab pos laut (Funabin) memakan waktu 1 bulan. Budi langsung memutuskan untuk menggunakan pos udara (Koukuubin) yang hanya memakan waktu 1 minggu.",
+      "type": "multiple-choice"
+    }
+  ]
+}

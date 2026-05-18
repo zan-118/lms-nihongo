@@ -1,0 +1,412 @@
+{
+  "_type": "lesson",
+  "_id": "lesson-bab-6",
+  "title": "Bab 6: 何を食べますか (Objek, Aktivitas, & Ajakan)",
+  "slug": {
+    "_type": "slug",
+    "current": "bab-6"
+  },
+  "order_number": 6,
+  "category_id": "N5-Course",
+  "summary": "Setelah bisa berpindah tempat di Bab 5, kini Anda akan belajar beraktivitas di tempat tersebut. Setelah menyelesaikan bab ini, Anda ditargetkan mampu:",
+  "estimated_minutes": 15,
+  "is_premium": false,
+  "is_published": true,
+  "vocab_list": [
+    "食べます",
+    "飲みます",
+    "吸います",
+    "見ます",
+    "聞きます",
+    "読みます",
+    "書きます",
+    "買います",
+    "撮ります",
+    "します",
+    "会います",
+    "朝ごはん",
+    "昼ごはん",
+    "晩ごはん",
+    "パン",
+    "肉",
+    "魚",
+    "卵",
+    "野菜",
+    "水",
+    "お茶",
+    "牛乳",
+    "お酒",
+    "タバコ",
+    "手紙",
+    "写真",
+    "宿題",
+    "レポート",
+    "テニス",
+    "サッカー",
+    "お花見",
+    "店",
+    "庭",
+    "喫茶店",
+    "いつも",
+    "時々",
+    "一緒に",
+    "ちょっと",
+    "分かりました",
+    "じゃ、また"
+  ],
+  "kanji_list": [
+    "食",
+    "飲",
+    "見",
+    "聞",
+    "読"
+  ],
+  "grammar_list": [
+    "[Kata Benda] を [Kata Kerja]",
+    "[Tempat] で [Kata Kerja]",
+    "します (Shimasu)",
+    "～ませんか (~masen ka)",
+    "～ましょう (~mashou)"
+  ],
+  "reading_list": [],
+  "listening_list": [],
+  "seo": {
+    "title": "Belajar Bab 6 Bahasa Jepang N5 - 何を食べますか (Objek, Aktivitas, & Ajakan) | NihongoRoute",
+    "description": "Kuasai materi pelajaran Bahasa Jepang N5 Bab 6: 何を食べますか (Objek, Aktivitas, & Ajakan). Kosakata, Kanji, Tata Bahasa, Percakapan, dan Kuis interaktif.",
+    "keywords": "NihongoRoute, N5, Bab 6, 何を食べますか (Objek, Aktivitas, & Ajakan), Bahasa Jepang"
+  },
+  "content_blocks": [
+    {
+      "_type": "block",
+      "style": "h2",
+      "children": [
+        {
+          "_type": "span",
+          "text": "🎯 1. Tujuan Belajar (Can-Do Objectives)"
+        }
+      ]
+    },
+    {
+      "_type": "block",
+      "style": "normal",
+      "children": [
+        {
+          "_type": "span",
+          "text": "Setelah bisa berpindah tempat di Bab 5, kini Anda akan belajar beraktivitas di tempat tersebut. Setelah menyelesaikan bab ini, Anda ditargetkan mampu:"
+        }
+      ]
+    },
+    {
+      "_type": "block",
+      "style": "normal",
+      "children": [
+        {
+          "_type": "span",
+          "text": "• Menyatakan aktivitas yang melibatkan objek (Makan nasi, minum teh, membeli sepatu).\n• Menyatakan di tempat mana Anda melakukan aktivitas tersebut.\n• Mengajak teman untuk melakukan sesuatu bersama-sama.\n• Menerima atau menolak tawaran ajakan dengan sopan."
+        }
+      ]
+    },
+    {
+      "_type": "block",
+      "style": "h2",
+      "children": [
+        {
+          "_type": "span",
+          "text": "📖 2. Bedah Kosakata (40 Kata)"
+        }
+      ]
+    },
+    {
+      "_type": "block",
+      "style": "normal",
+      "children": [
+        {
+          "_type": "span",
+          "text": "Format: Kanji (Hiragana - Romaji) : Arti"
+        }
+      ]
+    },
+    {
+      "_type": "vocabBlock",
+      "title": "Daftar Kosakata"
+    },
+    {
+      "_type": "block",
+      "style": "h2",
+      "children": [
+        {
+          "_type": "span",
+          "text": "🛠️ 3. Tata Bahasa Ekstensif"
+        }
+      ]
+    },
+    {
+      "_type": "grammarBlock",
+      "title": "A. Partikel Penanda Objek Langsung: [Kata Benda] を [Kata Kerja]",
+      "content": "[Kata Benda] を [Kata Kerja]",
+      "furigana": "",
+      "translation": "Partikel を (ditulis 'wo', dibaca 'o') diletakkan tepat di belakang benda yang menjadi target (objek) dari sebuah tindakan/kata kerja.",
+      "examples": [
+        {
+          "jp": "* 水を飲みます。",
+          "romaji": "Mizu wo nomimasu.",
+          "id": "Saya minum air.",
+          "furigana": ""
+        }
+      ]
+    },
+    {
+      "_type": "grammarBlock",
+      "title": "B. Partikel Tempat Aktivitas: [Tempat] で [Kata Kerja]",
+      "content": "[Tempat] で [Kata Kerja]",
+      "furigana": "",
+      "translation": "Ingat, di Bab 5 kita menggunakan partikel へ (e) untuk menunjuk arah (Pergi/Datang/Pulang). Namun, jika Anda melakukan **kegiatan di suatu tempat** (seperti makan di restoran, membeli tas di toko), Anda **WAJIB** menggunakan partikel で (de).",
+      "examples": [
+        {
+          "jp": "* 喫茶店でコーヒーを飲みます。",
+          "romaji": "Kissaten de koohii wo nomimasu.",
+          "id": "Saya minum kopi di kafe.",
+          "furigana": ""
+        }
+      ]
+    },
+    {
+      "_type": "grammarBlock",
+      "title": "C. Kata Kerja Universal: します (Shimasu)",
+      "content": "します (Shimasu)",
+      "furigana": "",
+      "translation": "\"Shimasu\" (Melakukan/Mengerjakan) memiliki jangkauan yang sangat luas. Ia digunakan untuk olahraga, permainan, hingga acara/pekerjaan.",
+      "examples": [
+        {
+          "jp": "* サッカーをします。",
+          "romaji": "Sakkaa wo shimasu.",
+          "id": "Bermain sepak bola.",
+          "furigana": ""
+        }
+      ]
+    },
+    {
+      "_type": "grammarBlock",
+      "title": "D. Mengajak Seseorang: ～ませんか (~masen ka)",
+      "content": "～ませんか (~masen ka)",
+      "furigana": "",
+      "translation": "Bentuk negatif dari kata kerja ditambah 'ka'. Secara harfiah berarti \"Tidakkah Anda ingin...?\", namun digunakan sebagai bentuk ajakan yang sangat sopan karena memberikan pilihan kepada lawan bicara untuk menolak.",
+      "examples": [
+        {
+          "jp": "* 一緒に京都へ行きませんか。",
+          "romaji": "Issho ni Kyouto e ikimasen ka.",
+          "id": "Maukah/Tidakkah Anda ingin pergi ke Kyoto bersama-sama?",
+          "furigana": ""
+        }
+      ]
+    },
+    {
+      "_type": "grammarBlock",
+      "title": "E. Menyetujui / Ayo Lakukan: ～ましょう (~mashou)",
+      "content": "～ましょう (~mashou)",
+      "furigana": "",
+      "translation": "Bentuk ini berarti \"Ayo...\" atau \"Mari...\". Sangat sering digunakan untuk merespons (menyetujui) ajakan dari *~masen ka*.",
+      "examples": [
+        {
+          "jp": "* いいですね。行きましょう。",
+          "romaji": "Ii desu ne. Ikimashou.",
+          "id": "Bagus ya. Ayo pergi!",
+          "furigana": ""
+        }
+      ]
+    },
+    {
+      "_type": "block",
+      "style": "h2",
+      "children": [
+        {
+          "_type": "span",
+          "text": "🖌️ 4. Daftar Kanji Dasar (Bab 6)"
+        }
+      ]
+    },
+    {
+      "_type": "block",
+      "style": "normal",
+      "children": [
+        {
+          "_type": "span",
+          "text": "Detail urutan coretan (stroke order) dan gabungan kata dapat dilihat di rute halaman eksplorasi Kanji."
+        }
+      ]
+    },
+    {
+      "_type": "kanjiBlock",
+      "title": "Daftar Kanji"
+    },
+    {
+      "_type": "block",
+      "style": "h2",
+      "children": [
+        {
+          "_type": "span",
+          "text": "⛩️ 5. Catatan Budaya (Etiket & Komunikasi)"
+        }
+      ]
+    },
+    {
+      "_type": "calloutBlock",
+      "title": "Itadakimasu & Gochisousama",
+      "content": "Di Jepang, sebelum makan Anda diwajibkan menyatukan kedua tangan di depan dada sambil menunduk sedikit dan berkata *Itadakimasu* (Secara harfiah: \"Saya menerima makanan ini dengan rasa syukur\"). Setelah selesai makan, ucapkan *Gochisousama deshita* (\"Terima kasih atas hidangannya\")."
+    },
+    {
+      "_type": "calloutBlock",
+      "title": "Seni Menolak (Chotto)",
+      "content": "Menolak ajakan secara langsung (\"Iie, ikimasen\") terdengar sangat kasar di Jepang. Cara menolak yang sopan adalah dengan berkata \"Sumimasen, [Hari/Kegiatan] wa chotto...\" (Maaf, kalau hari/kegiatan itu agak...). Lawan bicara akan langsung mengerti bahwa Anda menolak tanpa kehilangan muka."
+    },
+    {
+      "_type": "block",
+      "style": "h2",
+      "children": [
+        {
+          "_type": "span",
+          "text": "💬 6. Praktik Membaca Nyata (Dialog)"
+        }
+      ]
+    },
+    {
+      "_type": "dialogueBlock",
+      "title": "Praktik Membaca Nyata (Dialog)",
+      "content": "佐藤：ミラーさん、一緒に昼ごはんを食べませんか。\nミラー：ええ、いいですね。何を食べますか。\n佐藤：肉を食べましょう。\nミラー：すみません、肉はちょっと・・・。\n佐藤：そうですか。じゃ、魚はどうですか。\nミラー：いいですね。どこで食べますか。\n佐藤：あそこのレストランで食べましょう。\nミラー：分かりました。行きましょう。",
+      "translation": "Satou: san, issho ni hirugohan wo tabemasen ka. - Tuan Miller, maukah makan siang bersama-sama?\nMiraa: Ya, boleh juga. Kita makan apa?\nSatou: Ayo makan daging.\nMiraa: Maaf, kalau daging agak...\nSatou: Begitu ya. Kalau begitu, bagaimana kalau ikan?\nMiraa: Boleh juga. Kita makan di mana?\nSatou: Ayo makan di restoran sebelah sana.\nMiraa: Saya mengerti. Ayo pergi.",
+      "furigana": ""
+    },
+    {
+      "_type": "block",
+      "style": "h2",
+      "children": [
+        {
+          "_type": "span",
+          "text": "✏️ 7. Kuis Evaluasi Bab 6"
+        }
+      ]
+    }
+  ],
+  "quizzes": [
+    {
+      "id": "n5-bab6-q1",
+      "question": "Partikel apa yang digunakan untuk menghubungkan objek dengan kata kerja seperti makan, minum, dan membaca?",
+      "options": [
+        "に (ni)",
+        "で (de)",
+        "を (wo)"
+      ],
+      "correct_answer": "を (wo)",
+      "explanation": "Partikel を (wo) mutlak digunakan untuk menandakan objek langsung dari sebuah kata kerja.",
+      "type": "multiple-choice"
+    },
+    {
+      "id": "n5-bab6-q2",
+      "question": "\"Saya membaca buku di perpustakaan.\" Terjemahan yang tepat adalah...",
+      "options": [
+        "図書館に本を読みます。(Toshokan ni hon wo yomimasu.)",
+        "図書館で本を読みます。(Toshokan de hon wo yomimasu.)",
+        "図書館へ本を読みます。(Toshokan e hon wo yomimasu.)"
+      ],
+      "correct_answer": "図書館で本を読みます。(Toshokan de hon wo yomimasu.)",
+      "explanation": "Untuk menyatakan tempat terjadinya sebuah aksi (membaca/makan/membeli), partikel yang digunakan adalah で (de). Partikel に (ni) untuk waktu/eksistensi, dan へ (e) untuk arah pergi.",
+      "type": "multiple-choice"
+    },
+    {
+      "id": "n5-bab6-q3",
+      "question": "Apa arti dari kata \"時々\" (Tokidoki)?",
+      "options": [
+        "Selalu",
+        "Bersama-sama",
+        "Kadang-kadang"
+      ],
+      "correct_answer": "Kadang-kadang",
+      "explanation": "Tokidoki berarti kadang-kadang. (Itsumo = Selalu, Issho ni = Bersama-sama).",
+      "type": "multiple-choice"
+    },
+    {
+      "id": "n5-bab6-q4",
+      "question": "Anda ingin mengajak teman Anda bermain tenis. Kalimat ajakan yang paling sopan adalah...",
+      "options": [
+        "テニスをしませんか。(Tenisu wo shimasen ka.)",
+        "テニスをしますか。(Tenisu wo shimasu ka.)",
+        "テニスをしましょう。(Tenisu wo shimashou.)"
+      ],
+      "correct_answer": "テニスをしませんか。(Tenisu wo shimasen ka.)",
+      "explanation": "Menggunakan bentuk \"Masen ka\" adalah cara paling sopan untuk mengajak karena bermakna \"Maukah / Tidakkah Anda ingin...\". \"Shimashou\" lebih bersifat proaktif \"Ayo lakukan\".",
+      "type": "multiple-choice"
+    },
+    {
+      "id": "n5-bab6-q5",
+      "question": "*Lengkapi kalimat berikut:*\n昨日、喫茶店でコーヒーを（ ____ ）。 (Kinou, kissaten de koohii wo ____. )",
+      "options": [
+        "飲みます (Nomimasu)",
+        "飲みません (Nomimasen)",
+        "飲みました (Nomimashita)"
+      ],
+      "correct_answer": "飲みました (Nomimashita)",
+      "explanation": "Karena ada kata waktu \"Kinou\" (Kemarin) di awal kalimat, maka kata kerjanya wajib diubah ke bentuk lampau positif (Nomimashita).",
+      "type": "multiple-choice"
+    },
+    {
+      "id": "n5-bab6-q6",
+      "question": "Kanji \"食\" dibaca \"Shoku\" atau \"Ta\". Apa makna dari karakter ini?",
+      "options": [
+        "Membaca",
+        "Makan / Makanan",
+        "Minum"
+      ],
+      "correct_answer": "Makan / Makanan",
+      "explanation": "食 berarti Makan. Muncul dalam kata 食べます (Tabemasu) atau 食堂 (Shokudou - Ruang makan).",
+      "type": "multiple-choice"
+    },
+    {
+      "id": "n5-bab6-q7",
+      "question": "Saat diajak pergi dan Anda ingin menolak dengan cara yang paling sopan agar lawan bicara tidak tersinggung, Anda sebaiknya menggunakan kata...",
+      "options": [
+        "いいえ、行きません。(Iie, ikimasen.)",
+        "違います。(Chigaimasu.)",
+        "すみません、ちょっと・・・。(Sumimasen, chotto...)"
+      ],
+      "correct_answer": "すみません、ちょっと・・・。(Sumimasen, chotto...)",
+      "explanation": "Menggantung kalimat penolakan dengan kata \"Chotto...\" (Agak/Sebentar) adalah budaya standar di Jepang untuk menolak secara halus tanpa berkata \"Tidak\".",
+      "type": "multiple-choice"
+    },
+    {
+      "id": "n5-bab6-q8",
+      "question": "\"Menulis surat\". Kosakata bahasa Jepangnya adalah...",
+      "options": [
+        "手紙を読みます (Tegami wo yomimasu)",
+        "写真を書きます (Shashin wo kakimasu)",
+        "手紙を書きます (Tegami wo kakimasu)"
+      ],
+      "correct_answer": "手紙を書きます (Tegami wo kakimasu)",
+      "explanation": "Tegami = Surat, Kakimasu = Menulis. (Yomimasu artinya membaca, Shashin artinya foto).",
+      "type": "multiple-choice"
+    },
+    {
+      "id": "n5-bab6-q9",
+      "question": "Manakah dari aktivitas berikut yang HARUS menggunakan kata kerja \"します\" (Shimasu)?",
+      "options": [
+        "Nasi (Gohan)",
+        "Pekerjaan Rumah / PR (Shukudai)",
+        "Air putih (Mizu)"
+      ],
+      "correct_answer": "Pekerjaan Rumah / PR (Shukudai)",
+      "explanation": "Benda seperti makanan/minuman tidak bisa dikerjakan. \"PR / Shukudai\" adalah aktivitas yang dipasangkan dengan kata kerja \"Shimasu\" (Mengerjakan PR).",
+      "type": "multiple-choice"
+    },
+    {
+      "id": "n5-bab6-q10",
+      "question": "Berdasarkan teks dialog, Miller menolak diajak makan apa?",
+      "options": [
+        "魚 (Sakana / Ikan)",
+        "肉 (Niku / Daging)",
+        "パン (Pan / Roti)"
+      ],
+      "correct_answer": "肉 (Niku / Daging)",
+      "explanation": "Dalam dialog, Sato berkata \"Niku wo tabemashou\" (Ayo makan daging). Miller menolak dengan berkata \"Niku wa chotto...\" (Kalau daging agak...). Keduanya lalu sepakat makan ikan (Sakana).",
+      "type": "multiple-choice"
+    }
+  ]
+}
