@@ -21,11 +21,10 @@ export function useKanjiSvg(character: string, strokeOrderSvg?: string) {
       try {
         let svgText = "";
 
-        // 1. Cek Database/Fallback
+        // 1. Ambil data SVG (dari DB atau GitHub)
         if (strokeOrderSvg) {
           svgText = strokeOrderSvg;
         } else {
-          // 2. Fetch dari GitHub KanjiVG
           const KANJIVG_URL = "https://raw.githubusercontent.com/KanjiVG/kanjivg/master/kanji";
           const code = character.charCodeAt(0).toString(16).padStart(5, "0");
           const url = `${KANJIVG_URL}/${code}.svg`;
@@ -35,10 +34,26 @@ export function useKanjiSvg(character: string, strokeOrderSvg?: string) {
           svgText = await res.text();
         }
 
-        // 3. Parsing SVG
+        // 2. Parsing SVG
         const parser = new DOMParser();
-        const doc = parser.parseFromString(svgText, "image/svg+xml");
-        const svg = doc.querySelector("svg");
+        let doc = parser.parseFromString(svgText, "image/svg+xml");
+        let svg = doc.querySelector("svg");
+        const parserError = doc.querySelector("parsererror");
+
+        // 3. Fallback ke GitHub jika SVG dari database tidak valid
+        if ((!svg || parserError) && strokeOrderSvg) {
+          console.warn("SVG dari database tidak valid, mencoba fetch dari KanjiVG...");
+          const KANJIVG_URL = "https://raw.githubusercontent.com/KanjiVG/kanjivg/master/kanji";
+          const code = character.charCodeAt(0).toString(16).padStart(5, "0");
+          const url = `${KANJIVG_URL}/${code}.svg`;
+          
+          const res = await fetch(url);
+          if (res.ok) {
+            svgText = await res.text();
+            doc = parser.parseFromString(svgText, "image/svg+xml");
+            svg = doc.querySelector("svg");
+          }
+        }
 
         if (!svg) throw new Error("Format SVG tidak valid");
 

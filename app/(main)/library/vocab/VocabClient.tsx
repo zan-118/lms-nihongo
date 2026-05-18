@@ -7,7 +7,6 @@
 "use client";
 
 import { useState, useEffect } from "react";
-import { motion, AnimatePresence } from "framer-motion";
 import Link from "next/link";
 import {
   Search,
@@ -119,31 +118,23 @@ export default function VocabClient({
       />
 
       {/* Content Grid */}
-      <div className="relative">
-        {loading && (
-          <div className="absolute inset-0 z-50 flex items-center justify-center bg-background/50 backdrop-blur-sm rounded-[2rem]">
-            <Loader2 className="w-10 h-10 animate-spin text-primary" />
-          </div>
-        )}
-        <AnimatePresence mode="popLayout">
+        <div className="relative">
+          {loading && (
+            <div className="absolute inset-0 z-50 flex items-center justify-center bg-background/50 backdrop-blur-sm rounded-[2rem]">
+              <Loader2 className="w-10 h-10 animate-spin text-primary" />
+            </div>
+          )}
           {vocabList.length === 0 && !loading ? (
-            <motion.div
-              key="empty"
-              initial={{ opacity: 0, scale: 0.95 }}
-              animate={{ opacity: 1, scale: 1 }}
-              exit={{ opacity: 0, scale: 0.95 }}
+            <div
               className="py-24 text-center border border-dashed border-border rounded-3xl bg-muted/20 neo-inset px-6"
             >
               <Search className="mx-auto mb-6 text-muted-foreground/30" size={48} aria-hidden="true" />
               <p className="text-muted-foreground font-bold text-xs md:text-sm uppercase tracking-widest">
                 Kosakata tidak ditemukan. Coba gunakan kriteria pencarian lain.
               </p>
-            </motion.div>
+            </div>
           ) : (
-            <motion.div
-              key="grid"
-              initial={{ opacity: 0 }}
-              animate={{ opacity: 1 }}
+            <div
               className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-4 md:gap-5 min-h-[400px]"
             >
               {vocabList.map((item, idx) => (
@@ -154,10 +145,9 @@ export default function VocabClient({
                   showRomaji={showRomaji}
                 />
               ))}
-            </motion.div>
+            </div>
           )}
-        </AnimatePresence>
-      </div>
+        </div>
 
       <VocabPagination 
         currentPage={currentPage}

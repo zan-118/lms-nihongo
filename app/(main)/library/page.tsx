@@ -1,7 +1,4 @@
-"use client";
-
-import { motion } from "framer-motion";
-import { RefreshCw, BookOpen, BarChart2, Library, Database, Activity, Award, Headphones, Type } from "lucide-react";
+import { BookOpen, BarChart2, Library, Database, Activity, Award, Headphones, Type } from "lucide-react";
 import { Card } from "@/components/ui/card";
 
 // Domain Components
@@ -15,59 +12,50 @@ export default function LibraryPage() {
       title: "Panduan Tata Bahasa",
       desc: "Bahas pola kalimat jadi lebih mudah dengan contoh audio dan penjelasan yang simpel.",
       icon: <BookOpen size={28} />,
-      label: "Pola Kalimat",
-      delay: 0.2
+      label: "Pola Kalimat"
     },
     {
       href: "/library/vocab",
       title: "Daftar Kosakata",
       desc: "Ribuan kosakata, kata kerja, dan kata sifat N5-N2 lengkap dengan audio dan fitur SRS.",
       icon: <Database size={28} />,
-      label: "Perbendaharaan Kata",
-      delay: 0.3
+      label: "Perbendaharaan Kata"
     },
-
     {
       href: "/library/cheatsheet",
       title: "Catatan Cepat",
       desc: "Referensi cepat untuk angka, partikel, dan materi dasar lainnya sebagai penunjang belajar harian.",
       icon: <BarChart2 size={28} />,
-      label: "Panduan Cepat",
-      delay: 0.4
+      label: "Panduan Cepat"
     },
     {
       href: "/library/reading",
       title: "Graded Reading",
       desc: "Asah kemahiran membaca melalui teks interaktif yang dikategorikan sesuai standar level JLPT.",
       icon: <BookOpen size={28} />,
-      label: "Bacaan Berjenjang",
-      delay: 0.5
+      label: "Bacaan Berjenjang"
     },
     {
       href: "/exams",
       title: "Ujian & Sertifikasi",
       desc: "Uji kesiapan Anda menghadapi ujian JLPT sesungguhnya dengan simulasi skor yang akurat.",
       icon: <Award size={28} />,
-      label: "Latihan Ujian",
-      delay: 0.6
+      label: "Latihan Ujian"
     },
     {
       href: "/library/kanji",
       title: "Pustaka Kanji",
       desc: "Dalami struktur ribuan kanji melalui visualisasi urutan goresan (stroke order) yang interaktif.",
       icon: <Type size={28} />,
-      label: "Koleksi Kanji",
-      delay: 0.7
+      label: "Koleksi Kanji"
     },
     {
       href: "/library/listening",
       title: "Latihan Menyimak",
       desc: "Tingkatkan kepekaan pendengaran melalui modul audio interaktif dan dukungan transkrip.",
       icon: <Headphones size={28} />,
-      label: "Listening Lab",
-      delay: 0.8
+      label: "Listening Lab"
     }
-
   ];
 
   return (
@@ -80,7 +68,7 @@ export default function LibraryPage() {
         {/* HEADER SECTION */}
         <header className="mb-10 md:mb-24">
           <div className="flex items-center gap-4 md:gap-6 mb-8 md:mb-10">
-            <Card className="w-14 h-14 md:w-16 md:h-16 shrink-0 rounded-2xl bg-primary/10 border-primary/20 flex items-center justify-center neo-inset shadow-none">
+            <Card className="w-14 h-14 md:w-16 md:h-16 shrink-0 rounded-2xl bg-[rgba(var(--primary-rgb),0.1)] border-[rgba(var(--primary-rgb),0.2)] flex items-center justify-center neo-inset shadow-none">
               <Library size={28} className="text-primary md:w-8 md:h-8" />
             </Card>
             <div className="flex flex-col">
@@ -94,23 +82,14 @@ export default function LibraryPage() {
           
           <div className="flex flex-col lg:flex-row lg:items-end justify-between gap-10 lg:gap-12">
             <div className="flex-1">
-              <motion.h1
-                initial={{ opacity: 0, x: -10 }}
-                animate={{ opacity: 1, x: 0 }}
-                className="text-3xl sm:text-4xl md:text-7xl lg:text-7xl font-black uppercase tracking-tight text-foreground mb-4 md:mb-10 drop-shadow-lg leading-none md:leading-[0.85]"
-              >
+              <h1 className="text-3xl sm:text-4xl md:text-7xl lg:text-7xl font-black uppercase tracking-tight text-foreground mb-4 md:mb-10 drop-shadow-lg leading-none md:leading-[0.85]">
                 Pustaka<br />
                 <span className="text-primary">Materi</span>
-              </motion.h1>
+              </h1>
               
-              <motion.p
-                initial={{ opacity: 0, y: 15 }}
-                animate={{ opacity: 1, y: 0 }}
-                transition={{ delay: 0.2 }}
-                className="text-muted-foreground text-xs md:text-base lg:text-xl max-w-2xl leading-relaxed font-medium"
-              >
+              <p className="text-muted-foreground text-xs md:text-base lg:text-xl max-w-2xl leading-relaxed font-medium">
                 Cari semua materi belajar kamu di sini. Mulai dari kata kerja sampai pola kalimat buat persiapan JLPT, semuanya lengkap.
-              </motion.p>
+              </p>
             </div>
             
             <div className="shrink-0 hidden xl:block w-full lg:w-auto mt-8 lg:mt-0">

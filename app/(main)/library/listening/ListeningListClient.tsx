@@ -5,7 +5,6 @@ import { Search, Headphones, Play, ArrowRight, Clock, ChevronLeft, ChevronRight,
 import { Input } from "@/components/ui/input";
 import { Card } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
-import { motion, AnimatePresence } from "framer-motion";
 import Link from "next/link";
 import { useQuery, keepPreviousData } from "@tanstack/react-query";
 import { getPaginatedListening, PaginatedListeningResponse, ListeningTaskItem } from "@/app/actions/library.actions";
@@ -49,7 +48,7 @@ export default function ListeningListClient({ initialData }: ListeningListClient
       {/* Header */}
       <div className="flex flex-col gap-6">
         <div className="flex items-center gap-4 mb-2">
-          <div className="w-12 h-12 rounded-2xl bg-primary/10 flex items-center justify-center text-primary border border-primary/20">
+          <div className="w-12 h-12 rounded-2xl bg-[rgba(var(--primary-rgb),0.1)] flex items-center justify-center text-primary border border-[rgba(var(--primary-rgb),0.2)]">
             <Headphones size={24} />
           </div>
           <h1 className="text-4xl md:text-6xl font-black uppercase tracking-tight text-foreground">
@@ -64,7 +63,7 @@ export default function ListeningListClient({ initialData }: ListeningListClient
           <Search className="absolute left-4 top-1/2 -translate-y-1/2 text-muted-foreground w-5 h-5" />
           <Input 
             placeholder="Cari materi listening..." 
-            className="pl-12 h-14 bg-card/40 backdrop-blur-xl border-border/40 rounded-2xl text-lg shadow-2xl focus:ring-primary/20"
+            className="pl-12 h-14 bg-[rgba(var(--card-rgb),0.4)] backdrop-blur-xl border-[rgba(var(--border-rgb),0.4)] rounded-2xl text-lg shadow-2xl focus:ring-[rgba(var(--primary-rgb),0.2)]"
             value={search}
             onChange={(e) => setSearch(e.target.value)}
           />
@@ -74,24 +73,24 @@ export default function ListeningListClient({ initialData }: ListeningListClient
       {/* List */}
       <div className="relative">
         {isFetching && (
-          <div className="absolute inset-0 z-50 flex items-center justify-center bg-background/50 backdrop-blur-sm rounded-[2rem]">
+          <div className="absolute inset-0 z-50 flex items-center justify-center bg-[rgba(var(--background-rgb),0.5)] backdrop-blur-sm rounded-[2rem]">
             <Loader2 className="w-10 h-10 animate-spin text-primary" />
           </div>
         )}
         <div className="grid grid-cols-1 gap-4 min-h-[300px]">
-          <AnimatePresence mode="popLayout">
-            {tasks.map((task: ListeningTaskItem, idx: number) => (
-            <motion.div
+          {tasks.map((task: ListeningTaskItem, idx: number) => (
+            <div
               key={task.id}
-              initial={{ opacity: 0, x: -20 }}
-              animate={{ opacity: 1, x: 0 }}
-              exit={{ opacity: 0, x: 20 }}
-              transition={{ delay: idx * 0.05 }}
+              className="transform hover:-translate-y-1 transition-all duration-300"
+              style={{ 
+                contentVisibility: 'auto', 
+                containIntrinsicSize: '0 100px',
+              }}
             >
               <Link href={`/library/listening/${task.slug}`}>
-                <Card className="group relative flex items-center gap-6 p-6 bg-card/30 backdrop-blur-3xl border-border/40 hover:border-primary/50 transition-all duration-500 rounded-3xl overflow-hidden hover:shadow-[0_0_40px_rgba(var(--primary-rgb),0.1)] cursor-pointer">
+                <Card className="group relative flex items-center gap-6 p-6 bg-[rgba(var(--card-rgb),0.3)] backdrop-blur-3xl border-[rgba(var(--border-rgb),0.4)] hover:border-[rgba(var(--primary-rgb),0.5)] transition-all duration-500 rounded-3xl overflow-hidden hover:shadow-[0_0_40px_rgba(var(--primary-rgb),0.1)] cursor-pointer">
                   {/* Play Button Background */}
-                  <div className="w-12 h-12 md:w-16 md:h-16 rounded-2xl bg-primary/10 flex items-center justify-center text-primary group-hover:bg-primary group-hover:text-primary-foreground transition-all duration-500 shrink-0 shadow-inner">
+                  <div className="w-12 h-12 md:w-16 md:h-16 rounded-2xl bg-[rgba(var(--primary-rgb),0.1)] flex items-center justify-center text-primary group-hover:bg-primary group-hover:text-primary-foreground transition-all duration-500 shrink-0 shadow-inner">
                     <Play size={24} className="ml-1" />
                   </div>
 
@@ -102,11 +101,11 @@ export default function ListeningListClient({ initialData }: ListeningListClient
                        </span>
                     </div>
                     <div className="flex items-center gap-4 text-xs font-medium text-muted-foreground">
-                      <span className="flex items-center gap-1.5 bg-background/5 px-2 py-1 rounded-md">
+                      <span className="flex items-center gap-1.5 bg-[rgba(var(--background-rgb),0.05)] px-2 py-1 rounded-md">
                         <Clock size={12} />
                         Auto-Duration
                       </span>
-                      <span className="flex items-center gap-1.5 bg-background/5 px-2 py-1 rounded-md">
+                      <span className="flex items-center gap-1.5 bg-[rgba(var(--background-rgb),0.05)] px-2 py-1 rounded-md">
                         <Headphones size={12} />
                         Native/TTS Supported
                       </span>
@@ -118,9 +117,8 @@ export default function ListeningListClient({ initialData }: ListeningListClient
                   </div>
                 </Card>
               </Link>
-            </motion.div>
+            </div>
           ))}
-        </AnimatePresence>
         </div>
       </div>
 
@@ -170,8 +168,8 @@ export default function ListeningListClient({ initialData }: ListeningListClient
                     onClick={() => handlePageChange(pageNum)}
                     className={`w-10 h-10 rounded-xl font-bold transition-all ${
                       currentPage === pageNum 
-                        ? "bg-primary text-primary-foreground shadow-lg shadow-primary/20" 
-                        : "bg-card border border-border text-muted-foreground hover:border-primary/40"
+                        ? "bg-primary text-primary-foreground shadow-lg shadow-[rgba(var(--primary-rgb),0.2)]" 
+                        : "bg-card border border-border text-muted-foreground hover:border-[rgba(var(--primary-rgb),0.4)]"
                     }`}
                   >
                     {pageNum}
@@ -204,7 +202,7 @@ export default function ListeningListClient({ initialData }: ListeningListClient
 
       {tasks.length === 0 && !isFetching && (
         <div className="flex flex-col items-center justify-center py-24 text-center">
-          <div className="w-20 h-20 rounded-full bg-muted/20 flex items-center justify-center mb-6">
+          <div className="w-20 h-20 rounded-full bg-[rgba(var(--muted-rgb),0.2)] flex items-center justify-center mb-6">
              <Headphones size={32} className="text-muted-foreground/50" />
           </div>
           <h3 className="text-xl font-bold text-foreground">Materi tidak ditemukan</h3>

@@ -24,8 +24,13 @@ export interface VocabItem {
   is_common?: boolean;
   show_in_flashcard?: boolean;
   examples?: Array<{
-    japanese: string;
-    indonesian: string;
+    id?: string;
+    jp?: string;
+    romaji?: string;
+    furigana?: string;
+    meaning?: string;
+    japanese?: string;
+    indonesian?: string;
   }> | null;
   synonyms?: string[] | null;
   antonyms?: string[] | null;

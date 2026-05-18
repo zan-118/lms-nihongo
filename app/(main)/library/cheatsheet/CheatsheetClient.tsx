@@ -2,12 +2,12 @@
  * LOKASI FILE: app/(main)/library/cheatsheet/CheatsheetClient.tsx
  * KONSEP: Category-First Dashboard (Catatan Referensi Cepat)
  * RE-DESAIN: Category Cards -> Detail Modal
+ * Dioptimalkan tanpa Framer Motion untuk performa ekstrem.
  */
 
 "use client";
 
 import { useState } from "react";
-import { motion, AnimatePresence } from "framer-motion";
 import {
   Search,
   Hash,
@@ -84,7 +84,7 @@ export default function CheatsheetClient({
         <div className="flex flex-col md:flex-row md:items-end justify-between gap-8 md:gap-12">
           <div className="flex flex-col gap-4">
              <div className="flex items-center gap-3">
-                <div className="w-10 h-10 rounded-xl bg-primary/10 flex items-center justify-center text-primary border border-primary/20">
+                <div className="w-10 h-10 rounded-xl bg-[rgba(var(--primary-rgb),0.1)] flex items-center justify-center text-primary border border-[rgba(var(--primary-rgb),0.2)]">
                    <Activity size={20} className="animate-pulse" />
                 </div>
                 <span className="text-primary font-black text-xs uppercase tracking-[0.3em]">Quick Reference</span>
@@ -102,7 +102,7 @@ export default function CheatsheetClient({
             <Input
               type="text"
               placeholder="Cari materi referensi..."
-              className="w-full bg-muted/20 border border-border/50 pl-14 pr-6 py-7 h-auto rounded-[2rem] text-foreground font-medium text-base neo-inset shadow-none placeholder:text-muted-foreground/30 focus-visible:ring-primary/20"
+              className="w-full bg-[rgba(var(--muted-rgb),0.2)] border border-[rgba(var(--border-rgb),0.5)] pl-14 pr-6 py-7 h-auto rounded-[2rem] text-foreground font-medium text-base neo-inset shadow-none placeholder:text-[rgba(var(--muted-foreground-rgb),0.3)] focus-visible:ring-[rgba(var(--primary-rgb),0.2)]"
               value={searchTerm}
               onChange={(e) => setSearchTerm(e.target.value)}
             />
@@ -119,59 +119,56 @@ export default function CheatsheetClient({
         </div>
 
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6 md:gap-8">
-           <AnimatePresence>
-              {filteredSheets.map((sheet, idx) => (
-                <motion.div
-                  key={sheet._id || sheet.id}
-                  initial={{ opacity: 0, y: 20 }}
-                  animate={{ opacity: 1, y: 0 }}
-                  exit={{ opacity: 0, scale: 0.95 }}
-                  transition={{ delay: idx * 0.05 }}
+          {filteredSheets.map((sheet, idx) => (
+            <div
+              key={sheet._id || sheet.id}
+              className="transform hover:-translate-y-1 transition-all duration-300"
+              style={{ 
+                contentVisibility: 'auto', 
+                containIntrinsicSize: '0 250px',
+              }}
+            >
+              <Link href={`/library/cheatsheet/${sheet.slug || sheet.id || sheet._id}`}>
+                <Card 
+                  className="group relative h-full bg-card hover:bg-[rgba(var(--primary-rgb),0.02)] border border-[rgba(var(--border-rgb),0.5)] hover:border-[rgba(var(--primary-rgb),0.4)] rounded-[2.5rem] p-8 cursor-pointer transition-all duration-500 shadow-sm hover:shadow-[0_20px_50px_rgba(var(--background-rgb),0.1)] dark:hover:shadow-[0_20px_50px_rgba(var(--background-rgb),0.3)] flex flex-col gap-6 overflow-hidden"
                 >
-                  <Link href={`/library/cheatsheet/${sheet.slug || sheet.id || sheet._id}`}>
-                    <Card 
-                      className="group relative h-full bg-card hover:bg-primary/[0.02] border border-border/50 hover:border-primary/40 rounded-[2.5rem] p-8 cursor-pointer transition-all duration-500 shadow-sm hover:shadow-[0_20px_50px_rgba(var(--background-rgb),0.1)] dark:hover:shadow-[0_20px_50px_rgba(var(--background-rgb),0.3)] flex flex-col gap-6 overflow-hidden"
-                    >
-                      {/* Background decoration */}
-                      <div className="absolute -bottom-6 -right-6 text-[8rem] font-black text-foreground/[0.03] group-hover:text-primary/[0.05] transition-colors pointer-events-none italic">
-                        {idx + 1}
-                      </div>
+                  {/* Background decoration */}
+                  <div className="absolute -bottom-6 -right-6 text-[8rem] font-black text-[rgba(var(--foreground-rgb),0.03)] group-hover:text-[rgba(var(--primary-rgb),0.05)] transition-colors pointer-events-none italic">
+                    {idx + 1}
+                  </div>
 
-                      <div className="flex items-center justify-between relative z-10">
-                        <div className="w-14 h-14 rounded-2xl bg-muted border border-border flex items-center justify-center text-muted-foreground group-hover:text-primary group-hover:bg-primary/10 group-hover:border-primary/20 transition-all duration-500">
-                            {getIconForCategory(sheet.category)}
-                        </div>
-                        <Badge variant="outline" className="bg-muted/50 text-[10px] font-black uppercase tracking-widest text-muted-foreground border-border">
-                            {sheet.category}
-                        </Badge>
-                      </div>
+                  <div className="flex items-center justify-between relative z-10">
+                    <div className="w-14 h-14 rounded-2xl bg-muted border border-border flex items-center justify-center text-muted-foreground group-hover:text-primary group-hover:bg-[rgba(var(--primary-rgb),0.1)] group-hover:border-[rgba(var(--primary-rgb),0.2)] transition-all duration-500">
+                        {getIconForCategory(sheet.category)}
+                    </div>
+                    <Badge variant="outline" className="bg-[rgba(var(--muted-rgb),0.5)] text-[10px] font-black uppercase tracking-widest text-muted-foreground border-border">
+                        {sheet.category}
+                    </Badge>
+                  </div>
 
-                      <div className="flex-1 relative z-10">
-                        <h3 className="text-2xl md:text-3xl font-black text-foreground tracking-tight mb-2 group-hover:text-primary transition-colors">
-                            {sheet.title}
-                        </h3>
-                        <p className="text-xs text-muted-foreground font-medium leading-relaxed line-clamp-2">
-                            Lihat tabel referensi cepat untuk {sheet.title}. Dilengkapi dengan Furigana dan contoh penggunaan.
-                        </p>
-                      </div>
+                  <div className="flex-1 relative z-10">
+                    <h3 className="text-2xl md:text-3xl font-black text-foreground tracking-tight mb-2 group-hover:text-primary transition-colors">
+                        {sheet.title}
+                    </h3>
+                    <p className="text-xs text-muted-foreground font-medium leading-relaxed line-clamp-2">
+                        Lihat tabel referensi cepat untuk {sheet.title}. Dilengkapi dengan Furigana dan contoh penggunaan.
+                    </p>
+                  </div>
 
-                      <div className="flex items-center justify-between pt-6 border-t border-border/30 relative z-10">
-                        <div className="flex items-center gap-2 text-[10px] font-black uppercase tracking-widest text-primary">
-                            Buka Tabel <ChevronRight size={14} className="group-hover:translate-x-1 transition-transform" />
-                        </div>
-                        <div className="text-[10px] font-bold text-muted-foreground/40 italic">
-                            Full Detail View
-                        </div>
-                      </div>
-                    </Card>
-                  </Link>
-                </motion.div>
-              ))}
-           </AnimatePresence>
+                  <div className="flex items-center justify-between pt-6 border-t border-[rgba(var(--border-rgb),0.3)] relative z-10">
+                    <div className="flex items-center gap-2 text-[10px] font-black uppercase tracking-widest text-primary">
+                        Buka Tabel <ChevronRight size={14} className="group-hover:translate-x-1 transition-transform" />
+                    </div>
+                    <div className="text-[10px] font-bold text-[rgba(var(--muted-foreground-rgb),0.4)] italic">
+                        Full Detail View
+                    </div>
+                  </div>
+                </Card>
+              </Link>
+            </div>
+          ))}
         </div>
       </section>
-
-
     </div>
   );
 }

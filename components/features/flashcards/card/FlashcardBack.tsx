@@ -27,7 +27,12 @@ interface FlashcardBackProps {
   mnemonic?: string | null;
   pitchAccent?: string | null;
   hinshi?: string | null;
-  examples?: Array<{ japanese: string; indonesian: string }> | null;
+  examples?: Array<{ 
+    japanese?: string; 
+    indonesian?: string;
+    jp?: string;
+    meaning?: string;
+  }> | null;
   kanjiDetails?: any;
   relatedKanji?: any[] | null;
 }
@@ -136,10 +141,10 @@ export function FlashcardBack({
               <div className="p-2.5 bg-primary/[0.03] border border-primary/10 rounded-xl text-left">
                 <span className="text-[7px] font-black uppercase tracking-widest text-primary/60 block mb-0.5">Contoh</span>
                 <p className="text-[10px] md:text-[12px] font-bold text-foreground font-japanese leading-tight line-clamp-1">
-                  {examples[0].japanese}
+                  {examples[0].jp || examples[0].japanese}
                 </p>
                 <p className="text-[8px] md:text-[11px] font-medium text-muted-foreground italic line-clamp-1">
-                  {examples[0].indonesian}
+                  {examples[0].meaning || examples[0].indonesian}
                 </p>
               </div>
             ) : mnemonic && (

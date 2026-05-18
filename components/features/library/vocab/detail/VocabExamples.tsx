@@ -11,6 +11,7 @@ interface Example {
   indonesian?: string;
   furigana?: string;
   romaji?: string;
+  meaning?: string;
 }
 
 interface VocabExamplesProps {
@@ -40,7 +41,7 @@ export function VocabExamples({ examples }: VocabExamplesProps) {
             <div className="flex items-start gap-3 border-t border-border/50 pt-3">
               <div className="w-1.5 h-1.5 rounded-full bg-primary/40 mt-1.5 shrink-0" />
               <p className="text-sm font-medium text-muted-foreground italic">
-                {ex.id || ex.indonesian}
+                {ex.meaning || ex.id || ex.indonesian}
               </p>
             </div>
           </div>

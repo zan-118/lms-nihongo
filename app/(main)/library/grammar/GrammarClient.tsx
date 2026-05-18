@@ -2,7 +2,6 @@
 
 import { useState, useEffect } from "react";
 import { getGrammarArticles } from "@/app/actions/library.actions";
-import { AnimatePresence } from "framer-motion";
 import { BookOpen } from "lucide-react";
 import { Card } from "@/components/ui/card";
 import { Skeleton } from "@/components/ui/skeleton";
@@ -116,24 +115,22 @@ export default function GrammarClient({ initialArticles = [] }: GrammarClientPro
             <div className="w-10 h-10 animate-spin border-4 border-primary border-t-transparent rounded-full" />
           </div>
         )}
-        <AnimatePresence mode="popLayout">
-          {paginatedArticles.length > 0 ? (
-            paginatedArticles.map((article, idx) => (
-              <GrammarCard
-                key={article.id || article._id}
-                article={article}
-                index={idx}
-                selectedLevel={selectedLevel}
-              />
-            ))
-          ) : !loading ? (
-            <GrammarEmptyState 
-              searchTerm={searchTerm}
+        {paginatedArticles.length > 0 ? (
+          paginatedArticles.map((article, idx) => (
+            <GrammarCard
+              key={article.id || article._id}
+              article={article}
+              index={idx}
               selectedLevel={selectedLevel}
-              onResetSearch={() => setSearchTerm("")}
             />
-          ) : null}
-        </AnimatePresence>
+          ))
+        ) : !loading ? (
+          <GrammarEmptyState 
+            searchTerm={searchTerm}
+            selectedLevel={selectedLevel}
+            onResetSearch={() => setSearchTerm("")}
+          />
+        ) : null}
       </section>
 
       <Pagination 

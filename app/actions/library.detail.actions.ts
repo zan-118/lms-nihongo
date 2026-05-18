@@ -149,6 +149,16 @@ export async function getLibraryItemBySlug(
         data.synonyms = Array.isArray(data.synonyms) ? data.synonyms : [];
         data.antonyms = Array.isArray(data.antonyms) ? data.antonyms : [];
         
+        // Handle examples safely
+        if (typeof data.examples === "string") {
+          try {
+            data.examples = JSON.parse(data.examples);
+          } catch {
+            data.examples = [];
+          }
+        }
+        data.examples = Array.isArray(data.examples) ? data.examples : [];
+
         data.relatedKanji = data.relatedKanji.map((k: { id?: string; _id?: string }) => ({ ...k, _id: k.id || k._id }));
         data.synonyms = data.synonyms.map((s: { id?: string; _id?: string }) => ({ ...s, _id: s.id || s._id }));
         data.antonyms = data.antonyms.map((a: { id?: string; _id?: string }) => ({ ...a, _id: a.id || a._id }));
