@@ -27,6 +27,7 @@ import { MarkCompleteButton } from "@/components/features/lessons/MarkCompleteBu
 import { createClient } from "@/lib/supabase/server";
 import { getLibraryItemBySlug } from "@/app/actions/library.actions";
 import { formatQuizzes, getLessonNavigation } from "@/lib/utils/lesson-utils";
+import { getSanityLessonsByCategory } from "@/lib/queries";
 
 interface Props {
   params: Promise<{ categoryId: string; slug: string }>;
@@ -58,11 +59,7 @@ async function getLessonData(categoryId: string, slug: string) {
   }
 
   // 2. Get Navigation (depends on category.id)
-  const { data: nav } = await supabase
-    .from("lessons")
-    .select("slug, title")
-    .eq("category_id", category.id)
-    .order("order_number", { ascending: true });
+  const nav = await getSanityLessonsByCategory(categoryId, category.id);
 
   return { lesson, nav };
 }
@@ -142,7 +139,11 @@ export default async function LessonPage({ params }: Props) {
               </section>
             ) : (
               <section className="flex justify-center my-12">
-                <MarkCompleteButton lessonId={lesson._id || lesson.id} />
+                <MarkCompleteButton 
+                  lessonId={lesson._id || lesson.id} 
+                  nextLessonSlug={nextLesson?.slug}
+                  categoryId={categoryId}
+                />
               </section>
             )}
           </div>

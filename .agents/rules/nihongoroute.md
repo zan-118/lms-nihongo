@@ -13,7 +13,7 @@ Kamu WAJIB SELALU mematuhi file `ARCHITECTURE.md` secara ketat terkait struktur 
 
 <ATURAN_KRITIS>
   <INTEGRITAS_DATA>
-    - SUMBER KEBENARAN UTAMA: Seluruh konten edukasi (kosakata, pelajaran, kanji) dan kemajuan dinamis pengguna (XP, SRS) WAJIB berasal dari Supabase melalui Server Actions di `app/actions/`.
+    - SUMBER KEBENARAN UTAMA (SPLIT-SOURCE): Konten editorial (Lesson, Reading, Listening, Exam) WAJIB berasal dari Sanity CMS. Data leksikal (Vocab, Kanji, Grammar) dan kemajuan dinamis pengguna (XP, SRS) WAJIB berasal dari Supabase melalui Server Actions di `app/actions/`.
     - SINKRONISASI 3 TINGKAT: Semua pembaruan antarmuka pengguna (UI) harus berinteraksi dengan Zustand terlebih dahulu (zero-latency). `useSyncProgress.ts` mengatur debouncing, kemudian `useCloudMutation.ts` mengeksekusi RPC Supabase.
     - KEAMANAN MULTI-TAB: Mutasi awan yang sukses WAJIB menyiarkan "SYNC_COMPLETE" melalui `BroadcastChannel("nihongoroute_sync")` untuk memicu invalidasi cache di tab lain.
     - ZUSTAND: Gunakan secara ketat `useAuthStore`, `useUserStore`, `useSRSStore`, dan `useUIStore` (dipersistensi melalui `idb-keyval`). DILARANG membuat penyimpanan global baru tanpa izin.

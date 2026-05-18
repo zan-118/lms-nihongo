@@ -1,6 +1,7 @@
 "use client";
 
 import React, { useState } from "react";
+import { useRouter } from "next/navigation";
 import { CheckCircle2 } from "lucide-react";
 import { useUserStore } from "@/store/useUserStore";
 import { Button } from "@/components/ui/button";
@@ -8,9 +9,12 @@ import { cn } from "@/lib/utils";
 
 interface MarkCompleteButtonProps {
   lessonId: string;
+  nextLessonSlug?: string;
+  categoryId?: string;
 }
 
-export const MarkCompleteButton: React.FC<MarkCompleteButtonProps> = ({ lessonId }) => {
+export const MarkCompleteButton: React.FC<MarkCompleteButtonProps> = ({ lessonId, nextLessonSlug, categoryId }) => {
+  const router = useRouter();
   const [marked, setMarked] = useState(false);
   const completeLesson = useUserStore((s) => s.completeLesson);
   const completedLessons = useUserStore((s) => s.completedLessons);
@@ -25,6 +29,14 @@ export const MarkCompleteButton: React.FC<MarkCompleteButtonProps> = ({ lessonId
     addXP(10);
     completeLesson(lessonId);
     setMarked(true);
+
+    setTimeout(() => {
+      if (nextLessonSlug && categoryId) {
+        router.push(`/courses/${categoryId}/${nextLessonSlug}`);
+      } else if (categoryId) {
+        router.push(`/courses/${categoryId}`);
+      }
+    }, 800);
   };
 
   if (isCompleted || marked) {
