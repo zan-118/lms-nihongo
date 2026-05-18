@@ -21,6 +21,7 @@ import { ReadingSection } from "@/components/features/lessons/ReadingSection";
 import { CheatsheetSection } from "@/components/features/lessons/CheatsheetSection";
 import { PracticeSection } from "@/components/features/lessons/PracticeSection";
 import { LessonNavigation } from "@/components/features/lessons/LessonNavigation";
+import { MarkCompleteButton } from "@/components/features/lessons/MarkCompleteButton";
 
 // Database & Utils
 import { createClient } from "@/lib/supabase/server";
@@ -129,7 +130,7 @@ export default async function LessonPage({ params }: Props) {
 
             <PracticeSection lesson={lesson} />
 
-            {formattedQuizzes.length > 0 && (
+            {formattedQuizzes.length > 0 ? (
               <section>
                 <div className="flex items-center gap-4 mb-10">
                   <h2 className="text-xl font-black uppercase tracking-tight text-foreground flex items-center gap-3">
@@ -138,6 +139,10 @@ export default async function LessonPage({ params }: Props) {
                   <div className="h-[1px] flex-1 bg-border" />
                 </div>
                 <QuizEngine questions={formattedQuizzes} lessonId={lesson._id || lesson.id} />
+              </section>
+            ) : (
+              <section className="flex justify-center my-12">
+                <MarkCompleteButton lessonId={lesson._id || lesson.id} />
               </section>
             )}
           </div>

@@ -204,7 +204,7 @@ export async function getLibraryItemBySlug(
       // Create a clean result object with initial data
       const result: Record<string, any> = {
         ...data,
-        _id: data.id,
+        _id: data.id || data._id,
         articles: articles,
         quizzes: parseArray(data.quizzes).map((q: { id?: string; correct_answer?: string; correctAnswer?: string }, idx: number) => ({
           ...q,
