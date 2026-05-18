@@ -56,7 +56,7 @@ export function TrustBanner() {
                 <div className="w-10 h-10 rounded-xl bg-primary/10 border border-primary/20 flex items-center justify-center text-primary">
                   <ShieldCheck size={20} />
                 </div>
-                <h4 className="text-sm font-bold text-foreground">Tanpa Iklan / Paywall</h4>
+                <h4 className="text-sm font-bold text-foreground">Tanpa Iklan / Biaya Tersembunyi</h4>
                 <p className="text-xs text-muted-foreground leading-relaxed">
                   Tidak ada interupsi iklan mengganggu, tidak ada fitur berbayar tersembunyi, dan tidak perlu mendaftarkan kartu kredit.
                 </p>
@@ -108,7 +108,7 @@ export function TrustBanner() {
                 rel="noreferrer"
                 className="flex items-center justify-center"
               >
-                <Github size={16} className="mr-3" /> GitHub Repo <ArrowRight size={12} className="ml-2 group-hover:translate-x-1 transition-transform" />
+                <Github size={16} className="mr-3" /> Repositori GitHub <ArrowRight size={12} className="ml-2 group-hover:translate-x-1 transition-transform" />
               </a>
             </Button>
           </div>

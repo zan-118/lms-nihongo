@@ -27,6 +27,9 @@
 ### 💎 UI/UX Semantic Cyber-Glass
 Antarmuka imersif yang dibangun sepenuhnya di atas **Token Desain Semantik** dan **Variabel RGB**. Sistem kami beradaptasi 100% secara dinamis antara mode Terang dan Gelap. Setiap border, shadow, dan efek neon (glow) memanfaatkan variabel dinamis untuk menyediakan lingkungan yang berorientasi pada fokus belajar dengan estetika premium.
 
+### 🎯 Standardisasi Copywriting Ramah Pengguna (Language-Gap Elimination)
+Aplikasi ini dirancang 100% ramah bagi pembelajar lokal di Indonesia dengan mengeleminasi kesenjangan bahasa (*language gap*) dari istilah teknologi yang rumit. Kami menggunakan padanan kata yang intuitif (seperti mengubah *Spaced Repetition (SRS)* menjadi "pengulangan cerdas", *Paywall* menjadi "biaya tersembunyi", dan *Streak* menjadi "hari beruntun") untuk menjamin navigasi yang bersih dan transparan bagi semua orang.
+
 ### 🧠 Mesin Pembelajaran Cerdas & SRS
 - **Spaced Repetition (SRS) Lanjutan**: Algoritma SM-2 yang dimodifikasi dengan dukungan *due-date guarding* untuk retensi ingatan jangka panjang.
 - **Arsitektur Split-Source Terpusat**: Konten editorial interaktif ditenagai oleh Sanity CMS, sementara data leksikal dan progres dinamis dikelola oleh Supabase melalui Server Actions berkinerja tinggi menggunakan *Parallel Fetching* (`Promise.all`).
@@ -50,9 +53,9 @@ Dibangun dengan **Protokol Sinkronisasi 3-Tier**:
 | :--- | :--- |
 | **Frontend** | Next.js 16 (App Router), React 19, TypeScript |
 | **Styling** | Tailwind CSS (Semantik), Framer Motion, Radix UI |
-| **Database & Auth** | Supabase (PostgreSQL, RPC, Edge Functions, Auth) |
+| **Database, Auth & CMS** | Supabase (PostgreSQL, RPC, Auth) & Sanity CMS |
 | **State Management** | Zustand (Persisten via idb-keyval), TanStack Query v5 |
-| **Media Layer** | Cloudinary Media Integration |
+| **Media Layer** | Sanity Media Asset Management & Cloudinary (Legacy) |
 | **Audio Engine** | Procedural Web Audio API & TTS Integration |
 
 ---

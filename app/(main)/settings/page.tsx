@@ -186,10 +186,11 @@ export default function SettingsPage() {
 
   return (
     <div className="relative min-h-screen">
-      {/* Ambient Background Glow */}
+      {/* Premium Ambient Background Grid & Glows */}
       <div className="fixed inset-0 pointer-events-none overflow-hidden z-0">
-        <div className="absolute top-[10%] -left-[10%] w-[40%] h-[40%] bg-primary/5 blur-[120px] rounded-full animate-pulse" />
-        <div className="absolute bottom-[10%] -right-[10%] w-[40%] h-[40%] bg-primary/5 blur-[120px] rounded-full animate-pulse" style={{ animationDelay: '1s' }} />
+        <div className="absolute inset-0 neural-grid opacity-[0.12] mix-blend-overlay" />
+        <div className="absolute top-[10%] -left-[10%] w-[50%] h-[50%] bg-primary/10 blur-[130px] rounded-full animate-pulse pointer-events-none" />
+        <div className="absolute bottom-[10%] -right-[10%] w-[50%] h-[50%] bg-secondary/5 blur-[130px] rounded-full animate-pulse pointer-events-none" style={{ animationDelay: '1.5s' }} />
       </div>
 
       <ConfirmModal
@@ -210,14 +211,14 @@ export default function SettingsPage() {
       >
         <header className="mb-12 px-1">
           <motion.div variants={itemVariants}>
-            <Badge variant="outline" className="bg-background/5 text-primary border-primary/20 px-4 py-1.5 rounded-full text-[10px] font-black uppercase tracking-[0.2em] mb-6 flex items-center gap-2 w-fit shadow-xl backdrop-blur-md">
+            <Badge variant="outline" className="glass bg-background/20 text-primary border-primary/30 px-4 py-1.5 rounded-full text-[10px] font-black uppercase tracking-[0.2em] mb-6 flex items-center gap-2 w-fit shadow-[0_0_20px_rgba(var(--primary-rgb),0.1)]">
               <SettingsIcon size={14} className="animate-spin-slow" /> Konfigurasi Sistem
             </Badge>
           </motion.div>
-          <motion.h1 variants={itemVariants} className="text-4xl md:text-5xl font-black text-foreground italic tracking-tighter uppercase mb-4 leading-none">
-            The Pilot&apos;s Cabin
+          <motion.h1 variants={itemVariants} className="text-4xl md:text-5xl font-black text-foreground italic tracking-tighter uppercase mb-4 leading-none select-none">
+            Pengaturan Akun
           </motion.h1>
-          <motion.p variants={itemVariants} className="text-muted-foreground text-sm md:text-base font-medium max-w-xl leading-relaxed opacity-70">
+          <motion.p variants={itemVariants} className="text-muted-foreground text-sm md:text-base font-semibold max-w-xl leading-relaxed opacity-70">
             Atur profil dan preferensi belajar Anda. Gunakan sinkronisasi Cloud untuk menjaga keamanan riwayat belajar Anda di berbagai perangkat.
           </motion.p>
         </header>
@@ -269,7 +270,7 @@ export default function SettingsPage() {
               <h3 className="text-primary font-black uppercase tracking-[0.2em] text-[10px] mb-4">Navigasi Lanjutan</h3>
               <Button asChild variant="ghost" className="w-full h-14 bg-background/[0.03] border border-border justify-start hover:bg-primary/10 hover:text-primary rounded-2xl font-black uppercase tracking-widest text-[10px] transition-all">
                 <Link href="/library">
-                  <Layers size={18} className="mr-3 text-primary" /> Buka Pustaka Data
+                  <Layers size={18} className="mr-3 text-primary" /> Buka Perpustakaan
                 </Link>
               </Button>
             </Card>

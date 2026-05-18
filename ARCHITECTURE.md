@@ -43,10 +43,9 @@ app/
 │       ├── flashcards/     # Mesin kartu pengingat dinamis
 │       ├── kana/           # Latihan Hiragana & Katakana
 │       └── writing/        # Mesin latihan menulis Kanji
-│       └── srs/            # Logika utama pengulangan berkala
 ├── auth/                   # Alur masuk, daftar, & panggilan balik
 ├── onboarding/             # Pengenalan bertahap (Terisolasi dari Tata Letak Utama)
-├── (admin)/                # Command Center (Custom CMS)
+├── studio/                 # Sanity Studio (Embedded CMS)
 ├── globals.css             # Gaya dasar (Tailwind + Token Cyber-Glass)
 ├── layout.tsx              # Penyedia Utama (Autentikasi, Kueri, Tema)
 └── page.tsx                # Halaman Utama (Pemasaran)
@@ -144,24 +143,24 @@ Setiap interaksi (XP bertambah, kartu SRS dijawab) akan langsung memperbarui sta
 
 ---
 
-## 9. Jalur Rendering Furigana & Interaksi
+## 7. Jalur Rendering Furigana & Interaksi
 
 NihongoRoute menerapkan sistem rendering teks Jepang yang canggih dengan kontrol global dan interaksi kata yang cerdas.
 
-### 9.1 Kontrol Mode Global (`useUIStore`)
+### 7.1 Kontrol Mode Global (`useUIStore`)
 Status pembacaan dikendalikan secara terpusat melalui `readingState`:
 - **Kanji**: Hanya menampilkan Kanji asli.
 - **Furigana**: Menampilkan Kanji dengan anotasi Ruby di atasnya.
 - **Hiragana**: Mengonversi seluruh teks Jepang menjadi Hiragana.
 
-### 9.2 Komponen Rendering Cerdas
+### 7.2 Komponen Rendering Cerdas
 - **`SmartJapanese`**: Komponen utama yang mendeteksi teks Jepang dan membungkusnya dengan logika interaksi.
 - **`FuriganaDisplay`**: Mengelola tampilan visual (Ruby) berdasarkan mode yang aktif. Menggunakan `0.55em` untuk proporsi yang optimal.
 - **`WordPopover`**: Muncul saat teks diklik, melakukan pencarian kosakata secara dinamis di Supabase/IDB untuk memberikan definisi, contoh, dan audio TTS.
 
 ---
 
-## 10. Protokol Sinkronisasi 3-Tingkat (3-Tier Sync)
+## 8. Protokol Sinkronisasi 3-Tingkat (3-Tier Sync)
 
 Untuk menjamin performa luring (*offline-first*) yang tangguh, NihongoRoute mengikuti protokol sinkronisasi tiga lapis:
 
@@ -171,43 +170,25 @@ Untuk menjamin performa luring (*offline-first*) yang tangguh, NihongoRoute meng
 
 ---
 
-## 11. Arsitektur AI-Native & Tata Kelola Konten
+## 9. Standardisasi Copywriting & Pedoman Antarmuka Ramah Pengguna (Language-Gap Elimination)
 
-NihongoRoute menggunakan alur kerja editorial yang ditenagai AI dengan kontrol deterministik, transparansi operasional yang tinggi, dan pengawasan manusia sebagai prioritas utama.
+Untuk menjamin NihongoRoute dapat diakses dan dipahami dengan mudah oleh seluruh pembelajar dari berbagai latar belakang di Indonesia, seluruh komponen antarmuka wajib mematuhi panduan penulisan teks berikut:
 
-### 11.1 Batasan Kepemilikan AI (Ownership Boundaries)
-Terdapat pemisahan tegas antara data yang dihasilkan AI dan metadata yang dimiliki oleh sistem untuk menjaga integritas relasional:
-- **Milik AI (Semantic Content)**: Isi blok konten, ringkasan, soal kuis, metadata SEO, dan contoh kalimat.
-- **Milik Sistem (Structural Governance)**: Status editorial (`status`), identitas unik (`id`), stempel waktu (`timestamps`), dan riwayat audit. AI dilarang keras mengubah metadata struktural ini secara otonom.
+### 9.1 Eliminasi Kesenjangan Bahasa & Istilah Teknis
+Aplikasi ini melarang penggunaan jargon teknis, metafora berlebih (misalnya nuansa penerbangan *"Pilot's Cabin"* yang membingungkan), kata singkatan asing kaku, dan slang/jargon SaaS yang tidak ramah pemula.
 
-### 11.2 Siklus Hidup Generasi (Generation Lifecycle)
-Setiap konten melewati pipa pemrosesan lima tahap sebelum masuk ke tahap peninjauan:
-1. **Generation**: AI menghasilkan draf konten berdasarkan konteks database terbaru.
-2. **Validation**: Validasi skema ketat menggunakan Zod untuk memastikan integritas struktural dan tipe data.
-3. **Normalization**: Perbaikan otomatis pada format (pembersihan spasi, normalisasi enum, konversi tipe).
-4. **Enrichment (Semantic Resolution)**: Resolusi istilah referensi manusia (misal: "N5") menjadi ID database (UUID) secara deterministik melalui lapisan utilitas server.
-5. **Governance**: Penempelan otomatis pada status editorial, peringatan (*warnings*), jejak audit, dan sinyal kepercayaan.
+### 9.2 Tabel Padanan Istilah Wajib (Kanonik)
 
-### 11.3 Tata Kelola Editorial (Editorial Governance)
-Infrastruktur ini menyediakan visibilitas operasional penuh bagi editor manusia:
-- **Status Konten**: Mengikuti siklus hidup `draft` → `review` (default AI) → `approved` → `published` (atau `rejected`).
-- **Editorial Warnings**: Peringatan terstruktur (High/Medium/Low) yang bersifat penasihat (bukan pemblokir). Menggunakan kunci identitas kanonik (`v1:category:severity:target:path`) untuk mencegah duplikasi.
-- **Audit Trail (Operational Narrative)**: Riwayat peristiwa yang tidak dapat diubah (*immutable*) dan mudah dibaca manusia, menangkap "narasi operasional" (Peristiwa, Aktor, Pesan).
-- **Confidence Indicators**: Sinyal kepercayaan berbasis aturan deterministik (bukan intuisi AI) yang diturunkan dari fakta operasional seperti jumlah percobaan ulang (*retries*) dan tingkat keparahan peringatan.
+| Konteks / Fitur | Hindari (Language Gap / Jargon) | Wajib Menggunakan (Bahasa Indonesia Ramah) |
+| :--- | :--- | :--- |
+| **Pengaturan Akun** | `The Pilot's Cabin`, `Identitas Belajar` | `Pengaturan Akun`, `Profil Pengguna` |
+| **Halaman Utama / Buku** | `Buka Pustaka`, `Pustaka Data` | `Buka Perpustakaan`, `Perpustakaan` |
+| **Pencegahan Biaya** | `Paywall` | `Biaya Tersembunyi`, `Langganan Tersembunyi` |
+| **Rekor Belajar** | `Streak`, `Hari Streak` | `Hari Beruntun`, `Hari Berturut-turut` |
+| **Progres Sinkronisasi** | `data tertahan di buffer lokal`, `Purge Database` | `data belum disinkronkan`, `Hapus Semua Data` |
+| **Pusat Bantuan** | `E-Wallet`, `coding fitur / membasmi bug` | `Dompet Digital`, `mengembangkan fitur / memperbaiki masalah teknis` |
+| **Gamifikasi** | `XP Points` | `Poin XP` |
+| **Sertifikat & Tes** | `Evaluasi kompetensi`, `Tingkat akurasi` | `Ujian`, `Akurasi Jawaban` |
+| **Algoritma Memori** | `Spaced Repetition (SRS)` | `pengulangan cerdas`, `Pengulangan Terjadwal` |
 
-### 11.4 Filosofi Metadata Operasional
-- **Immutable Snapshots**: Setiap peristiwa generasi menghasilkan rekaman permanen yang tidak dapat diubah. Perbaikan konten menghasilkan snapshot baru alih-alih memutasi riwayat lama (*append-only*).
-- **Semantic Transparency**: Memisahkan konten teks dari referensi database keras untuk mencegah kerusakan relasional selama proses regenerasi sebagian.
-- **Human-in-the-Loop**: AI hanya berfungsi sebagai pendukung keputusan; kewenangan akhir status `published` tetap berada di tangan editor manusia melalui sistem sinyal yang transparan.
-
-### 11.6 Post-Phase 4 Scaling Constraints (PENTING)
-Setelah Phase 4 selesai, pengembangan masa depan WAJIB mematuhi batasan berikut untuk mencegah inflasi kompleksitas:
-- **Prioritas Utama**: Throughput editorial (kecepatan publish), ergonomi alur kerja (kenyamanan editor), dan stabilitas operasional.
-- **DILARANG**: Otonomi AI yang tidak perlu, sistem tata kelola bergaya enterprise yang birokratis, mesin moderasi probabilistik, dan fragmentasi infrastruktur prematur.
-- **Fokus Evolusi**: Mempercepat editor, memperjelas sinyal operasional, dan menjaga performa kueri tetap ringan meskipun metadata (audit/warnings) semakin kaya.
-
-### 11.5 Governance UX & Review Queue (Phase 4)
-- **Urgency-First Sorting**: Konten diurutkan berdasarkan `status` (Review diutamakan) dan kemudian `confidence_rank` (Kepercayaan rendah diutamakan) untuk memprioritaskan intervensi manusia.
-- **Inline Operational Signals**: Editor menampilkan `Confidence Banners` dan `Warning Inspectors` untuk menjelaskan keandalan AI kepada manusia secara transparan.
-- **Lifecycle Governance**: Transisi status manual (misal: Review -> Approved) dicatat dalam `audit_log` yang tidak dapat diubah dengan deskripsi naratif.
-- **Cognitive Simplicity**: Metadata tata kelola disajikan sebagai sinyal bantuan, bukan sebagai hambatan birokrasi yang kaku.
+Setiap pengembang yang menambahkan fitur baru wajib menggunakan padanan kata yang ramah pemula dari tabel di atas guna menjaga keberlanjutan pengalaman pengguna (*user experience*) yang konsisten.

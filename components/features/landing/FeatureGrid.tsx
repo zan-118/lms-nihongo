@@ -62,8 +62,8 @@ export function FeatureGrid() {
       action: "Masuk Perpustakaan"
     },
     {
-      title: "Langkah 3: Kunci dalam Memori (SRS)",
-      desc: "Lupakan metode menghafal konvensional. Algoritma Spaced Repetition (SRS) kami secara otomatis menjadwalkan kosakata yang harus diulang tepat sebelum Anda lupa.",
+      title: "Langkah 3: Pengulangan Terjadwal",
+      desc: "Lupakan metode menghafal konvensional. Algoritma pengulangan terjadwal kami secara otomatis mengatur kosakata yang harus diulang tepat sebelum Anda lupa.",
       badge: "Hafal Tanpa Lupa",
       tip: "Menghemat waktu belajar hingga 60% dibanding metode mencatat biasa.",
       action: "Coba Flashcard"
@@ -146,7 +146,7 @@ export function FeatureGrid() {
               </div>
               
               <h3 className="text-2xl font-bold tracking-tight mb-[13px] text-foreground group-hover:text-secondary transition-colors">
-                Pustaka Kosakata, Kanji & Tata Bahasa
+                Perpustakaan Kosakata, Kanji & Tata Bahasa
               </h3>
               
               <p className="text-muted-foreground text-sm leading-relaxed flex-1 font-medium mb-6">
@@ -184,11 +184,11 @@ export function FeatureGrid() {
               </div>
               
               <h3 className="text-2xl font-bold tracking-tight mb-[13px] text-foreground group-hover:text-primary transition-colors">
-                Flashcard Cerdas dengan Algoritma SRS
+                Flashcard Cerdas & Pengulangan Terjadwal
               </h3>
               
               <p className="text-muted-foreground text-sm leading-relaxed flex-1 font-medium mb-6">
-                Latih daya ingat Anda secara optimal. Sistem Spaced Repetition (SRS) kami secara cerdas menghitung dan menjadwalkan ulang kartu flashcard kosa kata yang perlu di-review persis sebelum Anda melupakannya.
+                Latih daya ingat Anda secara optimal. Sistem pengulangan cerdas kami secara otomatis menghitung dan menjadwalkan ulang kartu flashcard kosa kata yang perlu di-review persis sebelum Anda melupakannya.
               </p>
 
               {/* Visual Mockup inside Card */}
@@ -373,7 +373,7 @@ export function FeatureGrid() {
               </Badge>
               <h2 className="text-3xl md:text-4xl font-extrabold tracking-tight">
                 Tetap Konsisten dengan <br />
-                <span className="text-transparent bg-clip-text bg-gradient-to-r from-primary to-secondary">Sistem Belajar Gamifikasi</span>
+                <span className="text-transparent bg-clip-text bg-gradient-to-r from-primary to-secondary">Sistem Belajar Interaktif</span>
               </h2>
               <p className="text-muted-foreground text-sm md:text-base leading-relaxed font-medium">
                 NihongoRoute merancang fitur pelacakan konsistensi belajar harian (Streaks) dan poin pengalaman (XP) yang membuat rutinitas belajar bahasa Jepang Anda terasa seperti memainkan game petualangan yang menyenangkan.

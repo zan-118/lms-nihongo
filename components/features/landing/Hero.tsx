@@ -26,7 +26,7 @@ export function Hero() {
           >
             <Sparkles size={12} className="text-primary animate-pulse" />
             <span className="text-[10px] font-bold uppercase tracking-[0.3em] text-primary">
-              Next-Gen Learning Platform
+              Platform Belajar Bahasa Jepang
             </span>
           </Badge>
         </motion.div>
@@ -125,7 +125,7 @@ export function Hero() {
           >
             <div className="flex items-center gap-3">
               <div className="w-3 h-3 bg-success rounded-full animate-pulse" />
-              <span className="text-xs font-bold text-foreground">Cloud Sync Active</span>
+              <span className="text-xs font-bold text-foreground">Sinkronisasi Cloud Aktif</span>
             </div>
           </motion.div>
         </div>

@@ -31,7 +31,7 @@ export function LandingFooter() {
                 Nihongo<span className="text-primary">Route</span>
               </span>
               <span className="text-[8px] text-muted-foreground font-extrabold uppercase tracking-widest opacity-60">
-                Digital Learning Ecosystem
+                Platform Belajar Modern
               </span>
             </div>
           </div>

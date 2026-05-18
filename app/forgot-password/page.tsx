@@ -40,31 +40,36 @@ export default function ForgotPasswordPage() {
   };
 
   return (
-    <div className="min-h-screen bg-background flex items-center justify-center p-4 relative overflow-hidden">
-      <div className="absolute inset-0 z-0 flex items-center justify-center">
-        <div className="w-[500px] h-[500px] bg-destructive/10 rounded-full blur-[100px] opacity-50 pointer-events-none" />
-        <div className="w-[300px] h-[300px] bg-warning/10 rounded-full blur-[80px] absolute -top-10 -right-10 opacity-30 pointer-events-none" />
+    <div className="min-h-screen bg-background text-foreground flex items-center justify-center p-4 relative overflow-hidden transition-colors duration-300">
+      {/* Background Decor & Neural Grid */}
+      <div className="neural-grid" />
+      <div className="absolute inset-0 z-0 flex items-center justify-center pointer-events-none">
+        <div className="w-[500px] h-[500px] bg-destructive/10 rounded-full blur-[120px] opacity-40 absolute -top-12 -left-12" />
+        <div className="w-[400px] h-[400px] bg-warning/10 rounded-full blur-[100px] opacity-35 absolute -bottom-10 -right-10" />
       </div>
 
-      <div className="w-full max-w-md bg-card/80 backdrop-blur-xl border border-border rounded-3xl p-8 z-10 shadow-2xl animate-in fade-in slide-in-from-bottom-4 duration-500">
+      <div className="w-full max-w-md bg-card/85 backdrop-blur-xl border border-border/80 rounded-[2rem] p-8 z-10 shadow-[0_15px_50px_rgba(0,0,0,0.3)] hover:shadow-[0_20px_60px_rgba(var(--destructive-rgb),0.1)] transition-all duration-500 relative glass">
+        {/* Decorative corner glows */}
+        <div className="absolute top-0 right-0 w-24 h-24 bg-gradient-to-br from-destructive/10 to-transparent blur-md rounded-tr-[2rem] pointer-events-none" />
+
         <Link 
           href="/login" 
           className="inline-flex items-center gap-2 text-xs font-bold uppercase tracking-widest text-muted-foreground hover:text-primary transition-all group mb-8"
         >
-          <div className="w-8 h-8 rounded-full bg-muted/50 border border-border flex items-center justify-center group-hover:border-primary/30 group-hover:bg-primary/5 transition-all">
+          <div className="w-8 h-8 rounded-full bg-muted/60 border border-border flex items-center justify-center group-hover:border-primary/40 group-hover:bg-primary/5 transition-all">
             <ArrowLeft size={14} className="group-hover:-translate-x-0.5 transition-transform" />
           </div>
           Login
         </Link>
 
         <div className="text-center mb-6">
-          <div className="w-16 h-16 bg-destructive/10 rounded-2xl flex items-center justify-center mx-auto mb-4 border border-destructive/20 shadow-[0_0_15px_rgba(var(--destructive-rgb),0.1)]">
+          <div className="w-16 h-16 bg-destructive/10 rounded-2xl flex items-center justify-center mx-auto mb-4 border border-destructive/20 shadow-[0_0_20px_rgba(var(--destructive-rgb),0.15)] animate-pulse">
             <KeyRound className="text-destructive" size={32} />
           </div>
-          <h1 className="text-2xl font-bold text-foreground mb-2">
-            Lupa Kata Sandi? Tenang aja!
+          <h1 className="text-2xl md:text-3xl font-black text-foreground mb-2 uppercase tracking-tight font-japanese">
+            Lupa Kata Sandi?
           </h1>
-          <p className="text-sm text-muted-foreground">
+          <p className="text-xs md:text-sm text-muted-foreground font-medium leading-relaxed">
             {emailSent 
               ? "Yess! Email buat ganti sandi udah dikirim. Tunggu bentar ya..." 
               : "Yuk, tulis email kamu di bawah, nanti kita kirim link buat bikin sandi baru."}
@@ -80,14 +85,14 @@ export default function ForgotPasswordPage() {
               value={email}
               onChange={(e) => setEmail(e.target.value)}
               required
-              className="w-full bg-muted border border-border rounded-xl py-3 pl-10 pr-4 text-foreground placeholder-muted-foreground focus:outline-none focus:border-destructive focus:ring-1 focus:ring-destructive transition-all"
+              className="w-full bg-muted/50 border border-border/80 rounded-xl py-3 pl-10 pr-4 text-foreground placeholder:text-muted-foreground/60 focus:outline-none focus:border-destructive focus:ring-1 focus:ring-destructive/40 focus:shadow-[0_0_15px_rgba(var(--destructive-rgb),0.1)] transition-all duration-300"
             />
           </div>
 
           <button
             type="submit"
             disabled={loading || !email}
-            className="w-full py-3 px-4 bg-destructive hover:bg-destructive/90 text-destructive-foreground rounded-xl font-bold transition-colors disabled:opacity-50 disabled:hover:bg-destructive shadow-[0_0_15px_rgba(var(--destructive-rgb),0.2)]"
+            className="w-full py-3.5 px-4 bg-destructive hover:bg-destructive/90 text-destructive-foreground rounded-xl font-bold uppercase tracking-widest text-xs transition-all disabled:opacity-50 shadow-[0_0_20px_rgba(var(--destructive-rgb),0.15)] hover:shadow-[0_0_25px_rgba(var(--destructive-rgb),0.3)] active:scale-[0.98] duration-300"
           >
             {loading ? "Lagi dikirim..." : "Kirim Link Pemulihan"}
           </button>

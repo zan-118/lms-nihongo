@@ -6,7 +6,6 @@ import { User, LogIn, ChevronRight, Sparkles, Mail, Lock, ArrowLeft } from "luci
 import { useRouter, useSearchParams } from "next/navigation";
 import Link from "next/link";
 import { toast } from "sonner";
-import { useEffect } from "react";
 
 export default function LoginPage() {
   const [loading, setLoading] = useState(false);
@@ -100,40 +99,45 @@ export default function LoginPage() {
 
   return (
     <div className="min-h-screen bg-background text-foreground flex items-center justify-center p-4 relative overflow-hidden transition-colors duration-300">
-      {/* Background Effect */}
-      <div className="absolute inset-0 z-0 flex items-center justify-center">
-        <div className="w-[500px] h-[500px] bg-primary/10 rounded-full blur-[100px] opacity-50 pointer-events-none" />
-        <div className="w-[300px] h-[300px] bg-secondary/10 rounded-full blur-[80px] absolute -top-10 -right-10 opacity-30 pointer-events-none" />
+      {/* Background Decor & Neural Grid */}
+      <div className="neural-grid" />
+      <div className="absolute inset-0 z-0 flex items-center justify-center pointer-events-none">
+        <div className="w-[500px] h-[500px] bg-primary/10 rounded-full blur-[120px] opacity-40 absolute -top-12 -left-12" />
+        <div className="w-[400px] h-[400px] bg-secondary/15 rounded-full blur-[100px] opacity-35 absolute -bottom-10 -right-10" />
       </div>
 
-      <div className="w-full max-w-md bg-card/80 backdrop-blur-xl border border-border rounded-3xl p-8 z-10 shadow-2xl animate-in fade-in slide-in-from-bottom-4 duration-500 relative">
+      <div className="w-full max-w-md bg-card/85 backdrop-blur-xl border border-border/80 rounded-[2rem] p-8 z-10 shadow-[0_15px_50px_rgba(0,0,0,0.3)] hover:shadow-[0_20px_60px_rgba(var(--primary-rgb),0.1)] transition-all duration-500 relative glass">
+        {/* Decorative corner glows */}
+        <div className="absolute top-0 right-0 w-24 h-24 bg-gradient-to-br from-primary/10 to-transparent blur-md rounded-tr-[2rem] pointer-events-none" />
+        <div className="absolute bottom-0 left-0 w-24 h-24 bg-gradient-to-tl from-secondary/10 to-transparent blur-md rounded-bl-[2rem] pointer-events-none" />
+
         <Link 
           href="/" 
           className="inline-flex items-center gap-2 text-xs font-bold uppercase tracking-widest text-muted-foreground hover:text-primary transition-all group mb-8"
         >
-          <div className="w-8 h-8 rounded-full bg-muted/50 border border-border flex items-center justify-center group-hover:border-primary/30 group-hover:bg-primary/5 transition-all">
+          <div className="w-8 h-8 rounded-full bg-muted/60 border border-border flex items-center justify-center group-hover:border-primary/40 group-hover:bg-primary/5 transition-all">
             <ArrowLeft size={14} className="group-hover:-translate-x-0.5 transition-transform" />
           </div>
           Beranda
         </Link>
 
         <div className="text-center mb-6">
-          <div className="w-16 h-16 bg-primary/10 rounded-2xl flex items-center justify-center mx-auto mb-4 border border-primary/20 shadow-lg">
+          <div className="w-16 h-16 bg-primary/10 rounded-2xl flex items-center justify-center mx-auto mb-4 border border-primary/20 shadow-[0_0_20px_rgba(var(--primary-rgb),0.15)]">
             <Sparkles className="text-primary" size={32} />
           </div>
-          <h1 className="text-2xl md:text-3xl font-black text-foreground mb-2 uppercase tracking-tight">
+          <h1 className="text-2xl md:text-3xl font-black text-foreground mb-2 uppercase tracking-tight font-japanese">
             {isRegistering ? "Yuk, bikin akun baru!" : "Siap lanjut belajar?"}
           </h1>
           <p className="text-xs md:text-sm text-muted-foreground font-medium leading-relaxed">
             {isRegistering 
-              ? "Bikin akun yuk, biar semua progres belajarmu tersimpan rapi dan bisa diakses kapan aja." 
-              : "Masuk ke akunmu, yuk! Kita lanjutin petualangan belajar yang seru ini."}
+              ? "Bikin akun yuk, biar semua progres belajarmu tersimpan rapi dan bisa diakses kapan saja." 
+              : "Masuk ke akunmu, yuk! Kita lanjutkan petualangan belajar yang seru ini."}
           </p>
         </div>
 
         {/* Email & Password Form */}
         <form onSubmit={handleEmailAuth} className="space-y-4 mb-6">
-          <div className="space-y-2">
+          <div className="space-y-3">
             {isRegistering && (
               <div className="relative animate-in fade-in slide-in-from-top-2 duration-300">
                 <User className="absolute left-3 top-1/2 -translate-y-1/2 text-muted-foreground" size={18} />
@@ -143,7 +147,7 @@ export default function LoginPage() {
                   value={fullName}
                   onChange={(e) => setFullName(e.target.value)}
                   required={isRegistering}
-                  className="w-full bg-muted border border-border rounded-xl py-3 pl-10 pr-4 text-foreground placeholder-muted-foreground focus:outline-none focus:border-primary focus:ring-1 focus:ring-primary transition-all"
+                  className="w-full bg-muted/50 border border-border/80 rounded-xl py-3 pl-10 pr-4 text-foreground placeholder:text-muted-foreground/60 focus:outline-none focus:border-primary focus:ring-1 focus:ring-primary/40 focus:shadow-[0_0_15px_rgba(var(--primary-rgb),0.1)] transition-all duration-300"
                 />
               </div>
             )}
@@ -155,7 +159,7 @@ export default function LoginPage() {
                 value={email}
                 onChange={(e) => setEmail(e.target.value)}
                 required
-                className="w-full bg-muted border border-border rounded-xl py-3 pl-10 pr-4 text-foreground placeholder-muted-foreground focus:outline-none focus:border-primary focus:ring-1 focus:ring-primary transition-all"
+                className="w-full bg-muted/50 border border-border/80 rounded-xl py-3 pl-10 pr-4 text-foreground placeholder:text-muted-foreground/60 focus:outline-none focus:border-primary focus:ring-1 focus:ring-primary/40 focus:shadow-[0_0_15px_rgba(var(--primary-rgb),0.1)] transition-all duration-300"
               />
             </div>
             <div className="relative">
@@ -167,14 +171,14 @@ export default function LoginPage() {
                 onChange={(e) => setPassword(e.target.value)}
                 required
                 minLength={6}
-                className="w-full bg-muted border border-border rounded-xl py-3 pl-10 pr-4 text-foreground placeholder-muted-foreground focus:outline-none focus:border-primary focus:ring-1 focus:ring-primary transition-all"
+                className="w-full bg-muted/50 border border-border/80 rounded-xl py-3 pl-10 pr-4 text-foreground placeholder:text-muted-foreground/60 focus:outline-none focus:border-primary focus:ring-1 focus:ring-primary/40 focus:shadow-[0_0_15px_rgba(var(--primary-rgb),0.1)] transition-all duration-300"
               />
             </div>
             {!isRegistering && (
               <div className="flex justify-end mt-1">
                 <Link 
                   href="/forgot-password" 
-                  className="text-xs text-muted-foreground hover:text-primary transition-colors"
+                  className="text-xs text-muted-foreground hover:text-primary transition-colors font-medium"
                 >
                   Lupa kata sandi? Tenang, bisa kita bantu kok!
                 </Link>
@@ -185,7 +189,7 @@ export default function LoginPage() {
           <button
             type="submit"
             disabled={loading}
-            className="w-full py-4 px-4 bg-primary hover:bg-primary/90 text-primary-foreground rounded-xl font-bold uppercase tracking-widest text-xs md:text-xs transition-all disabled:opacity-50 shadow-lg border-none"
+            className="w-full py-3.5 px-4 bg-primary hover:bg-primary/90 text-primary-foreground rounded-xl font-bold uppercase tracking-widest text-xs transition-all disabled:opacity-50 shadow-[0_0_20px_rgba(var(--primary-rgb),0.15)] hover:shadow-[0_0_25px_rgba(var(--primary-rgb),0.3)] active:scale-[0.98] duration-300"
           >
             {loading ? "Sedang memproses..." : (isRegistering ? "Daftar Sekarang" : "Masuk Sekarang")}
           </button>
@@ -197,7 +201,7 @@ export default function LoginPage() {
             onClick={() => {
               setIsRegistering(!isRegistering);
             }}
-            className="text-sm text-primary hover:text-primary/80 transition-colors"
+            className="text-sm text-primary hover:text-primary/80 transition-colors font-semibold"
           >
             {isRegistering 
               ? "Sudah punya akun? Masuk lewat sini aja" 
@@ -207,10 +211,10 @@ export default function LoginPage() {
 
         <div className="relative py-4 mb-2">
           <div className="absolute inset-0 flex items-center">
-            <div className="w-full border-t border-border"></div>
+            <div className="w-full border-t border-border/80"></div>
           </div>
           <div className="relative flex justify-center">
-            <span className="bg-card px-4 text-xs md:text-xs font-bold text-muted-foreground uppercase tracking-widest">Atau pakai cara ini</span>
+            <span className="bg-card px-4 text-xs font-bold text-muted-foreground uppercase tracking-widest">Atau pakai cara ini</span>
           </div>
         </div>
 
@@ -219,7 +223,7 @@ export default function LoginPage() {
             type="button"
             onClick={() => handleSocialLogin("google")}
             disabled={loading}
-            className="w-full flex items-center justify-between p-3 rounded-xl bg-foreground text-background hover:opacity-90 transition-all disabled:opacity-50 font-semibold text-sm"
+            className="w-full flex items-center justify-between p-3.5 rounded-xl bg-foreground text-background hover:opacity-95 transition-all disabled:opacity-50 font-bold text-sm shadow-md active:scale-[0.98] duration-300"
           >
             <div className="flex items-center gap-3">
               <svg width="20" height="20" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
@@ -230,21 +234,19 @@ export default function LoginPage() {
               </svg>
               Masuk dengan akun Google
             </div>
-            <ChevronRight size={16} className="text-muted-foreground" />
+            <ChevronRight size={16} className="text-background/80" />
           </button>
-
-
 
           <button
             type="button"
             onClick={handleAnonymousLogin}
             disabled={loading}
-            className="w-full flex items-center justify-between p-3 rounded-xl bg-muted hover:bg-muted/80 border border-border transition-colors text-foreground disabled:opacity-50 text-sm"
+            className="w-full flex items-center justify-between p-3.5 rounded-xl bg-muted/60 hover:bg-muted/80 border border-border/80 transition-colors text-foreground disabled:opacity-50 text-sm active:scale-[0.98] duration-300"
           >
             <div className="flex items-center gap-3">
               <User size={20} className="text-primary" />
               <div className="text-left">
-                <div className="font-semibold">Coba Intip Dulu (Mode Tamu)</div>
+                <div className="font-bold">Coba Intip Dulu (Mode Tamu)</div>
               </div>
             </div>
             <LogIn size={16} className="text-muted-foreground" />
