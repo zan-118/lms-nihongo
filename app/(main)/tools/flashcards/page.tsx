@@ -7,8 +7,8 @@
 "use client";
 
 import React, { useState, useEffect, Suspense } from "react";
-import { createClient } from "@/lib/supabase/client";
 import { useRouter, useSearchParams } from "next/navigation";
+import { getFlashcardsByMode } from "@/app/actions/flashcard.actions";
 import { motion, AnimatePresence } from "framer-motion";
 import { 
   Zap, 
@@ -24,14 +24,7 @@ import { Badge } from "@/components/ui/badge";
 import { toast } from "sonner";
 
 // Modular Components
-import { FlashcardSelection } from "@/components/features/flashcards/FlashcardSelection";
-import { FlashcardModeSelection } from "@/components/features/flashcards/FlashcardModeSelection";
-
-interface Category {
-  id: string;
-  title: string;
-  slug: string;
-}
+import { FlashcardSetup } from "@/components/features/flashcards/FlashcardSetup";
 
 type ModeLatihan = "vocab" | "kanji" | "survival";
 
@@ -40,99 +33,50 @@ function FlashcardsContent() {
   const searchParams = useSearchParams();
   const categorySlug = searchParams.get("category");
 
-  const [categories, setCategories] = useState<Category[]>([]);
-  const [selectedCategory, setSelectedCategory] = useState<string | "all" | null>(null);
+  const [selectedLevel, setSelectedLevel] = useState<string | "all" | null>(null);
   const [selectedMode, setSelectedMode] = useState<ModeLatihan | null>(null);
   const [cards, setCards] = useState<MasterCardData[]>([]);
-  const [isLoading, setIsLoading] = useState(true);
   const [isFetchingCards, setIsFetchingCards] = useState(false);
   const [hasAutoFetched, setHasAutoFetched] = useState(false);
-
-  // Mengambil daftar kategori dari Supabase
-  useEffect(() => {
-    const fetchCategories = async () => {
-      try {
-        const supabase = createClient();
-        const { data, error } = await supabase
-          .from("course_categories")
-          .select("id, title, slug")
-          .order("title", { ascending: true });
-
-        if (error) throw error;
-        setCategories((data || []).map(c => ({ id: c.id, title: c.title, slug: c.slug })));
-      } catch (error) {
-        console.error("Gagal memuat kategori:", error);
-        toast.error("Gagal memuat daftar kategori");
-      } finally {
-        setIsLoading(false);
-      }
-    };
-    fetchCategories();
-  }, []);
 
   // Trigger otomatis jika masuk via URL ?category=slug
   useEffect(() => {
     if (categorySlug && !hasAutoFetched) {
       requestAnimationFrame(() => {
         setHasAutoFetched(true);
-        setSelectedCategory(categorySlug);
+        setSelectedLevel(categorySlug.toUpperCase());
       });
     }
   }, [categorySlug, hasAutoFetched]);
 
-  const fetchCardsAndStart = async (mode: ModeLatihan) => {
+  const fetchCardsAndStart = async (level: string, mode: ModeLatihan, amount: number) => {
     setIsFetchingCards(true);
+    setSelectedLevel(level);
     setSelectedMode(mode);
-    try {
-      const supabase = createClient();
-      let combined: MasterCardData[] = [];
+      try {
+        let combined: MasterCardData[] = [];
+        const data = await getFlashcardsByMode(mode, level, amount);
 
-      if (mode === "kanji") {
-        let query = supabase
-          .from("kanji")
-          .select("id, character, meaning, onyomi, kunyomi, examples")
-          .neq("show_in_flashcard", false)
-          .limit(50);
-
-        if (selectedCategory !== "all" && selectedCategory) {
-          query = query.eq("jlpt_level", selectedCategory.toUpperCase());
+        if (mode === "kanji") {
+          combined = data.map((k: any) => ({
+            id: k.id,
+            docType: "kanji",
+            word: k.character,
+            meaning: k.meaning,
+            details: { onyomi: k.onyomi || undefined, kunyomi: k.kunyomi || undefined },
+            slug: k.character,
+          }));
+        } else {
+          combined = data.map((v: any) => ({
+            id: v.id,
+            docType: "vocab",
+            word: v.word,
+            meaning: v.meaning_id || "",
+            romaji: v.romaji || undefined,
+            furigana: v.furigana || undefined,
+            slug: v.slug || undefined,
+          }));
         }
-
-        const { data, error } = await query;
-        if (error) throw error;
-
-        combined = (data || []).map(k => ({
-          id: k.id,
-          docType: "kanji",
-          word: k.character,
-          meaning: k.meaning,
-          details: { onyomi: k.onyomi || undefined, kunyomi: k.kunyomi || undefined },
-          slug: k.character,
-        }));
-      } else {
-        let query = supabase
-          .from("vocab")
-          .select("id, word, meaning_id, romaji, furigana, slug")
-          .neq("show_in_flashcard", false)
-          .limit(50);
-
-        if (selectedCategory !== "all" && selectedCategory) {
-          query = query.eq("jlpt_level", selectedCategory.toUpperCase());
-        }
-
-        const { data, error } = await query;
-        if (error) throw error;
-
-        combined = (data || []).map(v => ({
-          id: v.id,
-          docType: "vocab",
-          word: v.word,
-          meaning: v.meaning_id || "",
-          romaji: v.romaji || undefined,
-          furigana: v.furigana || undefined,
-          slug: v.slug || undefined,
-        }));
-      }
 
       combined = combined.sort(() => Math.random() - 0.5);
 
@@ -155,44 +99,30 @@ function FlashcardsContent() {
     if (categorySlug) {
       router.push(`/courses/${categorySlug}`);
     } else {
-      setSelectedCategory(null);
+      setSelectedLevel(null);
+      setSelectedMode(null);
     }
   };
 
-  if (isLoading && !categorySlug) {
-    return (
-      <div className="flex-1 flex flex-col items-center justify-center px-4">
-        <RotateCw className="text-primary animate-spin mb-4" size={32} />
-        <p className="text-muted-foreground font-mono uppercase tracking-widest text-xs animate-pulse font-bold">
-          Menyiapkan Pustaka...
-        </p>
-      </div>
-    );
-  }
-
-  if (isFetchingCards) {
-    return (
-      <div className="flex-1 flex flex-col items-center justify-center px-4">
-        <RotateCw className="text-primary animate-spin mb-4" size={32} />
-        <p className="text-muted-foreground font-mono uppercase tracking-widest text-xs animate-pulse font-bold">
-          Mengumpulkan kartu...
-        </p>
-      </div>
-    );
-  }
-
   return (
     <AnimatePresence mode="wait">
-      {!selectedCategory ? (
-        <FlashcardSelection
-          categories={categories}
-          onSelectCategory={setSelectedCategory}
-        />
+      {isFetchingCards ? (
+        <motion.div 
+          key="loading-cards"
+          initial={{ opacity: 0 }} 
+          animate={{ opacity: 1 }} 
+          exit={{ opacity: 0 }} 
+          className="flex-1 flex flex-col items-center justify-center px-4"
+        >
+          <RotateCw className="text-primary animate-spin mb-4" size={32} />
+          <p className="text-muted-foreground font-mono uppercase tracking-widest text-xs animate-pulse font-bold">
+            Mengumpulkan kartu...
+          </p>
+        </motion.div>
       ) : !selectedMode ? (
-        <FlashcardModeSelection
-          selectedCategory={selectedCategory}
-          onBack={handleBackFromMode}
-          onSelectMode={fetchCardsAndStart}
+        <FlashcardSetup 
+          defaultLevel={categorySlug?.toUpperCase() || null}
+          onStart={fetchCardsAndStart}
         />
       ) : (
         <motion.div 

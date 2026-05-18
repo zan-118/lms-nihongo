@@ -19,7 +19,8 @@ export async function getPaginatedKanji(
     let query = supabase.from("kanji").select("*", { count: "exact" });
 
     if (search) {
-      query = query.or(`character.ilike.%${search}%,meaning.ilike.%${search}%,onyomi.ilike.%${search}%,kunyomi.ilike.%${search}%,romaji.ilike.%${search}%`);
+      const safeSearch = search.replace(/"/g, '');
+      query = query.or(`character.ilike."%${safeSearch}%",meaning.ilike."%${safeSearch}%",onyomi.ilike."%${safeSearch}%",kunyomi.ilike."%${safeSearch}%",romaji.ilike."%${safeSearch}%"`);
     }
 
     if (level && level !== "all") {

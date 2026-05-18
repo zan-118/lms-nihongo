@@ -33,12 +33,18 @@ export default function VocabClient({
   const [isFlashcardMode, setIsFlashcardMode] = useState(false);
   const [showRomaji, setShowRomaji] = useState(true);
 
-  const [level, setLevel] = useState<string>("N5");
+  const [level, setLevel] = useState<string>("Semua");
   const [hinshi, setHinshi] = useState<string>("all");
   const [search, setSearch] = useState("");
   const [debouncedSearch, setDebouncedSearch] = useState("");
   const [currentPage, setCurrentPage] = useState(1);
   const limit = 50;
+
+  const mapLevelToQuery = (lbl: string) => {
+    if (lbl === "Semua") return "all";
+    if (lbl === "Umum") return "umum";
+    return lbl;
+  };
 
   useEffect(() => {
     const handler = setTimeout(() => {
@@ -56,9 +62,9 @@ export default function VocabClient({
 
   const { data, isFetching: loading } = useQuery({
     queryKey: ["vocab", currentPage, debouncedSearch, level, hinshi],
-    queryFn: () => getPaginatedVocab(currentPage, limit, debouncedSearch, level, hinshi),
+    queryFn: () => getPaginatedVocab(currentPage, limit, debouncedSearch, mapLevelToQuery(level), hinshi),
     placeholderData: keepPreviousData,
-    initialData: currentPage === 1 && debouncedSearch === "" && level === "N5" && hinshi === "all" ? initialData : undefined,
+    initialData: currentPage === 1 && debouncedSearch === "" && level === "Semua" && hinshi === "all" ? initialData : undefined,
   });
 
   const vocabListRaw = data?.data || [];
@@ -114,26 +120,18 @@ export default function VocabClient({
 
       {/* Content Grid */}
       <div className="relative">
-        <AnimatePresence mode="wait">
-          {loading ? (
-            <motion.div
-              key="loading"
-              initial={{ opacity: 0 }}
-              animate={{ opacity: 1 }}
-              exit={{ opacity: 0 }}
-              className="py-32 flex flex-col items-center justify-center gap-6"
-            >
-              <div className="relative w-16 h-16">
-                 <div className="absolute inset-0 rounded-full border-4 border-primary/10"></div>
-                 <div className="absolute inset-0 rounded-full border-4 border-primary border-t-transparent animate-spin"></div>
-              </div>
-              <p className="text-xs md:text-xs font-black text-primary uppercase tracking-[0.3em] animate-pulse">Menghubungkan ke Pangkalan Data...</p>
-            </motion.div>
-          ) : vocabList.length === 0 ? (
+        {loading && (
+          <div className="absolute inset-0 z-50 flex items-center justify-center bg-background/50 backdrop-blur-sm rounded-[2rem]">
+            <Loader2 className="w-10 h-10 animate-spin text-primary" />
+          </div>
+        )}
+        <AnimatePresence mode="popLayout">
+          {vocabList.length === 0 && !loading ? (
             <motion.div
               key="empty"
               initial={{ opacity: 0, scale: 0.95 }}
               animate={{ opacity: 1, scale: 1 }}
+              exit={{ opacity: 0, scale: 0.95 }}
               className="py-24 text-center border border-dashed border-border rounded-3xl bg-muted/20 neo-inset px-6"
             >
               <Search className="mx-auto mb-6 text-muted-foreground/30" size={48} aria-hidden="true" />
@@ -146,7 +144,7 @@ export default function VocabClient({
               key="grid"
               initial={{ opacity: 0 }}
               animate={{ opacity: 1 }}
-              className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-4 md:gap-5"
+              className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-4 md:gap-5 min-h-[400px]"
             >
               {vocabList.map((item, idx) => (
                 <VocabCard

@@ -53,11 +53,16 @@ export async function getPaginatedVocab(
     let query = supabase.from("vocab").select("*", { count: "exact" });
 
     if (search) {
-      query = query.or(`word.ilike.%${search}%,meaning_id.ilike.%${search}%,furigana.ilike.%${search}%,romaji.ilike.%${search}%`);
+      const safeSearch = search.replace(/"/g, '');
+      query = query.or(`word.ilike."%${safeSearch}%",meaning_id.ilike."%${safeSearch}%",furigana.ilike."%${safeSearch}%",romaji.ilike."%${safeSearch}%"`);
     }
 
     if (level && level !== "all") {
-      query = query.eq("jlpt_level", level.toUpperCase());
+      if (level.toLowerCase() === "umum" || level.toLowerCase() === "other" || level.toLowerCase() === "non-jlpt") {
+        query = query.is("jlpt_level", null);
+      } else {
+        query = query.eq("jlpt_level", level.toUpperCase());
+      }
     }
 
     if (hinshi && hinshi !== "all") {
@@ -65,7 +70,7 @@ export async function getPaginatedVocab(
       if (targets.length === 1) {
         query = query.contains("hinshi", JSON.stringify([targets[0]]));
       } else {
-        const orStr = targets.map(val => `hinshi.cs.["${val}"]`).join(",");
+        const orStr = targets.map(val => `hinshi.cs."${JSON.stringify([val]).replace(/"/g, '\\"')}"`).join(",");
         query = query.or(orStr);
       }
     }
@@ -76,13 +81,13 @@ export async function getPaginatedVocab(
         const verbTypes = [
           "Verb", "Verb (Group 1)", "Verb (Group 2)", "Verb (Group 3)"
         ];
-        const orStr = verbTypes.map(v => `hinshi.cs.["${v}"]`).join(",");
+        const orStr = verbTypes.map(v => `hinshi.cs."${JSON.stringify([v]).replace(/"/g, '\\"')}"`).join(",");
         query = query.or(orStr);
       } else if (type === "adjective") {
         const adjTypes = [
           "Na-Adjective", "I-Adjective"
         ];
-        const orStr = adjTypes.map(a => `hinshi.cs.["${a}"]`).join(",");
+        const orStr = adjTypes.map(a => `hinshi.cs."${JSON.stringify([a]).replace(/"/g, '\\"')}"`).join(",");
         query = query.or(orStr);
       }
     }

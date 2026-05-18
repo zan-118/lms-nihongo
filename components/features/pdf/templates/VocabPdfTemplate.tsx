@@ -202,6 +202,12 @@ const styles = StyleSheet.create({
 // MAIN EXECUTION
 // ======================
 
+const formatMeaning = (text?: string) => {
+  if (!text) return "—";
+  const parts = text.split(/[,;]/).map((s: string) => s.trim()).filter(Boolean);
+  return parts.length > 2 ? `${parts.slice(0, 2).join(", ")}, dll.` : text;
+};
+
 /**
  * Komponen VocabPdfTemplate: Menyusun layout PDF untuk daftar kosakata.
  */
@@ -272,7 +278,7 @@ export const VocabPdfTemplate = ({ data, level }: VocabTemplateProps) => (
               <Text style={styles.romajiText}>{item.romaji}</Text>
             </View>
             <View style={styles.cellMeaning}>
-              <Text style={styles.meaningText}>{item.meaning}</Text>
+              <Text style={styles.meaningText}>{formatMeaning(item.meaning)}</Text>
             </View>
           </View>
         ))}

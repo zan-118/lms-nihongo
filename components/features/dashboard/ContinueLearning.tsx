@@ -30,23 +30,24 @@ export default function ContinueLearning({ courseMetadata }: ContinueLearningPro
 
     // 1. Calculate progress for each category
     const stats = courseMetadata.map(cat => {
-      const completedInCat = cat.lessons.filter(lesson => {
+      const lessons = cat.lessons || [];
+      const completedInCat = lessons.filter(lesson => {
           const record = completedLessons[lesson._id];
           return record && record.completedAt;
       });
       
-      const totalLessons = cat.lessons.length;
+      const totalLessons = lessons.length;
       const progress = totalLessons > 0 
         ? (completedInCat.length / totalLessons) * 100 
         : 0;
       
       // Find last updated lesson in this category
-      const lastUpdate = cat.lessons.reduce((max, lesson) => {
+      const lastUpdate = lessons.reduce((max, lesson) => {
         const ts = completedLessons[lesson._id]?.updatedAt || 0;
         return ts > max ? ts : max;
       }, 0);
 
-      return { ...cat, progress, lastUpdate, completedCount: completedInCat.length, totalLessons };
+      return { ...cat, lessons, progress, lastUpdate, completedCount: completedInCat.length, totalLessons };
     });
 
     // 2. Find "Active" course (has progress but not 100%, and most recently updated)

@@ -37,7 +37,7 @@ export interface VocabItem {
   created_at?: string;
 }
 
-export const LEVELS = ["N5", "N4", "N3", "N2", "N1"];
+export const LEVELS = ["Semua", "Umum", "N5", "N4", "N3", "N2", "N1"];
 
 export const HINSHI = [
   { label: "Semua Tipe", value: "all" },

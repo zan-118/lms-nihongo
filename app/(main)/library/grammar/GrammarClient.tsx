@@ -110,21 +110,14 @@ export default function GrammarClient({ initialArticles = [] }: GrammarClientPro
 
       <GrammarSearch value={searchTerm} onChange={setSearchTerm} />
 
-      <section className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4 md:gap-5 items-stretch min-h-[400px]">
-        <AnimatePresence>
-          {loading ? (
-            [...Array(6)].map((_, i) => (
-              <Card key={i} className="h-48 md:h-56 bg-card/40 backdrop-blur-xl border-border rounded-[2rem] overflow-hidden p-6 relative">
-                <div className="flex justify-between items-start mb-6">
-                  <Skeleton className="w-10 h-10 rounded-2xl bg-background/5" />
-                  <Skeleton className="w-16 h-6 rounded-xl bg-background/5" />
-                </div>
-                <Skeleton className="w-3/4 h-8 rounded-xl bg-background/5 mb-4" />
-                <Skeleton className="w-1/2 h-4 rounded-lg bg-background/5 mt-auto" />
-                <div className="absolute inset-0 bg-gradient-to-r from-transparent via-white/[0.03] to-transparent -translate-x-full animate-[shimmer_2s_infinite] pointer-events-none" />
-              </Card>
-            ))
-          ) : paginatedArticles.length > 0 ? (
+      <section className="relative grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4 md:gap-5 items-stretch min-h-[400px]">
+        {loading && (
+          <div className="absolute inset-0 z-50 flex items-center justify-center bg-background/50 backdrop-blur-sm rounded-[2rem]">
+            <div className="w-10 h-10 animate-spin border-4 border-primary border-t-transparent rounded-full" />
+          </div>
+        )}
+        <AnimatePresence mode="popLayout">
+          {paginatedArticles.length > 0 ? (
             paginatedArticles.map((article, idx) => (
               <GrammarCard
                 key={article.id || article._id}
@@ -133,13 +126,13 @@ export default function GrammarClient({ initialArticles = [] }: GrammarClientPro
                 selectedLevel={selectedLevel}
               />
             ))
-          ) : (
+          ) : !loading ? (
             <GrammarEmptyState 
               searchTerm={searchTerm}
               selectedLevel={selectedLevel}
               onResetSearch={() => setSearchTerm("")}
             />
-          )}
+          ) : null}
         </AnimatePresence>
       </section>
 

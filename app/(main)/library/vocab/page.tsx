@@ -24,7 +24,7 @@ export const metadata = {
 // ======================
 
 export default async function VocabLibraryPage() {
-  const initialData = await getPaginatedVocab(1, 50, "", "N5", "all");
+  const initialData = await getPaginatedVocab(1, 50, "", "all", "all");
 
   return (
     <main className="w-full bg-background px-6 md:px-12 relative overflow-hidden flex flex-col justify-start min-h-screen pt-24 pb-20 transition-colors duration-300">
