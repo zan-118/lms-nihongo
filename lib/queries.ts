@@ -78,10 +78,14 @@ export async function getSanityReadingBySlug(slug: string) {
     body,
     hiragana,
     translation,
-    audio_url,
-    image_url,
-    video_url,
-    quizzes,
+    "audio_url": coalesce(audio_url.asset->url, audio_url),
+    "image_url": coalesce(image_url.asset->url, image_url),
+    "video_url": coalesce(video_url.asset->url, video_url),
+    quizzes[] {
+      ...,
+      "audio_url": coalesce(audio_url.asset->url, audio_url),
+      "image_url": coalesce(image_url.asset->url, image_url)
+    },
     seo
   }`;
   try {

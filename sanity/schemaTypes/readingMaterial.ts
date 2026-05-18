@@ -84,20 +84,23 @@ export default {
     },
     {
       name: 'audio_url',
-      title: 'Audio URL (Sanity/CDN)',
-      type: 'string',
+      title: 'Audio (Media Library)',
+      type: 'file',
       group: 'content',
     },
     {
       name: 'image_url',
-      title: 'Image URL (Sanity/CDN)',
-      type: 'string',
+      title: 'Image (Media Library)',
+      type: 'image',
       group: 'content',
+      options: {
+        hotspot: true,
+      },
     },
     {
       name: 'video_url',
-      title: 'Video URL (Sanity/CDN)',
-      type: 'string',
+      title: 'Video (Media Library)',
+      type: 'file',
       group: 'content',
     },
     {
@@ -144,13 +147,16 @@ export default {
             },
             {
               name: 'audio_url',
-              title: 'Audio URL (Sanity/CDN)',
-              type: 'string',
+              title: 'Audio (Media Library)',
+              type: 'file',
             },
             {
               name: 'image_url',
-              title: 'Image URL (Sanity/CDN)',
-              type: 'string',
+              title: 'Image (Media Library)',
+              type: 'image',
+              options: {
+                hotspot: true,
+              },
             },
             {
               name: 'type',
